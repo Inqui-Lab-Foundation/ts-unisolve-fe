@@ -7,7 +7,8 @@ import {
     GET_STUDENTS,
     GET_STUDENTS_LANGUAGE,
     GET_STUDENTS_LIST_ERROR,
-    GET_STUDENTS_LIST_SUCCESS
+    GET_STUDENTS_LIST_SUCCESS,
+    GET_STUDENT_BADGES
 } from '../actions';
 
 
@@ -19,7 +20,8 @@ const INIT_STATE = {
     teamMember:{},
     challengeQuestions:[],
     challengesSubmittedResponse:[],
-    studentLanguage:languageOptions[0]
+    studentLanguage:languageOptions[0],
+    badges:""
 };
 
 export default (state = INIT_STATE, action) => {
@@ -62,6 +64,11 @@ export default (state = INIT_STATE, action) => {
         return {
             ...state,
             challengesSubmittedResponse:action.payload
+        };
+    case GET_STUDENT_BADGES:
+        return {
+            ...state,
+            badges:action.payload
         };
     default:
         return newState;
