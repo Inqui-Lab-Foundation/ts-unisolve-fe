@@ -31,7 +31,7 @@ import { getNormalHeaders } from '../helpers/Utils';
 import axios from 'axios';
 import { getLanguage } from '../constants/languageOptions';
 import { useSelector } from 'react-redux';
-import { RiLogoutBoxRFill} from 'react-icons/ri';
+import { RiLogoutBoxRFill,RiLockPasswordFill} from 'react-icons/ri';
 import {   logout } from '../helpers/Utils';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -287,6 +287,21 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                             to={'/my-profile'}
                         >
                             {t('teacher.profile')}
+                        </NavLink>
+                    </MenuItem>
+                    <MenuItem
+                        icon={<RiLockPasswordFill />}
+                        className={
+                            location.pathname === '/teacher/change-password' &&
+                            'sidebar-active'
+                        }
+                    >
+                        <NavLink
+                            exact={true}
+                            // onClick={(e) => handleClick(e, '')}
+                            to={'/change-password'}
+                        >
+                            {t('teacher.password')}
                         </NavLink>
                     </MenuItem>
                     <MenuItem
