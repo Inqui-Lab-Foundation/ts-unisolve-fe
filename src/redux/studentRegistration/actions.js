@@ -8,7 +8,8 @@ import {
     GET_STUDENT,
     GET_STUDENTS_LANGUAGE,
     GET_CHALLENGE_QUESTIONS,
-    GET_CHALLENGE_SUBMITTED_DATA
+    GET_CHALLENGE_SUBMITTED_DATA,
+    GET_STUDENT_BADGES
 } from '../actions';
 import { URL, KEY } from '../../constants/defaultValues';
 import { getNormalHeaders } from '../../helpers/Utils';
@@ -190,6 +191,37 @@ export const getStudentChallengeSubmittedResponse = (id,language) => async (disp
                 result?.data?.data.length > 0 &&
                 result?.data?.data[0]?.dataValues;
             dispatch(getStudentChallengeSubmittedResponseSuccess(data));
+        } else {
+            dispatch(
+                getStudentListError(result.statusText)
+            );
+        }
+    } catch (error) {
+        dispatch(getStudentListError({}));
+    }
+};
+
+export const getStudentBadgesSuccess =
+    (badges) => async (dispatch) => {
+        dispatch({
+            type: GET_STUDENT_BADGES,
+            payload: badges
+        });
+    };
+export const getStudentBadges = (id,language) => async (dispatch) => {
+    try {
+        const axiosConfig = getNormalHeaders(KEY.User_API_Key);
+        const result = await axios
+            .get(`${URL.getStudentBadges}${id}/badges&${getLanguage(language)}`, axiosConfig)
+            .then((badges) => badges)
+            .catch((err) => {
+                return err.response;
+            });
+        if (result && result.status === 200) {
+            const data =
+                result.data &&
+                result?.data;
+            dispatch(getStudentBadgesSuccess(data));
         } else {
             dispatch(
                 getStudentListError(result.statusText)

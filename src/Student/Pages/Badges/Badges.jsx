@@ -22,7 +22,9 @@ import badgesBg from '../../../assets/media/img/badge_header.svg';
 // import { ProgressComp } from '../../../stories/Progress/Progress';
 import { Figure } from 'react-bootstrap';
 import Layout from '../../Layout';
+// import { useSelector } from 'react-redux';
 const BadgesComp = () => {
+    // const {badges} = useSelector(state.studentRegistration);
     const badgesList = [
         {
             id: 1,

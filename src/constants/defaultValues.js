@@ -71,6 +71,7 @@ export const URL = {
     getTeacherCousesDetails:
         process.env.REACT_APP_API_BASE_URL + '/mentorCourses/',
     getStudents: process.env.REACT_APP_API_BASE_URL + '/students',
+    getStudentBadges: process.env.REACT_APP_API_BASE_URL + '/students/',
     getStudentById: process.env.REACT_APP_API_BASE_URL + '/students/',
     getTeacherById: process.env.REACT_APP_API_BASE_URL + '/mentors/',
     getTeacherDashboardStatesById:
