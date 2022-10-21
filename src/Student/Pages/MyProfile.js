@@ -27,7 +27,7 @@ import ChangePSWModal from './ChangePSWModal';
 import { getCurrentUser } from '../../helpers/Utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStudentByIdData } from '../../redux/studentRegistration/actions';
-import defaultUser from '../../assets/media/img/default-user.png';
+// import defaultUser from '../../assets/media/img/default-user.png';
 import moment from 'moment';
 
 const MySwal = withReactContent(Swal);
@@ -158,51 +158,27 @@ const MyProfile = () => {
                                     <CardBody>
                                         <Row>
                                             <Col
-                                                md={8}
+                                                md={12}
                                                 className="border-right my-auto "
                                             >
-                                                <Row>
-                                                    <Col md={5}>
-                                                        {/* <small>Image 240x240</small> */}
-                                                        <figure>
-                                                            {/* <PhotoUpload /> */}
-                                                            <img
-                                                                className="img-fluid w-50"
-                                                                alt="default"
-                                                                src={
-                                                                    defaultUser
-                                                                }
-                                                            />
-                                                        </figure>
-                                                    </Col>
-                                                    <Col
-                                                        md={7}
-                                                        className="my-auto profile-detail"
-                                                    >
-                                                        <h2 className="mb-4">
-                                                            <span>Name:</span>
-                                                            {teamMember?.full_name
-                                                                ? teamMember?.full_name
-                                                                : 'N/A'}
+                                                <h2 className="mb-4">
+                                                            Student Details
                                                         </h2>
-                                                        {/* <CardText>
-                                                            <span>Email:</span>{' '}
-                                                            <b>
-                                                                ritusharma@gmail.com
-                                                            </b>
-                                                        </CardText> */}
-                                                        {/* <CardText>
-                                                            <span>Class:</span>{' '}
-                                                            <b>{teamMember?.Grade}</b>
-                                                        </CardText> */}
-                                                    </Col>
-                                                </Row>
+                                                     
                                             </Col>
 
                                             <Col
-                                                md={4}
-                                                className="my-auto profile-detail"
+                                                md={12}
+                                                className="my-auto profile-detail mx-5"
                                             >
+                                                 <CardText>
+                                                    <span>Name:</span>{' '}
+                                                    <b>
+                                                    {teamMember?.full_name
+                                                                ? teamMember?.full_name
+                                                                : 'N/A'}
+                                                    </b>
+                                                </CardText>
                                                 <CardText>
                                                     <span>Grade:</span>{' '}
                                                     <b>
@@ -241,7 +217,29 @@ const MyProfile = () => {
                                                 </CardText>
                                             </Col>
 
-                                            <Col md={12}></Col>
+                                            <Col
+                                                md={12}
+                                                className="border-right my-auto "
+                                            >
+                                                <h2 className="mb-4 my-5">
+                                                            Other Details
+                                                        </h2>
+                                                     
+                                            </Col>
+                                            <Col
+                                                md={12}
+                                                className="my-auto profile-detail mx-5"
+                                            >
+                                                 <CardText>
+                                                    <span>Team Name:</span>{' '}
+                                                    <b>
+                                                        {console.log("adsasdasdas",teamMember)}
+                                                    {teamMember?.team_name
+                                                                ? teamMember?.team_name
+                                                                : 'N/A'}
+                                                    </b>
+                                                </CardText>
+                                                </Col>
                                         </Row>
                                         <br />
                                         <Row>
