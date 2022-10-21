@@ -14,7 +14,8 @@ import {
     FaLightbulb,
     FaShieldVirus,
     // FaQuestionCircle,
-    FaBars
+    FaBars,
+    FaHouseUser
 } from 'react-icons/fa';
 import { RiSurveyFill} from 'react-icons/ri';
 
@@ -30,12 +31,15 @@ import { getNormalHeaders } from '../helpers/Utils';
 import axios from 'axios';
 import { getLanguage } from '../constants/languageOptions';
 import { useSelector } from 'react-redux';
-
+import { RiLogoutBoxRFill} from 'react-icons/ri';
+import {   logout } from '../helpers/Utils';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
 
     const { t } = useTranslation();
+    const history = useHistory();
     const language = useSelector(state=>state?.studentRegistration?.studentLanguage);
 
 
@@ -78,6 +82,10 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
     });
     const handleClick = (e) => {
         if(presurveyStatus !== "COMPLETED") e.preventDefault();
+    };
+    const handleLogout = (e) => {
+        logout(history, t);
+        e.preventDefault();
     };
     return (
         <ProSidebar
@@ -264,6 +272,29 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                         <NavLink exact={true}  onClick={handleClick} to={'/student/post-survey'}>
                             {/* PostSurvey */}
                             {t('home.post_survey')}
+                        </NavLink>
+                    </MenuItem>
+                    <MenuItem
+                        icon={<FaHouseUser />}
+                        className={
+                            location.pathname === '/teacher/my-profile' &&
+                            'sidebar-active'
+                        }
+                    >
+                        <NavLink
+                            exact={true}
+                            // onClick={(e) => handleClick(e, '')}
+                            to={'/my-profile'}
+                        >
+                            {t('teacher.profile')}
+                        </NavLink>
+                    </MenuItem>
+                    <MenuItem
+                        icon={<RiLogoutBoxRFill />}
+                        className={location.pathname === '' && 'sidebar-active'}
+                    >
+                        <NavLink exact={true} onClick={handleLogout} to={''}>
+                            {t('teacher.logout')}
                         </NavLink>
                     </MenuItem>
                 </Menu>
