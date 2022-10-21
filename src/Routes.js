@@ -14,7 +14,7 @@ import { ProtectedRoute } from './helpers/authHelper';
 import Dashboard from './Student/Pages/Dashboard/index';
 import BadgesComp from './Student/Pages/Badges/Badges';
 import Ideas from './Student/Pages/Ideas';
-
+import StudenetChangePSWModal from './Student/Pages/ChangePS';
 import './i18n';
 import SignUpNew from './Student/Pages/SignUpNew';
 import LoginNew from './Student/Pages/LoginNew';
@@ -512,6 +512,12 @@ const Routers = () => {
                         exact={true}
                         path="/admin/road-map"
                         component={RoadMap}
+                    />
+
+                    <ProtectedRoute
+                        exact={true}
+                        path="/change-password"
+                        component={StudenetChangePSWModal}
                     />
 
                     {/* TEACHERS ROUTES */}
