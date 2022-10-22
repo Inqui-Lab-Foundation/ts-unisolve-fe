@@ -12,7 +12,7 @@ import * as Yup from 'yup';
 import CryptoJS from 'crypto-js';
 import { useTranslation } from 'react-i18next';
 
-function StepFour({ userData, setHideFour, setHideFive,oldPassword }) {
+function StepFour({ userData, setHideFour, setHideFive }) {
     // oldPassword
     const { t } = useTranslation();
     const password = {
@@ -29,7 +29,7 @@ function StepFour({ userData, setHideFour, setHideFive,oldPassword }) {
     const formik = useFormik({
         initialValues: {
             user_id: userData?.user_id,
-            old_password: oldPassword,
+            old_password: '112233',
             new_password: '',
             confirmpassword: ''
         },

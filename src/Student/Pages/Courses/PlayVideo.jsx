@@ -1397,6 +1397,13 @@ const PlayVideoCourses = (props) => {
                                                         />
                                                     </a>
                                                 )}
+                                                <Button
+                                                    label="Skip & Continue"
+                                                    btnClass="primary w-auto"
+                                                    size="small"
+                                                    type="submit"
+                                                    onClick={handleNextCourse}
+                                                />
                                                 {worksheetResponce.response !=
                                                     null &&
                                                 worksheetResponce.worksheet_id !==
