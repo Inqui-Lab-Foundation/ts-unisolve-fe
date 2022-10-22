@@ -41,14 +41,14 @@ const ViewTeamMember = () => {
         teamID.team_id;
 
     const headingDetails = {
-        title: t("teacher_teams.view_team_member_details"),
+        title: t('teacher_teams.view_team_member_details'),
         options: [
             {
-                title: t("teacher_teams.teamslist"),
+                title: t('teacher_teams.teamslist'),
                 path: '/teacher/teamlist'
             },
             {
-                title: t("teacher_teams.view_team_member")
+                title: t('teacher_teams.view_team_member')
             }
         ]
     };
@@ -115,38 +115,38 @@ const ViewTeamMember = () => {
         data: teamsMembersList.length > 0 && teamsMembersList,
         columns: [
             {
-                name: "User Name",
+                name: 'User Name',
                 selector: 'user.username',
                 width: '15%'
             },
             {
-                name: "Password",
+                name: 'Password',
                 selector: 'UUID',
                 width: '10%'
             },
             {
-                name: t("teacher_teams.student_name"),
+                name: t('teacher_teams.student_name'),
                 selector: 'full_name',
                 width: '15%'
             },
             {
-                name: t("teacher_teams.grade"),
+                name: t('teacher_teams.grade'),
                 selector: 'Grade',
                 width: '10%'
             },
             {
-                name: t("teacher_teams.age"),
+                name: t('teacher_teams.age'),
                 selector: 'Age',
                 width: '9%'
             },
 
             {
-                name: t("teacher_teams.gender"),
+                name: t('teacher_teams.gender'),
                 selector: 'Gender',
                 width: '12%'
             },
             {
-                name: t("teacher_teams.actions"),
+                name: t('teacher_teams.actions'),
                 cell: (params) => {
                     return [
                         <a onClick={() => handleEditTeamMember(params)}>
@@ -189,7 +189,35 @@ const ViewTeamMember = () => {
     };
 
     // const handleReseatTeamMember = (item) => {
-    //     console.log(item);
+    //     const body = JSON.stringify({
+    //         user_id: JSON.stringify(item.user_id)
+    //     });
+    //     console.log('item', body);
+
+    //     var config = {
+    //         method: 'post',
+    //         url: process.env.REACT_APP_API_BASE_URL + '/students/resetPassword',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             Authorization: `Bearer ${currentUser.data[0].token}`
+    //         },
+    //         data: body
+    //     };
+    //     axios(config)
+    //         .then(function (response) {
+    //             if (response.status === 202) {
+    //                 setCount(count + 1);
+    //                 openNotificationWithIcon(
+    //                     'success',
+    //                     'Password Successfully Updated'
+    //                 );
+    //             } else {
+    //                 openNotificationWithIcon('error', 'Opps! Something Wrong');
+    //             }
+    //         })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //         });
     // };
 
     const handleDeleteTeamMember = (item) => {
@@ -203,13 +231,13 @@ const ViewTeamMember = () => {
 
         swalWithBootstrapButtons
             .fire({
-                title: t("teacher_teams.delete_member_warning"),
-                text: t("teacher_teams.sure"),
+                title: t('teacher_teams.delete_member_warning'),
+                text: t('teacher_teams.sure'),
                 imageUrl: `${logout}`,
                 showCloseButton: true,
-                confirmButtonText: t("teacher_teams.delete"),
+                confirmButtonText: t('teacher_teams.delete'),
                 showCancelButton: true,
-                cancelButtonText: t("general_req.btn_cancel"),
+                cancelButtonText: t('general_req.btn_cancel'),
                 reverseButtons: false
             })
             .then((result) => {
@@ -235,7 +263,7 @@ const ViewTeamMember = () => {
                                 setCount(count + 1);
                                 openNotificationWithIcon(
                                     'success',
-                                    t("teacher_teams.delete_success"),
+                                    t('teacher_teams.delete_success')
                                 );
                             } else {
                                 openNotificationWithIcon(
@@ -249,8 +277,8 @@ const ViewTeamMember = () => {
                         });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
-                        t("teacher_teams.delete_cancelled"),
-                        t("teacher_teams.delete_member_warning"),
+                        t('teacher_teams.delete_cancelled'),
+                        t('teacher_teams.delete_member_warning'),
                         'error'
                     );
                 }
@@ -269,7 +297,7 @@ const ViewTeamMember = () => {
                         <Col className="ticket-btn col ml-auto ">
                             <div className="d-flex justify-content-end">
                                 <Button
-                                    label={t("teacher_teams.back")}
+                                    label={t('teacher_teams.back')}
                                     btnClass="primary ml-2"
                                     size="small"
                                     shape="btn-square"
@@ -282,7 +310,9 @@ const ViewTeamMember = () => {
                         </Col>
                     </Row>
 
-                    <p>{t("teacher_teams.team_name")}: {teamID.team_name}</p>
+                    <p>
+                        {t('teacher_teams.team_name')}: {teamID.team_name}
+                    </p>
                     <div className="ticket-data">
                         <Tabs defaultActiveKey="1">
                             <div className="my-2">
