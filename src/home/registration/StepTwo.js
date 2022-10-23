@@ -17,7 +17,8 @@ function StepTwo({
     setUserData,
     orgData,
     setHideTwo,
-    setHideThree,
+    // setHideThree,
+    setHideFour
 }) {
     const { t } = useTranslation();
     const dispatch = useDispatch();
@@ -92,7 +93,7 @@ function StepTwo({
                         if (mentorRegRes?.data?.status == 202) {
                             setUserData(mentorRegRes?.data?.data[0]);
                             setHideTwo(false);
-                            setHideThree(true);
+                            setHideFour(true);
                         }
                     })
                     .catch((err) => {
@@ -113,7 +114,7 @@ function StepTwo({
                         if (mentorRegRes?.data?.status == 201) {
                             setUserData(mentorRegRes?.data?.data[0]);
                             setHideTwo(false);
-                            setHideThree(true);
+                            setHideFour(true);
                         }
                     })
                     .catch((err) => {
