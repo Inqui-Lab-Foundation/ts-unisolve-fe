@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Container,
     Row,
@@ -11,90 +11,25 @@ import {
 } from 'reactstrap';
 import './style.scss';
 import badgesBg from '../../../assets/media/img/badge_header.svg';
-// import starBadge from '../../../assets/media/img/Star_Badge.png';
-// import likeBadge from '../../../assets/media/img/like_badge.png';
-// import MonitorBadge from '../../../assets/media/img/Monitor_Badge.png';
-// import shuttleBadge from '../../../assets/media/img/Shuttle_Badge_Color.png';
-// import cupBadge from '../../../assets/media/img/Cup_Badge_Color.png';
-// import medalBadge from '../../../assets/media/img/Medal_Badge_Color.png';
-// import growthBadge from '../../../assets/media/img/Growth_Badge_Color.png';
-
 // import { ProgressComp } from '../../../stories/Progress/Progress';
 import { Figure } from 'react-bootstrap';
 import Layout from '../../Layout';
-// import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getStudentBadges } from '../../../redux/studentRegistration/actions';
+import { getCurrentUser } from '../../../helpers/Utils';
 const BadgesComp = () => {
-    // const {badges} = useSelector(state.studentRegistration);
-    const badgesList = [
-        {
-            id: 1,
-            name: 'pre survey completed',
-            slug: 'pre_survey_completed',
-            desc: '',
-            icon: '/assets/images/default.jpg',
-            student_status: '2022-10-22'
-        }
-    ];
-    // const progressProp = {
-    //     label: 'Progress',
-    //     options: [{ id: 1, teams: 'CSK', percent: 80, status: 'active' }]
-    // };
-    // const ProgressCardList = [
-    //     {
-    //         icon: shuttleBadge,
-    //         name: 'Challenger',
-    //         count: '300/600',
-    //         text: 'Lorem 50 ipsum dolor sit amet'
-    //     },
-    //     {
-    //         icon: cupBadge,
-    //         name: 'Ten to the Fourth',
-    //         count: '300/600',
-    //         text: 'Lorem 50 ipsum dolor sit amet'
-    //     },
-    //     {
-    //         icon: medalBadge,
-    //         name: 'Collaborator',
-    //         count: '300/600',
-    //         text: 'Lorem 50 ipsum dolor sit amet'
-    //     },
-    //     {
-    //         icon: growthBadge,
-    //         name: 'Mad Scientist',
-    //         count: '300/600',
-    //         text: 'Lorem 50 ipsum dolor sit amet'
-    //     },
-    //     {
-    //         icon: shuttleBadge,
-    //         name: 'Making progress',
-    //         count: '300/600',
-    //         text: 'Lorem 50 ipsum dolor sit amet'
-    //     },
-    //     {
-    //         icon: medalBadge,
-    //         name: 'Badge Name',
-    //         count: '300/600',
-    //         text: 'Lorem 50 ipsum dolor sit amet'
-    //     },
-    //     {
-    //         icon: cupBadge,
-    //         name: 'Badge Name',
-    //         count: '300/600',
-    //         text: 'Lorem 50 ipsum dolor sit amet'
-    //     },
-    //     {
-    //         icon: medalBadge,
-    //         name: 'Badge Name',
-    //         count: '300/600',
-    //         text: 'Lorem 50 ipsum dolor sit amet'
-    //     },
-    //     {
-    //         icon: medalBadge,
-    //         name: 'Badge Name',
-    //         count: '300/600',
-    //         text: 'Lorem 50 ipsum dolor sit amet'
-    //     }
-    // ];
+    const {badges} = useSelector(state=>state.studentRegistration);
+    const language = useSelector(
+        (state) => state?.studentRegistration?.studentLanguage
+    );
+    const currentUser = getCurrentUser('current_user');
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getStudentBadges(currentUser.data[0].user_id,language));
+    }, [dispatch,currentUser.data[0].user_id,language]);
+    
+   
     return (
         <Layout>
             {/* <PageConstruction /> */}
@@ -146,7 +81,7 @@ const BadgesComp = () => {
                         className="myBadges equal mt-0 mb-50"
                         style={{ gap: '1.5rem' }}
                     >
-                        {badgesList.map((badge, i) => {
+                        {badges && badges.length>0 && badges.map((badge, i) => {
                             return (
                                 <div
                                     key={i}
@@ -167,7 +102,7 @@ const BadgesComp = () => {
                                             <CardSubtitle className="badge-date">
                                                 EARNED ON:{' '}
                                                 <span className="badge-time">
-                                                    {badge.student_status}
+                                                    {badge?.student_status ? badge?.student_status :"Locked"}
                                                 </span>
                                             </CardSubtitle>
                                         </CardBody>

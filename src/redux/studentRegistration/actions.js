@@ -212,7 +212,7 @@ export const getStudentBadges = (id,language) => async (dispatch) => {
     try {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         const result = await axios
-            .get(`${URL.getStudentBadges}${id}/badges&${getLanguage(language)}`, axiosConfig)
+            .get(`${URL.getStudentBadges}${id}/badges?${getLanguage(language)}`, axiosConfig)
             .then((badges) => badges)
             .catch((err) => {
                 return err.response;
@@ -220,7 +220,7 @@ export const getStudentBadges = (id,language) => async (dispatch) => {
         if (result && result.status === 200) {
             const data =
                 result.data &&
-                result?.data;
+                result?.data?.data;
             dispatch(getStudentBadgesSuccess(data));
         } else {
             dispatch(
