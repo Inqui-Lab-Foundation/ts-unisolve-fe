@@ -306,7 +306,7 @@ const LoginNew = (props) => {
                                             md={10}
                                             xl={7}
                                         >
-                                            <Button
+                                            {/* <Button
                                                 {...logInBtn}
                                                 type="submit"
                                                 btnClass={
@@ -318,7 +318,7 @@ const LoginNew = (props) => {
                                                         : 'primary'
                                                 }
                                                 disabled={!(formik.dirty && formik.isValid)}
-                                            />
+                                            /> */}
                                         </Col>
                                         {/* <Space>
                       <Button
