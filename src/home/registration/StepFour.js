@@ -12,7 +12,7 @@ import * as Yup from 'yup';
 import CryptoJS from 'crypto-js';
 import { useTranslation } from 'react-i18next';
 
-function StepFour({ userData, setHideFour, setHideFive,oldPassword }) {
+function StepFour({ userData, setHideFour, setHideFive }) {
     // oldPassword
     const { t } = useTranslation();
     const password = {
@@ -37,10 +37,10 @@ function StepFour({ userData, setHideFour, setHideFive,oldPassword }) {
         validationSchema: Yup.object({
             new_password: Yup.string()
                 .required('Password is required')
-                .min(5, 'Your password is too short.')
+                .min(5, 'Your password should be minimum 5 characters')
                 .matches(
-                    /[a-zA-Z]/,
-                    'Password can only contain Latin letters.'
+                    /[a-zA-Z0-9]/,
+                    'Password should be only alphanumeric'
                 ),
             confirmpassword: Yup.string().oneOf(
                 [Yup.ref('new_password'), null],
