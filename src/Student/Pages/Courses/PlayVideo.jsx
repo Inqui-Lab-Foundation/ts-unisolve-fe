@@ -1633,13 +1633,10 @@ const PlayVideoCourses = (props) => {
                                     <Fragment>
                                         <Card className="course-sec-basic p-5">
                                             <CardBody>
-                                                <text
-                                                    style={{
-                                                        whiteSpace: 'pre-wrap'
-                                                    }}
-                                                >
-                                                    {adminCourse &&
-                                                        adminCourse.description}
+                                                <text>
+                                                    <div dangerouslySetInnerHTML={{ __html: adminCourse &&
+                                                            adminCourse.description }}>
+                                                    </div>
                                                 </text>
                                                 <div>
                                                     <Button
