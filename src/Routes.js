@@ -62,6 +62,7 @@ import AdminNotification from './Admin/Notification';
 import AdminUserList from './Admin/UserList/Ticket';
 import AdminAddMentor from './Admin/UserList/AddNewMentor';
 import CommonUserProfile from './Admin/UserList/CommonUserProfile';
+import CommonUserProfileEdit from './Admin/UserList/EditProfile';
 import AdminEvaluator from './Admin/UserList/AddNewEvaluator';
 import EditEvaluator from './Admin/UserList/EditNewEvaluator';
 import AdminProblemcategory from './Admin/ProblemCategory';
@@ -360,6 +361,12 @@ const Routers = () => {
                         exact={true}
                         path="/admin/userprofile"
                         component={CommonUserProfile}
+                    />
+                    {/* CommonUserProfileEdit */}
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/edit-user-profile"
+                        component={CommonUserProfileEdit}
                     />
                     <ProtectedRoute
                         exact={true}

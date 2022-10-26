@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../../Admin/Layout';
 import { withRouter } from 'react-router-dom';
-import { Container, Row, Card, CardBody, Table } from 'reactstrap';
+import { Container, Row, Card, CardBody, CardText } from 'reactstrap';
 import { BreadcrumbTwo } from '../../stories/BreadcrumbTwo/BreadcrumbTwo';
 
 const CommonUserProfile = (props) => {
@@ -49,7 +49,35 @@ const CommonUserProfile = (props) => {
                 <Row>
                     <Card className="py-5">
                         <CardBody>
-                            <Table bordered className="w-25">
+
+                            {/* <h2 className="mb-4">Personal Details</h2> */}
+                            
+                            <CardText>
+                                <span className='mx-3'><b>Name:</b></span>
+                                <b>
+                                    {props.location.data &&
+                                                props.location.data.full_name ? props.location.data &&
+                                                props.location.data.full_name : "-"}
+                                </b>
+                            </CardText>
+                            <CardText>
+                                <span className='mx-3'><b>Mobile:</b></span>
+                                <b>
+                                    {props.location.data &&
+                                                props.location.data.mobile ? props.location.data &&
+                                                props.location.data.mobile : "-"}
+                                </b>
+                            </CardText>
+                            <CardText>
+                                <span className='mx-3'><b>Email:</b></span>
+                                <b>
+                                    
+                                    {props.location.data &&
+                                                props.location.data.email ? props.location.data &&
+                                                props.location.data.email : "-"}
+                                </b>
+                            </CardText>
+                            {/* <Table bordered className="w-25">
                                 <tbody>
                                     <tr>
                                         <th scope="row" className="w-25">
@@ -110,7 +138,50 @@ const CommonUserProfile = (props) => {
                                         </td>
                                     </tr>
                                 </tbody>
-                            </Table>
+                            </Table> */}
+                        </CardBody>
+                    </Card>
+                </Row>
+                <Row className='my-5'>
+                    <Card className="py-5">
+                        <CardBody>
+
+                            <h2 className="mb-4">Institution  Details</h2>
+                            
+                            
+                            <CardText>
+                                <span className='mx-3'><b>UDISE Code:</b></span>
+                                <b>
+                                    {props.location.data &&
+                                                props.location.data.organization_code ? props.location.data &&
+                                                props.location.data.organization_code : "-"}
+                                </b>
+                            </CardText>
+                            <CardText>
+                                <span className='mx-3'><b>School Name:</b></span>
+                                <b>
+                                    {props.location.data &&
+                                                props.location.data.organization_name ? props.location.data &&
+                                                props.location.name.organization_code : "-"}
+                                </b>
+                            </CardText>
+                            <CardText>
+                                <span className='mx-3'><b>City:</b></span>
+                                <b>
+                                    {props.location.data &&
+                                                props.location.data.city ? props.location.data &&
+                                                props.location.name.city : "-"}
+                                </b>
+                            </CardText>
+                            <CardText>
+                                <span className='mx-3'><b>District:</b></span>
+                                <b>
+                                    {props.location.data &&
+                                                props.location.data.district ? props.location.data &&
+                                                props.location.name.district : "-"}
+                                </b>
+                            </CardText>
+                            
                         </CardBody>
                     </Card>
                 </Row>
