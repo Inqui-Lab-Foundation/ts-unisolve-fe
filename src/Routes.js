@@ -119,6 +119,9 @@ import TeacherSupportAnswer from './Teachers/SupportJourney/TicketResponse';
 import MyCertificate from './Teachers/Certificate/MyCertificate';
 import PageNotFound from '../src/PageNotFound';
 import ChangePSWModal from './Teachers/ChangePSWModal';
+import Translation from './Admin/Translation/Translation';
+import EditTranslation from './Admin/Translation/EditTranslation'; 
+import CreateTranslation from './Admin/Translation/CreateTranslation'; 
 
 const Routers = () => {
     // const history = useHistory();
@@ -633,6 +636,9 @@ const Routers = () => {
                         path="/teacher/my-certificate"
                         component={MyCertificate}
                     />
+                    <ProtectedRoute exact={true} path="/admin/translation" component={Translation} />
+                    <ProtectedRoute exact={true} path="/admin/edit-translation" component={EditTranslation} />
+                    <ProtectedRoute exact={true} path="/admin/create-translation" component={CreateTranslation} />
                     <Route component={PageNotFound} path="*" />
                 </Switch>
             </Router>

@@ -251,6 +251,23 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                                 Schedule Roadmap
                             </NavLink>
                         </MenuItem>
+                        <MenuItem
+                            icon={
+                                <img
+                                    src={FaqIcon}
+                                    className="img-fluid"
+                                    alt="faq"
+                                />
+                            }
+                            className={
+                                location.pathname === '/admin/translation' &&
+                                'sidebar-active'
+                            }
+                        >
+                            <NavLink exact={true} to={'/admin/translation'}>
+                                Tranlsation
+                            </NavLink>
+                        </MenuItem>
                     </SubMenu>
 
                     <MenuItem
