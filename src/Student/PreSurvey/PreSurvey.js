@@ -18,6 +18,7 @@ import { useFormik } from 'formik';
 import Layout from '../Layout';
 import { URL, KEY } from '../../constants/defaultValues';
 import {
+    getCurrentUser,
     getNormalHeaders,
     openNotificationWithIcon
 } from '../../helpers/Utils';
@@ -25,16 +26,19 @@ import axios from 'axios';
 import Congo from '../../assets/media/survey-success.jpg';
 import { useHistory } from 'react-router-dom';
 import { getLanguage } from '../../constants/languageOptions';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import getStart from '../../assets/media/getStart.png';
 import { useTranslation } from 'react-i18next';
+import { updateStudentBadges } from '../../redux/studentRegistration/actions';
 
 const PreSurvey = () => {
     const { t } = useTranslation();
     const [preSurveyList, setPreSurveyList] = useState([]);
+    const currentUser = getCurrentUser('current_user');
     const [quizSurveyId, setQuizSurveyId] = useState(0);
     const [preSurveyStatus, setPreSurveyStatus] = useState('COMPLETED');
     const history = useHistory();
+    const dispatch = useDispatch();
     const language = useSelector(
         (state) => state?.studentRegistration?.studentLanguage
     ); 
@@ -77,6 +81,7 @@ const PreSurvey = () => {
                                 'Presurvey has been submitted successfully',
                                 ''
                             );
+                            dispatch(updateStudentBadges({badge_slugs:["survey_champ"]},currentUser.data[0].user_id,language));
                             setTimeout(() => {
                                 history.push('/dashboard');
                             }, 500);

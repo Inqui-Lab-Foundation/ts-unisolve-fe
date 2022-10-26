@@ -11,45 +11,35 @@ import { IoCheckmarkDoneCircleSharp } from 'react-icons/io5';
 import { getAdminCourseDetails } from '../../../redux/actions';
 import TakeAssesmentPopup from './TakeAssesmentPopup';
 import { BsLayoutTextSidebarReverse } from 'react-icons/bs';
-
-// import { BsFillPauseFill } from "react-icons/bs";
-// import { FiPlayCircle } from "react-icons/fi";
 import { VscCircleFilled } from 'react-icons/vsc';
 import { VscCheck } from 'react-icons/vsc';
-// import CourseVideo from "../../assets/img/courseVideo.png";
-// import { Avatar, Icon } from "antd";
 import Vimeo from '@u-wave/react-vimeo';
 import Layout from '../../Layout';
-// import { Progress } from "antd";
 import { BsQuestionCircle } from 'react-icons/bs';
 import { Modal } from 'react-bootstrap';
+import CourseSuccessMessage from './CourseSuccessMessage';
 import {
     Accordion,
     AccordionItem,
     AccordionHeader,
     AccordionBody
 } from 'reactstrap';
-// import User from "../../assets/img/avatar1.png";
 import { Button } from '../../../stories/Button';
 import { GrDocument } from 'react-icons/gr';
 import { AiFillPlayCircle } from 'react-icons/ai';
 import { getCurrentUser } from '../../../helpers/Utils';
 import axios from 'axios';
-// import { ProgressComp } from "../../stories/Progress/Progress";
 import ModuleAssesmentImg from '../../../assets/media/moduleAssesmentPopup.svg';
-
-// import { FileComp } from "../../stories/FileComp/FileComp";
 import { connect, useSelector } from 'react-redux';
-
-// import DetaledQuiz from "../../Admin/DetailedQuiz";
 import DetaledQuiz from '../../../Admin/DetailedQuiz/DetaledQuiz';
 
 import Csv from '../../../assets/media/csv1.png';
 
 import Pdf from '../../../assets/media/csv1.png';
 import FullScreenButton from '../../../components/FullScreenButtonComp';
-import CourseSuccessMessage from './CourseSuccessMessage';
 import { getLanguage } from '../../../constants/languageOptions';
+import { updateStudentBadges } from '../../../redux/studentRegistration/actions';
+import { useDispatch } from 'react-redux';
 //VIMEO REFERENCE
 //https://github.com/u-wave/react-vimeo/blob/default/test/util/createVimeo.js
 
@@ -71,8 +61,8 @@ const PlayVideoCourses = (props) => {
         ? props.location.data.course_videos_count
         : '';
     const history = useHistory();
+    const dispatch = useDispatch();
     const currentUser = getCurrentUser('current_user');
-    // console.log("============================currentUser=========", currentUser);
     const [condition, setCondition] = useState('');
     const [modalShow, setModalShow] = useState(false);
     const [showQuiz, setHideQuiz] = useState(false);
@@ -120,23 +110,30 @@ const PlayVideoCourses = (props) => {
     const [seletedFilesName, setSeletedFilesName] = useState([]);
     const [seletedFiles, setSeletedFiles] = useState([]);
     const [open, setOpen] = useState('0');
+    const [badge, setBadge] = useState('0');
     const toggle = (id) => {
         if (id == 1) {
             setOpen('1');
+            setBadge("the_inspirer");
         } else if (open === id) {
             setOpen();
         } else if (open === '0') {
             setOpen('1');
         } else if (id === 2) {
             setOpen('2');
+            setBadge("the_team_player");
         } else if (id === 3) {
             setOpen('3');
+            setBadge("the_finder");
         } else if (id === 4) {
             setOpen(4);
+            setBadge("the_explorer");
         } else if (id === 5) {
             setOpen('5');
+            setBadge("the_ideator");
         } else if (id === 6) {
             setOpen('6');
+            setBadge("the_solver");
         } else if (id === 7) {
             setOpen('7');
         } else {
@@ -229,7 +226,6 @@ const PlayVideoCourses = (props) => {
     };
 
     async function modulesListUpdateApi(courseTopicId) {
-        // console.log(courseTopicId);
         const body1 = JSON.stringify({
             user_id: JSON.stringify(currentUser.data[0].user_id),
             course_topic_id: JSON.stringify(courseTopicId),
@@ -797,7 +793,6 @@ const PlayVideoCourses = (props) => {
     };
 
     const handleSelect = (topicId, couseId, type) => {
-        console.log(type);
         setCourseTopicId(couseId);
         const topic_Index =
             setTopicArrays &&
@@ -960,13 +955,13 @@ const PlayVideoCourses = (props) => {
                     setFileName();
                     setUrl();
                     setSeletedFiles();
+                    dispatch(updateStudentBadges({badge_slugs:[badge]},currentUser.data[0].user_id,language));
                 }
             })
             .catch(function (error) {
                 console.log(error);
             });
     };
-
     const handleNextCourse = () => {
         toggle(topicObj.course_module_id);
         modulesListUpdateApi(topicObj.course_topic_id);
@@ -1549,14 +1544,8 @@ const PlayVideoCourses = (props) => {
                                         id="desc"
                                     >
                                         <CardBody>
-                                            <text
-                                                style={{
-                                                    whiteSpace: 'pre-wrap'
-                                                }}
-                                            >
-                                                {courseData &&
-                                                    courseData.description}
-                                            </text>
+                                            <div dangerouslySetInnerHTML={ { __html: courseData &&
+                                                courseData.description } }></div>
                                             {courseData &&
                                             courseData.course_module_id == 1 ? (
                                                 <div>

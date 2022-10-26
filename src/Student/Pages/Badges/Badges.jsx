@@ -32,7 +32,6 @@ const BadgesComp = () => {
    
     return (
         <Layout>
-            {/* <PageConstruction /> */}
             <div className="badges-page">
                 <Container className=" mt-2 ">
                     <h2 className="mt-5">Badges</h2>
@@ -87,7 +86,7 @@ const BadgesComp = () => {
                                     key={i}
                                     className="badgesCard  col-xs-12 col-sm-6  col-xl-2 mb-3"
                                 >
-                                    <Card className="badge-card py-5 h-100">
+                                    <Card className="badge-card py-5 h-100" style={{backgroundColor:`${badge?.student_status ? "":"lightgrey"}`}}>
                                         <Figure className="w-100 text-center">
                                             <CardImg
                                                 alt={badge.icon}
