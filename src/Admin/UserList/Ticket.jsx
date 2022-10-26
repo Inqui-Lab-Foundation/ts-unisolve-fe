@@ -825,6 +825,17 @@ const TicketsPage = (props) => {
                 selector: "full_name",
                 width:"12%"
             },
+            
+            {
+                name: "Email",
+                selector: "email",
+                width:"20%"
+            },
+            {
+                name: "Phone",
+                selector: "mobile",
+                width:"20%"
+            },
             {
                 name: "Status",
                 cell: (row) => [
@@ -838,16 +849,6 @@ const TicketsPage = (props) => {
                     </Badge>
                 ],
                 width:"8%"
-            },
-            {
-                name: "Email",
-                selector: "email",
-                width:"20%"
-            },
-            {
-                name: "Phone",
-                selector: "mobile",
-                width:"20%"
             },
             
             // {

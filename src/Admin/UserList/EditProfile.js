@@ -92,7 +92,7 @@ const EditProfile = (props) => {
             axios(config)
                 .then(function (response) {
                     if (response.status === 200) {
-                        props.history.push('/admin/userprofile');
+                        props.history.push('/admin/userlist');
                     }
                 })
                 .catch(function (error) {
@@ -112,7 +112,7 @@ const EditProfile = (props) => {
                         <div>
                             <Form onSubmit={formik.handleSubmit} isSubmitting>
                                 <div className="create-ticket register-block">
-                                    <Row>
+                                    <Row className='justify-content-center'>
                                         <Col md={6} className="mb-5 mb-xl-0">
                                             <Label
                                                 className="name-req"
@@ -144,9 +144,10 @@ const EditProfile = (props) => {
                                                     </small>
                                                 ) : null}
                                         </Col>
+                                        <div className='w-100'/>
                                         <Col md={6}>
                                             <Label
-                                                className="name-req"
+                                                className="name-req mt-5"
                                                 htmlFor="email"
                                             >
                                                 Email
@@ -173,6 +174,7 @@ const EditProfile = (props) => {
                                                     </small>
                                                 ) : null}
                                         </Col>
+                                        <div className='w-100'/>
                                         <Col md={6}>
                                             <Label
                                                 className="name-req mt-5"
