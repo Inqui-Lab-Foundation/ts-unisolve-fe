@@ -22,7 +22,7 @@ import Layout from './Layout.jsx';
 import { getCurrentUser } from '../helpers/Utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTeacherByID } from '../redux/actions';
-import moment from 'moment';
+// import moment from 'moment';
 
 // const MySwal = withReactContent(Swal);
 
@@ -128,53 +128,109 @@ const MyProfile = () => {
                                                     
                                                     <Col
                                                         md={7}
-                                                        className="my-auto profile-detail"
+                                                        className="my-auto profile-detail w-100"
                                                     >
-                                                        <h2 className="mb-4">
+                                                        {/* <h2 className="mb-4">
                                                             {teacher?.full_name}
-                                                        </h2>
+                                                        </h2> */}
+
                                                         <CardText>
-                                                            <span>Mobile:</span>{' '}
+                                                            <span className='mx-3'><b>Name:</b></span>
                                                             <b>
-                                                                {teacher?.mobile}
+                                                                {teacher?.full_name ? teacher?.full_name : "-"}
                                                             </b>
                                                         </CardText>
+
                                                         <CardText>
-                                                            <span>State:</span>{' '}
-                                                            <b>{teacher?.state ? teacher?.state :"-"}</b>
+                                                            <span className='mx-3'><b>Email:</b></span>
+                                                            <b>
+                                                                {teacher?.email ? teacher?.email : "-"}
+                                                            </b>
                                                         </CardText>
+
+                                                        <CardText>
+                                                            <span className='mx-3'><b>Mobile:</b></span>
+                                                            <b>
+                                                                {teacher?.mobile ? teacher?.mobile : "-"}
+                                                            </b>
+                                                        </CardText>
+
+                                                        
+
+
+
+                                                        
                                                     </Col>
                                                 </Row>
                                             </Col>
 
-                                            <Col
-                                                md={4}
-                                                className="my-auto profile-detail"
-                                            >
-                                                <CardText>
-                                                    <span>Joined on:</span>{' '}
-                                                    <b>{moment(teacher?.created_at).format("MMM Do YYYY")}</b>
-                                                </CardText>
-                                            </Col>
-                                            <Col md={12}></Col>
+                                            
+                                           
                                         </Row>
-                                        {/* <br/>
+                                        
+                                    </CardBody>
+                                </Card>
+                            </Col>
+
+                            <Col md={12}>
+                                <Card className="w-100  mb-5 p-4">
+                                    <CardBody>
                                         <Row>
-                                            <Col md={6}>
-                                                <CardTitle className="pb-2">
-                                                    Password 
-                                                </CardTitle>
-                                                <CardText>
-                                                    <Link
-                                                        exact="true"
-                                                        onClick={showModal}
-                                                        className="my-auto pt-0 text-link "
+                                            <Col
+                                                md={8}
+                                                className="border-right my-auto "
+                                            >
+                                                <Row>
+                                                    
+                                                    <Col
+                                                        md={7}
+                                                        className="my-auto profile-detail w-100"
                                                     >
-                                                       Change Password
-                                                    </Link>
-                                                </CardText>
+                                                        {/* <h2 className="mb-4">
+                                                            {teacher?.full_name}
+                                                        </h2> */}
+
+                                                        <CardText>
+                                                            <span className='mx-3'><b>UDISE:</b></span>
+                                                            <b>
+                                                                {teacher?.organization_code ? teacher?.organization_code : "-"}
+                                                            </b>
+                                                        </CardText>
+
+                                                        <CardText>
+                                                            <span className='mx-3'><b>Principal Name:</b></span>
+                                                            <b>
+                                                                {teacher.organization?.principal_name ? teacher.organization?.principal_name : "-"}
+                                                            </b>
+                                                        </CardText>
+
+                                                        <CardText>
+                                                            <span className='mx-3'><b>City:</b></span>
+                                                            <b>
+                                                                {teacher.organization?.city ? teacher.organization?.city : "-"}
+                                                            </b>
+                                                        </CardText>
+
+                                                        <CardText>
+                                                            <span className='mx-3'><b>District:</b></span>
+                                                            <b>
+                                                                {teacher.organization?.district ? teacher.organization?.district : "-"}
+                                                            </b>
+                                                        </CardText>
+
+                                                        
+
+
+
+                                                        
+                                                    </Col>
+                                                </Row>
                                             </Col>
-                                        </Row> */}
+
+                                            
+                                           
+                                        </Row>
+                                        
                                     </CardBody>
                                 </Card>
                             </Col>
