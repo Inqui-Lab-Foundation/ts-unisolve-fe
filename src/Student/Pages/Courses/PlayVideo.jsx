@@ -1606,7 +1606,7 @@ const PlayVideoCourses = (props) => {
                                                 showTitle
                                             />
                                         )}
-                                        <p className="p-4">
+                                        {/* <p className="p-4">
                                             <span> Description : </span> Lorem
                                             ipsum dolor sit amet, consectetur
                                             adipisicing elit. Ullam fugiat fuga
@@ -1615,7 +1615,7 @@ const PlayVideoCourses = (props) => {
                                             praesentium nisi voluptatum
                                             quibusdam consequuntur. Saepe harum
                                             hic dicta eius.
-                                        </p>
+                                        </p> */}
                                     </Card>
                                 </>
                             ) : (

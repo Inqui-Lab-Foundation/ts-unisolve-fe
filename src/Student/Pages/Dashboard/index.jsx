@@ -74,14 +74,14 @@ const Dashboard = () => {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         axios
             .get(
-                `${URL.getPreSurveyList}?role=STUDENT?${getLanguage(language)}`,
+                `${URL.getStudentPreSurveyList}?role=STUDENT&${getLanguage(language)}`,
                 axiosConfig
             )
             .then((preSurveyRes) => {
                 if (preSurveyRes?.status == 200) {
                     console.log(preSurveyRes);
                     if (
-                        preSurveyRes.data.data[0].dataValues[0].progress !==
+                        preSurveyRes.data.data[0].progress !==
                         'COMPLETED'
                     )
                         history.push('/student/pre-survey');

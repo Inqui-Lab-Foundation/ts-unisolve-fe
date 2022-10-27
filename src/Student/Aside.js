@@ -58,10 +58,10 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
     const checkPresurvey = ()=>{
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         axios
-            .get(`${URL.getPreSurveyList}?role=STUDENT?${getLanguage(language)}`, axiosConfig)
+            .get(`${URL.getStudentPreSurveyList}?role=STUDENT&${getLanguage(language)}`, axiosConfig)
             .then((preSurveyRes) => {
                 if (preSurveyRes?.status == 200) {
-                    setpresurveyStatus(preSurveyRes.data.data[0].dataValues[0].progress);
+                    setpresurveyStatus(preSurveyRes.data.data[0].progress);
                 }
             })
             .catch((err) => {

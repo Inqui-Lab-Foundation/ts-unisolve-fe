@@ -99,22 +99,18 @@ const PreSurvey = () => {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         axios
             .get(
-                `${URL.getPreSurveyList}?role=STUDENT?${getLanguage(language)}`,
+                `${URL.getStudentPreSurveyList}?role=STUDENT&${getLanguage(language)}`,
                 axiosConfig
             )
             .then((preSurveyRes) => {
                 if (preSurveyRes?.status == 200) {
-                    console.log(
-                        '🚀 ~ file: PreSurvey.js ~ line 76 ~ .then ~ preSurveyRes',
-                        preSurveyRes
-                    );
                     setQuizSurveyId(
-                        preSurveyRes.data.data[0].dataValues[0].quiz_survey_id
+                        preSurveyRes.data.data[0].quiz_survey_id
                     );
                     setPreSurveyStatus(
-                        preSurveyRes.data.data[0].dataValues[0].progress
+                        preSurveyRes.data.data[0].progress
                     );
-                    let allQuestions = preSurveyRes.data.data[0].dataValues[0];
+                    let allQuestions = preSurveyRes.data.data[0];
                     setPreSurveyList(allQuestions.quiz_survey_questions);
                 }
             })
