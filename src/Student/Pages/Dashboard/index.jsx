@@ -60,12 +60,12 @@ const Dashboard = () => {
                 language
             )
         );
-    }, [dispatch,currentUser.data[0].user_id, language]);
-    
+    }, [dispatch, currentUser.data[0].user_id, language]);
+
     useEffect(() => {
         dispatch(getStudentDashboardTutorialVideos(language));
     }, [dispatch, language]);
-    
+
     useEffect(() => {
         dispatch(getStudentByIdData(currentUser.data[0].student_id));
     }, [dispatch, currentUser.data[0].student_id]);
@@ -114,7 +114,10 @@ const Dashboard = () => {
             position: 2,
             footerLabels: {
                 heading: 'Badges',
-                value: dashboardStatus && dashboardStatus?.badges_earned_count ? dashboardStatus?.badges_earned_count : 0
+                value:
+                    dashboardStatus && dashboardStatus?.badges_earned_count
+                        ? dashboardStatus?.badges_earned_count
+                        : 0
             }
         },
         teacher: {
@@ -125,18 +128,23 @@ const Dashboard = () => {
                 heading: 'Team Count',
                 value: 5
             }
-        },
+        }
     };
 
-    const percentageBWNumbers =(a,b)=>{
-        return (((a-b)/a)*100).toFixed(2);
+    const percentageBWNumbers = (a, b) => {
+        return (((a - b) / a) * 100).toFixed(2);
     };
 
     const columns = [
         {
             title: 'Name',
             dataIndex: 'full_name',
-            render: (_, record) => (record.full_name === currentUser?.data[0]?.full_name ? <div className='self-decor'>{record.full_name}*</div>:record.full_name)
+            render: (_, record) =>
+                record.full_name === currentUser?.data[0]?.full_name ? (
+                    <div className="self-decor">{record.full_name}*</div>
+                ) : (
+                    record.full_name
+                )
         },
         {
             title: 'Progress',
@@ -146,9 +154,22 @@ const Dashboard = () => {
                     key={'25'}
                     className="progress-height"
                     animated
-                    value={100 - percentageBWNumbers(record.all_topics_count,record.topics_completed_count)}
+                    value={
+                        100 -
+                        percentageBWNumbers(
+                            record.all_topics_count,
+                            record.topics_completed_count
+                        )
+                    }
                 >
-                    {Math.round(100 - percentageBWNumbers(record.all_topics_count,record.topics_completed_count))} %
+                    {Math.round(
+                        100 -
+                            percentageBWNumbers(
+                                record.all_topics_count,
+                                record.topics_completed_count
+                            )
+                    )}{' '}
+                    %
                 </Progress>
             )
         }
@@ -173,38 +194,77 @@ const Dashboard = () => {
                         footerLabels={cardData.profile.footerLabels}
                         rightImage={cardData.profile.rightImage}
                         position={cardData.profile.position}
-                        name={currentUser && currentUser?.data[0]?.full_name ? currentUser?.data[0]?.full_name : "-"}
-                        email={currentUser && currentUser?.data[0]?.team_name ? currentUser?.data[0]?.team_name : "-"}
-                        mentorData = {teamMember && teamMember?.team?.mentor ? teamMember?.team?.mentor: null}
+                        name={
+                            currentUser && currentUser?.data[0]?.full_name
+                                ? currentUser?.data[0]?.full_name
+                                : '-'
+                        }
+                        email={
+                            currentUser && currentUser?.data[0]?.team_name
+                                ? currentUser?.data[0]?.team_name
+                                : '-'
+                        }
+                        mentorData={
+                            teamMember && teamMember?.team?.mentor
+                                ? teamMember?.team?.mentor
+                                : null
+                        }
                     />
                     <TopSectionCard
                         heading={cardData.teacher.heading}
                         footerLabels={cardData.teacher.footerLabels}
                         rightImage={cardData.teacher.rightImage}
                         position={cardData.teacher.position}
-                        type = "teacher"
-                        organiZation = {teamMember && teamMember?.team?.mentor ? teamMember?.team?.mentor?.organization : null}
+                        type="teacher"
+                        organiZation={
+                            teamMember && teamMember?.team?.mentor
+                                ? teamMember?.team?.mentor?.organization
+                                : null
+                        }
                     />
                 </Row>
                 <Row className="flex-start mb-5" style={{ gap: '1rem' }}>
                     <DashboardOverviewCard
                         title={'Completed Quiz'}
-                        count={dashboardStatus && dashboardStatus?.quiz_completed_count ? dashboardStatus?.quiz_completed_count : 0}
+                        count={
+                            dashboardStatus &&
+                            dashboardStatus?.quiz_completed_count
+                                ? dashboardStatus?.quiz_completed_count
+                                : 0
+                        }
                         image={vector1}
                     />
                     <DashboardOverviewCard
                         title={'Completed Videos'}
-                        count={dashboardStatus && dashboardStatus?.videos_completed_count ? dashboardStatus?.videos_completed_count : 0}
+                        count={
+                            dashboardStatus &&
+                            dashboardStatus?.videos_completed_count
+                                ? dashboardStatus?.videos_completed_count
+                                : 0
+                        }
                         image={vector2}
                     />
                     <DashboardOverviewCard
                         title={'Completed WorkSheets'}
-                        count={dashboardStatus && dashboardStatus?.worksheet_completed_count ? dashboardStatus?.worksheet_completed_count : 0}
+                        count={
+                            dashboardStatus &&
+                            dashboardStatus?.worksheet_completed_count
+                                ? dashboardStatus?.worksheet_completed_count
+                                : 0
+                        }
                         image={vector3}
                     />
                     <DashboardOverviewCard
                         title={'Overall Progress'}
-                        count={Math.round(100 - percentageBWNumbers(dashboardStatus?.all_topics_count,dashboardStatus?.topics_completed_count)) + " %"}
+                        count={
+                            Math.round(
+                                100 -
+                                    percentageBWNumbers(
+                                        dashboardStatus?.all_topics_count,
+                                        dashboardStatus?.topics_completed_count
+                                    )
+                            ) + ' %'
+                        }
                         image={vector}
                     />
                 </Row>
@@ -216,7 +276,10 @@ const Dashboard = () => {
                         <h2>Team Progress</h2>
                         <div className="bg-white team-progress rounded  p-3">
                             <div className="row flex-column p-2">
-                                <label htmlFor="teams" className="mb-3 text-capitalize">
+                                <label
+                                    htmlFor="teams"
+                                    className="mb-3 text-capitalize"
+                                >
                                     <span>{currentUser.data[0].team_name}</span>
                                 </label>
                             </div>
@@ -239,28 +302,34 @@ const Dashboard = () => {
                                         position: 'relative'
                                     }}
                                 >
-                                    <Vimeo
-                                        video={videoId ? videoId : dashboardTutorials &&
-                                            dashboardTutorials.length > 0 && dashboardTutorials[0].video_stream_id}
-                                        volume={true}
-                                        autoplay
-                                        showTitle
-                                    />
+                                    {videoId ? (
+                                        <Vimeo
+                                            video={videoId}
+                                            volume={true}
+                                            autoplay
+                                            showTitle
+                                        />
+                                    ) : (
+                                        <div className='common-flex text-primary' style={{height:"inherit"}}>
+                                            <p className='sub-heading'>Please select the video to play</p>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                             <div className="flex-1 seperator-left px-3">
-                                <ol className='list-unstyled'>
+                                <ol className="list-unstyled">
                                     {dashboardTutorials &&
                                         dashboardTutorials.length > 0 &&
                                         dashboardTutorials.map((item, i) => (
                                             <li
                                                 key={i}
-                                                onClick={() =>{
-                                                    setVideoId(item.video_stream_id);
-                                                }
-                                                }
-                                                // style={{backgroundColor:`${videoId === item.video_stream_id && "lightgray"}`,padding:"2rem"}}
-                                                className="mb-4"
+                                                onClick={() => {
+                                                    setVideoId(
+                                                        item.video_stream_id
+                                                    );
+                                                }}
+                                                style={{backgroundColor:`${videoId === item.video_stream_id && "lightgray"}`,padding:"2rem"}}
+                                                className="mb-4 pointer"
                                             >
                                                 {item.title}
                                             </li>
