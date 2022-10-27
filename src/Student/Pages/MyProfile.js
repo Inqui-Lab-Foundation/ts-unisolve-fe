@@ -180,7 +180,7 @@ const MyProfile = () => {
                                                     </b>
                                                 </CardText>
                                                 <CardText>
-                                                    <span>Grade:</span>{' '}
+                                                    <span>Class:</span>{' '}
                                                     <b>
                                                         {teamMember?.Grade
                                                             ? teamMember?.Grade

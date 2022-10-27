@@ -29,7 +29,7 @@ const UserBasicDetails = () => {
                                         </span>
                                         <h6>Ibrahim</h6>
                                         <span>
-                      Grade 6,
+                      Class 6,
                                             <br />
                       Govt. High School, Amberpet, Hyderabad
                                         </span>

@@ -21,7 +21,7 @@ const TeamMemberCard = ({item}) => {
                         {item.full_name}
                     </h2>
                     <p className="mt-1">
-                        Grade : {item.Grade ? item.Grade : '-'}
+                        Class : {item.Grade ? item.Grade : '-'}
                     </p>
                     <p className="mt-1">
                         DOB : {moment(item.date_of_birth).format('L')}

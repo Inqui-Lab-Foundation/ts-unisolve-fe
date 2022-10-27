@@ -20,7 +20,7 @@ export const SearchDropdown = Template.bind({});
 //The default props of search components are listed here
 //label, options and onClick functions need to be passed.
 SearchDropdown.args = {
-    label: 'Select grade',
+    label: 'Select Class',
     options: [
         { label: 10, value: "Mapusa" },
         { label: 20, value: "Vasco" },

@@ -19,7 +19,7 @@ export const CommonSingleDropdown = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 CommonSingleDropdown.args = {
     primary: true,
-    label: "Select grade",
+    label: "Select Class",
     options: ["Garde 1", "Garde 2", "Garde 3", "Garde 1", "Garde 2", "Garde 3"],
 };
 

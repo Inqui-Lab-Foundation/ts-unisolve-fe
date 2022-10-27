@@ -618,7 +618,7 @@ const TicketsPage = (props) => {
             props.getAdminEvalutorsListAction(history);
             activeMenter(false);
         } else if (e === "2") {
-            props.getAdminMentorsListAction("");
+            props.getAdminMentorsListAction("ACTIVE");
             activeMenter(!menter);
             activeEvaluater(false);
         } else {
