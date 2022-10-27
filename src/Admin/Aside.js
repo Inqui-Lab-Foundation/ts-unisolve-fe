@@ -19,19 +19,25 @@ import {
     SidebarHeader,
     SidebarContent
 } from 'react-pro-sidebar';
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaHouseUser } from 'react-icons/fa';
 
 import 'react-pro-sidebar/dist/css/styles.css';
 import { useLocation } from 'react-router-dom';
 // import Logo from "../../assets/img/Logo.png";
 // import Logo from '../assets/media/img/Logo.svg';
 import Logo from '../assets/media/tn-brands/UPSHIFT_BLACK.png';
+import { useHistory } from 'react-router-dom';
+import {RiLogoutBoxRFill} from 'react-icons/ri';
+import { useTranslation } from 'react-i18next';
 
 // import { getCurrentUser, logout } from "../helpers/Utils";
+import {  logout } from "../helpers/Utils";
 const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
     // const intl = useIntl();
 
     const location = useLocation();
+    const history = useHistory();
+    const { t } = useTranslation();
 
     //create initial menuCollapse state using useState hook
     const [menuCollapse, setMenuCollapse] = useState(false);
@@ -51,6 +57,10 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
     });
     // console.log("-----57", location);
     // console.log("-----50", location.pathname === '/admin/registered-schools' || location.pathname === '/admin/register-new-schools');
+    const handleLogout = (e) => {
+        logout(history, t);
+        e.preventDefault();
+    };
 
     return (
         <ProSidebar
@@ -285,6 +295,27 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     >
                         <NavLink exact={true} to={'/admin/reports'}>
                             Reports
+                        </NavLink>
+                    </MenuItem>
+
+                    <MenuItem
+                        icon={<FaHouseUser />}
+                        className={
+                            location.pathname === '/admin/my-profile' &&
+                            'sidebar-active'
+                        }
+                    >
+                        <NavLink exact={true} to={'/admin/my-profile'}>
+                            My Profile
+                        </NavLink>
+                    </MenuItem>
+
+                    <MenuItem
+                        icon={<RiLogoutBoxRFill  />}
+                        className={location.pathname === '' && 'sidebar-active'}
+                    >
+                        <NavLink exact={true} onClick={handleLogout} to={''}>
+                            Logout
                         </NavLink>
                     </MenuItem>
 
