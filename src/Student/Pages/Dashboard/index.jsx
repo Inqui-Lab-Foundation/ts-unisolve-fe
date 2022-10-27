@@ -225,16 +225,6 @@ const Dashboard = () => {
                 </Row>
                 <Row className="flex-start mb-5" style={{ gap: '1rem' }}>
                     <DashboardOverviewCard
-                        title={'Completed Quiz'}
-                        count={
-                            dashboardStatus &&
-                            dashboardStatus?.quiz_completed_count
-                                ? dashboardStatus?.quiz_completed_count
-                                : 0
-                        }
-                        image={vector1}
-                    />
-                    <DashboardOverviewCard
                         title={'Completed Videos'}
                         count={
                             dashboardStatus &&
@@ -244,6 +234,17 @@ const Dashboard = () => {
                         }
                         image={vector2}
                     />
+                    <DashboardOverviewCard
+                        title={'Completed Quiz'}
+                        count={
+                            dashboardStatus &&
+                            dashboardStatus?.quiz_completed_count
+                                ? dashboardStatus?.quiz_completed_count
+                                : 0
+                        }
+                        image={vector1}
+                    />
+                   
                     <DashboardOverviewCard
                         title={'Completed WorkSheets'}
                         count={
@@ -292,7 +293,7 @@ const Dashboard = () => {
                         </div>
                     </Col>
                     <Col md={12} className="flex-2">
-                        <h2>Learning Statistics</h2>
+                        <h2>Support</h2>
                         <div className="bg-white learning-statistics rounded p-3">
                             <div className="flex-2 px-3">
                                 <div
@@ -311,7 +312,7 @@ const Dashboard = () => {
                                         />
                                     ) : (
                                         <div className='common-flex text-primary' style={{height:"inherit"}}>
-                                            <p className='sub-heading'>Please select the video to play</p>
+                                            <h2>Please select the video to play</h2>
                                         </div>
                                     )}
                                 </div>

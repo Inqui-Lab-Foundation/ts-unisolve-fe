@@ -1397,7 +1397,10 @@ const PlayVideoCourses = (props) => {
                                                     btnClass="primary w-auto"
                                                     size="small"
                                                     type="submit"
-                                                    onClick={handleNextCourse}
+                                                    onClick={()=>{
+                                                        handleNextCourse();
+                                                        dispatch(updateStudentBadges({badge_slugs:[badge]},currentUser.data[0].user_id,language));
+                                                    }}
                                                 />
                                                 {worksheetResponce.response !=
                                                     null &&
