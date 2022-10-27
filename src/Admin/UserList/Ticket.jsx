@@ -50,11 +50,12 @@ const TicketsPage = (props) => {
         props.getEvaluatorsBulkUploadListAction("i");
     }, []);
     useEffect(() => {
-        props.getStudentListAction();
+        props.getStudentListAction("i");
     }, []);
     useEffect(() => {
-        props.getAdminMentorsListAction("");
+        props.getAdminMentorsListAction("ACTIVE");
     }, []);
+
     const [rows, setRows] = React.useState([]);
     const [mentorRows, setMentorRows] = React.useState([]);
     // const [mentorActiveRows, setMentorActiveRows] = React.useState([]);

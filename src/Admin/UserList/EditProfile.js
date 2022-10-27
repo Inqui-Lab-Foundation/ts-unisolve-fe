@@ -18,6 +18,7 @@ const EditProfile = (props) => {
     const currentUser = getCurrentUser('current_user');
     const mentorData =
         (history && history.location && history.location.data) || {};
+    console.log("mentorData", mentorData);              
 
     const headingDetails = {
         title: 'User Edit Details',
