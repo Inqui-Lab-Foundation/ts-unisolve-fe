@@ -82,6 +82,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
     const handleClick = (e, type) => {
         const typeFilter = type && schedules[0].teacher[type];
         if (presurveyStatus !== 'COMPLETED') e.preventDefault();
+
         if(type){
             if((presurveyStatus === 'COMPLETED') && !compareDates(typeFilter)) e.preventDefault();
         }
@@ -158,7 +159,8 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     >
                         <NavLink
                             exact={true}
-                            onClick={(e) => handleClick(e, 'dashboard')}
+                            onClick={(e) => handleClick(e, '')}
+                            // onClick={(e) => handleClick(e, 'dashboard')}
                             to={'/teacher/dashboard'}
                         >
                             {t('teacher.dashboard')}
@@ -199,7 +201,8 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     >
                         <NavLink
                             exact={true}
-                            onClick={(e) => handleClick(e, 'course')}
+                            onClick={(e) => handleClick(e, '')}
+                            // onClick={(e) => handleClick(e, 'course')}
                             to={`/teacher/playvideo/${1}`}
                         >
                             {t('teacher.course')}
@@ -215,7 +218,8 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     >
                         <NavLink
                             exact={true}
-                            onClick={(e) => handleClick(e, 'teams')}
+                            onClick={(e) => handleClick(e, '')}
+                            // onClick={(e) => handleClick(e, 'teams')}
                             to={'/teacher/teamlist'}
                         >
                             {t('teacher.team')}
@@ -268,7 +272,8 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     >
                         <NavLink
                             exact={true}
-                            onClick={(e) => handleClick(e, 'post_survery')}
+                            onClick={(e) => handleClick(e, '')}
+                            // onClick={(e) => handleClick(e, 'post_survery')}
                             to={'/teacher/post-survey'}
                         >
                             {t('teacher.post_survey')}
@@ -283,7 +288,8 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     >
                         <NavLink
                             exact={true}
-                            onClick={(e) => handleClick(e, 'certificate')}
+                            onClick={(e) => handleClick(e, '')}
+                            // onClick={(e) => handleClick(e, 'certificate')}
                             to={'/teacher/my-certificate'}
                         >
                             {t('teacher.certificate')}
