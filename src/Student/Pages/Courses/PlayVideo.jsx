@@ -1037,7 +1037,7 @@ const PlayVideoCourses = (props) => {
                     <Row className="m-0 courser-video-section ">
                         <Col
                             xl={4}
-                            className="course-assement order-2 order-xl-1"
+                            className="course-assement order-2 order-xl-1 mb-5"
                             style={{
                                 display: `${
                                     fullScreen.isFullSCreen ? 'none' : ''
@@ -1045,7 +1045,7 @@ const PlayVideoCourses = (props) => {
                             }}
                         >
                             <div className="assement-info">
-                                <p className="content-title">Course Modules</p>
+                                <p className="content-title">Course Lessons</p>
                                 <div className="view-head"></div>
                                 {/* <div className='courses-type pb-3'>
                   <BsDot />
@@ -1055,7 +1055,7 @@ const PlayVideoCourses = (props) => {
                   <BsDot className='lessonsvg' />
                   <span className='card-type points'>11h 9m total length</span>
                 </div> */}
-                                <div className="assement-item" id="scrollbar">
+                                <div className="assement-item " id="scrollbar">
                                     <Accordion open={open} toggle={toggle}>
                                         {adminCourseDetails &&
                                             adminCourseDetails.length &&
@@ -1256,7 +1256,7 @@ const PlayVideoCourses = (props) => {
 
                         <Col
                             xl={8}
-                            className="course-video order-1 order-xl-2"
+                            className="course-video order-1 order-xl-2 mb-5"
                             style={{
                                 width: `${
                                     fullScreen.isFullSCreen
@@ -1620,7 +1620,7 @@ const PlayVideoCourses = (props) => {
                                 item !== 'VIDEO' &&
                                 condition !== 'Video1' && (
                                     <Fragment>
-                                        <Card className="course-sec-basic p-5">
+                                        <Card className="course-sec-basic p-5 mb-5">
                                             <CardBody>
                                                 <text>
                                                     <div dangerouslySetInnerHTML={{ __html: adminCourse &&

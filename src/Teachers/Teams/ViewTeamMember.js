@@ -130,7 +130,7 @@ const ViewTeamMember = () => {
                 width: '15%'
             },
             {
-                name: t('teacher_teams.grade'),
+                name: "Class",
                 selector: 'Grade',
                 width: '10%'
             },

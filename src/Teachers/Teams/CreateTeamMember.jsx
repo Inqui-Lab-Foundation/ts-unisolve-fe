@@ -228,7 +228,7 @@ const CreateTeamMember = (props) => {
                                                 className="name-req"
                                                 htmlFor="grade"
                                             >
-                                                {t('teacher_teams.grade')}
+                                                Class
                                             </Label>
                                             <div className="dropdown CalendarDropdownComp ">
                                                 {/* <InputBox
