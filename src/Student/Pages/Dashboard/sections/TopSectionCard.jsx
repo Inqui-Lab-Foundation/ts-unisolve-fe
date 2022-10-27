@@ -8,7 +8,12 @@ const TopSectionCard = ({
     teamImages,
     rightImage,
     footerLabels,
-    position
+    name,
+    email,
+    position,
+    type,
+    mentorData,
+    organiZation,
 }) => {
     return (
         <Col className="dashboard--top--card">
@@ -24,32 +29,48 @@ const TopSectionCard = ({
                         <div className="dashboard-card-footer">
                             <p className="text-muted small">{footerText}</p>
                             <div className="d-flex">
-                                {teamImages.map((item, i) => (
-                                    <img
-                                        key={i}
-                                        src={item}
-                                        alt={item + i}
-                                        className="img-fluid"
-                                    />
-                                ))}
+                                {teamImages &&
+                                    teamImages.map((item, i) => (
+                                        <img
+                                            key={i}
+                                            src={item}
+                                            alt={item + i}
+                                            className="img-fluid"
+                                        />
+                                    ))}
                             </div>
                         </div>
                     </div>
                 ) : position === 2 ? (
                     <div className="card-left">
                         <div className="d-flex align-items-center">
-                            <img
+                            {/* <img
                                 src={rightImage}
                                 alt="card"
                                 className="img-fluid w-30"
-                            />
-                            <div className='d-flex flex-column'>
-                                <span>name</span>
-                                <span className='small'>email</span>
-                            </div>
+                            /> */}
+                            {type !== 'teacher' ? (
+                                <div className="d-flex flex-column">
+                                    <p className="sub-heading"> {name}</p>
+                                    <p>UDISE:{mentorData?.organization_code}</p>
+                                    <p className="small">{email}</p>
+                                </div>
+                            ) : (
+                                <div className="d-flex flex-column">
+                                    <p className="sub-heading">{mentorData?.full_name}</p>
+                                    <p className="sub-heading">{organiZation?.organization_name}</p>
+                                    <p>{organiZation?.state}</p>
+                                    <p className="small">{organiZation?.city},{organiZation?.district} </p>
+                                </div>
+                            )}
                         </div>
                         <div className="dashboard-card-footer">
-                            <p className='badges'><span>{footerLabels.heading}</span> : <span>{footerLabels.value}</span></p>
+                            {type !== 'teacher' && (
+                                <p className="badges">
+                                    <span>{footerLabels.heading}</span> :{' '}
+                                    <span>{footerLabels.value}</span>
+                                </p>
+                            )}
                         </div>
                     </div>
                 ) : (
