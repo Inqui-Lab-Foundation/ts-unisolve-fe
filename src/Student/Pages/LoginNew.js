@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Row, Col, Form, FormGroup, Label, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { InputBox } from '../../stories/InputBox/InputBox.jsx';
-// import { Button } from '../../stories/Button.jsx';
+import { Button } from '../../stories/Button.jsx';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -66,11 +66,11 @@ const LoginNew = (props) => {
         placeholder: t('loginPage.Password')
     };
 
-    // const logInBtn = {
-    //     label: t('login.logIn'),
-    //     size: 'large'
-    //     // btnClass: "default",
-    // };
+    const logInBtn = {
+        label: t('login.logIn'),
+        size: 'large'
+        // btnClass: "default",
+    };
 
     // const openNotificationWithIcon = (type, item) => {
     //   notification[type]({
