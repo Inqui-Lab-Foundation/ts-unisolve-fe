@@ -896,10 +896,10 @@ const TeacherPlayVideo = (props) => {
                     <Row className="m-0 courser-video-section ">
                         <Col
                             xl={4}
-                            className="course-assement order-2 order-xl-1"
+                            className="course-assement order-2 order-xl-1 "
                         >
                             <div className="assement-info">
-                                <p className="content-title">Course Modules</p>
+                                <p className="content-title">Course Lessons</p>
                                 <div className="view-head"></div>
                                 <div className="assement-item" id="scrollbar">
                                     {teacherCourseDetails &&

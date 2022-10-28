@@ -8,7 +8,11 @@ import {
     GET_STUDENTS_LANGUAGE,
     GET_STUDENTS_LIST_ERROR,
     GET_STUDENTS_LIST_SUCCESS,
-    GET_STUDENT_BADGES
+    GET_STUDENT_BADGES,
+    GET_STUDENT_DASHBOARD_STATUS,
+    GET_STUDENT_DASHBOARD_CHALLENGES_STATUS,
+    GET_STUDENT_DASHBOARD_TEAMPROGRESS,
+    GET_STUDENT_DASHBOARD_TUTORIALS
 } from '../actions';
 
 
@@ -21,7 +25,11 @@ const INIT_STATE = {
     challengeQuestions:[],
     challengesSubmittedResponse:[],
     studentLanguage:languageOptions[0],
-    badges:""
+    badges:"",
+    dashboardStatus:null,
+    dashboardChallengesStatus:null,
+    dashboardTeamProgressStatus:null,
+    dashboardTutorials:null
 };
 
 export default (state = INIT_STATE, action) => {
@@ -69,6 +77,26 @@ export default (state = INIT_STATE, action) => {
         return {
             ...state,
             badges:action.payload
+        };
+    case GET_STUDENT_DASHBOARD_STATUS:
+        return {
+            ...state,
+            dashboardStatus:action.payload
+        };
+    case GET_STUDENT_DASHBOARD_CHALLENGES_STATUS:
+        return {
+            ...state,
+            dashboardChallengesStatus:action.payload
+        };
+    case GET_STUDENT_DASHBOARD_TEAMPROGRESS:
+        return {
+            ...state,
+            dashboardTeamProgressStatus:action.payload
+        };
+    case GET_STUDENT_DASHBOARD_TUTORIALS:
+        return {
+            ...state,
+            dashboardTutorials:action.payload
         };
     default:
         return newState;

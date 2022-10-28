@@ -30,6 +30,7 @@
         }
         .card-height{
             min-height: 15rem;
+            align-items: center;
         }
     }
     .overview-card{
@@ -52,6 +53,10 @@
                 border-color: #f8f1f1;
                 border-radius: 0.5rem;
             }
+            .self-decor{
+                font-weight: 500;
+                color: blue;
+            }
         }
         .learning-statistics{
             min-height: 35rem !important;
@@ -73,4 +78,7 @@
     .seperator-left{
         border-left: 0.2rem solid aliceblue;
     }
+}
+.pointer{
+    cursor: pointer;
 }

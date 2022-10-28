@@ -98,9 +98,9 @@ const CreateTeamMember = (props) => {
             //   (date) => moment().diff(moment(date), "years") <= 18),
             gender: Yup.string().required('Please select valid gender'),
             grade: Yup.string()
-                .matches('', 'Please enter valid grade')
+                .matches('', 'Please enter valid class')
                 .max(40)
-                .required('Please enter valid grade')
+                .required('Please enter valid class')
         }),
 
         onSubmit: (values) => {
@@ -228,7 +228,7 @@ const CreateTeamMember = (props) => {
                                                 className="name-req"
                                                 htmlFor="grade"
                                             >
-                                                {t('teacher_teams.grade')}
+                                                Class
                                             </Label>
                                             <div className="dropdown CalendarDropdownComp ">
                                                 {/* <InputBox
@@ -251,21 +251,21 @@ const CreateTeamMember = (props) => {
                                                 onChange={formik.handleChange}
                                             >
                                                  <option value="">
-                                                Select Grade..
+                                                Select Class..
                                                 </option>
-                                                <option value="6">Grade 6
+                                                <option value="6">Class 6
                                                 </option>
-                                                <option value="7">Grade 7
+                                                <option value="7">Class 7
                                                 </option>
-                                                <option value="8">Grade 8
+                                                <option value="8">Class 8
                                                 </option>
-                                                <option value="9">Grade 9
+                                                <option value="9">Class 9
                                                 </option>
-                                                <option value="10">Grade 10
+                                                <option value="10">Class 10
                                                 </option>
-                                                <option value="11">Grade 11
+                                                <option value="11">Class 11
                                                 </option>
-                                                <option value="12">Grade 12
+                                                <option value="12">Class 12
                                                 </option>
                                                
                                             </select>

@@ -50,11 +50,12 @@ const TicketsPage = (props) => {
         props.getEvaluatorsBulkUploadListAction("i");
     }, []);
     useEffect(() => {
-        props.getStudentListAction();
+        props.getStudentListAction("i");
     }, []);
     useEffect(() => {
-        props.getAdminMentorsListAction("");
+        props.getAdminMentorsListAction("ACTIVE");
     }, []);
+
     const [rows, setRows] = React.useState([]);
     const [mentorRows, setMentorRows] = React.useState([]);
     // const [mentorActiveRows, setMentorActiveRows] = React.useState([]);
@@ -617,7 +618,7 @@ const TicketsPage = (props) => {
             props.getAdminEvalutorsListAction(history);
             activeMenter(false);
         } else if (e === "2") {
-            props.getAdminMentorsListAction("");
+            props.getAdminMentorsListAction("ACTIVE");
             activeMenter(!menter);
             activeEvaluater(false);
         } else {
@@ -637,6 +638,13 @@ const TicketsPage = (props) => {
             pathname: `/admin/userprofile`,
             data: item,
         });
+    };
+    const handleEdit = (item) => {
+        props.history.push({
+            pathname: `/admin/edit-user-profile`,
+            data: item,
+        });
+        localStorage.setItem('mentor', JSON.stringify(item));
     };
     console.log(tab);
 
@@ -808,9 +816,26 @@ const TicketsPage = (props) => {
                 width:"8%"
             },
             {
+                name: "UDISE  Code",
+                selector: "organization_code",
+                width:"10%"
+            },
+            
+            {
                 name: "Teacher Name",
                 selector: "full_name",
                 width:"12%"
+            },
+            
+            {
+                name: "Email",
+                selector: "email",
+                width:"20%"
+            },
+            {
+                name: "Phone",
+                selector: "mobile",
+                width:"20%"
             },
             {
                 name: "Status",
@@ -826,40 +851,36 @@ const TicketsPage = (props) => {
                 ],
                 width:"8%"
             },
-            {
-                name: "UDISE  Code",
-                selector: "organization_code",
-                width:"10%"
-            },
-            {
-                name: "Qualification",
-                selector: "qualification",
-                width:"11%"
-            },
-            {
-                name: "City",
-                selector: "city",
-                width:"10%"
-            },
-            {
-                name: "District",
-                selector: "district",
-                width:"10%"
-            },
-            {
-                name: "State",
-                selector: "state",
-                width:"8%"
-            },
-            {
-                name: "Country",
-                selector: "country",
-                width:"8%"
-            },
+            
+            // {
+            //     name: "Qualification",
+            //     selector: "qualification",
+            //     width:"11%"
+            // },
+            // {
+            //     name: "City",
+            //     selector: "city",
+            //     width:"10%"
+            // },
+            // {
+            //     name: "District",
+            //     selector: "district",
+            //     width:"10%"
+            // },
+            // {
+            //     name: "State",
+            //     selector: "state",
+            //     width:"8%"
+            // },
+            // {
+            //     name: "Country",
+            //     selector: "country",
+            //     width:"8%"
+            // },
             {
                 name: "ACTIONS",
                 selector: "action",
-                width:"15%",
+                width:"20%",
                 cell: (record) => [
                     <Link
                         exact='true'
@@ -868,6 +889,14 @@ const TicketsPage = (props) => {
                         style={{marginRight:"10px"}}
                     >
                         <div className="btn btn-primary btn-lg">View</div>
+                    </Link>,
+                    <Link
+                        exact='true'
+                        key={record.id}
+                        onClick={() => handleEdit(record)}
+                        style={{marginRight:"10px"}}
+                    >
+                        <div className="btn btn-warning btn-lg">Edit</div>
                     </Link>,
                     <Link 
                         exact='true' 

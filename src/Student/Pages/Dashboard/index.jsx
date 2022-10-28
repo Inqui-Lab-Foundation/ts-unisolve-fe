@@ -1,8 +1,8 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Layout from '../../Layout.jsx';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { getNormalHeaders } from '../../../helpers/Utils.js';
+import { getCurrentUser, getNormalHeaders } from '../../../helpers/Utils.js';
 import { KEY, URL } from '../../../constants/defaultValues.js';
 import { getLanguage } from '../../../constants/languageOptions.js';
 import { useSelector } from 'react-redux';
@@ -20,24 +20,68 @@ import DashboardOverviewCard from './DashboardOverviewCard.jsx';
 import { Table } from 'antd';
 import { Progress } from 'reactstrap';
 import Vimeo from '@u-wave/react-vimeo';
+import { useDispatch } from 'react-redux';
+import {
+    getStudentByIdData,
+    getStudentDashboardChallengesStatus,
+    getStudentDashboardStatus,
+    getStudentDashboardTeamProgressStatus,
+    getStudentDashboardTutorialVideos
+} from '../../../redux/studentRegistration/actions.js';
 
 const Dashboard = () => {
     const language = useSelector(
         (state) => state?.studentRegistration?.studentLanguage
     );
+    const currentUser = getCurrentUser('current_user');
+    const dispatch = useDispatch();
+    const {
+        dashboardStatus,
+        dashboardChallengesStatus,
+        dashboardTeamProgressStatus,
+        dashboardTutorials,
+        teamMember
+    } = useSelector((state) => state?.studentRegistration);
+    const [videoId, setVideoId] = useState(null);
     const history = useHistory();
+    useEffect(() => {
+        dispatch(
+            getStudentDashboardStatus(currentUser.data[0].user_id, language)
+        );
+        dispatch(
+            getStudentDashboardChallengesStatus(
+                currentUser.data[0].user_id,
+                language
+            )
+        );
+        dispatch(
+            getStudentDashboardTeamProgressStatus(
+                currentUser.data[0].user_id,
+                language
+            )
+        );
+    }, [dispatch, currentUser.data[0].user_id, language]);
+
+    useEffect(() => {
+        dispatch(getStudentDashboardTutorialVideos(language));
+    }, [dispatch, language]);
+
+    useEffect(() => {
+        dispatch(getStudentByIdData(currentUser.data[0].student_id));
+    }, [dispatch, currentUser.data[0].student_id]);
+
     const checkPresurvey = () => {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         axios
             .get(
-                `${URL.getPreSurveyList}?role=STUDENT?${getLanguage(language)}`,
+                `${URL.getStudentPreSurveyList}?role=STUDENT&${getLanguage(language)}`,
                 axiosConfig
             )
             .then((preSurveyRes) => {
                 if (preSurveyRes?.status == 200) {
                     console.log(preSurveyRes);
                     if (
-                        preSurveyRes.data.data[0].dataValues[0].progress !==
+                        preSurveyRes.data.data[0].progress !==
                         'COMPLETED'
                     )
                         history.push('/student/pre-survey');
@@ -52,9 +96,13 @@ const Dashboard = () => {
     }, []);
     const cardData = {
         idea: {
-            heading: 'Idea Registeration',
-            deadline: '20 Nov 2021, 12:00 PM',
-            subHeading: 'Idea Registration Submission',
+            heading: 'Idea Registration',
+            deadline: `${
+                dashboardChallengesStatus
+                    ? dashboardChallengesStatus?.end_date
+                    : '-'
+            }`,
+            subHeading: 'Idea  Submission',
             footerText: 'With Team Members',
             teamImages: [AvatarImg, AvatarImg, AvatarImg],
             rightImage: topCard1,
@@ -66,61 +114,62 @@ const Dashboard = () => {
             position: 2,
             footerLabels: {
                 heading: 'Badges',
-                value: 3
+                value:
+                    dashboardStatus && dashboardStatus?.badges_earned_count
+                        ? dashboardStatus?.badges_earned_count
+                        : 0
+            }
+        },
+        teacher: {
+            heading: 'Institute Details',
+            rightImage: topCard2,
+            position: 2,
+            footerLabels: {
+                heading: 'Team Count',
+                value: 5
             }
         }
     };
 
-    const dataSource = [
-        {
-            key: '1',
-            name: 'Mike',
-            age: 32,
-            address: '10 Downing Street'
-        },
-        {
-            key: '2',
-            name: 'John',
-            age: 42,
-            address: '10 Downing Street'
-        },
-        {
-            key: '3',
-            name: 'Doe',
-            age: 42,
-            address: '10 Downing Street'
-        },
-        {
-            key: '4',
-            name: 'Ram',
-            age: 42,
-            address: '10 Downing Street'
-        }
-    ];
+    const percentageBWNumbers = (a, b) => {
+        return (((a - b) / a) * 100).toFixed(2);
+    };
 
     const columns = [
         {
             title: 'Name',
-            dataIndex: 'name',
-            key: 'name'
-        },
-        {
-            title: 'Start Date',
-            dataIndex: 'age',
-            render: () => <div>10-10-2022</div>
+            dataIndex: 'full_name',
+            render: (_, record) =>
+                record.full_name === currentUser?.data[0]?.full_name ? (
+                    <div className="self-decor">{record.full_name}*</div>
+                ) : (
+                    record.full_name
+                )
         },
         {
             title: 'Progress',
             dataIndex: 'address',
-            // render: (_, record) => (
-            render: () => (
+            render: (_, record) => (
                 <Progress
                     key={'25'}
                     className="progress-height"
                     animated
-                    value="25"
+                    value={
+                        100 -
+                        percentageBWNumbers(
+                            record.all_topics_count,
+                            record.topics_completed_count
+                        )
+                    }
                 >
-                    25%
+                    {Math.round(
+                        100 -
+                            percentageBWNumbers(
+                                record.all_topics_count,
+                                record.topics_completed_count
+                            )
+                    )}{' '}
+                    %
                 </Progress>
             )
         }
@@ -136,7 +185,7 @@ const Dashboard = () => {
                         deadline={cardData.idea.deadline}
                         subHeading={cardData.idea.subHeading}
                         footerText={cardData.idea.footerText}
-                        teamImages={cardData.idea.teamImages}
+                        // teamImages={cardData.idea.teamImages}
                         rightImage={cardData.idea.rightImage}
                         position={cardData.idea.position}
                     />
@@ -145,38 +194,79 @@ const Dashboard = () => {
                         footerLabels={cardData.profile.footerLabels}
                         rightImage={cardData.profile.rightImage}
                         position={cardData.profile.position}
+                        name={
+                            currentUser && currentUser?.data[0]?.full_name
+                                ? currentUser?.data[0]?.full_name
+                                : '-'
+                        }
+                        email={
+                            currentUser && currentUser?.data[0]?.team_name
+                                ? currentUser?.data[0]?.team_name
+                                : '-'
+                        }
+                        mentorData={
+                            teamMember && teamMember?.team?.mentor
+                                ? teamMember?.team?.mentor
+                                : null
+                        }
                     />
                     <TopSectionCard
-                        heading={cardData.idea.heading}
-                        deadline={cardData.idea.deadline}
-                        subHeading={cardData.idea.subHeading}
-                        footerText={cardData.idea.footerText}
-                        teamImages={cardData.idea.teamImages}
-                        rightImage={cardData.idea.rightImage}
-                        position={cardData.idea.position}
+                        heading={cardData.teacher.heading}
+                        footerLabels={cardData.teacher.footerLabels}
+                        rightImage={cardData.teacher.rightImage}
+                        position={cardData.teacher.position}
+                        type="teacher"
+                        organiZation={
+                            teamMember && teamMember?.team?.mentor
+                                ? teamMember?.team?.mentor?.organization
+                                : null
+                        }
                     />
                 </Row>
                 <Row className="flex-start mb-5" style={{ gap: '1rem' }}>
-                    <h2>Dashboard Overview</h2>
                     <DashboardOverviewCard
-                        title={'Courses in progress'}
-                        count={3}
-                        image={vector}
-                    />
-                    <DashboardOverviewCard
-                        title={'Courses completed'}
-                        count={3}
-                        image={vector1}
-                    />
-                    <DashboardOverviewCard
-                        title={'Watching time'}
-                        count={3}
+                        title={'Completed Videos'}
+                        count={
+                            dashboardStatus &&
+                            dashboardStatus?.videos_completed_count
+                                ? dashboardStatus?.videos_completed_count
+                                : 0
+                        }
                         image={vector2}
                     />
                     <DashboardOverviewCard
-                        title={'Certificate achievement'}
-                        count={3}
+                        title={'Completed Quiz'}
+                        count={
+                            dashboardStatus &&
+                            dashboardStatus?.quiz_completed_count
+                                ? dashboardStatus?.quiz_completed_count
+                                : 0
+                        }
+                        image={vector1}
+                    />
+                   
+                    <DashboardOverviewCard
+                        title={'Completed WorkSheets'}
+                        count={
+                            dashboardStatus &&
+                            dashboardStatus?.worksheet_completed_count
+                                ? dashboardStatus?.worksheet_completed_count
+                                : 0
+                        }
                         image={vector3}
+                    />
+                    <DashboardOverviewCard
+                        title={'Overall Progress'}
+                        count={
+                            Math.round(
+                                100 -
+                                    percentageBWNumbers(
+                                        dashboardStatus?.all_topics_count,
+                                        dashboardStatus?.topics_completed_count
+                                    )
+                            ) + ' %'
+                        }
+                        image={vector}
                     />
                 </Row>
                 <Row
@@ -187,43 +277,64 @@ const Dashboard = () => {
                         <h2>Team Progress</h2>
                         <div className="bg-white team-progress rounded  p-3">
                             <div className="row flex-column p-2">
-                                <label htmlFor="teams" className="mb-3">
-                                    Team Name: <span>One</span>
+                                <label
+                                    htmlFor="teams"
+                                    className="mb-3 text-capitalize"
+                                >
+                                    <span>{currentUser.data[0].team_name}</span>
                                 </label>
                             </div>
                             <Table
                                 bordered
                                 pagination={false}
-                                dataSource={dataSource}
+                                dataSource={dashboardTeamProgressStatus}
                                 columns={columns}
                             />
                         </div>
                     </Col>
                     <Col md={12} className="flex-2">
-                        <h2>Learning Statistics</h2>
+                        <h2>Support</h2>
                         <div className="bg-white learning-statistics rounded p-3">
                             <div className="flex-2 px-3">
-                                <label>Video Title</label>
-                                <div style={{width:"100%",height:"100%",position:"relative"}}>
-                                    <Vimeo
-                                        video={400247816}
-                                        // volume={true}
-                                        // paused={paused}
-                                        // onPause={handlePlayerPause}
-                                        // onPlay={handlePlayerPlay}
-                                        onSeeked={true}
-                                        // onTimeUpdate={handleTimeUpdate}
-                                        // onEnd={() => handleVimeoOnEnd(id)}
-                                        showTitle
-                                    />
+                                <div
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        position: 'relative'
+                                    }}
+                                >
+                                    {videoId ? (
+                                        <Vimeo
+                                            video={videoId}
+                                            volume={true}
+                                            autoplay
+                                            showTitle
+                                        />
+                                    ) : (
+                                        <div className='common-flex text-primary' style={{height:"inherit"}}>
+                                            <h2>Please select the video to play</h2>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                             <div className="flex-1 seperator-left px-3">
-                                <label>Choose Video to Play</label>
-                                <ol>
-                                    <li className="mb-4">one</li>
-                                    <li className="mb-4">two</li>
-                                    <li className="mb-4">three</li>
+                                <ol className="list-unstyled">
+                                    {dashboardTutorials &&
+                                        dashboardTutorials.length > 0 &&
+                                        dashboardTutorials.map((item, i) => (
+                                            <li
+                                                key={i}
+                                                onClick={() => {
+                                                    setVideoId(
+                                                        item.video_stream_id
+                                                    );
+                                                }}
+                                                style={{backgroundColor:`${videoId === item.video_stream_id && "lightgray"}`,padding:"2rem"}}
+                                                className="mb-4 pointer"
+                                            >
+                                                {item.title}
+                                            </li>
+                                        ))}
                                 </ol>
                             </div>
                         </div>

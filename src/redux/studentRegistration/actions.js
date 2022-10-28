@@ -9,10 +9,14 @@ import {
     GET_STUDENTS_LANGUAGE,
     GET_CHALLENGE_QUESTIONS,
     GET_CHALLENGE_SUBMITTED_DATA,
-    GET_STUDENT_BADGES
+    GET_STUDENT_BADGES,
+    GET_STUDENT_DASHBOARD_STATUS,
+    GET_STUDENT_DASHBOARD_CHALLENGES_STATUS,
+    GET_STUDENT_DASHBOARD_TEAMPROGRESS,
+    GET_STUDENT_DASHBOARD_TUTORIALS
 } from '../actions';
 import { URL, KEY } from '../../constants/defaultValues';
-import { getNormalHeaders } from '../../helpers/Utils';
+import { getNormalHeaders, openNotificationWithIcon } from '../../helpers/Utils';
 import { getLanguage } from '../../constants/languageOptions';
 
 export const getStudentListSuccess =
@@ -229,5 +233,142 @@ export const getStudentBadges = (id,language) => async (dispatch) => {
         }
     } catch (error) {
         dispatch(getStudentListError({}));
+    }
+};
+
+export const updateStudentBadges = (data,id,language) => async (dispatch) => {
+    try {
+        const axiosConfig = getNormalHeaders(KEY.User_API_Key);
+        const result = await axios
+            .post(`${URL.getStudentBadges}${id}/badges?${getLanguage(language)}`,data, axiosConfig)
+            .then(() => openNotificationWithIcon("success","New Badge Added!"))
+            .catch((err) => {
+                return err.response;
+            });
+        if (result && result.status === 202) {
+            const data =
+                result.data &&
+                result?.data?.data;
+            dispatch(getStudentBadgesSuccess(data));
+        } else {
+            dispatch(
+                getStudentListError(result.statusText)
+            );
+        }
+    } catch (error) {
+        dispatch(getStudentListError({}));
+    }
+};
+
+export const getStudentDashboardStatusSuccess =
+    (data) => async (dispatch) => {
+        dispatch({
+            type: GET_STUDENT_DASHBOARD_STATUS,
+            payload: data
+        });
+    };
+export const getStudentDashboardStatus = (id,language) => async (dispatch) => {
+    try {
+        const axiosConfig = getNormalHeaders(KEY.User_API_Key);
+        const result = await axios
+            .get(`${URL.getStudentDashboardStatusCommonById}${id}?${getLanguage(language)}`, axiosConfig)
+            .then((data) => data)
+            .catch((err) => {
+                return err.response;
+            });
+        if (result && result.status === 200) {
+            const data =
+                result.data &&
+                result?.data?.data && result?.data?.data[0] ;
+            dispatch(getStudentDashboardStatusSuccess(data));
+        } else {
+            dispatch(getStudentDashboardStatusSuccess(null));
+        }
+    } catch (error) {
+        dispatch(getStudentDashboardStatusSuccess(null));
+    }
+};
+export const getStudentDashboardChallengesStatusSuccess =
+    (data) => async (dispatch) => {
+        dispatch({
+            type: GET_STUDENT_DASHBOARD_CHALLENGES_STATUS,
+            payload: data
+        });
+    };
+export const getStudentDashboardChallengesStatus = (id,language) => async (dispatch) => {
+    try {
+        const axiosConfig = getNormalHeaders(KEY.User_API_Key);
+        const result = await axios
+            .get(`${URL.getStudentDashboardStatusCommonById}${id}/challenges?${getLanguage(language)}`, axiosConfig)
+            .then((data) => data)
+            .catch((err) => {
+                return err.response;
+            });
+        if (result && result.status === 200) {
+            const data =
+                result.data &&
+                result?.data?.data && result?.data?.data[0] ;
+            dispatch(getStudentDashboardChallengesStatusSuccess(data));
+        } else {
+            dispatch(getStudentDashboardChallengesStatusSuccess(null));
+        }
+    } catch (error) {
+        dispatch(getStudentDashboardChallengesStatusSuccess(null));
+    }
+};
+export const getStudentDashboardTeamProgressStatusSuccess =
+    (data) => async (dispatch) => {
+        dispatch({
+            type: GET_STUDENT_DASHBOARD_TEAMPROGRESS,
+            payload: data
+        });
+    };
+export const getStudentDashboardTeamProgressStatus = (id,language) => async (dispatch) => {
+    try {
+        const axiosConfig = getNormalHeaders(KEY.User_API_Key);
+        const result = await axios
+            .get(`${URL.getStudentDashboardStatusCommonById}${id}/teamProgress?${getLanguage(language)}`, axiosConfig)
+            .then((data) => data)
+            .catch((err) => {
+                return err.response;
+            });
+        if (result && result.status === 200) {
+            const data =
+                result.data &&
+                result?.data?.data && result?.data?.data ;
+            dispatch(getStudentDashboardTeamProgressStatusSuccess(data));
+        } else {
+            dispatch(getStudentDashboardTeamProgressStatusSuccess(null));
+        }
+    } catch (error) {
+        dispatch(getStudentDashboardTeamProgressStatusSuccess(null));
+    }
+};
+export const getStudentDashboardTutorialVideosSuccess =
+    (data) => async (dispatch) => {
+        dispatch({
+            type: GET_STUDENT_DASHBOARD_TUTORIALS,
+            payload: data
+        });
+    };
+export const getStudentDashboardTutorialVideos = (language) => async (dispatch) => {
+    try {
+        const axiosConfig = getNormalHeaders(KEY.User_API_Key);
+        const result = await axios
+            .get(`${process.env.REACT_APP_API_BASE_URL}/tutorialVideos?${getLanguage(language)}`, axiosConfig)
+            .then((data) => data)
+            .catch((err) => {
+                return err.response;
+            });
+        if (result && result.status === 200) {
+            const data =
+                result.data &&
+                result?.data?.data && result?.data?.data[0].dataValues ;
+            dispatch(getStudentDashboardTutorialVideosSuccess(data));
+        } else {
+            dispatch(getStudentDashboardTutorialVideosSuccess(null));
+        }
+    } catch (error) {
+        dispatch(getStudentDashboardTutorialVideosSuccess(null));
     }
 };

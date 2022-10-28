@@ -130,7 +130,7 @@ const ViewTeamMember = () => {
                 width: '15%'
             },
             {
-                name: t('teacher_teams.grade'),
+                name: "Class",
                 selector: 'Grade',
                 width: '10%'
             },
@@ -163,9 +163,9 @@ const ViewTeamMember = () => {
                                 style={{ marginRight: '10px' }}
                             />
                         </a>,
-                        <a onClick={() => handleReseatTeamMember(params)}>
-                            <i key={params.team_id} className="fa fa-key" />
-                        </a>
+                        // <a onClick={() => handleReseatTeamMember(params)}>
+                        //     <i key={params.team_id} className="fa fa-key" />
+                        // </a>
                     ];
                 },
                 width: '15%',
@@ -188,37 +188,37 @@ const ViewTeamMember = () => {
         });
     };
 
-    const handleReseatTeamMember = (item) => {
-        const body = JSON.stringify({
-            user_id: JSON.stringify(item.user_id)
-        });
-        console.log('item', body);
+    // const handleReseatTeamMember = (item) => {
+    //     const body = JSON.stringify({
+    //         user_id: JSON.stringify(item.user_id)
+    //     });
+    //     console.log('item', body);
 
-        var config = {
-            method: 'put',
-            url: process.env.REACT_APP_API_BASE_URL + '/students/resetPassword',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${currentUser.data[0].token}`
-            },
-            data: body
-        };
-        axios(config)
-            .then(function (response) {
-                if (response.status === 202) {
-                    setCount(count + 1);
-                    openNotificationWithIcon(
-                        'success',
-                        'Password Successfully Updated'
-                    );
-                } else {
-                    openNotificationWithIcon('error', 'Opps! Something Wrong');
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
+    //     var config = {
+    //         method: 'put',
+    //         url: process.env.REACT_APP_API_BASE_URL + '/students/resetPassword',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             Authorization: `Bearer ${currentUser.data[0].token}`
+    //         },
+    //         data: body
+    //     };
+    //     axios(config)
+    //         .then(function (response) {
+    //             if (response.status === 202) {
+    //                 setCount(count + 1);
+    //                 openNotificationWithIcon(
+    //                     'success',
+    //                     'Password Successfully Updated'
+    //                 );
+    //             } else {
+    //                 openNotificationWithIcon('error', 'Opps! Something Wrong');
+    //             }
+    //         })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //         });
+    // };
 
     const handleDeleteTeamMember = (item) => {
         const swalWithBootstrapButtons = Swal.mixin({
