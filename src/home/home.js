@@ -1234,7 +1234,7 @@ const Home = () => {
                 <Row className="w-100 mt-5 footer-sub">
                     <Col md={12} className="text-center">
                         <p className="my-0 py-3 text-white">
-                            © UNISOLVE {new Date().getFullYear()}.{' '}
+                            © UNISOLVE, UNICEF {new Date().getFullYear()}.{' '}
                             {t('home_nav_links.rights')}{' '}
                         </p>
                     </Col>

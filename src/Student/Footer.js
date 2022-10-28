@@ -7,17 +7,16 @@ const Footer = () => {
         <div className="Footer" style={{ backgroundColor: '#fff' }}>
             <Container>
                 <Row className="py-5">
-                    <Col md={6}>
+                    <Col md={12}>
                         <p className="p-0 my-auto">
-                            &copy; Unisolve {new Date().getFullYear()}
+                            &copy; UNISOLVE, UNICEF {new Date().getFullYear()} <span className="my-auto">&reg;</span> All Rights Reserved.
                         </p>
                     </Col>
-                    <Col md={6} className="text-right my-auto">
+                    {/* <Col md={6} className="text-right my-auto">
                         <p className="p-0 my-auto">
-                            <span className="my-auto">&reg;</span> All rights
-                            reserved
+                            <span className="my-auto">&reg;</span> All Rights Reserved
                         </p>
-                    </Col>
+                    </Col> */}
                 </Row>
             </Container>
         </div>
