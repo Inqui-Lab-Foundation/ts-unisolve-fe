@@ -142,16 +142,17 @@ const PreSurvey = () => {
                                             </figure>
                                         </Col>
                                         <Col md={8}>
-                                            <h2>{t('get_started.heading')}</h2>
+                                            <h2>{t('student_get_started.heading')}</h2>
                                             <div
                                                 dangerouslySetInnerHTML={{
                                                     __html: t(
-                                                        'get_started.desc'
+                                                        'student_get_started.desc'
                                                     )
                                                 }}
                                             ></div>
+                                            
                                             <Button
-                                                label={t('get_started.btn')}
+                                                label={t('student_get_started.btn')}
                                                 btnClass="primary my-3"
                                                 size="small"
                                                 onClick={handleStart}
