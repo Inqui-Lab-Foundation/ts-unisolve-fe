@@ -86,6 +86,8 @@ import AdminNews from './Admin/News/Ticket';
 import AdminAddNews from './Admin/News/AddNews';
 import AdminAddNewsCategory from './Admin/News/AddNewsCategory';
 import RoadMap from './Admin/RoadMap/RoadMap';
+import Reports from './Admin/Reports';
+import IndividualReport from './Admin/Reports/IndividualReport';
 import StudentSignup from './Admin/StudentSignup';
 import Home from './home/home';
 import Terms from './home/termsandconditions';
@@ -509,12 +511,6 @@ const Routers = () => {
 
                     <ProtectedRoute
                         exact={true}
-                        path="/admin/reports"
-                        component={AdminBadgesComp}
-                    />
-
-                    <ProtectedRoute
-                        exact={true}
                         path="/admin/pre-survey"
                         component={Preservey}
                     />
@@ -522,6 +518,16 @@ const Routers = () => {
                         exact={true}
                         path="/admin/road-map"
                         component={RoadMap}
+                    />
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/reports"
+                        component={Reports}
+                    />
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/selected-report"
+                        component={IndividualReport}
                     />
 
                     <ProtectedRoute
