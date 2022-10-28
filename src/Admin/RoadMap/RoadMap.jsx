@@ -576,7 +576,7 @@ const RoadMap = (props) => {
                             <Row>
                                 <div className="col-md-2 my-auto">
                                     <span className="mb-2" htmlFor="text">
-                                        Post Survery
+                                        Post Survey
                                     </span>
                                 </div>
                                 <div className="col-md-2">
@@ -758,7 +758,7 @@ const RoadMap = (props) => {
                             <Row>
                                 <div className="col-md-2 my-auto">
                                     <span className="mb-2" htmlFor="text">
-                                        Post Survery
+                                        Post Survey
                                     </span>
                                 </div>
                                 <div className="col-md-2">

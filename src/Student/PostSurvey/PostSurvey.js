@@ -268,7 +268,7 @@ const PostSurvey = () => {
                                         </div>
                                         <div>
                                             <h2>
-                                                Post Survery has been
+                                                Post Survey has been
                                                 submitted
                                             </h2>
                                         </div>
