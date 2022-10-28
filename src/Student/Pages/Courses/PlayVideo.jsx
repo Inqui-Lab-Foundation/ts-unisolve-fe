@@ -1380,7 +1380,7 @@ const PlayVideoCourses = (props) => {
                                                         href={
                                                             process.env
                                                                 .REACT_APP_API_IMAGE_BASE_URL +
-                                                            '/images/default_worksheet.pdf'
+                                                            'assets/defaults/default_worksheet.pdf'
                                                         }
                                                         target="_blank"
                                                         rel="noreferrer"
@@ -1388,7 +1388,7 @@ const PlayVideoCourses = (props) => {
                                                     >
                                                         <Button
                                                             button="submit"
-                                                            label="Download Sample Worksheet"
+                                                            label="Download Worksheet"
                                                             btnClass="primary mt-4"
                                                             size="small"
                                                             style={{
