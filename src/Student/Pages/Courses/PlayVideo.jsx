@@ -74,6 +74,7 @@ const PlayVideoCourses = (props) => {
     const [topicObj, setTopicObj] = useState({});
     const [id, setResponce] = useState([]);
     const [firstObj, setFirstObj] = useState([]);
+    const [continueObj, setContinueObj] = useState([]);
     const [moduleResponce, setUpdateModuleResponce] = useState([]);
     const [worksheetResponce, SetWorksheetResponce] = useState([]);
     const [courseData, setCourseData] = useState(null);
@@ -114,26 +115,26 @@ const PlayVideoCourses = (props) => {
     const toggle = (id) => {
         if (id == 1) {
             setOpen('1');
-            setBadge("the_inspirer");
+            setBadge('the_inspirer');
         } else if (open === id) {
             setOpen();
-        } else if (open === '0') {
-            setOpen('1');
+            // } else if (open === '0') {
+            //     setOpen('1');
         } else if (id === 2) {
             setOpen('2');
-            setBadge("the_team_player");
+            setBadge('the_team_player');
         } else if (id === 3) {
             setOpen('3');
-            setBadge("the_finder");
+            setBadge('the_finder');
         } else if (id === 4) {
             setOpen(4);
-            setBadge("the_explorer");
+            setBadge('the_explorer');
         } else if (id === 5) {
             setOpen('5');
-            setBadge("the_ideator");
+            setBadge('the_ideator');
         } else if (id === 6) {
             setOpen('6');
-            setBadge("the_solver");
+            setBadge('the_solver');
         } else if (id === 7) {
             setOpen('7');
         } else {
@@ -147,6 +148,8 @@ const PlayVideoCourses = (props) => {
     useEffect(() => {
         var topicArrays = [];
         var firstObjectArray = [];
+        var continueArrays = [];
+        var continueObjectArrays = [];
         setAdminCourse(props.adminCoursesDetails[0]);
         // setAdminCourseDetails(props.adminCoursesDetails[0].description);
         setAdminCourseDetails(
@@ -161,9 +164,16 @@ const PlayVideoCourses = (props) => {
             });
         setTopicArray(topicArrays);
         if (topicArrays.length > 0) {
+            topicArrays.map((item, i) => {
+                if (item.progress == 'INCOMPLETE') {
+                    continueArrays.push(item);
+                }
+            });
             firstObjectArray.push(topicArrays[0]);
+            continueObjectArrays.push(continueArrays[0]);
+            setContinueObj(continueObjectArrays);
+            setFirstObj(firstObjectArray);
         }
-        setFirstObj(firstObjectArray);
     }, [props.adminCoursesDetails]);
     async function fetchData(videoId) {
         setVideoId(videoId);
@@ -955,7 +965,13 @@ const PlayVideoCourses = (props) => {
                     setFileName();
                     setUrl();
                     setSeletedFiles();
-                    dispatch(updateStudentBadges({badge_slugs:[badge]},currentUser.data[0].user_id,language));
+                    dispatch(
+                        updateStudentBadges(
+                            { badge_slugs: [badge] },
+                            currentUser.data[0].user_id,
+                            language
+                        )
+                    );
                 }
             })
             .catch(function (error) {
@@ -981,7 +997,19 @@ const PlayVideoCourses = (props) => {
             firstObj[0].course_topic_id,
             firstObj[0].topic_type
         );
-        toggle('1');
+        toggle(firstObj[0].course_module_id);
+    };
+
+    const startContinueCourse = (e) => {
+        setCourseData(null);
+        modulesListUpdateApi(continueObj[0].course_topic_id);
+        setTopic(continueObj[0]);
+        handleSelect(
+            continueObj[0].topic_type_id,
+            continueObj[0].course_topic_id,
+            continueObj[0].topic_type
+        );
+        toggle(continueObj[0].course_module_id);
     };
 
     const startCourseModule = (e) => {
@@ -1352,7 +1380,7 @@ const PlayVideoCourses = (props) => {
                                                         href={
                                                             process.env
                                                                 .REACT_APP_API_IMAGE_BASE_URL +
-                                                            '/images/default_worksheet.pdf'
+                                                            'assets/defaults/default_worksheet.pdf'
                                                         }
                                                         target="_blank"
                                                         rel="noreferrer"
@@ -1360,7 +1388,7 @@ const PlayVideoCourses = (props) => {
                                                     >
                                                         <Button
                                                             button="submit"
-                                                            label="Download Sample Worksheet"
+                                                            label="Download Worksheet"
                                                             btnClass="primary mt-4"
                                                             size="small"
                                                             style={{
@@ -1397,9 +1425,20 @@ const PlayVideoCourses = (props) => {
                                                     btnClass="primary w-auto"
                                                     size="small"
                                                     type="submit"
-                                                    onClick={()=>{
+                                                    onClick={() => {
                                                         handleNextCourse();
-                                                        dispatch(updateStudentBadges({badge_slugs:[badge]},currentUser.data[0].user_id,language));
+                                                        dispatch(
+                                                            updateStudentBadges(
+                                                                {
+                                                                    badge_slugs:
+                                                                        [badge]
+                                                                },
+                                                                currentUser
+                                                                    .data[0]
+                                                                    .user_id,
+                                                                language
+                                                            )
+                                                        );
                                                     }}
                                                 />
                                                 {worksheetResponce.response !=
@@ -1547,8 +1586,13 @@ const PlayVideoCourses = (props) => {
                                         id="desc"
                                     >
                                         <CardBody>
-                                            <div dangerouslySetInnerHTML={ { __html: courseData &&
-                                                courseData.description } }></div>
+                                            <div
+                                                dangerouslySetInnerHTML={{
+                                                    __html:
+                                                        courseData &&
+                                                        courseData.description
+                                                }}
+                                            ></div>
                                             {courseData &&
                                             courseData.course_module_id == 1 ? (
                                                 <div>
@@ -1626,20 +1670,43 @@ const PlayVideoCourses = (props) => {
                                         <Card className="course-sec-basic p-5 mb-5">
                                             <CardBody>
                                                 <text>
-                                                    <div dangerouslySetInnerHTML={{ __html: adminCourse &&
-                                                            adminCourse.description }}>
-                                                    </div>
+                                                    <div
+                                                        dangerouslySetInnerHTML={{
+                                                            __html:
+                                                                adminCourse &&
+                                                                adminCourse.description
+                                                        }}
+                                                    ></div>
                                                 </text>
-                                                <div>
-                                                    <Button
-                                                        label="START COURSE"
-                                                        btnClass="primary mt-4"
-                                                        size="small"
-                                                        onClick={(e) =>
-                                                            startFirstCourse(e)
-                                                        }
-                                                    />
-                                                </div>
+                                                {firstObj[0] &&
+                                                firstObj[0].progress ==
+                                                    'INCOMPLETE' ? (
+                                                    <div>
+                                                        <Button
+                                                            label="START COURSE"
+                                                            btnClass="primary mt-4"
+                                                            size="small"
+                                                            onClick={(e) =>
+                                                                startFirstCourse(
+                                                                    e
+                                                                )
+                                                            }
+                                                        />
+                                                    </div>
+                                                ) : (
+                                                    <div>
+                                                        <Button
+                                                            label="CONTINUE COURSE"
+                                                            btnClass="primary mt-4"
+                                                            size="small"
+                                                            onClick={(e) =>
+                                                                startContinueCourse(
+                                                                    e
+                                                                )
+                                                            }
+                                                        />
+                                                    </div>
+                                                )}
                                             </CardBody>
                                         </Card>
                                     </Fragment>
