@@ -183,7 +183,7 @@ const CreateTranslation = (props) => {
                                 </Col>
                             </Col>
                             <Col>
-                                <Label className="mb-2 mt-5">From_Key</Label>
+                                <Label className="mb-2 mt-5">To_Value</Label>
                                 <Col className="form-group" md={12}>
                                     <div style={{ height: '211px' }}>
                                         <RichText
@@ -218,7 +218,7 @@ const CreateTranslation = (props) => {
                             </div>
                             <div className="col-6 text-right">
                                 <Button
-                                    label="Create"
+                                    label="Save"
                                     type="submit"
                                     btnClass={
                                         !(formik.dirty && formik.isValid)
