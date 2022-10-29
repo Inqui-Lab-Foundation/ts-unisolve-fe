@@ -28,7 +28,7 @@ import { getCurrentUser } from '../../helpers/Utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStudentByIdData } from '../../redux/studentRegistration/actions';
 // import defaultUser from '../../assets/media/img/default-user.png';
-import moment from 'moment';
+// import moment from 'moment';
 
 // const MySwal = withReactContent(Swal);
 
@@ -157,19 +157,10 @@ const MyProfile = () => {
                                 <Card className="w-100  mb-5 p-4">
                                     <CardBody>
                                         <Row>
+                                           
                                             <Col
                                                 md={12}
-                                                className="border-right my-auto "
-                                            >
-                                                <h2 className="mb-4">
-                                                            Student Details
-                                                        </h2>
-                                                     
-                                            </Col>
-
-                                            <Col
-                                                md={12}
-                                                className="my-auto profile-detail mx-5"
+                                                className="my-auto profile-detail "
                                             >
                                                  <CardText>
                                                     <span>Name:</span>{' '}
@@ -187,14 +178,7 @@ const MyProfile = () => {
                                                             : 'N/A'}
                                                     </b>
                                                 </CardText>
-                                                <CardText>
-                                                    <span>Gender:</span>{' '}
-                                                    <b>
-                                                        {teamMember?.Gender
-                                                            ? teamMember?.Gender
-                                                            : 'N/A'}
-                                                    </b>
-                                                </CardText>
+                                               
                                                 <CardText>
                                                     <span>Age:</span>{' '}
                                                     <b>
@@ -203,61 +187,56 @@ const MyProfile = () => {
                                                             : 'N/A'}
                                                     </b>
                                                 </CardText>
-                                                <CardText>
-                                                    <span>Joined on:</span>{' '}
-                                                    <b>
-                                                        {teamMember?.created_at
-                                                            ? moment(
-                                                                  teamMember?.created_at
-                                                              ).format(
-                                                                  'MMM Do YYYY'
-                                                              )
-                                                            : 'N/A'}
-                                                    </b>
-                                                </CardText>
+                                                
                                             </Col>
 
+                                           
+                                        </Row>
+                                       
+                                    </CardBody>
+                                </Card>
+                                <Card className="w-100  mb-5 p-4">
+                                    <CardBody>
+                                        <Row>
+                                           
                                             <Col
                                                 md={12}
-                                                className="border-right my-auto "
-                                            >
-                                                <h2 className="mb-4 my-5">
-                                                            Other Details
-                                                        </h2>
-                                                     
-                                            </Col>
-                                            <Col
-                                                md={12}
-                                                className="my-auto profile-detail mx-5"
+                                                className="my-auto profile-detail"
                                             >
                                                  <CardText>
-                                                    <span>Team Name:</span>{' '}
+                                                    <span>UDISE:</span>{' '}
                                                     <b>
-                                                        {console.log("adsasdasdas",teamMember)}
-                                                    {teamMember?.team_name
-                                                                ? teamMember?.team_name
+                                                    {teamMember.team.mentor?.organization_code
+                                                                ? teamMember.team.mentor?.organization_code
                                                                 : 'N/A'}
                                                     </b>
                                                 </CardText>
-                                                </Col>
-                                        </Row>
-                                        {/* <br /> */}
-                                        {/* <Row>
-                                            <Col md={6}>
-                                                <CardTitle className="pb-2">
-                                                    Password
-                                                </CardTitle>
-                                                <CardText>
-                                                    <Link
-                                                        exact="true"
-                                                        onClick={showModal}
-                                                        className="my-auto pt-0 text-link "
-                                                    >
-                                                        Change Password
-                                                    </Link>
+                                                 <CardText>
+                                                    <span>Team Name:</span>{' '}
+                                                    <b>
+                                                    {teamMember.team?.team_name
+                                                                ? teamMember.team?.team_name
+                                                                : 'N/A'}
+                                                    </b>
                                                 </CardText>
+                                                <CardText>
+                                                    <span>Teacher:</span>{' '}
+                                                    <b>
+                                                    {teamMember.team.mentor?.full_name
+                                                                ? teamMember.team.mentor?.full_name
+                                                                : 'N/A'}
+                                                    </b>
+                                                </CardText>
+                                               
+                                               
+                                                
+                                                
                                             </Col>
-                                        </Row> */}
+
+                                           
+                                            
+                                        </Row>
+                                        
                                     </CardBody>
                                 </Card>
                             </Col>
