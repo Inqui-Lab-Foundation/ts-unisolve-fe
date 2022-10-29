@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import dummyCSV from "../../assets/media/basic-csv.csv";
 import {
-    getEvaluatorsBulkUploadList,
+    // getEvaluatorsBulkUploadList,
     getAdminMentorsList,
     updateMentorStatus,
 } from "../../redux/actions";
@@ -46,9 +46,9 @@ const TicketsPage = (props) => {
     // const [status, setStatus] = useState("");
     // const [studentType, setStudentType] = React.useState("below");
     // const callback = () => {};
-    useEffect(() => {
-        props.getEvaluatorsBulkUploadListAction("i");
-    }, []);
+    // useEffect(() => {
+    //     props.getEvaluatorsBulkUploadListAction("i");
+    // }, []);
     useEffect(() => {
         props.getStudentListAction("i");
     }, []);
@@ -1332,7 +1332,7 @@ const mapStateToProps = ({ evaluatorsBulkUpload, adminMentors,studentRegistratio
     return { evaluatorsBulkUploadList, mentorsList,totalItems,studentList };
 };
 export default connect(mapStateToProps, {
-    getEvaluatorsBulkUploadListAction: getEvaluatorsBulkUploadList,
+    // getEvaluatorsBulkUploadListAction: getEvaluatorsBulkUploadList,
     getAdminMentorsListAction: getAdminMentorsList,
     getStudentListAction: getStudentRegistationData,
     mentorStatusUpdate: updateMentorStatus,
