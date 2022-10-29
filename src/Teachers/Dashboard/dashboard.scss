@@ -93,3 +93,11 @@
 .progress-height{
     height: 3rem;
 }
+
+.text-wrapped{
+    width: 200px;
+        overflow:hidden; 
+        white-space:nowrap; 
+        text-overflow: ellipsis;
+        text-align: center;
+}

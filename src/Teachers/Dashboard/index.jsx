@@ -19,6 +19,7 @@ import { useDispatch } from 'react-redux';
 import { getDashboardStates } from '../store/dashboard/actions';
 // import DoughnutChart from './DoughnutChart';
 
+
 const Dashboard = () => {
     const language = useSelector((state) => state?.mentors.mentorLanguage);
     const dispatch = useDispatch();
@@ -69,14 +70,14 @@ const Dashboard = () => {
                                             className="mx-4"
                                         />
                                         <div className="common-flex flex-column">
-                                            <span className="color-blue fs-600">
+                                            <p className="color-blue fs-600 my-0 text-wrapped">
                                                 {dashboardStates &&
                                                 dashboardStates?.organization
                                                     ? dashboardStates
                                                         ?.organization
                                                         ?.organization_name
                                                     : '-'}
-                                            </span>
+                                            </p>
                                             <small>School Name</small>
                                         </div>
                                     </div>
