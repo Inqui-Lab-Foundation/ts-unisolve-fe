@@ -242,11 +242,8 @@ const ViewTeamMember = () => {
             })
             .then((result) => {
                 if (result.isConfirmed) {
-                    const body = JSON.stringify({
-                        status: 'DELETED'
-                    });
                     var config = {
-                        method: 'put',
+                        method: 'delete',
                         url:
                             process.env.REACT_APP_API_BASE_URL +
                             '/students/' +
@@ -254,8 +251,7 @@ const ViewTeamMember = () => {
                         headers: {
                             'Content-Type': 'application/json',
                             Authorization: `Bearer ${currentUser.data[0].token}`
-                        },
-                        data: body
+                        }
                     };
                     axios(config)
                         .then(function (response) {
