@@ -144,7 +144,7 @@ const MyProfile = () => {
                                                         <CardText>
                                                             <span className='mx-3'><b>Email:</b></span>
                                                             <b>
-                                                                {teacher?.email ? teacher?.email : "-"}
+                                                                {teacher?.username_email ? teacher?.username_email : "-"}
                                                             </b>
                                                         </CardText>
 
