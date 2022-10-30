@@ -1096,11 +1096,20 @@ const Home = () => {
                                                         School details are not
                                                         registered with us.
                                                     </span>
-                                                    <br />
+                                                    <span>
+                                                        <br />
+                                                        Thank you for your
+                                                        interest! Please contact
+                                                        your program coordinator
+                                                        to enroll and
+                                                        participate in this
+                                                        program.
+                                                    </span>
+                                                    {/* <br />
                                                     <u onClick={handleRegister}>
                                                         Click here
                                                     </u>{' '}
-                                                    to register your school
+                                                    to register your school */}
                                                 </Col>
                                                 {/* <Col className='text-right my-auto'>
                                             <Button
