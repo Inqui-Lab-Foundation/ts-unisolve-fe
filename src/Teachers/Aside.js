@@ -89,7 +89,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
         }
     };
     const handleLogout = (e) => {
-        logout(history, t);
+        logout(history, t,"teacher");
         e.preventDefault();
     };
     return (

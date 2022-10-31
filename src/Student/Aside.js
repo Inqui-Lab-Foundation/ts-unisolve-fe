@@ -83,7 +83,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
         if(presurveyStatus !== "COMPLETED") e.preventDefault();
     };
     const handleLogout = (e) => {
-        logout(history, t);
+        logout(history, t,"student");
         e.preventDefault();
     };
     return (

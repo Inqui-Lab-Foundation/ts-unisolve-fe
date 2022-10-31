@@ -70,7 +70,7 @@ export const adminLoginUserError = (message) => async (dispatch) => {
     });
 };
 
-export const adminLoginUser = (data, history) => async (dispatch) => {
+export const adminLoginUser = (data, history,module) => async (dispatch) => {
     try {
         const loginData = {
             ...data,
@@ -78,19 +78,18 @@ export const adminLoginUser = (data, history) => async (dispatch) => {
         };
         dispatch({ type: ADMIN_LOGIN_USER });
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
-        console.log(URL.adminLogin);
         const result = await axios
             .post(`${URL.adminLogin}`, loginData, axiosConfig)
             .then((user) => user)
             .catch((err) => {
                 return err.response;
             });
-        console.log('============', result);
         if (result && result.status === 200) {
             const item = result.data;
-            console.log('============', item);
             setCurrentUser(item);
+            localStorage.setItem("module",module);
             dispatch(adminLoginUserSuccess(result));
+
             history.push('/admin/dashboard');
         } else {
             openNotificationWithIcon('error', 'Enter the correct credentials');
