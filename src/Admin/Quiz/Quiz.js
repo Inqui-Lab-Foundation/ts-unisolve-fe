@@ -222,6 +222,7 @@ const Quiz = (props) => {
                                                             ? 'default'
                                                             : 'primary'
                                                     }
+                                                    disabled={!(selectOption)}
                                                 />
                                             </Col>
                                         </Row>
