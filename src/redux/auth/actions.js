@@ -27,7 +27,7 @@ export const loginUserError = (message) => async (dispatch) => {
     });
 };
 
-export const loginUser = (data, history) => async (dispatch) => {
+export const loginUser = (data, history,module) => async (dispatch) => {
     console.log('========data', URL.login);
     try {
         const loginData = {
@@ -43,11 +43,11 @@ export const loginUser = (data, history) => async (dispatch) => {
             .catch((err) => {
                 return err.response;
             });
-        console.log('============', result);
         if (result && result.status === 200) {
             const item = result.data;
             console.log('============', item);
             setCurrentUser(item);
+            localStorage.setItem("module",module);
             dispatch(loginUserSuccess(result));
             history.push('/dashboard');
         } else {

@@ -13,6 +13,7 @@ import ellipse_1 from '../assets/media/ellipse.svg';
 import { adminLoginUser } from '../redux/actions';
 
 import CryptoJS from 'crypto-js';
+import { openNotificationWithIcon } from '../helpers/Utils';
 
 const LoginNew = (props) => {
     const history = useHistory();
@@ -29,6 +30,10 @@ const LoginNew = (props) => {
         }),
         // ADMIN ROLE
         onSubmit: (values) => {
+            if(localStorage.getItem("current_user") && localStorage.getItem("module")){
+                openNotificationWithIcon("error",`Another User(${localStorage.getItem("module")}) has already logged in`);
+                return;
+            }
             const key = CryptoJS.enc.Hex.parse(
                 '253D3FB468A0E24677C28A624BE0F939'
             );
@@ -46,7 +51,7 @@ const LoginNew = (props) => {
                 role: "ADMIN"
             };
             // history.push("/admin/dashboard");
-            props.adminLoginUserAction(body, history);
+            props.adminLoginUserAction(body, history,"ADMIN");
             console.log('======', body);
         }
     });

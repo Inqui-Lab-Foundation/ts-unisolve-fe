@@ -79,7 +79,7 @@ export const compareDates = (filterDate) => {
         moment(date).isSameOrBefore(filterDate.end_date)
     );
 };
-export const logout = (history, t) => {
+export const logout = (history, t,module) => {
     // const { t } = useTranslation();
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -109,6 +109,9 @@ export const logout = (history, t) => {
                     localStorage.removeItem('headerOption');
                     localStorage.removeItem('teamId');
                     localStorage.removeItem('mobile');
+                    if(module){
+                        localStorage.removeItem('module');
+                    }
                     history.push('/');
                 }
             } else if (
