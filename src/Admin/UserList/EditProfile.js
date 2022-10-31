@@ -59,7 +59,7 @@ const EditProfile = (props) => {
     const formik = useFormik({
         initialValues: {
             name: mentorData.full_name,
-            // email: '',
+            email: mentorData.username,
             phone: mentorData.mobile
         },
 
@@ -74,10 +74,12 @@ const EditProfile = (props) => {
 
         onSubmit: (values) => {
             const full_name = values.name;
+            const email = values.email;
             const mobile = values.phone;
             const body = JSON.stringify({
                 full_name: full_name,
                 mobile: mobile,
+                username: email,
             });
             var config = {
                 method: 'put',
