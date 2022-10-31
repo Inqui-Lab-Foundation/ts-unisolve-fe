@@ -829,7 +829,7 @@ const TicketsPage = (props) => {
             
             {
                 name: "Email",
-                selector: "email",
+                selector: "username",
                 width:"20%"
             },
             {
