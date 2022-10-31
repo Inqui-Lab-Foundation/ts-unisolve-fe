@@ -85,7 +85,7 @@ const EditProfile = (props) => {
                 method: 'put',
                 url:
                     process.env.REACT_APP_API_BASE_URL +
-                    '/mentors/'+ mentorData.user_id,
+                    '/mentors/'+ mentorData.mentor_id,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${currentUser.data[0].token}`
