@@ -37,6 +37,7 @@ const TicketsPage = (props) => {
     // const [student, activeStudent] = useState(false);
     const [menter, activeMenter] = useState(false);
     const [evaluater, activeEvaluater] = useState(false);
+    const [tab, setTab] = useState("1");
 
     // const [file] = useState();
     // const [fileName, setFileName] = useState("");
@@ -50,11 +51,14 @@ const TicketsPage = (props) => {
     //     props.getEvaluatorsBulkUploadListAction("i");
     // }, []);
     useEffect(() => {
-        props.getStudentListAction("i");
-    }, []);
-    useEffect(() => {
-        props.getAdminMentorsListAction("ACTIVE");
-    }, []);
+        console.log(tab);
+        if(Number(tab) === 1){
+            props.getStudentListAction("i");
+        }else if(tab===2){
+            props.getAdminMentorsListAction("ACTIVE");
+        }
+    }, [tab]);
+    
 
     const [rows, setRows] = React.useState([]);
     const [mentorRows, setMentorRows] = React.useState([]);
@@ -626,7 +630,6 @@ const TicketsPage = (props) => {
             activeMenter(false);
         }
     };
-    const [tab, setTab] = useState("1");
     useEffect(() => {       
         if(localStorage.getItem("tab")){
             setTab(localStorage.getItem("tab"));
@@ -646,8 +649,6 @@ const TicketsPage = (props) => {
         });
         localStorage.setItem('mentor', JSON.stringify(item));
     };
-    console.log(tab);
-
     const handleDelete = () => {
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
