@@ -1413,18 +1413,16 @@ const PlayVideoCourses = (props) => {
                                                             label="Download Worksheet"
                                                             btnClass="primary mt-4"
                                                             size="small"
-                                                            style={{
-                                                                marginRight:
-                                                                    '2rem'
-                                                            }}
+                                                            
                                                         />
                                                     </a>
                                                 )}
                                                 <Button
                                                     label="Skip & Continue"
-                                                    btnClass="primary w-auto"
+                                                    btnClass=" mx-4"
                                                     size="small"
                                                     type="submit"
+                                                    style={{background:"#067de1"}}
                                                     onClick={() => {
                                                         handleNextCourse();
                                                         dispatch(
@@ -1482,7 +1480,7 @@ const PlayVideoCourses = (props) => {
                                                                     type="file"
                                                                     name="file"
                                                                     multiple
-                                                                    accept="image/png, image/jpeg,.pdf"
+                                                                    accept=".csv,,.pdf"
                                                                     onChange={(
                                                                         e
                                                                     ) =>
