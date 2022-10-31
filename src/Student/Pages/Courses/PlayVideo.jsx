@@ -165,12 +165,12 @@ const PlayVideoCourses = (props) => {
         setTopicArray(topicArrays);
         if (topicArrays.length > 0) {
             topicArrays.map((item, i) => {
-                if (item.progress == 'INCOMPLETE') {
+                if (item.progress == 'COMPLETED') {
                     continueArrays.push(item);
                 }
             });
             firstObjectArray.push(topicArrays[0]);
-            continueObjectArrays.push(continueArrays[0]);
+            continueObjectArrays.push(continueArrays[continueArrays.length - 1]);
             setContinueObj(continueObjectArrays);
             setFirstObj(firstObjectArray);
         }
