@@ -233,7 +233,7 @@ const EditTranslation = (props) => {
                                     size="small"
                                     btnClass="primary"
                                     type="cancel"
-                                    onClick={() => history.goBack()}
+                                    onClick={() => history.push('/admin/translation')}
                                 />
                             </div>
                             <div className="col-6 text-right">
