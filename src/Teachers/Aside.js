@@ -288,7 +288,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     >
                         <NavLink
                             exact={true}
-                            onClick={(e) => handleClick(e, 'certificate')}
+                            onClick={(e) => handleClick(e, '')}
                             // onClick={(e) => handleClick(e, 'certificate')}
                             to={'/teacher/my-certificate'}
                         >

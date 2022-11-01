@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
-import VerticalLinearStepper from './StepperComponent';
+//import VerticalLinearStepper from './StepperComponent';
 // import Charts from './Chart';
 // import BarChart from './BarChart';
 import { getCurrentUser, getNormalHeaders } from '../../helpers/Utils';
@@ -154,10 +154,10 @@ const Dashboard = () => {
                             {/* <div className="teacher-progress">
                                 teacher progress{' '}
                             </div> */}
-                            <div className="stepper">
+                            {/* <div className="stepper">
                                 <h2 className='mb-5'>Teacher Roadmap</h2>
                                 <VerticalLinearStepper />
-                            </div>
+                            </div> */}
                         </Col>
                     </Row>
                 </Row>
