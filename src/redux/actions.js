@@ -39,6 +39,10 @@ export const GET_MYTEAM = 'GET_MYTEAM';
 export const GET_MYTEAM_SUCCESS = 'GET_MYTEAM_SUCCESS';
 export const GET_MYTEAM_ERROR = 'GET_MYTEAM_ERROR';
 
+/* reports */
+export const GET_SURVEY_REPORT = 'GET_SURVEY_REPORT';
+export const GET_MRNTOR_REG_STATUS_REPORT = 'GET_MRNTOR_REG_STATUS_REPORT';
+
 // Mentors //
 export const GET_TEACHERS = "GET_TEACHERS";
 export const MENTORS_CREATE = 'MENTORS_CREATE';

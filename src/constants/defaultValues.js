@@ -94,7 +94,9 @@ export const URL = {
     getDistricts: process.env.REACT_APP_API_BASE_URL + '/dashboard/mapStats',
     getDistrictsLive:
         process.env.REACT_APP_API_BASE_URL + '/dashboard/refreshMapStatsLive',
-    getScheduleDates: process.env.REACT_APP_API_BASE_URL + '/auth/roadMap'
+    getScheduleDates: process.env.REACT_APP_API_BASE_URL + '/auth/roadMap',
+    getAdminReports: process.env.REACT_APP_API_BASE_URL +'/quizSurveys/',
+    getAdminMentorRegStatusReports: process.env.REACT_APP_API_BASE_URL +'/mentors/regStatus'
 };
 const API = 'O10ZPA0jZS38wP7cO9EhI3jaDf24WmKX62nWw870';
 
