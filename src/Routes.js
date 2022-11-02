@@ -87,7 +87,7 @@ import AdminAddNews from './Admin/News/AddNews';
 import AdminAddNewsCategory from './Admin/News/AddNewsCategory';
 import RoadMap from './Admin/RoadMap/RoadMap';
 import Reports from './Admin/Reports';
-import IndividualReport from './Admin/Reports/IndividualReport';
+import IndividualReport from './Admin/Reports/ReportFilter';
 import StudentSignup from './Admin/StudentSignup';
 import Home from './home/home';
 import Terms from './home/termsandconditions';
