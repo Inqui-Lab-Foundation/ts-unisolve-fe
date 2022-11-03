@@ -117,7 +117,6 @@
         "Cancel": "Cancel",
         "Change_password": "Change password"
     },
-
     "home": {
         "banner_heading": "Transforming schools into places of",
         "banner_creativity": "Creativity",
@@ -129,10 +128,8 @@
         "counter_students": "Students/Learners registered",
         "counter_teachers": "Teachers/Mentors registered",
         "counter_ideas": "Ideas shared",
-
         "how_unisolve_works": "How Unisolve",
         "works": "Works",
-
         "how_unisolve_works_idea": "Find and & Give Idea",
         "how_unisolve_works_idea_description": "We present you a proposal and discuss niffty-gritty like",
         "how_unisolve_works_test": "Find and & Give Idea",
@@ -189,14 +186,12 @@
         "faq": "FAQ",
         "post_survey": "Post Survey",
         "join_us": "Join us",
-
         "banner_new_heading": "Creating Tomorrow’s",
         "banner_new_creativity": "Changemakers",
         "banner_new_description": "Nurture a culture of social innovation and build skills while inspiring young people to become transformative leaders.",
         "get_new_Started": "Register"
     },
-
-    "home_tl": {
+    "home_tl1": {
         "Hero_section-header": "Creating Change Makers of Tomorrow with <span className='green'>21st Century Skills</span>",
         "Hero_section-description": "Nurture a culture of social innovation and build skills while inspiring young people to become transformative leaders.",
         "register": "Register",
@@ -207,7 +202,7 @@
         "about_us_heading": "School Innovation Development Project (SIDP)",
         "about_us_desc": "<p>To create a positive and dynamic innovation ecosystem within educational institutions, Government of Tamil Nadu, <spa>EDII-TN</span> launches <spa>SIDP<span> with support of School Education Department. </p><p>The objective of <span>SIDP</span> is to inspire students to solve problems by using a simple design thinking process as a method to innovate, collaborate and obtain leadership skills. The program also focuses on building the capacity of the teaching community to play a vital role in building an entrepreneurial, innovative ecosystem in schools and be mentors to the evolving minds.</p>",
         "about_upshift_heading": "<h2 class='mb-5 sub-heading'>What is <span class='blue'>UPSHIFT</span></h2>",
-        "about_upshift_desc": "<p><span class='yellow'>UPSHIFT</span> is a <span class='blue'>UNICEF</span> global innovation for transferable skills building of adolescents and young people that is now in implementation in 45 countries. <span class='yellow'>UPSHIFT</span> is designed to build transferable skills and create opportunity, with a focus on the young people. <span class='yellow'>UPSHIFT</span> supports the development of skills for life and livelihood and supports youth to positively engage with their local communities as change-makers. <br/>[LEARN MORE ABOUT <a href='https://www.unicef.org/innovation/upshift' target='_target'><span class='blue'><u>UPSHIFT</u></span></a>]</p><p>With the goal of engaging and skilling more adolescents and young people, <span class='blue'>UNICEF</span>, along with State Government, Yuwaah and Inqui-Lab Foundation embarked on the development of <span class='blue'>UNISOLVE</span>. </p>",
+        "about_upshift_desc": "<p><span class='yellow'>UPSHIFT</span> is a <span class='yellow'>UNICEF</span> global innovation for transferable skills building of adolescents and young people that is now in implementation in 45 countries. <span class='yellow'>UPSHIFT</span> is designed to build transferable skills and create opportunity, with a focus on the young people. <span class='yellow'>UPSHIFT</span> supports the development of skills for life and livelihood and supports youth to positively engage with their local communities as change-makers. <br/>[LEARN MORE ABOUT <a href='https://www.unicef.org/innovation/upshift' target='_target'><span class='blue'><u>UPSHIFT</u></span></a>]</p><p>With the goal of engaging and skilling more adolescents and young people, <span class='blue'>UNICEF</span>, along with State Government, Yuwaah and Inqui-Lab Foundation embarked on the development of <span class='blue'>UNISOLVE</span>. </p>",
         "upshift_power_desc": "<p>UNISOLVE is a digital platform designed to facilitate <span class='blue'><b>UPSHIFT</b></span> delivery through a school-based, teacher-facilitated blended learning model.</p><p>UNISOLVE combines the advantages of distance learning opportunities and face-to-face activities to promote creativity and innovation among adolescents and young people. Designed with and for the education system keeping scalability in mind this specially designed platform, UNISOLVE, is a tool to skill students on social innovation and 21st century skills.</p>",
         "idea_heading_1": "Multipurpose Agriculture Bag",
         "idea_desc_1": "Multipurpose Agriculture Bag can be used for plucking cotton, Chilli, vegetables, fruits and spreading fertilizers in the agriculture field.",
@@ -249,14 +244,20 @@
         "about_us_heading": "School Innovation Development Project (SIDP)",
         "about_us_desc": "<p>To create a positive and dynamic innovation ecosystem within educational institutions, Government of Tamil Nadu, Entrepreneurship Development and Innovation Institute (EDII-TN) launches SIDP with support of School Education Department.</p><p>The objective of SIDP is to:</p><ul><li><p>To expose school students to the cycle of innovation and promote the culture of entrepreneurship.</p></li><li><p>To inspire students to solve real life problems by using a simple design thinking process as a method to innovate, collaborate and obtain leadership cum entrepreneurship skills.</p></li><li><p>To build the capacity of the teaching community to play a vital role in building an entrepreneurial, innovative ecosystem in schools and be mentors to the evolving minds.</p></li></ul>",
         "about_upshift_heading": "<h2 class='mb-5 sub-heading'>What is <span class='blue'>UPSHIFT</span></h2>",
-        "about_upshift_desc": "<p><span class='blue'><b>UPSHIFT</b></span> is a UNICEF global innovation for transferable skills building of adolescents and young people that is now in implementation in 45 countries. <span class='blue'><b>UPSHIFT</b></span> is designed to build transferable skills and create opportunity, with a focus on the young people. <span class='blue'><b>UPSHIFT</b></span> supports the development of skills for life and livelihood and supports youth to positively engage with their local communities as change-makers. <br/>[LEARN MORE ABOUT <a href='https://www.unicef.org/innovation/upshift' target='_target'><span class='blue'><u><b>UPSHIFT</b></u></span></a> ]</p><p>With the goal of engaging and skilling more adolescents and young people, UNICEF, along with State Government, Yuwaah and Inqui-Lab Foundation embarked on the development of UNISOLVE.</p>",
-        "upshift_power_desc": "<p>UNISOLVE is a digital platform designed to facilitate <span class='blue'><b>UPSHIFT</b></span> delivery through a school-based, teacher-facilitated blended learning model.</p><p>UNISOLVE combines the advantages of distance learning opportunities and face-to-face activities to promote creativity and innovation among adolescents and young people. Designed with and for the education system keeping scalability in mind this specially designed platform, UNISOLVE, is a tool to skill students on social innovation and 21st century skills.</p>",
+        "about_upshift_desc": "<p><b>UPSHIFT</b> is a <span class='blue'><b>UNICEF</b></span> global innovation for transferable skills building of adolescents and young people that is now in implementation in 45 countries. <b>UPSHIFT</b> is designed to build transferable skills and create opportunity, with a focus on the young people. <b>UPSHIFT</b> supports the development of skills for life and livelihood and supports youth to positively engage with their local communities as change-makers. <br/>[LEARN MORE ABOUT <a href='https://www.unicef.org/innovation/upshift' target='_target'><u><b>UPSHIFT</b></u></a> ]</p><p>With the goal of engaging and skilling more adolescents and young people, UNICEF, along with State Government, Yuwaah and Inqui-Lab Foundation embarked on the development of UNISOLVE.</p>",
+        "upshift_power_desc": "<p><span class='blue'><b>UNISOLVE</b></span> is a digital platform designed to facilitate <b>UPSHIFT</b> delivery through a school-based, teacher-facilitated blended learning model.</p><p><span class='blue'><b>UNISOLVE</b></span> combines the advantages of distance learning opportunities and face-to-face activities to promote creativity and innovation among adolescents and young people. Designed with and for the education system keeping scalability in mind this specially designed platform, <span class='blue'><b>UNISOLVE</b></span>, is a tool to skill students on social innovation and 21st century skills.</p>",
         "idea_heading_1": "Multipurpose Agriculture Bag",
         "idea_desc_1": "Multipurpose Agriculture Bag can be used for plucking cotton, Chilli, vegetables, fruits and spreading fertilizers in the agriculture field.",
         "idea_heading_2": "Makeshift sweeping machine",
         "idea_desc_2": "Using available waste materials on the campus like waste palm wheels, coconut leaves, a stick, and wheels of small cycles, these students made a makeshift sweeping machine to help the aged sweeper.",
         "idea_heading_3": "Adjustable walker for the elderly",
         "idea_desc_3": "When the user pushes the front legs of the walker on the upper stairs and the rear legs rest on the lower stairs, the walker is stable enough for climbing. It also has a foldable seat that can be pulled out.",
+        "testimonials_desc_1": "Through this program , we could improve our Design thinking skills. We learnt the way we should think and work while identifying a problem, Finding the root cause of it and Developing Innovative solutions for it and could apply it in our daily life",
+        "testimonials_name_1": "Swathi",
+        "testimonials_title_1": "Student at GHS , India",
+        "testimonials_desc_2": "This Program provides participants with an opportunity to put concrete skills into practice-young people invest themselves in developing solutions for the problems they identified in their communities.",
+        "testimonials_name_2": "Herve Morin, Global lead",
+        "testimonials_title_2": "Unicef Office of innovation",
         "faq_qn_1": "What is the School Innovation Development Project?",
         "faq_ans_1": "<p>To create a positive and dynamic innovation ecosystem within educational institutions, Government of Tamil Nadu, Entrepreneurship Development and Innovation Institute (EDII-TN) launches SIDP with support of School Education Department.</p><p>The objective of SIDP is to:</p><ul><li><p>To expose school students to the cycle of innovation and promote the culture of entrepreneurship.</p></li><li><p>To inspire students to solve real life problems by using a simple design thinking process as a method to innovate, collaborate and obtain leadership cum entrepreneurship skills.</p></li><li><p>To build the capacity of the teaching community to play a vital role in building an entrepreneurial, innovative ecosystem in schools and be mentors to the evolving minds.</p></li></ul>",
         "faq_qn_2": "Who can participate in this program?",
@@ -269,7 +270,7 @@
         "faq_ans_5": "<p>The following are the next steps involved after you register your school/institution:</p><ol><li><p>Identify students who can participate in the program.</p></li><li><p>Form teams with the interested or nominated participant group.</p></li><li><p>Students have to log in to the website and start doing the online course with the team.</p></li><li><p>Teams will complete the learning course and submit one idea as their challenge project. </p></li></ol>",
         "roadmpa_heading": "Road Map",
         "roadmpa_one": "AWARENESS",
-        "roadmpa_one_desc": "<p>Learners become aware of Program, its goals and process through various channels like : <ol><li><p class='my-0'>Institution management</p></li><li><p class='my-0'>Digital and print media</p></li><li><p class='my-0'>Peer Groups</p></li></ol></p>",
+        "roadmpa_one_desc": "<p>Learners become aware of Program, its goals a`nd process through various channels like : <ol><li><p class='my-0'>Institution management</p></li><li><p class='my-0'>Digital and print media</p></li><li><p class='my-0'>Peer Groups</p></li></ol></p>",
         "roadmpa_two": "Registration",
         "roadmpa_two_desc": "<p>Learners consult their teachers, form a team, and register themselves to the platform.</p>",
         "roadmpa_three": "Problem Solving Journey",
@@ -289,7 +290,6 @@
         "search_btn": "Search",
         "step": "Step"
     },
-
     "get_started": {
         "heading": "Welcome Students!",
         "desc": "<p>We are glad that you have signed-up to this program and joined us in this exciting journey of nurturing an experience of learning, skilling and innovation for the young people. As you are aware you will be playing a role of student for the participants in their learning journey.</p><p>This portal gives you an experience of learning modules and important resources for supporting the participants. You can also register and track progress of your teams using the dashboard. </p><p>Your journey as a teacher/mentor will involve the following key milestones: </p><ul><li>Step-1: Take Pre-Survey</li><li>Step-2: Complete the course and reading material</li><li>Step-3: Register the teams</li><li>Step-4: Support the participants  in completing the learning journey.</li><li>Step-5: Support the participants in challenge/idea submission.</li><li>Step-6: Complete the post survey.</li></ul><p>We hope you and your teams will have a great learning experience and wish you all the best for this program!</p>",
@@ -367,25 +367,25 @@
         "req_field_grade": "Please enter valid grade",
         "certificate": "Certificate",
         "certificate_des": "Please Download Certificate",
-        "delete_member_warning":"You are attempting to Delete Team Member",
-        "delete_member_cancel":"Team Member not Deleted",
-        "delete_cancelled":"Cancelled",
-        "delete_success":"Team Member Delete Successfully",
-        "ok":"Ok",
-        "sure":"Are You Sure?",
-        "submit":"Submit",
-        "discard":"Discard",
-        "view_team_member_details":"View Team Members details",
-        "view_team_member":"View Team Members",
-        "teamslist":"TeamsList",
-        "edit_team":"Edit Team",
-        "edit_team_details":"Edit Team Details",
-        "edit_team_member":"Edit Team Member",
-        "edit_team_member_details":"Edit Team Member Details",
-        "back":"Back",
-        "male":"Male",
-        "female":"Female",
-        "others":"Others"
+        "delete_member_warning": "You are attempting to Delete Team Member",
+        "delete_member_cancel": "Team Member not Deleted",
+        "delete_cancelled": "Cancelled",
+        "delete_success": "Team Member Delete Successfully",
+        "ok": "Ok",
+        "sure": "Are You Sure?",
+        "submit": "Submit",
+        "discard": "Discard",
+        "view_team_member_details": "View Team Members details",
+        "view_team_member": "View Team Members",
+        "teamslist": "TeamsList",
+        "edit_team": "Edit Team",
+        "edit_team_details": "Edit Team Details",
+        "edit_team_member": "Edit Team Member",
+        "edit_team_member_details": "Edit Team Member Details",
+        "back": "Back",
+        "male": "Male",
+        "female": "Female",
+        "others": "Others"
     },
     "home_nav_links": {
         "about": "About",
@@ -396,7 +396,6 @@
         "btn_login": "Login",
         "rights": "All Rights Reserved."
     },
-
     "general_req": {
         "attempt_logout": "You are attempting to logout of Unisolve.",
         "are_you_sure": "Are you sure?",

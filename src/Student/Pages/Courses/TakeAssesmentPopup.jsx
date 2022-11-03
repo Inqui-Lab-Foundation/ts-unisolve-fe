@@ -28,7 +28,7 @@ function TakeAssesmentPopup(props) {
                     <Modal.Header closeButton>
                         <Modal.Title
                             id="contained-modal-title-vcenter"
-                            className="w-100 d-block mb-2"
+                            className="w-100 heading d-block mb-2"
                         >
                             Let&apos;s think about a few things you learnt in the video
                         </Modal.Title>
