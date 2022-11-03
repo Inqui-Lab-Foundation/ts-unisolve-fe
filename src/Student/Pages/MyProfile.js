@@ -6,7 +6,7 @@ import {
     Row,
     Col,
     Card,
-    CardTitle,
+    // CardTitle,
     CardBody,
     CardText
     // CardImg
@@ -19,64 +19,64 @@ import { Link } from 'react-router-dom';
 import { BreadcrumbTwo } from '../../stories/BreadcrumbTwo/BreadcrumbTwo.jsx';
 
 import Layout from '../Layout.jsx';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
+// import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
-import withReactContent from 'sweetalert2-react-content';
-import ChangePSWModal from './ChangePSWModal';
+// import withReactContent from 'sweetalert2-react-content';
+// import ChangePSWModal from './ChangePSWModal';
 
 import { getCurrentUser } from '../../helpers/Utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStudentByIdData } from '../../redux/studentRegistration/actions';
-import defaultUser from '../../assets/media/img/default-user.png';
-import moment from 'moment';
+// import defaultUser from '../../assets/media/img/default-user.png';
+// import moment from 'moment';
 
-const MySwal = withReactContent(Swal);
+// const MySwal = withReactContent(Swal);
 
-const onCancel = () => {
-    Swal.close();
-};
+// const onCancel = () => {
+//     Swal.close();
+// };
 
-const btnSubmit = () => {
-    Swal.close();
-};
+// const btnSubmit = () => {
+//     Swal.close();
+// };
 
 const MyProfile = () => {
     const [profileAction, setProfileAction] = useState(true);
     const currentUser = getCurrentUser('current_user');
 
-    const showFormModal = (values) => {
-        return new Promise((resolve, reject) => {
-            MySwal.fire({
-                // title: "Enter values",
-                reverseButtons: false,
-                showCloseButton: true,
-                allowOutsideClick: false,
-                html: (
-                    <ChangePSWModal
-                        values={values}
-                        onSubmit={(values) => {
-                            resolve(values);
-                            Swal.close();
-                        }}
-                        onCancel={onCancel}
-                        btnSubmit={btnSubmit}
-                    />
-                ),
-                onClose: () => reject(),
-                showConfirmButton: false
-            });
-        });
-    };
-    function showModal() {
-        showFormModal({
-            oldPassword: '',
-            newPassword: '',
-            confirmPassword: '',
-            lastName: ''
-        })
-            .then((values) => console.log(values))
-            .catch(() => console.log('Modal closed'));
-    }
+    // const showFormModal = (values) => {
+    //     return new Promise((resolve, reject) => {
+    //         MySwal.fire({
+    //             title: "Enter values",
+    //             reverseButtons: false,
+    //             showCloseButton: true,
+    //             allowOutsideClick: false,
+    //             html: (
+    //                 <ChangePSWModal
+    //                     values={values}
+    //                     onSubmit={(values) => {
+    //                         resolve(values);
+    //                         Swal.close();
+    //                     }}
+    //                     onCancel={onCancel}
+    //                     btnSubmit={btnSubmit}
+    //                 />
+    //             ),
+    //             onClose: () => reject(),
+    //             showConfirmButton: false
+    //         });
+    //     });
+    // };
+    // function showModal() {
+    //     showFormModal({
+    //         oldPassword: '',
+    //         newPassword: '',
+    //         confirmPassword: '',
+    //         lastName: ''
+    //     })
+    //         .then((values) => console.log(values))
+    //         .catch(() => console.log('Modal closed'));
+    // }
     useEffect(() => {
         const search = window.location.search;
 
@@ -157,68 +157,28 @@ const MyProfile = () => {
                                 <Card className="w-100  mb-5 p-4">
                                     <CardBody>
                                         <Row>
+                                           
                                             <Col
-                                                md={8}
-                                                className="border-right my-auto "
+                                                md={12}
+                                                className="my-auto profile-detail "
                                             >
-                                                <Row>
-                                                    <Col md={5}>
-                                                        {/* <small>Image 240x240</small> */}
-                                                        <figure>
-                                                            {/* <PhotoUpload /> */}
-                                                            <img
-                                                                className="img-fluid w-50"
-                                                                alt="default"
-                                                                src={
-                                                                    defaultUser
-                                                                }
-                                                            />
-                                                        </figure>
-                                                    </Col>
-                                                    <Col
-                                                        md={7}
-                                                        className="my-auto profile-detail"
-                                                    >
-                                                        <h2 className="mb-4">
-                                                            <span>Name:</span>
-                                                            {teamMember?.full_name
+                                                 <CardText>
+                                                    <span>Name:</span>{' '}
+                                                    <b>
+                                                    {teamMember?.full_name
                                                                 ? teamMember?.full_name
                                                                 : 'N/A'}
-                                                        </h2>
-                                                        {/* <CardText>
-                                                            <span>Email:</span>{' '}
-                                                            <b>
-                                                                ritusharma@gmail.com
-                                                            </b>
-                                                        </CardText> */}
-                                                        {/* <CardText>
-                                                            <span>Class:</span>{' '}
-                                                            <b>{teamMember?.Grade}</b>
-                                                        </CardText> */}
-                                                    </Col>
-                                                </Row>
-                                            </Col>
-
-                                            <Col
-                                                md={4}
-                                                className="my-auto profile-detail"
-                                            >
+                                                    </b>
+                                                </CardText>
                                                 <CardText>
-                                                    <span>Grade:</span>{' '}
+                                                    <span>Class:</span>{' '}
                                                     <b>
                                                         {teamMember?.Grade
                                                             ? teamMember?.Grade
                                                             : 'N/A'}
                                                     </b>
                                                 </CardText>
-                                                <CardText>
-                                                    <span>Gender:</span>{' '}
-                                                    <b>
-                                                        {teamMember?.Gender
-                                                            ? teamMember?.Gender
-                                                            : 'N/A'}
-                                                    </b>
-                                                </CardText>
+                                               
                                                 <CardText>
                                                     <span>Age:</span>{' '}
                                                     <b>
@@ -227,39 +187,56 @@ const MyProfile = () => {
                                                             : 'N/A'}
                                                     </b>
                                                 </CardText>
-                                                <CardText>
-                                                    <span>Joined on:</span>{' '}
-                                                    <b>
-                                                        {teamMember?.created_at
-                                                            ? moment(
-                                                                  teamMember?.created_at
-                                                              ).format(
-                                                                  'MMM Do YYYY'
-                                                              )
-                                                            : 'N/A'}
-                                                    </b>
-                                                </CardText>
+                                                
                                             </Col>
 
-                                            <Col md={12}></Col>
+                                           
                                         </Row>
-                                        <br />
+                                       
+                                    </CardBody>
+                                </Card>
+                                <Card className="w-100  mb-5 p-4">
+                                    <CardBody>
                                         <Row>
-                                            <Col md={6}>
-                                                <CardTitle className="pb-2">
-                                                    Password
-                                                </CardTitle>
-                                                <CardText>
-                                                    <Link
-                                                        exact="true"
-                                                        onClick={showModal}
-                                                        className="my-auto pt-0 text-link "
-                                                    >
-                                                        Change Password
-                                                    </Link>
+                                           
+                                            <Col
+                                                md={12}
+                                                className="my-auto profile-detail"
+                                            >
+                                                 <CardText>
+                                                    <span>UDISE:</span>{' '}
+                                                    <b>
+                                                    {teamMember.team.mentor?.organization_code
+                                                                ? teamMember.team.mentor?.organization_code
+                                                                : 'N/A'}
+                                                    </b>
                                                 </CardText>
+                                                 <CardText>
+                                                    <span>Team Name:</span>{' '}
+                                                    <b>
+                                                    {teamMember.team?.team_name
+                                                                ? teamMember.team?.team_name
+                                                                : 'N/A'}
+                                                    </b>
+                                                </CardText>
+                                                <CardText>
+                                                    <span>Teacher:</span>{' '}
+                                                    <b>
+                                                    {teamMember.team.mentor?.full_name
+                                                                ? teamMember.team.mentor?.full_name
+                                                                : 'N/A'}
+                                                    </b>
+                                                </CardText>
+                                               
+                                               
+                                                
+                                                
                                             </Col>
+
+                                           
+                                            
                                         </Row>
+                                        
                                     </CardBody>
                                 </Card>
                             </Col>

@@ -40,12 +40,12 @@ const Question = (props) => {
 
     useEffect(() => {
         props.onSelectAnswer(image);
-        props.onSelectType('DRAW');
+        props.onSelectType(quiz[0] && quiz[0].type);
     }, [image]);
-
+    const fileTypes = ["csv","pdf","png","jpg","jpeg"];
     const changeHandler = (event) => {
         const file = event.target.files[0].name.split('.', 2);
-        if (file[1] === 'csv' || file[1] === 'pdf') {
+        if (fileTypes.includes(file[1].toLowerCase())) {
             let img = event.target.files[0];
             setUrl(file[1]);
             setImage(img);
@@ -63,7 +63,6 @@ const Question = (props) => {
         className: 'defaultInput',
         placeholder: 'Please Answer'
     };
-    console.log(quiz);
     return (
         <Fragment>
             {quiz[0].question_image != null ? (

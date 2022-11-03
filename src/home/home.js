@@ -22,7 +22,7 @@ import {
 import { Button } from '../stories/Button';
 import { Link } from 'react-router-dom';
 import { Input } from 'antd';
-// import LanguageSelectorComp from '../components/LanguageSelectorComp';
+import LanguageSelectorComp from '../components/LanguageSelectorComp';
 import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { slide as Menu } from 'react-burger-menu';
@@ -74,9 +74,9 @@ const Home = () => {
     const dispatch = useDispatch();
     const { schedules } = useSelector((state) => state.schedules);
     const [modalShow, setModalShow] = useState(false);
-    useLayoutEffect(() => {
-        dispatch(getSchedulesForTeacherAndStudents());
-    }, []);
+    // useLayoutEffect(() => {
+    //     dispatch(getSchedulesForTeacherAndStudents());
+    // }, []);
     const [nav1, setNav1] = useState(null);
     const [nav2, setNav2] = useState(null);
     const [slider1, setSlider1] = useState(null);
@@ -205,16 +205,16 @@ const Home = () => {
         {
             id: 1,
             imageUrl: testi2,
-            desc: 'Through this program , we could improve our Design thinking skills. We learnt the way we should think and work while identifying a problem, Finding the root cause of it and Developing Innovative solutions for it and could apply it in our daily life',
-            name: 'Swathi',
-            title: 'Student at GHS , India'
+            desc: `${t('home_tl.testimonials_desc_1')}`,
+            name: `${t('home_tl.testimonials_name_1')}`,
+            title: `${t('home_tl.testimonials_title_1')}`
         },
         {
             id: 2,
             imageUrl: testi1,
-            desc: 'This Program provides participants with an opportunity to put concrete skills into practice-young people invest themselves in developing solutions for the problems they identified in their communities',
-            name: 'Herve Morin, Global lead',
-            title: 'Unicef Office of innovation'
+            desc: `${t('home_tl.testimonials_desc_2')}`,
+            name: `${t('home_tl.testimonials_name_2')}`,
+            title: `${t('home_tl.testimonials_title_2')}`
         }
     ];
 
@@ -452,7 +452,7 @@ const Home = () => {
                                             </AnchorLink>
                                         </NavItem>
                                     </Nav>
-                                    {/* <LanguageSelectorComp module="general"/> */}
+                                    <LanguageSelectorComp module="general"/>
                                 </div>
                             </Col>
                         </Row>
@@ -1014,16 +1014,16 @@ const Home = () => {
                     </Row>
                 </Container>
             </section>
-
+``
             <section className="locate-unisolve">
                 <Container>
                     <Row>
                         <Col md={12} className="text-center">
                             <h2>{t('home.join_us')}</h2>
                             <div className="heading">
-                                <h2 className="sub-heading1 mb-3">
+                                {/* <h2 className="sub-heading1 mb-3">
                                     {t('home.unisolve_partner')}
-                                </h2>
+                                </h2> */}
                                 <h5 className="text-center">
                                     {t('home.unisolve_partner_paragraph')}
                                 </h5>
@@ -1096,11 +1096,20 @@ const Home = () => {
                                                         School details are not
                                                         registered with us.
                                                     </span>
-                                                    <br />
+                                                    <span>
+                                                        <br />
+                                                        Thank you for your
+                                                        interest! Please contact
+                                                        your program coordinator
+                                                        to enroll and
+                                                        participate in this
+                                                        program.
+                                                    </span>
+                                                    {/* <br />
                                                     <u onClick={handleRegister}>
                                                         Click here
                                                     </u>{' '}
-                                                    to register your school
+                                                    to register your school */}
                                                 </Col>
                                                 {/* <Col className='text-right my-auto'>
                                             <Button
@@ -1234,7 +1243,7 @@ const Home = () => {
                 <Row className="w-100 mt-5 footer-sub">
                     <Col md={12} className="text-center">
                         <p className="my-0 py-3 text-white">
-                            © UNISOLVE {new Date().getFullYear()}.{' '}
+                            © UNISOLVE, UNICEF {new Date().getFullYear()}.{' '}
                             {t('home_nav_links.rights')}{' '}
                         </p>
                     </Col>

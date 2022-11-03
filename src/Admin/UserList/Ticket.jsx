@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import dummyCSV from "../../assets/media/basic-csv.csv";
 import {
-    getEvaluatorsBulkUploadList,
+    // getEvaluatorsBulkUploadList,
     getAdminMentorsList,
     updateMentorStatus,
 } from "../../redux/actions";
@@ -37,6 +37,7 @@ const TicketsPage = (props) => {
     // const [student, activeStudent] = useState(false);
     const [menter, activeMenter] = useState(false);
     const [evaluater, activeEvaluater] = useState(false);
+    const [tab, setTab] = useState("1");
 
     // const [file] = useState();
     // const [fileName, setFileName] = useState("");
@@ -46,15 +47,19 @@ const TicketsPage = (props) => {
     // const [status, setStatus] = useState("");
     // const [studentType, setStudentType] = React.useState("below");
     // const callback = () => {};
+    // useEffect(() => {
+    //     props.getEvaluatorsBulkUploadListAction("i");
+    // }, []);
     useEffect(() => {
-        props.getEvaluatorsBulkUploadListAction("i");
-    }, []);
-    useEffect(() => {
-        props.getStudentListAction();
-    }, []);
-    useEffect(() => {
-        props.getAdminMentorsListAction("");
-    }, []);
+        console.log(tab);
+        if(Number(tab) === 1){
+            props.getStudentListAction("i");
+        }else if(tab===2){
+            props.getAdminMentorsListAction("ACTIVE");
+        }
+    }, [tab]);
+    
+
     const [rows, setRows] = React.useState([]);
     const [mentorRows, setMentorRows] = React.useState([]);
     // const [mentorActiveRows, setMentorActiveRows] = React.useState([]);
@@ -617,7 +622,7 @@ const TicketsPage = (props) => {
             props.getAdminEvalutorsListAction(history);
             activeMenter(false);
         } else if (e === "2") {
-            props.getAdminMentorsListAction("");
+            props.getAdminMentorsListAction("ACTIVE");
             activeMenter(!menter);
             activeEvaluater(false);
         } else {
@@ -625,7 +630,6 @@ const TicketsPage = (props) => {
             activeMenter(false);
         }
     };
-    const [tab, setTab] = useState("1");
     useEffect(() => {       
         if(localStorage.getItem("tab")){
             setTab(localStorage.getItem("tab"));
@@ -638,8 +642,13 @@ const TicketsPage = (props) => {
             data: item,
         });
     };
-    console.log(tab);
-
+    const handleEdit = (item) => {
+        props.history.push({
+            pathname: `/admin/edit-user-profile`,
+            data: item,
+        });
+        localStorage.setItem('mentor', JSON.stringify(item));
+    };
     const handleDelete = () => {
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
@@ -808,9 +817,26 @@ const TicketsPage = (props) => {
                 width:"8%"
             },
             {
+                name: "UDISE  Code",
+                selector: "organization_code",
+                width:"10%"
+            },
+            
+            {
                 name: "Teacher Name",
                 selector: "full_name",
                 width:"12%"
+            },
+            
+            {
+                name: "Email",
+                selector: "username",
+                width:"20%"
+            },
+            {
+                name: "Phone",
+                selector: "mobile",
+                width:"20%"
             },
             {
                 name: "Status",
@@ -826,40 +852,36 @@ const TicketsPage = (props) => {
                 ],
                 width:"8%"
             },
-            {
-                name: "UDISE  Code",
-                selector: "organization_code",
-                width:"10%"
-            },
-            {
-                name: "Qualification",
-                selector: "qualification",
-                width:"11%"
-            },
-            {
-                name: "City",
-                selector: "city",
-                width:"10%"
-            },
-            {
-                name: "District",
-                selector: "district",
-                width:"10%"
-            },
-            {
-                name: "State",
-                selector: "state",
-                width:"8%"
-            },
-            {
-                name: "Country",
-                selector: "country",
-                width:"8%"
-            },
+            
+            // {
+            //     name: "Qualification",
+            //     selector: "qualification",
+            //     width:"11%"
+            // },
+            // {
+            //     name: "City",
+            //     selector: "city",
+            //     width:"10%"
+            // },
+            // {
+            //     name: "District",
+            //     selector: "district",
+            //     width:"10%"
+            // },
+            // {
+            //     name: "State",
+            //     selector: "state",
+            //     width:"8%"
+            // },
+            // {
+            //     name: "Country",
+            //     selector: "country",
+            //     width:"8%"
+            // },
             {
                 name: "ACTIONS",
                 selector: "action",
-                width:"15%",
+                width:"20%",
                 cell: (record) => [
                     <Link
                         exact='true'
@@ -868,6 +890,14 @@ const TicketsPage = (props) => {
                         style={{marginRight:"10px"}}
                     >
                         <div className="btn btn-primary btn-lg">View</div>
+                    </Link>,
+                    <Link
+                        exact='true'
+                        key={record.id}
+                        onClick={() => handleEdit(record)}
+                        style={{marginRight:"10px"}}
+                    >
+                        <div className="btn btn-warning btn-lg">Edit</div>
                     </Link>,
                     <Link 
                         exact='true' 
@@ -1303,7 +1333,7 @@ const mapStateToProps = ({ evaluatorsBulkUpload, adminMentors,studentRegistratio
     return { evaluatorsBulkUploadList, mentorsList,totalItems,studentList };
 };
 export default connect(mapStateToProps, {
-    getEvaluatorsBulkUploadListAction: getEvaluatorsBulkUploadList,
+    // getEvaluatorsBulkUploadListAction: getEvaluatorsBulkUploadList,
     getAdminMentorsListAction: getAdminMentorsList,
     getStudentListAction: getStudentRegistationData,
     mentorStatusUpdate: updateMentorStatus,

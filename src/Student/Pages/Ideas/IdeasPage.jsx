@@ -84,7 +84,7 @@ const IdeasPage = () => {
                     if (challengeStatus?.status == 200) {
                         openNotificationWithIcon(
                             'success',
-                            'Challenges has been submitted successfully..!!',
+                            'Idea Submission has been submitted successfully!',
                             ''
                         );
                         formik.resetForm();

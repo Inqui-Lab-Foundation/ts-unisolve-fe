@@ -55,7 +55,7 @@ export const getTeacherByID = (id) => async (dispatch) => {
         dispatch(getTeacherByIdSuccess(""));
     }
 };
-export const teacherLoginUser = (data, history) => async (dispatch) => {
+export const teacherLoginUser = (data, history,module) => async (dispatch) => {
     try {
         const loginData = {
             ...data,
@@ -63,18 +63,16 @@ export const teacherLoginUser = (data, history) => async (dispatch) => {
         };
         dispatch({ type: TEACHER_LOGIN_USER });
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
-        console.log(URL.teacherLogin);
         const result = await axios
             .post(`${URL.teacherLogin}`, loginData, axiosConfig)
             .then((user) => user)
             .catch((err) => {
                 return err.response;
             });
-        console.log('============', result);
         if (result && result.status === 200) {
             const item = result.data;
-            console.log('============', item);
             setCurrentUser(item);
+            localStorage.setItem('module',module);
             dispatch(teacherLoginUserSuccess(result));
             history.push('/teacher/dashboard');
         } else {

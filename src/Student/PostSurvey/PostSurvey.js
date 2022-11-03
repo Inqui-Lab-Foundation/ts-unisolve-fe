@@ -92,16 +92,17 @@ const PostSurvey = () => {
             local: final[1]
         };
         axios
-            .get(`${URL.getPostSurveyList}`, axiosConfig)
+            .get(`${URL.getStudentPostSurveyList}`, axiosConfig)
             .then((postSurveyRes) => {
                 if (postSurveyRes?.status == 200) {
+
                     setQuizSurveyId(
-                        postSurveyRes.data.data[0].dataValues[1].quiz_survey_id
+                        postSurveyRes.data.data[0].quiz_survey_id
                     );
                     setPostSurveyStatus(
-                        postSurveyRes.data.data[0].dataValues[1].progress
+                        postSurveyRes.data.data[0].progress
                     );
-                    let allQuestions = postSurveyRes.data.data[0].dataValues[1];
+                    let allQuestions = postSurveyRes.data.data[0];
                     setPostSurveyList(allQuestions.quiz_survey_questions);
                 }
             })
@@ -267,7 +268,7 @@ const PostSurvey = () => {
                                         </div>
                                         <div>
                                             <h2>
-                                                Post Survery has been
+                                                Post Survey has been
                                                 submitted
                                             </h2>
                                         </div>

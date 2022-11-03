@@ -6,7 +6,6 @@ import {
     Row,
     Col,
     Card,
-    CardBody,
     Form,
     FormGroup,
     Input,
@@ -18,6 +17,7 @@ import { useFormik } from 'formik';
 import Layout from '../Layout';
 import { URL, KEY } from '../../constants/defaultValues';
 import {
+    getCurrentUser,
     getNormalHeaders,
     openNotificationWithIcon
 } from '../../helpers/Utils';
@@ -25,19 +25,22 @@ import axios from 'axios';
 import Congo from '../../assets/media/survey-success.jpg';
 import { useHistory } from 'react-router-dom';
 import { getLanguage } from '../../constants/languageOptions';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import getStart from '../../assets/media/getStart.png';
 import { useTranslation } from 'react-i18next';
+import { updateStudentBadges } from '../../redux/studentRegistration/actions';
 
 const PreSurvey = () => {
     const { t } = useTranslation();
     const [preSurveyList, setPreSurveyList] = useState([]);
+    const currentUser = getCurrentUser('current_user');
     const [quizSurveyId, setQuizSurveyId] = useState(0);
     const [preSurveyStatus, setPreSurveyStatus] = useState('COMPLETED');
     const history = useHistory();
+    const dispatch = useDispatch();
     const language = useSelector(
         (state) => state?.studentRegistration?.studentLanguage
-    ); 
+    );
     const [show, setShow] = useState(false);
 
     const formik = useFormik({
@@ -64,8 +67,7 @@ const PreSurvey = () => {
             } else {
                 return await axios
                     .post(
-                        `${
-                            URL.getPreSurveyList
+                        `${URL.getPreSurveyList
                         }/${quizSurveyId}/responses?${getLanguage(language)}`,
                         JSON.stringify(submitData, null, 2),
                         axiosConfig
@@ -77,6 +79,7 @@ const PreSurvey = () => {
                                 'Presurvey has been submitted successfully',
                                 ''
                             );
+                            dispatch(updateStudentBadges({ badge_slugs: ["survey_champ"] }, currentUser.data[0].user_id, language));
                             setTimeout(() => {
                                 history.push('/dashboard');
                             }, 500);
@@ -94,22 +97,18 @@ const PreSurvey = () => {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         axios
             .get(
-                `${URL.getPreSurveyList}?role=STUDENT?${getLanguage(language)}`,
+                `${URL.getStudentPreSurveyList}?role=STUDENT&${getLanguage(language)}`,
                 axiosConfig
             )
             .then((preSurveyRes) => {
                 if (preSurveyRes?.status == 200) {
-                    console.log(
-                        '🚀 ~ file: PreSurvey.js ~ line 76 ~ .then ~ preSurveyRes',
-                        preSurveyRes
-                    );
                     setQuizSurveyId(
-                        preSurveyRes.data.data[0].dataValues[0].quiz_survey_id
+                        preSurveyRes.data.data[0].quiz_survey_id
                     );
                     setPreSurveyStatus(
-                        preSurveyRes.data.data[0].dataValues[0].progress
+                        preSurveyRes.data.data[0].progress
                     );
-                    let allQuestions = preSurveyRes.data.data[0].dataValues[0];
+                    let allQuestions = preSurveyRes.data.data[0];
                     setPreSurveyList(allQuestions.quiz_survey_questions);
                 }
             })
@@ -125,215 +124,213 @@ const PreSurvey = () => {
     return (
         <Layout>
             <Container className="presuervey mb-50 mt-5 ">
-                <Col>
-                    <Row className=" justify-content-center">
-                        <div className="aside  p-4 bg-transparent">
-                            {!show && preSurveyStatus != 'COMPLETED' ? (
-                                <CardBody>
-                                    <Row>
-                                        <Col md={4}>
-                                            <figure>
-                                                <img
-                                                    src={getStart}
-                                                    className="img-fluid"
-                                                    alt="get started"
-                                                />
-                                            </figure>
-                                        </Col>
-                                        <Col md={8}>
-                                            <h2>{t('get_started.heading')}</h2>
-                                            <div
-                                                dangerouslySetInnerHTML={{
-                                                    __html: t(
-                                                        'get_started.desc'
-                                                    )
-                                                }}
-                                            ></div>
-                                            <Button
-                                                label={t('get_started.btn')}
-                                                btnClass="primary my-3"
-                                                size="small"
-                                                onClick={handleStart}
-                                            />
-                                        </Col>
-                                    </Row>
-                                </CardBody>
-                            ) : (
-                                <>
-                                    <h2>Pre Survey</h2>
-                                    {preSurveyStatus != 'COMPLETED' && (
-                                        <Form
-                                            className="form-row"
-                                            onSubmit={formik.handleSubmit}
-                                            isSubmitting
-                                        >
-                                            {preSurveyList.map(
-                                                (eachQuestion, i) => {
-                                                    return (
-                                                        <Row key={i}>
-                                                            <Card className="card mb-4 my-3 comment-card px-0 px-5 py-3">
-                                                                <div className="question quiz mb-0">
-                                                                    <b>
-                                                                        {i + 1}.{' '}
-                                                                        {
-                                                                            eachQuestion.question
-                                                                        }
-                                                                    </b>
-                                                                </div>
-                                                                <div className="answers">
-                                                                    <FormGroup
-                                                                        tag="fieldset"
-                                                                        className="w-100"
-                                                                        id="radioGroup1"
-                                                                        label="One of these please"
-                                                                        value={
-                                                                            formik
-                                                                                .values
-                                                                                .radioGroup1
-                                                                        }
-                                                                        error={
-                                                                            formik
-                                                                                .errors
-                                                                                .radioGroup1
-                                                                        }
-                                                                        touched={
-                                                                            formik
-                                                                                .touched
-                                                                                .radioGroup1
-                                                                        }
-                                                                        onChange={
-                                                                            formik.handleChange
-                                                                        }
-                                                                        onBlur={
-                                                                            formik.handleBlur
-                                                                        }
+
+                <Row className="justify-content-center aside p-4 bg-transparent">
+                    {!show && preSurveyStatus != 'COMPLETED' ? (
+                        <Card className='p-5'>
+                            <Row>
+                                <Col md={4}>
+                                    <figure>
+                                        <img
+                                            src={getStart}
+                                            className="img-fluid"
+                                            alt="get started"
+                                        />
+                                    </figure>
+                                </Col>
+                                <Col md={8}>
+                                    <h2>{t('student_get_started.heading')}</h2>
+                                    <div
+                                        dangerouslySetInnerHTML={{
+                                            __html: t(
+                                                'student_get_started.desc'
+                                            )
+                                        }}
+                                    ></div>
+
+                                    <Button
+                                        label={t('student_get_started.btn')}
+                                        btnClass="primary my-3"
+                                        size="small"
+                                        onClick={handleStart}
+                                    />
+                                </Col>
+                            </Row>
+                        </Card>
+                    ) : (
+                        <>
+                            <h2>Pre Survey</h2>
+                            {preSurveyStatus != 'COMPLETED' && (
+                                <Form
+                                    className="form-row"
+                                    onSubmit={formik.handleSubmit}
+                                    isSubmitting
+                                >
+                                    {preSurveyList.map(
+                                        (eachQuestion, i) => {
+                                            return (
+                                                <Row key={i}>
+                                                    <Card className="card mb-4 my-3 comment-card px-0 px-5 py-3">
+                                                        <div className="question quiz mb-0">
+                                                            <b>
+                                                                {i + 1}.{' '}
+                                                                {
+                                                                    eachQuestion.question
+                                                                }
+                                                            </b>
+                                                        </div>
+                                                        <div className="answers">
+                                                            <FormGroup
+                                                                tag="fieldset"
+                                                                className="w-100"
+                                                                id="radioGroup1"
+                                                                label="One of these please"
+                                                                value={
+                                                                    formik
+                                                                        .values
+                                                                        .radioGroup1
+                                                                }
+                                                                error={
+                                                                    formik
+                                                                        .errors
+                                                                        .radioGroup1
+                                                                }
+                                                                touched={
+                                                                    formik
+                                                                        .touched
+                                                                        .radioGroup1
+                                                                }
+                                                                onChange={
+                                                                    formik.handleChange
+                                                                }
+                                                                onBlur={
+                                                                    formik.handleBlur
+                                                                }
+                                                            >
+                                                                <FormGroup
+                                                                    check
+                                                                >
+                                                                    <Label
+                                                                        check
                                                                     >
-                                                                        <FormGroup
-                                                                            check
-                                                                        >
-                                                                            <Label
-                                                                                check
-                                                                            >
-                                                                                <Input
-                                                                                    type="radio"
-                                                                                    name={`radioGroup${i}`}
-                                                                                    id="radioOption1"
-                                                                                    value={`${eachQuestion.quiz_survey_question_id} -- ${eachQuestion.option_a}`}
-                                                                                />{' '}
-                                                                                {
-                                                                                    eachQuestion.option_a
-                                                                                }
-                                                                            </Label>
-                                                                        </FormGroup>
-                                                                        <FormGroup
-                                                                            check
-                                                                        >
-                                                                            <Label
-                                                                                check
-                                                                            >
-                                                                                <Input
-                                                                                    type="radio"
-                                                                                    name={`radioGroup${i}`}
-                                                                                    id="radioOption2"
-                                                                                    value={`${eachQuestion.quiz_survey_question_id} -- ${eachQuestion.option_b}`}
-                                                                                />{' '}
-                                                                                {
-                                                                                    eachQuestion.option_b
-                                                                                }
-                                                                            </Label>
-                                                                        </FormGroup>
-                                                                        <FormGroup
-                                                                            check
-                                                                        >
-                                                                            <Label
-                                                                                check
-                                                                            >
-                                                                                <Input
-                                                                                    type="radio"
-                                                                                    name={`radioGroup${i}`}
-                                                                                    id="radioOption3"
-                                                                                    value={`${eachQuestion.quiz_survey_question_id} -- ${eachQuestion.option_c}`}
-                                                                                />{' '}
-                                                                                {
-                                                                                    eachQuestion.option_c
-                                                                                }
-                                                                            </Label>
-                                                                        </FormGroup>
+                                                                        <Input
+                                                                            type="radio"
+                                                                            name={`radioGroup${i}`}
+                                                                            id="radioOption1"
+                                                                            value={`${eachQuestion.quiz_survey_question_id} -- ${eachQuestion.option_a}`}
+                                                                        />{' '}
+                                                                        {
+                                                                            eachQuestion.option_a
+                                                                        }
+                                                                    </Label>
+                                                                </FormGroup>
+                                                                <FormGroup
+                                                                    check
+                                                                >
+                                                                    <Label
+                                                                        check
+                                                                    >
+                                                                        <Input
+                                                                            type="radio"
+                                                                            name={`radioGroup${i}`}
+                                                                            id="radioOption2"
+                                                                            value={`${eachQuestion.quiz_survey_question_id} -- ${eachQuestion.option_b}`}
+                                                                        />{' '}
+                                                                        {
+                                                                            eachQuestion.option_b
+                                                                        }
+                                                                    </Label>
+                                                                </FormGroup>
+                                                                <FormGroup
+                                                                    check
+                                                                >
+                                                                    <Label
+                                                                        check
+                                                                    >
+                                                                        <Input
+                                                                            type="radio"
+                                                                            name={`radioGroup${i}`}
+                                                                            id="radioOption3"
+                                                                            value={`${eachQuestion.quiz_survey_question_id} -- ${eachQuestion.option_c}`}
+                                                                        />{' '}
+                                                                        {
+                                                                            eachQuestion.option_c
+                                                                        }
+                                                                    </Label>
+                                                                </FormGroup>
 
-                                                                        <FormGroup
-                                                                            check
-                                                                        >
-                                                                            <Label
-                                                                                check
-                                                                            >
-                                                                                <Input
-                                                                                    type="radio"
-                                                                                    name={`radioGroup${i}`}
-                                                                                    id="radioOption4"
-                                                                                    value={`${eachQuestion.quiz_survey_question_id} -- ${eachQuestion.option_d}`}
-                                                                                />{' '}
-                                                                                {
-                                                                                    eachQuestion.option_d
-                                                                                }
-                                                                            </Label>
-                                                                        </FormGroup>
+                                                                <FormGroup
+                                                                    check
+                                                                >
+                                                                    <Label
+                                                                        check
+                                                                    >
+                                                                        <Input
+                                                                            type="radio"
+                                                                            name={`radioGroup${i}`}
+                                                                            id="radioOption4"
+                                                                            value={`${eachQuestion.quiz_survey_question_id} -- ${eachQuestion.option_d}`}
+                                                                        />{' '}
+                                                                        {
+                                                                            eachQuestion.option_d
+                                                                        }
+                                                                    </Label>
+                                                                </FormGroup>
 
-                                                                        
-                                                                    </FormGroup>
-                                                                </div>
-                                                            </Card>
-                                                        </Row>
-                                                    );
-                                                }
-                                            )}
 
-                                            <div className="text-right">
-                                                <Button
-                                                    type="submit"
-                                                    btnClass={
-                                                        !(
-                                                            formik.dirty &&
-                                                            formik.isValid
-                                                        )
-                                                            ? 'default'
-                                                            : 'primary'
-                                                    }
-                                                    disabled={
-                                                        !(
-                                                            formik.dirty &&
-                                                            formik.isValid
-                                                        )
-                                                    }
-                                                    size="small"
-                                                    label="Submit"
-                                                />
-                                            </div>
-                                        </Form>
+                                                            </FormGroup>
+                                                        </div>
+                                                    </Card>
+                                                </Row>
+                                            );
+                                        }
                                     )}
 
-                                    {preSurveyStatus == 'COMPLETED' && (
-                                        <div style={{ textAlign: 'center' }}>
-                                            <div>
-                                                <img
-                                                    className="img-fluid w-25"
-                                                    src={Congo}
-                                                ></img>
-                                            </div>
-
-                                            <div>
-                                                <h2>
-                                                    {t(
-                                                        'teacher_get_started.pre'
-                                                    )}
-                                                </h2>
-                                            </div>
-                                        </div>
-                                    )}
-                                </>
+                                    <div className="text-right">
+                                        <Button
+                                            type="submit"
+                                            btnClass={
+                                                !(
+                                                    formik.dirty &&
+                                                    formik.isValid
+                                                )
+                                                    ? 'default'
+                                                    : 'primary'
+                                            }
+                                            disabled={
+                                                !(
+                                                    formik.dirty &&
+                                                    formik.isValid
+                                                )
+                                            }
+                                            size="small"
+                                            label="Submit"
+                                        />
+                                    </div>
+                                </Form>
                             )}
-                        </div>
-                    </Row>
-                </Col>
+
+                            {preSurveyStatus == 'COMPLETED' && (
+                                <div style={{ textAlign: 'center' }}>
+                                    <div>
+                                        <img
+                                            className="img-fluid w-25"
+                                            src={Congo}
+                                        ></img>
+                                    </div>
+
+                                    <div>
+                                        <h2>
+                                            {t(
+                                                'teacher_get_started.pre'
+                                            )}
+                                        </h2>
+                                    </div>
+                                </div>
+                            )}
+                        </>
+                    )}
+                </Row>
             </Container>
         </Layout>
     );

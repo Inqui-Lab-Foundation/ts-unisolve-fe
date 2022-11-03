@@ -11,45 +11,35 @@ import { IoCheckmarkDoneCircleSharp } from 'react-icons/io5';
 import { getAdminCourseDetails } from '../../../redux/actions';
 import TakeAssesmentPopup from './TakeAssesmentPopup';
 import { BsLayoutTextSidebarReverse } from 'react-icons/bs';
-
-// import { BsFillPauseFill } from "react-icons/bs";
-// import { FiPlayCircle } from "react-icons/fi";
 import { VscCircleFilled } from 'react-icons/vsc';
 import { VscCheck } from 'react-icons/vsc';
-// import CourseVideo from "../../assets/img/courseVideo.png";
-// import { Avatar, Icon } from "antd";
 import Vimeo from '@u-wave/react-vimeo';
 import Layout from '../../Layout';
-// import { Progress } from "antd";
 import { BsQuestionCircle } from 'react-icons/bs';
 import { Modal } from 'react-bootstrap';
+import CourseSuccessMessage from './CourseSuccessMessage';
 import {
     Accordion,
     AccordionItem,
     AccordionHeader,
     AccordionBody
 } from 'reactstrap';
-// import User from "../../assets/img/avatar1.png";
 import { Button } from '../../../stories/Button';
 import { GrDocument } from 'react-icons/gr';
 import { AiFillPlayCircle } from 'react-icons/ai';
 import { getCurrentUser } from '../../../helpers/Utils';
 import axios from 'axios';
-// import { ProgressComp } from "../../stories/Progress/Progress";
 import ModuleAssesmentImg from '../../../assets/media/moduleAssesmentPopup.svg';
-
-// import { FileComp } from "../../stories/FileComp/FileComp";
 import { connect, useSelector } from 'react-redux';
-
-// import DetaledQuiz from "../../Admin/DetailedQuiz";
 import DetaledQuiz from '../../../Admin/DetailedQuiz/DetaledQuiz';
 
 import Csv from '../../../assets/media/csv1.png';
 
 import Pdf from '../../../assets/media/csv1.png';
 import FullScreenButton from '../../../components/FullScreenButtonComp';
-import CourseSuccessMessage from './CourseSuccessMessage';
 import { getLanguage } from '../../../constants/languageOptions';
+import { updateStudentBadges } from '../../../redux/studentRegistration/actions';
+import { useDispatch } from 'react-redux';
 //VIMEO REFERENCE
 //https://github.com/u-wave/react-vimeo/blob/default/test/util/createVimeo.js
 
@@ -71,8 +61,8 @@ const PlayVideoCourses = (props) => {
         ? props.location.data.course_videos_count
         : '';
     const history = useHistory();
+    const dispatch = useDispatch();
     const currentUser = getCurrentUser('current_user');
-    // console.log("============================currentUser=========", currentUser);
     const [condition, setCondition] = useState('');
     const [modalShow, setModalShow] = useState(false);
     const [showQuiz, setHideQuiz] = useState(false);
@@ -84,6 +74,7 @@ const PlayVideoCourses = (props) => {
     const [topicObj, setTopicObj] = useState({});
     const [id, setResponce] = useState([]);
     const [firstObj, setFirstObj] = useState([]);
+    const [continueObj, setContinueObj] = useState([]);
     const [moduleResponce, setUpdateModuleResponce] = useState([]);
     const [worksheetResponce, SetWorksheetResponce] = useState([]);
     const [courseData, setCourseData] = useState(null);
@@ -120,23 +111,30 @@ const PlayVideoCourses = (props) => {
     const [seletedFilesName, setSeletedFilesName] = useState([]);
     const [seletedFiles, setSeletedFiles] = useState([]);
     const [open, setOpen] = useState('0');
+    const [badge, setBadge] = useState('0');
     const toggle = (id) => {
         if (id == 1) {
             setOpen('1');
+            setBadge('the_inspirer');
         } else if (open === id) {
             setOpen();
-        } else if (open === '0') {
-            setOpen('1');
+            // } else if (open === '0') {
+            //     setOpen('1');
         } else if (id === 2) {
             setOpen('2');
+            setBadge('the_team_player');
         } else if (id === 3) {
             setOpen('3');
+            setBadge('the_finder');
         } else if (id === 4) {
             setOpen(4);
+            setBadge('the_explorer');
         } else if (id === 5) {
             setOpen('5');
+            setBadge('the_ideator');
         } else if (id === 6) {
             setOpen('6');
+            setBadge('the_solver');
         } else if (id === 7) {
             setOpen('7');
         } else {
@@ -150,6 +148,8 @@ const PlayVideoCourses = (props) => {
     useEffect(() => {
         var topicArrays = [];
         var firstObjectArray = [];
+        var continueArrays = [];
+        var continueObjectArrays = [];
         setAdminCourse(props.adminCoursesDetails[0]);
         // setAdminCourseDetails(props.adminCoursesDetails[0].description);
         setAdminCourseDetails(
@@ -164,9 +164,16 @@ const PlayVideoCourses = (props) => {
             });
         setTopicArray(topicArrays);
         if (topicArrays.length > 0) {
+            topicArrays.map((item, i) => {
+                if (item.progress == 'COMPLETED') {
+                    continueArrays.push(item);
+                }
+            });
             firstObjectArray.push(topicArrays[0]);
+            continueObjectArrays.push(continueArrays[continueArrays.length - 1]);
+            setContinueObj(continueObjectArrays);
+            setFirstObj(firstObjectArray);
         }
-        setFirstObj(firstObjectArray);
     }, [props.adminCoursesDetails]);
     async function fetchData(videoId) {
         setVideoId(videoId);
@@ -229,7 +236,6 @@ const PlayVideoCourses = (props) => {
     };
 
     async function modulesListUpdateApi(courseTopicId) {
-        // console.log(courseTopicId);
         const body1 = JSON.stringify({
             user_id: JSON.stringify(currentUser.data[0].user_id),
             course_topic_id: JSON.stringify(courseTopicId),
@@ -797,7 +803,6 @@ const PlayVideoCourses = (props) => {
     };
 
     const handleSelect = (topicId, couseId, type) => {
-        console.log(type);
         setCourseTopicId(couseId);
         const topic_Index =
             setTopicArrays &&
@@ -960,13 +965,19 @@ const PlayVideoCourses = (props) => {
                     setFileName();
                     setUrl();
                     setSeletedFiles();
+                    dispatch(
+                        updateStudentBadges(
+                            { badge_slugs: [badge] },
+                            currentUser.data[0].user_id,
+                            language
+                        )
+                    );
                 }
             })
             .catch(function (error) {
                 console.log(error);
             });
     };
-
     const handleNextCourse = () => {
         toggle(topicObj.course_module_id);
         modulesListUpdateApi(topicObj.course_topic_id);
@@ -986,7 +997,19 @@ const PlayVideoCourses = (props) => {
             firstObj[0].course_topic_id,
             firstObj[0].topic_type
         );
-        toggle('1');
+        toggle(firstObj[0].course_module_id);
+    };
+
+    const startContinueCourse = (e) => {
+        setCourseData(null);
+        modulesListUpdateApi(continueObj[0].course_topic_id);
+        setTopic(continueObj[0]);
+        handleSelect(
+            continueObj[0].topic_type_id,
+            continueObj[0].course_topic_id,
+            continueObj[0].topic_type
+        );
+        toggle(continueObj[0].course_module_id);
     };
 
     const startCourseModule = (e) => {
@@ -1042,7 +1065,7 @@ const PlayVideoCourses = (props) => {
                     <Row className="m-0 courser-video-section ">
                         <Col
                             xl={4}
-                            className="course-assement order-2 order-xl-1"
+                            className="course-assement order-2 order-xl-1 mb-5"
                             style={{
                                 display: `${
                                     fullScreen.isFullSCreen ? 'none' : ''
@@ -1050,7 +1073,7 @@ const PlayVideoCourses = (props) => {
                             }}
                         >
                             <div className="assement-info">
-                                <p className="content-title">Course Modules</p>
+                                <p className="content-title">Course Lessons</p>
                                 <div className="view-head"></div>
                                 {/* <div className='courses-type pb-3'>
                   <BsDot />
@@ -1060,7 +1083,7 @@ const PlayVideoCourses = (props) => {
                   <BsDot className='lessonsvg' />
                   <span className='card-type points'>11h 9m total length</span>
                 </div> */}
-                                <div className="assement-item" id="scrollbar">
+                                <div className="assement-item " id="scrollbar">
                                     <Accordion open={open} toggle={toggle}>
                                         {adminCourseDetails &&
                                             adminCourseDetails.length &&
@@ -1261,7 +1284,7 @@ const PlayVideoCourses = (props) => {
 
                         <Col
                             xl={8}
-                            className="course-video order-1 order-xl-2"
+                            className="course-video order-1 order-xl-2 mb-5"
                             style={{
                                 width: `${
                                     fullScreen.isFullSCreen
@@ -1357,7 +1380,7 @@ const PlayVideoCourses = (props) => {
                                                         href={
                                                             process.env
                                                                 .REACT_APP_API_IMAGE_BASE_URL +
-                                                            '/images/default_worksheet.pdf'
+                                                            'assets/defaults/default_worksheet.pdf'
                                                         }
                                                         target="_blank"
                                                         rel="noreferrer"
@@ -1365,7 +1388,7 @@ const PlayVideoCourses = (props) => {
                                                     >
                                                         <Button
                                                             button="submit"
-                                                            label="Download Sample Worksheet"
+                                                            label="Download Worksheet"
                                                             btnClass="primary mt-4"
                                                             size="small"
                                                             style={{
@@ -1390,13 +1413,32 @@ const PlayVideoCourses = (props) => {
                                                             label="Download Worksheet"
                                                             btnClass="primary mt-4"
                                                             size="small"
-                                                            style={{
-                                                                marginRight:
-                                                                    '2rem'
-                                                            }}
+                                                            
                                                         />
                                                     </a>
                                                 )}
+                                                <Button
+                                                    label="Skip & Continue"
+                                                    btnClass=" mx-4"
+                                                    size="small"
+                                                    type="submit"
+                                                    style={{background:"#067de1"}}
+                                                    onClick={() => {
+                                                        handleNextCourse();
+                                                        dispatch(
+                                                            updateStudentBadges(
+                                                                {
+                                                                    badge_slugs:
+                                                                        [badge]
+                                                                },
+                                                                currentUser
+                                                                    .data[0]
+                                                                    .user_id,
+                                                                language
+                                                            )
+                                                        );
+                                                    }}
+                                                />
                                                 {worksheetResponce.response !=
                                                     null &&
                                                 worksheetResponce.worksheet_id !==
@@ -1438,7 +1480,7 @@ const PlayVideoCourses = (props) => {
                                                                     type="file"
                                                                     name="file"
                                                                     multiple
-                                                                    accept="image/png, image/jpeg,.pdf"
+                                                                    accept=".csv,,.pdf"
                                                                     onChange={(
                                                                         e
                                                                     ) =>
@@ -1542,14 +1584,13 @@ const PlayVideoCourses = (props) => {
                                         id="desc"
                                     >
                                         <CardBody>
-                                            <text
-                                                style={{
-                                                    whiteSpace: 'pre-wrap'
+                                            <div
+                                                dangerouslySetInnerHTML={{
+                                                    __html:
+                                                        courseData &&
+                                                        courseData.description
                                                 }}
-                                            >
-                                                {courseData &&
-                                                    courseData.description}
-                                            </text>
+                                            ></div>
                                             {courseData &&
                                             courseData.course_module_id == 1 ? (
                                                 <div>
@@ -1607,7 +1648,7 @@ const PlayVideoCourses = (props) => {
                                                 showTitle
                                             />
                                         )}
-                                        <p className="p-4">
+                                        {/* <p className="p-4">
                                             <span> Description : </span> Lorem
                                             ipsum dolor sit amet, consectetur
                                             adipisicing elit. Ullam fugiat fuga
@@ -1616,7 +1657,7 @@ const PlayVideoCourses = (props) => {
                                             praesentium nisi voluptatum
                                             quibusdam consequuntur. Saepe harum
                                             hic dicta eius.
-                                        </p>
+                                        </p> */}
                                     </Card>
                                 </>
                             ) : (
@@ -1624,26 +1665,46 @@ const PlayVideoCourses = (props) => {
                                 item !== 'VIDEO' &&
                                 condition !== 'Video1' && (
                                     <Fragment>
-                                        <Card className="course-sec-basic p-5">
+                                        <Card className="course-sec-basic p-5 mb-5">
                                             <CardBody>
-                                                <text
-                                                    style={{
-                                                        whiteSpace: 'pre-wrap'
-                                                    }}
-                                                >
-                                                    {adminCourse &&
-                                                        adminCourse.description}
+                                                <text>
+                                                    <div
+                                                        dangerouslySetInnerHTML={{
+                                                            __html:
+                                                                adminCourse &&
+                                                                adminCourse.description
+                                                        }}
+                                                    ></div>
                                                 </text>
-                                                <div>
-                                                    <Button
-                                                        label="START COURSE"
-                                                        btnClass="primary mt-4"
-                                                        size="small"
-                                                        onClick={(e) =>
-                                                            startFirstCourse(e)
-                                                        }
-                                                    />
-                                                </div>
+                                                {firstObj[0] &&
+                                                firstObj[0].progress ==
+                                                    'INCOMPLETE' ? (
+                                                    <div>
+                                                        <Button
+                                                            label="START COURSE"
+                                                            btnClass="primary mt-4"
+                                                            size="small"
+                                                            onClick={(e) =>
+                                                                startFirstCourse(
+                                                                    e
+                                                                )
+                                                            }
+                                                        />
+                                                    </div>
+                                                ) : (
+                                                    <div>
+                                                        <Button
+                                                            label="CONTINUE COURSE"
+                                                            btnClass="primary mt-4"
+                                                            size="small"
+                                                            onClick={(e) =>
+                                                                startContinueCourse(
+                                                                    e
+                                                                )
+                                                            }
+                                                        />
+                                                    </div>
+                                                )}
                                             </CardBody>
                                         </Card>
                                     </Fragment>

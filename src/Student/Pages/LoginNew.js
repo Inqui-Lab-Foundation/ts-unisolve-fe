@@ -19,6 +19,7 @@ import ellipse_1 from '../../assets/media/ellipse.svg';
 import { loginUser } from '../../redux/actions.js';
 // import LanguageSelectorComp from '../../components/LanguageSelectorComp';
 import CryptoJS from 'crypto-js';
+import { openNotificationWithIcon } from '../../helpers/Utils';
 
 const LoginNew = (props) => {
     const { t } = useTranslation();
@@ -36,6 +37,10 @@ const LoginNew = (props) => {
         }),
         // STIDENT ROLE
         onSubmit: (values) => {
+            if(localStorage.getItem("current_user") && localStorage.getItem("module")){
+                openNotificationWithIcon("error",`Another User(${localStorage.getItem("module")}) has already logged in.`);
+                return;
+            }
             const key = CryptoJS.enc.Hex.parse(
                 '253D3FB468A0E24677C28A624BE0F939'
             );
@@ -53,7 +58,7 @@ const LoginNew = (props) => {
                 role: "STUDENT"
             };
             console.log(body);
-            props.loginUserAction(body, history);
+            props.loginUserAction(body, history,"STUDENT");
         }
     });
 
@@ -66,11 +71,11 @@ const LoginNew = (props) => {
         placeholder: t('loginPage.Password')
     };
 
-    // const logInBtn = {
-    //     label: t('login.logIn'),
-    //     size: 'large'
-    //     // btnClass: "default",
-    // };
+
+    const logInBtn = {
+        label: t('login.logIn'),
+        size: 'large'
+    };
 
     // const openNotificationWithIcon = (type, item) => {
     //   notification[type]({
@@ -299,8 +304,10 @@ const LoginNew = (props) => {
                                     {/* {props.error} */}
 
                                     <div className="form-row row mb-5">
-                                        <p>Student login will be launched shortly. Please wait for notice from the program coordinators.</p>
-                                        {/* <Col
+
+                                        {/* Login button */}
+                                        <Col
+
                                             className="form-group"
                                             xs={12}
                                             sm={12}

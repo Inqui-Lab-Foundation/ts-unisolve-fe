@@ -216,12 +216,13 @@ const Quiz = (props) => {
                                                 <Button
                                                     size="small"
                                                     label="Submit"
-                                                    onClick={(e) => handleSubmit(e)}
+                                                    onClick={(e) =>  !selectOption ? null :handleSubmit(e)}
                                                     btnClass={
                                                         !selectOption
                                                             ? 'default'
                                                             : 'primary'
                                                     }
+                                                    disabled={!(selectOption)}
                                                 />
                                             </Col>
                                         </Row>

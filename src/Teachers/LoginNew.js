@@ -23,12 +23,14 @@ import { teacherLoginUser } from '../redux/actions';
 
 import CryptoJS from 'crypto-js';
 import ForgotPassword from './ForgotPassword';
+import { openNotificationWithIcon } from '../helpers/Utils';
 
 const LoginNew = (props) => {
     const { t } = useTranslation();
     const history = useHistory();
     const [password, handlePassword] = useState('password');
     const [showPopUp, setShowPopUp] = useState(false);
+    
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -41,6 +43,10 @@ const LoginNew = (props) => {
         }),
         // TEACHER ROLE
         onSubmit: (values) => {
+            if(localStorage.getItem("current_user") && localStorage.getItem("module")){
+                openNotificationWithIcon("error",`Another User(${localStorage.getItem("module")}) has already logged in`);
+                return;
+            }
             const key = CryptoJS.enc.Hex.parse(
                 '253D3FB468A0E24677C28A624BE0F939'
             );
@@ -51,14 +57,13 @@ const LoginNew = (props) => {
                 iv: iv,
                 padding: CryptoJS.pad.NoPadding
             }).toString();
-            console.log(encrypted);
             const body = {
                 username: values.email.trim(),
                 password: encrypted,
                 role: 'MENTOR'
             };
             // history.push("/admin/dashboard");
-            props.teacherLoginUserAction(body, history);
+            props.teacherLoginUserAction(body, history,"MENTOR");
         }
     });
 

@@ -81,20 +81,28 @@ const Header = (props) => {
                         </div>
                         <Navbar>
                             <Row className="justify-content-between w-100">
-                                <Col md={6}>
+                                {/* <Col md={6}>
                                     <InputWithSearch {...headerProps} />
-                                </Col>
-                                <Col md={6} className="d-flex profile-section">
-                                    <Badge
+                                </Col> */}
+                                <Col md={12} className="d-flex profile-section text-right">
+                                    {/* <Badge
                                         status="success"
                                         count={props.NotificationCount}
                                         className="notify-sec"
                                     >
                                         <CommonDropDownComp {...notifyOpt} />
-                                    </Badge>
+                                    </Badge> */}
 
                                     <div className="d-flex align-items-center profile">
-                                        <CommonDropDownComp {...profileOpt} />
+
+                                        <div className="d-flex align-items-center profile">
+                                            <img src={AvatarImg} className="img-fluid"  />
+                                            <span className='header-name-size'>
+                                                {currentUser.data[0].full_name}
+                                            </span> 
+                                        </div>
+
+                                        {/* <CommonDropDownComp {...profileOpt} /> */}
                                     </div>
                                 </Col>
                             </Row>

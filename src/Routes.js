@@ -14,7 +14,7 @@ import { ProtectedRoute } from './helpers/authHelper';
 import Dashboard from './Student/Pages/Dashboard/index';
 import BadgesComp from './Student/Pages/Badges/Badges';
 import Ideas from './Student/Pages/Ideas';
-
+import StudenetChangePSWModal from './Student/Pages/ChangePS';
 import './i18n';
 import SignUpNew from './Student/Pages/SignUpNew';
 import LoginNew from './Student/Pages/LoginNew';
@@ -62,6 +62,7 @@ import AdminNotification from './Admin/Notification';
 import AdminUserList from './Admin/UserList/Ticket';
 import AdminAddMentor from './Admin/UserList/AddNewMentor';
 import CommonUserProfile from './Admin/UserList/CommonUserProfile';
+import CommonUserProfileEdit from './Admin/UserList/EditProfile';
 import AdminEvaluator from './Admin/UserList/AddNewEvaluator';
 import EditEvaluator from './Admin/UserList/EditNewEvaluator';
 import AdminProblemcategory from './Admin/ProblemCategory';
@@ -85,6 +86,8 @@ import AdminNews from './Admin/News/Ticket';
 import AdminAddNews from './Admin/News/AddNews';
 import AdminAddNewsCategory from './Admin/News/AddNewsCategory';
 import RoadMap from './Admin/RoadMap/RoadMap';
+import Reports from './Admin/Reports';
+import IndividualReport from './Admin/Reports/ReportFilter';
 import StudentSignup from './Admin/StudentSignup';
 import Home from './home/home';
 import Terms from './home/termsandconditions';
@@ -119,6 +122,9 @@ import TeacherSupportAnswer from './Teachers/SupportJourney/TicketResponse';
 import MyCertificate from './Teachers/Certificate/MyCertificate';
 import PageNotFound from '../src/PageNotFound';
 import ChangePSWModal from './Teachers/ChangePSWModal';
+import Translation from './Admin/Translation/Translation';
+import EditTranslation from './Admin/Translation/EditTranslation'; 
+import CreateTranslation from './Admin/Translation/CreateTranslation'; 
 
 const Routers = () => {
     // const history = useHistory();
@@ -358,6 +364,12 @@ const Routers = () => {
                         path="/admin/userprofile"
                         component={CommonUserProfile}
                     />
+                    {/* CommonUserProfileEdit */}
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/edit-user-profile"
+                        component={CommonUserProfileEdit}
+                    />
                     <ProtectedRoute
                         exact={true}
                         path="/admin/notifications"
@@ -499,12 +511,6 @@ const Routers = () => {
 
                     <ProtectedRoute
                         exact={true}
-                        path="/admin/reports"
-                        component={AdminBadgesComp}
-                    />
-
-                    <ProtectedRoute
-                        exact={true}
                         path="/admin/pre-survey"
                         component={Preservey}
                     />
@@ -512,6 +518,22 @@ const Routers = () => {
                         exact={true}
                         path="/admin/road-map"
                         component={RoadMap}
+                    />
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/reports"
+                        component={Reports}
+                    />
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/selected-report"
+                        component={IndividualReport}
+                    />
+
+                    <ProtectedRoute
+                        exact={true}
+                        path="/change-password"
+                        component={StudenetChangePSWModal}
                     />
 
                     {/* TEACHERS ROUTES */}
@@ -627,6 +649,9 @@ const Routers = () => {
                         path="/teacher/my-certificate"
                         component={MyCertificate}
                     />
+                    <ProtectedRoute exact={true} path="/admin/translation" component={Translation} />
+                    <ProtectedRoute exact={true} path="/admin/edit-translation" component={EditTranslation} />
+                    <ProtectedRoute exact={true} path="/admin/create-translation" component={CreateTranslation} />
                     <Route component={PageNotFound} path="*" />
                 </Switch>
             </Router>
