@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Row, Col, Form, FormGroup, Label, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { InputBox } from '../../stories/InputBox/InputBox.jsx';
-//import { Button } from '../../stories/Button.jsx';
+import { Button } from '../../stories/Button.jsx';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -327,7 +327,7 @@ const LoginNew = (props) => {
                                                 }
                                                 disabled={!(formik.dirty && formik.isValid)}
                                             />
-                                        </Col> */}
+                                        </Col>
                                         {/* <Space>
                       <Button
                         onClick={() =>

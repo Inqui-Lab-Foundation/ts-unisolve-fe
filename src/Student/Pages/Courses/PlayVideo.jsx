@@ -928,6 +928,7 @@ const PlayVideoCourses = (props) => {
             setImage(img);
             setFileName(event.target.files[0].name);
         }
+        event.target.files = null;
     };
     const removeSelectedImage = () => {
         setSeletedFiles();
@@ -1591,7 +1592,7 @@ const PlayVideoCourses = (props) => {
                                                         courseData.description
                                                 }}
                                             ></div>
-                                            {courseData &&
+                                            {/* {courseData &&
                                             courseData.course_module_id == 1 ? (
                                                 <div>
                                                     <Button
@@ -1603,9 +1604,20 @@ const PlayVideoCourses = (props) => {
                                                         }
                                                     />
                                                 </div>
-                                            ) : (
-                                                ''
-                                            )}
+                                            ) : ( */}
+                                                <div>
+                                                    <Button
+                                                        label="CONTINUE COURSE"
+                                                        btnClass="primary mt-4"
+                                                        size="small"
+                                                        onClick={(e) =>
+                                                            startContinueCourse(
+                                                                e
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
+                                            {/* )} */}
                                         </CardBody>
                                     </Card>
                                 </Fragment>
@@ -1642,8 +1654,16 @@ const PlayVideoCourses = (props) => {
                                                 onPlay={handlePlayerPlay}
                                                 onSeeked={handleSeeked}
                                                 onTimeUpdate={handleTimeUpdate}
-                                                onEnd={() =>
-                                                    handleVimeoOnEnd(id)
+                                                onEnd={() =>{
+                                                    if(backToQuiz){
+                                                        setBackToQuiz(false);
+                                                        setItem('');
+                                                        setHideQuiz(true);
+                                                        setQuizTopic('');
+                                                        return;
+                                                    } 
+                                                    handleVimeoOnEnd(id);
+                                                }
                                                 }
                                                 showTitle
                                             />

@@ -42,6 +42,7 @@ export const GET_MYTEAM_ERROR = 'GET_MYTEAM_ERROR';
 /* reports */
 export const GET_SURVEY_REPORT = 'GET_SURVEY_REPORT';
 export const GET_MRNTOR_REG_STATUS_REPORT = 'GET_MRNTOR_REG_STATUS_REPORT';
+export const GET_MENTOR_REPORT = 'GET_MENTOR_REPORT';
 
 // Mentors //
 export const GET_TEACHERS = "GET_TEACHERS";
