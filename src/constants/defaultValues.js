@@ -96,7 +96,8 @@ export const URL = {
         process.env.REACT_APP_API_BASE_URL + '/dashboard/refreshMapStatsLive',
     getScheduleDates: process.env.REACT_APP_API_BASE_URL + '/auth/roadMap',
     getAdminReports: process.env.REACT_APP_API_BASE_URL +'/quizSurveys/',
-    getAdminMentorRegStatusReports: process.env.REACT_APP_API_BASE_URL +'/mentors/regStatus'
+    getAdminMentorRegStatusReports: process.env.REACT_APP_API_BASE_URL +'/mentors/regStatus',
+    getAdminMentorReports: process.env.REACT_APP_API_BASE_URL +'/reports/allMentorReports'
 };
 const API = 'O10ZPA0jZS38wP7cO9EhI3jaDf24WmKX62nWw870';
 

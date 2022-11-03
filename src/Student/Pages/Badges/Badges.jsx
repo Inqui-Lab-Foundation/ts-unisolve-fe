@@ -17,6 +17,7 @@ import Layout from '../../Layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStudentBadges } from '../../../redux/studentRegistration/actions';
 import { getCurrentUser } from '../../../helpers/Utils';
+import moment from 'moment/moment';
 const BadgesComp = () => {
     const {badges} = useSelector(state=>state.studentRegistration);
     const language = useSelector(
@@ -101,7 +102,7 @@ const BadgesComp = () => {
                                             <CardSubtitle className="badge-date">
                                                 EARNED ON:{' '}
                                                 <span className="badge-time">
-                                                    {badge?.student_status ? badge?.student_status :"Locked"}
+                                                    {badge?.student_status ? moment(badge?.student_status).format("DD MMM YYYY") :"Locked"}
                                                 </span>
                                             </CardSubtitle>
                                         </CardBody>
