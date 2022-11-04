@@ -180,11 +180,11 @@ const ViewTeamMember = () => {
                             />
                         </a>,
                         <a onClick={() => handleDeleteTeamMember(params)}>
-                            <i
+                            {teamsMembersList && teamsMembersList.length >2 && <i
                                 key={params.team_id}
                                 className="fa fa-trash"
                                 style={{ marginRight: '10px' }}
-                            />
+                            />}
                         </a>,
                         <a onClick={() => handleResetPassword(params)}>
                             <i key={params.team_id} className="fa fa-key" />

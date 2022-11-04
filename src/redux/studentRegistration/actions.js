@@ -20,7 +20,7 @@ import { getNormalHeaders } from '../../helpers/Utils';
 import { getLanguage } from '../../constants/languageOptions';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
-import logout from '../../assets/media/logout.svg';
+import logout from '../../assets/media/badge.png';
 
 
 
@@ -256,8 +256,9 @@ export const updateStudentBadges = (data, id, language) => async (dispatch) => {
 
                 swalWithBootstrapButtons
                     .fire({
-                        title: `New Batch `,
-                        text:`You have Earned a New Badge ${data.badge_slugs[0].replace("_"," ").toUpperCase()}`,
+                        title: `Congratulations`,
+                        text:`you've just earned a new badge`,
+                        // text:`You have Earned a New Badge ${data.badge_slugs[0].replace("_"," ").toUpperCase()}`,
                         imageUrl: `${logout}`,
                         showCloseButton: true,
                         confirmButtonText: "OK",
