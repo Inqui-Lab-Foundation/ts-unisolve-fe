@@ -14,7 +14,8 @@ import {
     FaShieldVirus,
     // FaQuestionCircle,
     FaBars,
-    FaHouseUser
+    FaHouseUser,
+    FaCertificate
 } from 'react-icons/fa';
 import { RiSurveyFill,RiLockPasswordFill} from 'react-icons/ri';
 
@@ -272,6 +273,24 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                             {t('home.post_survey')}
                         </NavLink>
                     </MenuItem>
+
+                    <MenuItem
+                        icon={<FaCertificate />}
+                        className={
+                            location.pathname === '/student/my-certificate' &&
+                            'sidebar-active'
+                        }
+                    >
+                        <NavLink
+                            exact={true}
+                            onClick={(e) => handleClick(e, '')}
+                            // onClick={(e) => handleClick(e, 'certificate')}
+                            to={'/student/my-certificate'}
+                        >
+                            {t('teacher.certificate')}
+                        </NavLink>
+                    </MenuItem>
+                    
                     <MenuItem
                         icon={<FaHouseUser />}
                         className={
