@@ -55,6 +55,35 @@ export const getTeacherByID = (id) => async (dispatch) => {
         dispatch(getTeacherByIdSuccess(""));
     }
 };
+export const teacherCreateMultipleStudent = (data,history) => async () => {
+    try {
+       
+        const axiosConfig = getNormalHeaders(KEY.User_API_Key);
+        const result = await axios
+            .post(`${URL.createMultiStudent}`, data, axiosConfig)
+            .then((user) => user)
+            .catch((err) => {
+                return err.response;
+            });
+        if (result && result.status === 201) {
+            openNotificationWithIcon(
+                'success',
+                'Students created successfully'
+            );
+            history.push("/teacher/teamlist");
+        } else {
+            openNotificationWithIcon(
+                'error',
+                'Something went wrong'
+            );
+        }
+    } catch (error) {
+        openNotificationWithIcon(
+            'error',
+            'Something went wrong'
+        );
+    }
+};
 export const teacherLoginUser = (data, history,module) => async (dispatch) => {
     try {
         const loginData = {
