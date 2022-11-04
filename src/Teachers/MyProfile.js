@@ -261,8 +261,8 @@ const MyProfile = () => {
                                                                     className="my-auto profile-detail"
                                                                 >
                                                                     <b>
-                                                                        {teacher?.organization_name
-                                                                            ? teacher?.organization_name
+                                                                        {teacher.organization?.organization_name
+                                                                            ? teacher.organization?.organization_name
                                                                             : '-'}
                                                                     </b>
                                                                 </Col>

@@ -122,7 +122,7 @@ const ChangePSW = (props) => {
             <div className="container ChangePSWModal mb-5">
                 <Row className="mt-5 change-password">
                     <Col md={12}>
-                        <h5>{t('changepswd.Change your password')}</h5>
+                        <h2>{t('changepswd.Change your password')}</h2>
                         <p>
                             {t(
                                 'changepswd.password_helps_prevent_unauthorized'
@@ -134,9 +134,9 @@ const ChangePSW = (props) => {
                         <Form onSubmit={formik.handleSubmit}>
                             <div className="form-row row mb-5 mt-3">
                                 <Col className="form-group" md={12}>
-                                    <Label className="mb-2" htmlFor="Password">
+                                    <h3><Label className="mb-2" htmlFor="Password">
                                         {t('changepswd.Current_password')}
-                                    </Label>
+                                    </Label></h3>
                                     <InputBox
                                         {...oldPassword}
                                         id="oldPassword"
@@ -157,12 +157,12 @@ const ChangePSW = (props) => {
 
                             <div className="form-row row  mb-5">
                                 <Col className="form-group" md={12}>
-                                    <Label
+                                    <h3><Label
                                         className="mb-2"
                                         htmlFor="newPassword"
                                     >
                                         {t('changepswd.New_password')}
-                                    </Label>
+                                    </Label></h3>
                                     <InputBox
                                         {...newPassword}
                                         id="newPassword"
@@ -185,12 +185,12 @@ const ChangePSW = (props) => {
                                 </Col>
                                 <div className="w-100 clearfix" />
                                 <Col className="form-group mt-5" md={12}>
-                                    <Label
+                                    <h3><Label
                                         className="mb-2"
                                         htmlFor="confirmPassword"
                                     >
                                         {t('changepswd.Verify_New_password')}
-                                    </Label>
+                                    </Label></h3>
                                     <InputBox
                                         {...confirmPassword}
                                         id="confirmPassword"
@@ -208,8 +208,10 @@ const ChangePSW = (props) => {
                                     ) : null}
                                 </Col>
                             </div>
+                            <b style={{color: 'red' }}>
                             {error}
                             {responce}
+                            </b>
                             <div
                                 className="swal2-actions"
                                 style={{

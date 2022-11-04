@@ -53,7 +53,7 @@ const TicketsPage = (props) => {
         return () => clearTimeout(timeout);
     }, []);
     useEffect(() => {
-        props.getAdminTeamsListAction(currentUser.data[0].user_id);
+        props.getAdminTeamsListAction(currentUser.data[0].mentor_id);
     }, [count]);
 
     useEffect(() => {

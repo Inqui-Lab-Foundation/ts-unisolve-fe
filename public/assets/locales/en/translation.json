@@ -190,7 +190,11 @@
         "banner_new_heading": "Creating Tomorrow’s",
         "banner_new_creativity": "Changemakers",
         "banner_new_description": "Nurture a culture of social innovation and build skills while inspiring young people to become transformative leaders.",
-        "get_new_Started": "Register"
+        "get_new_Started": "Register",
+        "badges":"Badges",
+        "idea_submission":"Idea Submission",
+        "my_profile":"My Profile"
+
     },
     "home_tl1": {
         "Hero_section-header": "Creating Change Makers of Tomorrow with <span className='green'>21st Century Skills</span>",
@@ -323,6 +327,12 @@
         "desc": "<p>We are glad that you are part of this program and have joined us in this exciting journey of learning, skilling and innovation. There are many exciting things awaiting you in this journey.</p><p>You will learn through this platform, work with your team and be supported by your teachers as well.</p><p>Your journey as a participant will involve the following key steps:</p><ul><li><p>Step 1: Take Pre-Survey</p></li><li><p>Step 2: Start the course by watching the video.</p></li><li><p>Step 3: Complete each module and attempt the Quiz.</p></li><li><p>Step 4: Work with your team on the worksheets in each module to complete your own problem solving journey.</p></li><li><p>Step 5: Submit your team’s final idea.</p></li><li><p>Step 6: Complete the post survey.</p></li></ul><p>We hope you and your teams will have a great learning experience and wish you all the best for this program!</p>",
         "btn": "START JOURNEY",
         "pre": "Pre survey has been submitted"
+    },
+    "student_presurvey": {
+        "submit" : "Submit"
+    },
+    "student" : {
+        "profile": "My Profile"
     },
     "teacher_presurvey": {
         "completed_text": "Your survey has been successfully submitted!"
