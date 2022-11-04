@@ -21,9 +21,12 @@ export const URL = {
         process.env.REACT_APP_API_BASE_URL + '/supportTicketsReply',
     createOrganization:
         process.env.REACT_APP_API_BASE_URL + '/organizations/createOrg',
+    createMultiStudent:
+        process.env.REACT_APP_API_BASE_URL + '/students/bulkCreateStudent',
 
     //Put//
     changePassword: process.env.REACT_APP_API_BASE_URL + '/auth/changePassword',
+    studentResetPwd: process.env.REACT_APP_API_BASE_URL + '/students/resetPassword',
     updatePassword:
         process.env.REACT_APP_API_BASE_URL + '/mentors/updatePassword',
     updateMobile: process.env.REACT_APP_API_BASE_URL + '/mentors/updateMobile',

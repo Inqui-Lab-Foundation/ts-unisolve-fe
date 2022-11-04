@@ -20,7 +20,7 @@ import {
     NavItem
 } from 'reactstrap';
 import { Button } from '../stories/Button';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Input } from 'antd';
 import LanguageSelectorComp from '../components/LanguageSelectorComp';
 import { useTranslation } from 'react-i18next';
@@ -72,11 +72,18 @@ const Home = () => {
     const { t } = useTranslation();
     const [open, setOpen] = useState('1');
     const dispatch = useDispatch();
+    const history = useHistory();
     const { schedules } = useSelector((state) => state.schedules);
     const [modalShow, setModalShow] = useState(false);
     // useLayoutEffect(() => {
     //     dispatch(getSchedulesForTeacherAndStudents());
     // }, []);
+    useLayoutEffect(() => {
+        const moduleName = localStorage.getItem("module");
+        if (localStorage.getItem("current_user") && localStorage.getItem("module")) {
+            moduleName === "MENTOR" ? history.push("/teacher/dashboard") : moduleName === "ADMIN" ? history.push("/admin/dashboard") : history.push("/dashboard");
+        }
+    }, []);
     const [nav1, setNav1] = useState(null);
     const [nav2, setNav2] = useState(null);
     const [slider1, setSlider1] = useState(null);
@@ -452,7 +459,7 @@ const Home = () => {
                                             </AnchorLink>
                                         </NavItem>
                                     </Nav>
-                                    <LanguageSelectorComp module="general"/>
+                                    <LanguageSelectorComp module="general" />
                                 </div>
                             </Col>
                         </Row>
@@ -1014,7 +1021,7 @@ const Home = () => {
                     </Row>
                 </Container>
             </section>
-``
+            ``
             <section className="locate-unisolve">
                 <Container>
                     <Row>
