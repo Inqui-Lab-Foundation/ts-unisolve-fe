@@ -16,7 +16,7 @@ import {
     FaBars,
     FaHouseUser
 } from 'react-icons/fa';
-import { RiSurveyFill} from 'react-icons/ri';
+import { RiSurveyFill,RiLockPasswordFill} from 'react-icons/ri';
 
 
 import 'react-pro-sidebar/dist/css/styles.css';
@@ -195,7 +195,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                             onClick={handleClick}
                             to={'/badges'}
                         >
-                            Badges
+                            {t('home.badges')}
                         </NavLink>
                     </MenuItem>
                     <MenuItem
@@ -206,7 +206,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     >
                         <NavLink exact={true} onClick={handleClick} to={'/challenges'}>
                             {/* Challenges */}
-                            Idea Submission
+                            {t('home.idea_submission')}
                         </NavLink>
                     </MenuItem>
                     {/* <MenuItem
@@ -284,10 +284,10 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                             // onClick={(e) => handleClick(e, '')}
                             to={'/my-profile'}
                         >
-                            {t('teacher.profile')}
+                            {t('home.my_profile')}
                         </NavLink>
                     </MenuItem>
-                    {/* <MenuItem
+                    <MenuItem
                         icon={<RiLockPasswordFill />}
                         className={
                             location.pathname === '/teacher/change-password' &&
@@ -296,12 +296,12 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     >
                         <NavLink
                             exact={true}
-                            // onClick={(e) => handleClick(e, '')}
+                            //onClick={(e) => handleClick(e, '')}
                             to={'/change-password'}
                         >
                             {t('teacher.password')}
                         </NavLink>
-                    </MenuItem> */}
+                    </MenuItem>
                     <MenuItem
                         icon={<RiLogoutBoxRFill />}
                         className={location.pathname === '' && 'sidebar-active'}
