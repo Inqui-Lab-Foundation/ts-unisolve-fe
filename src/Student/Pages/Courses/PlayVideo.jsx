@@ -1362,6 +1362,7 @@ const PlayVideoCourses = (props) => {
                                             >
                                                 Unisolve Worksheet
                                             </CardTitle>
+                                        
                                             {worksheetResponce.response ===
                                             null ? (
                                                 <p>
@@ -1381,7 +1382,7 @@ const PlayVideoCourses = (props) => {
                                                         href={
                                                             process.env
                                                                 .REACT_APP_API_IMAGE_BASE_URL +
-                                                            'assets/defaults/default_worksheet.pdf'
+                                                                worksheetResponce?.attachments
                                                         }
                                                         target="_blank"
                                                         rel="noreferrer"
@@ -1423,7 +1424,7 @@ const PlayVideoCourses = (props) => {
                                                     btnClass=" mx-4"
                                                     size="small"
                                                     type="submit"
-                                                    style={{background:"#067de1"}}
+                                                    style={{background:"#00ced1",color:"#fff"}}
                                                     onClick={() => {
                                                         handleNextCourse();
                                                         dispatch(
