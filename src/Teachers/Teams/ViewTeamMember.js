@@ -142,11 +142,11 @@ const ViewTeamMember = () => {
                 selector: 'user.username',
                 width: '15%'
             },
-            {
-                name: 'Password',
-                selector: 'UUID',
-                width: '10%'
-            },
+            // {
+            //     name: 'Password',
+            //     selector: 'UUID',
+            //     width: '10%'
+            // },
             {
                 name: t('teacher_teams.student_name'),
                 selector: 'full_name',

@@ -305,7 +305,9 @@ const LoginNew = (props) => {
                                                         onClick={handleOnClick}
                                                         className="text-link pt-1"
                                                     >
-                                                        ForgotPassword
+                                                        {t(
+                                                                'loginPage.Forgot_password'
+                                                            )}
                                                     </Link>
                                                 </Col>
                                             </Row>
