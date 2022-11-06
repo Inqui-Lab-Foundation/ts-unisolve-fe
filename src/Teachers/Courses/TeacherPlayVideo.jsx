@@ -927,7 +927,7 @@ const TeacherPlayVideo = (props) => {
                             className="course-assement order-2 order-xl-1 "
                         >
                             <div className="assement-info">
-                                <p className="content-title">Course Lessons</p>
+                                <p className="content-title">Lessons</p>
                                 <div className="view-head"></div>
                                 <div className="assement-item" id="scrollbar">
                                     {teacherCourseDetails &&
