@@ -345,7 +345,7 @@ const Home = () => {
                 </Link>
                 <Link className="menu-item" onClick={() => setSidebar(false)}>
                     <Button
-                        label="Register"
+                        label={t('home_tl.register')}
                         btnClass="primary px-0 register"
                         size="small"
                         onClick={() => setModalShow(true)}

@@ -438,5 +438,9 @@
         "dice_place": "Please enter your UDISE code to continue",
         "hand_book": "UNISOLVE Hand Book",
         "please_download": "Please Download Handbook..."
+    },
+    "dummytext":{
+        "student_idea_sub":"<p>Dear Participant, we hope you are having a great learning experience along with your team.</p><p>You can submit your idea once the Idea Submissions are open. Your Guide Teacher will share the details about this and assist you and your team.</p><p>All the best! : )</p>",
+        "student_my_cer":"Please complete post survey to get course completion certificate"
     }
 }
