@@ -1028,9 +1028,9 @@ const PlayVideoCourses = (props) => {
             <div className="courses-page">
                 <Row className="courses-head view-head py-5">
                     <Col md={12} lg={9} className="mb-5 mb-md-5 mb-lg-0">
-                        <p className="course-breadcrum">
+                        {/* <p className="course-breadcrum">
                             Courses <BsChevronRight /> Courses details
-                        </p>
+                        </p> */}
                         <div className="courses-type">
                             <BsLayoutTextSidebarReverse />
                             <span className="card-type">
@@ -1074,7 +1074,7 @@ const PlayVideoCourses = (props) => {
                             }}
                         >
                             <div className="assement-info">
-                                <p className="content-title">Course Lessons</p>
+                                <p className="content-title">Lessons</p>
                                 <div className="view-head"></div>
                                 {/* <div className='courses-type pb-3'>
                   <BsDot />

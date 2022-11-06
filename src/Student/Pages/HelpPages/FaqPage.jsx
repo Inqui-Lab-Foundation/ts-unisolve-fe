@@ -195,7 +195,7 @@ const FaqPage = () => {
                                                                         xl={12}
                                                                         className="my-auto text-left"
                                                                     >
-                                                                        <p className="mb-0">{que.answer}</p>
+                                                                        <div dangerouslySetInnerHTML={ { __html: que.answer } }></div>
                                                                     </Col>
                                                                 </Row>
                                                             </div>
