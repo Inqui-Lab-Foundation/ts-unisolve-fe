@@ -1,6 +1,6 @@
 import './SignUp.scss';
 import React, { useState } from 'react';
-import { Row, Col, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Row, Col, Form, FormGroup, Label, Input, List } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { InputBox } from '../../stories/InputBox/InputBox.jsx';
 //import { Button } from '../../stories/Button.jsx';
