@@ -49,18 +49,19 @@ const EditTeamMember = (props) => {
 
         validationSchema: Yup.object({
             fullName: Yup.string()
-                .required('Please Give valid FullName')
-                .max(40)
-                .required(),
-            age: Yup.string()
-                .matches(/^[0-9\b]+$/, 'Please enter valid age')
-                .max(2)
-                .required(),
-            gender: Yup.string().required('Please select valid gender'),
-            grade: Yup.string()
-                .matches('', 'Please enter valid Class')
-                .max(40)
-                .required('Please enter valid Class')
+            .required('Please Enter valid Full Name')
+            .max(40)
+            .required(),
+        age: Yup.number()
+            .integer()
+            .min(10, 'Min age is 10')
+            .max(18, 'Max age is 18')
+            .required('required'),
+        gender: Yup.string().required('Please select valid gender'),
+        grade: Yup.string()
+            .matches('', 'Please enter valid class')
+            .max(40)
+            .required('Please enter valid class')
         }),
 
         onSubmit: (values) => {
