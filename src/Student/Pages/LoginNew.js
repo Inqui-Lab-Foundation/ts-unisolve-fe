@@ -72,10 +72,10 @@ const LoginNew = (props) => {
     };
 
 
-    const logInBtn = {
-        label: t('login.logIn'),
-        size: 'large'
-    };
+    // const logInBtn = {
+    //     label: t('login.logIn'),
+    //     size: 'large'
+    // };
 
     // const openNotificationWithIcon = (type, item) => {
     //   notification[type]({
@@ -304,9 +304,9 @@ const LoginNew = (props) => {
                                     {/* {props.error} */}
 
                                     <div className="form-row row mb-5">
-
+                                        <p>Student login will be launched shortly. Please wait for notice from the program coordinators.</p>
                                         {/* Login button */}
-                                        <Col
+                                        {/* <Col
 
                                             className="form-group"
                                             xs={12}
@@ -368,6 +368,19 @@ const LoginNew = (props) => {
                                 </Row> */}
 
                                 
+                            </Col>
+                            <Col>
+                                <List type="unstyled">
+                                    <li>
+                                        <a href="http://tiny.cc/StudentVideoOne" target="_blank" rel='noopener noreferrer'>Click here to watch video 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="http://tiny.cc/StudentVideoTwo" target="_blank" rel='noopener noreferrer'>Click here to watch video 2</a>
+                                    </li>
+                                    <li>
+                                        <a href="http://tiny.cc/StudentVideoThree" target="_blank" rel='noopener noreferrer'>Click here to watch video 3</a>
+                                    </li>
+                                </List>
                             </Col>
                         </Row>
                     </Col>
