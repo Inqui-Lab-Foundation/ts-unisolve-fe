@@ -136,7 +136,7 @@ const TicketsPage = (props) => {
                             onClick={() => handleDelete(params)}
                             // style={{marginRight:"20px"}}
                         >
-                            { params.student_count === 0 && <div className="btn btn-danger btn-lg mr-5 ">{t('teacher_teams.delete')}</div>}
+                            { params.student_count <= 2 && <div className="btn btn-danger btn-lg mr-5 ">{t('teacher_teams.delete')}</div>}
                         </Link>,
                     ];
                 },
