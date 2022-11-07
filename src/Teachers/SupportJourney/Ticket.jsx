@@ -45,14 +45,14 @@ const TicketsPage = (props) => {
             {
                 name: "S.No.",
                 selector: "id",
-                // width: "20%",
+                width: "8%",
                 // center: true,
             },
             {
                 name: "Category",
                 selector: "query_category",
                 sortable: true,
-                // width: "30%",
+                width: "13%",
                 // center: true,
 
                 cell:(params)=>[<Link key={params.support_ticket_id} to={`/teacher/support-journey/ans-ticket?id=${params.support_ticket_id}`}>{params?.query_category} <FaComments/> {params.replies_count} </Link>]
@@ -64,32 +64,32 @@ const TicketsPage = (props) => {
                 name: "Query",
                 selector: "query_details",
                 sortable: true,
-                // width: "30%",
+                width: "64%",
                 // center: true,
             },
-            {
-                name: "Created By",
-                selector: "created_by",
-                center: true,
-                // width: "20%",
+            // {
+            //     name: "Created By",
+            //     selector: "created_by",
+            //     center: true,
+            //     // width: "20%",
                 
-            },
+            // },
             
-            {
-                name: "Created On",
-                // selector: "updated_at",
-                cell : (record)=>[<span key={record.id}>{moment(record.updated_at).format(
-                    'Do MMM, YYYY'
-                )}</span>]
-                // width: "20%",
-                // center: right,
-            },
+            // {
+            //     name: "Created On",
+            //     // selector: "updated_at",
+            //     cell : (record)=>[<span key={record.id}>{moment(record.updated_at).format(
+            //         'Do MMM, YYYY'
+            //     )}</span>]
+            //     // width: "20%",
+            //     // center: right,
+            // },
 
             {
                 name: "Status",
                 selector: "status",
-                // width: "20%",
-                // center: right,
+                width: "15%",
+                //center: true,
             },
         ],
     };

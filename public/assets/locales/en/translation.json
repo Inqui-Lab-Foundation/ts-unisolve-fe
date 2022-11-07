@@ -66,6 +66,7 @@
         "Password": "Enter your password",
         "keep_me": "keep me logged in",
         "Forgot_your_password": "Forgot your password",
+        "Forgot_password": "Forgot password",
         "Login": "Login",
         "Dont_have_an_account": "Don’t have an account?",
         "Signup": "Signup",
@@ -189,7 +190,11 @@
         "banner_new_heading": "Creating Tomorrow’s",
         "banner_new_creativity": "Changemakers",
         "banner_new_description": "Nurture a culture of social innovation and build skills while inspiring young people to become transformative leaders.",
-        "get_new_Started": "Register"
+        "get_new_Started": "Register",
+        "badges":"Badges",
+        "idea_submission":"Idea Submission",
+        "my_profile":"My Profile"
+
     },
     "home_tl1": {
         "Hero_section-header": "Creating Change Makers of Tomorrow with <span className='green'>21st Century Skills</span>",
@@ -217,7 +222,7 @@
         "faq_qn_3": "How many teams and teachers/mentors can participate in the program?",
         "faq_ans_3": "<p>The platform does not have any limitation in terms of the number of teams or students. But it is suggested that teacher/mentor:teams ratio be maintained as 1:5.</p>",
         "faq_qn_4": "How to register your institution for this program?",
-        "faq_ans_4": "<p>Open the website and click register. Register your school/Institution thereby entering the UDISE code/Unique ID and then filling in all required details. Once the registration process is completed, you can log in to your account either by entering a password or with OTP.</p>",
+        "faq_ans_4": "<p>Open the website and click register. Register your school/Institution thereby entering the UDISE code/Unique ID and then filling in all required details. Once the registration process is completed, you can log in to your account by entering email id and password.</p>",
         "faq_qn_5": "What are the next steps involved after registering my school on the website?",
         "faq_ans_5": "<p>The following are the next steps involved after you register your school/institution:</p><ol><li>Identify students who can participate in the program.</li><li>Form teams with the interested or nominated participant group. </li><li>Students have to log in to the website and start doing the online course with the team.</li><li>Teams will complete the learning course and submit one idea as their challenge project. </li></ol>",
         "roadmpa_one": "AWARENESS",
@@ -323,6 +328,12 @@
         "btn": "START JOURNEY",
         "pre": "Pre survey has been submitted"
     },
+    "student_presurvey": {
+        "submit" : "Submit"
+    },
+    "student" : {
+        "profile": "My Profile"
+    },
     "teacher_presurvey": {
         "completed_text": "Your survey has been successfully submitted!"
     },
@@ -427,5 +438,9 @@
         "dice_place": "Please enter your UDISE code to continue",
         "hand_book": "UNISOLVE Hand Book",
         "please_download": "Please Download Handbook..."
+    },
+    "dummytext":{
+        "student_idea_sub":"<p>Dear Participant, we hope you are having a great learning experience along with your team.</p><p>You can submit your idea once the Idea Submissions are open. Your Guide Teacher will share the details about this and assist you and your team.</p><p>All the best! : )</p>",
+        "student_my_cer":"Please complete post survey to get course completion certificate"
     }
 }

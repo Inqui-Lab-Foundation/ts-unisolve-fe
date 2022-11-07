@@ -7,12 +7,12 @@ import Layout from '../Layout';
 // import { Link } from 'react-router-dom';
 import { BsPlusLg } from 'react-icons/bs';
 import { Button } from '../../stories/Button';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 // import dummyCSV from '../../media/basic-csv.csv';
 import {
     // getAdminTeamsList,
-    getAdminTeamMembersList
+    getAdminTeamMembersList, studentResetPassword
 } from '../../redux/actions';
 import axios from 'axios';
 import { openNotificationWithIcon, getCurrentUser } from '../../helpers/Utils';
@@ -31,6 +31,7 @@ const ViewTeamMember = () => {
     const { t } = useTranslation();
     const currentUser = getCurrentUser('current_user');
     const teamID = JSON.parse(localStorage.getItem('teamId'));
+    const dispatch = useDispatch();
 
     const history = useHistory();
     const teamId =
@@ -91,16 +92,6 @@ const ViewTeamMember = () => {
             });
     }
 
-    // useEffect(() => {
-    //     var teamsMembersArrays = [];
-    //     props.teamsMembersList.length > 0 &&
-    //         props.teamsMembersList.map((teams, index) => {
-    //             var key = index + 1;
-    //             return teamsMembersArrays.push({ ...teams, key });
-    //         });
-    //     setTeamMembersArray(teamsMembersArrays);
-    // }, [props.teamsMembersList.length > 0, count]);
-
     useEffect(() => {
         var teamsMembersArrays = [];
         teamsMembersList.length > 0 &&
@@ -111,6 +102,38 @@ const ViewTeamMember = () => {
         setTeamMembersArray(teamsMembersArrays);
     }, [teamsMembersList.length > 0, count]);
 
+    const handleResetPassword = (data) => {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        });
+
+        swalWithBootstrapButtons
+            .fire({
+                title: "You are attempting to reset the password",
+                text: "Are you sure?",
+                imageUrl: `${logout}`,
+                showCloseButton: true,
+                confirmButtonText: "Reset Password",
+                showCancelButton: true,
+                cancelButtonText: t('general_req.btn_cancel'),
+                reverseButtons: false
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(studentResetPassword({ user_id: data.user_id.toString() }));
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire(
+                        "Cancelled",
+                        "Reset password is cancelled",
+                        'error'
+                    );
+                }
+            }).catch(err => console.log(err.response));
+    };
     var adminTeamMembersList = {
         data: teamsMembersList.length > 0 && teamsMembersList,
         columns: [
@@ -157,15 +180,15 @@ const ViewTeamMember = () => {
                             />
                         </a>,
                         <a onClick={() => handleDeleteTeamMember(params)}>
-                            <i
+                            {teamsMembersList && teamsMembersList.length >2 && <i
                                 key={params.team_id}
                                 className="fa fa-trash"
                                 style={{ marginRight: '10px' }}
-                            />
+                            />}
                         </a>,
-                        // <a onClick={() => handleReseatTeamMember(params)}>
-                        //     <i key={params.team_id} className="fa fa-key" />
-                        // </a>
+                        <a onClick={() => handleResetPassword(params)}>
+                            <i key={params.team_id} className="fa fa-key" />
+                        </a>
                     ];
                 },
                 width: '15%',
@@ -187,38 +210,6 @@ const ViewTeamMember = () => {
             item: item
         });
     };
-
-    // const handleReseatTeamMember = (item) => {
-    //     const body = JSON.stringify({
-    //         user_id: JSON.stringify(item.user_id)
-    //     });
-    //     console.log('item', body);
-
-    //     var config = {
-    //         method: 'put',
-    //         url: process.env.REACT_APP_API_BASE_URL + '/students/resetPassword',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             Authorization: `Bearer ${currentUser.data[0].token}`
-    //         },
-    //         data: body
-    //     };
-    //     axios(config)
-    //         .then(function (response) {
-    //             if (response.status === 202) {
-    //                 setCount(count + 1);
-    //                 openNotificationWithIcon(
-    //                     'success',
-    //                     'Password Successfully Updated'
-    //                 );
-    //             } else {
-    //                 openNotificationWithIcon('error', 'Opps! Something Wrong');
-    //             }
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });
-    // };
 
     const handleDeleteTeamMember = (item) => {
         const swalWithBootstrapButtons = Swal.mixin({

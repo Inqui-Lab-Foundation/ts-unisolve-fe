@@ -122,7 +122,7 @@ const ChangePSWModal = (props) => {
             <div className="container ChangePSWModal mb-5">
                 <Row className="mt-5 change-password">
                     <Col md={12}>
-                        <h5>{t('changepswd.Change your password')}</h5>
+                        <h2>{t('changepswd.Change your password')}</h2>
                         <p>
                             {t(
                                 'changepswd.password_helps_prevent_unauthorized'
@@ -135,7 +135,9 @@ const ChangePSWModal = (props) => {
                             <div className="form-row row mb-5 mt-3">
                                 <Col className="form-group" md={12}>
                                     <Label className="mb-2" htmlFor="Password">
-                                        {t('changepswd.Current_password')}
+                                        <h3>
+                                            {t('changepswd.Current_password')}
+                                        </h3>
                                     </Label>
                                     <InputBox
                                         {...oldPassword}
@@ -161,7 +163,7 @@ const ChangePSWModal = (props) => {
                                         className="mb-2"
                                         htmlFor="newPassword"
                                     >
-                                        {t('changepswd.New_password')}
+                                        <h3>{t('changepswd.New_password')}</h3>
                                     </Label>
                                     <InputBox
                                         {...newPassword}
@@ -189,7 +191,11 @@ const ChangePSWModal = (props) => {
                                         className="mb-2"
                                         htmlFor="confirmPassword"
                                     >
-                                        {t('changepswd.Verify_New_password')}
+                                        <h3>
+                                            {t(
+                                                'changepswd.Verify_New_password'
+                                            )}
+                                        </h3>
                                     </Label>
                                     <InputBox
                                         {...confirmPassword}
@@ -208,8 +214,10 @@ const ChangePSWModal = (props) => {
                                     ) : null}
                                 </Col>
                             </div>
-                            {error}
-                            {responce}
+                            <p style={{ fontWeight: 'bold', color: 'red' }}>
+                                {error}
+                                {responce}
+                            </p>
                             <div
                                 className="swal2-actions"
                                 style={{

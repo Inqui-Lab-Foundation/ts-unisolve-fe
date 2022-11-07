@@ -21,9 +21,12 @@ export const URL = {
         process.env.REACT_APP_API_BASE_URL + '/supportTicketsReply',
     createOrganization:
         process.env.REACT_APP_API_BASE_URL + '/organizations/createOrg',
+    createMultiStudent:
+        process.env.REACT_APP_API_BASE_URL + '/students/bulkCreateStudent',
 
     //Put//
     changePassword: process.env.REACT_APP_API_BASE_URL + '/auth/changePassword',
+    studentResetPwd: process.env.REACT_APP_API_BASE_URL + '/students/resetPassword',
     updatePassword:
         process.env.REACT_APP_API_BASE_URL + '/mentors/updatePassword',
     updateMobile: process.env.REACT_APP_API_BASE_URL + '/mentors/updateMobile',
@@ -96,7 +99,8 @@ export const URL = {
         process.env.REACT_APP_API_BASE_URL + '/dashboard/refreshMapStatsLive',
     getScheduleDates: process.env.REACT_APP_API_BASE_URL + '/auth/roadMap',
     getAdminReports: process.env.REACT_APP_API_BASE_URL +'/quizSurveys/',
-    getAdminMentorRegStatusReports: process.env.REACT_APP_API_BASE_URL +'/mentors/regStatus'
+    getAdminMentorRegStatusReports: process.env.REACT_APP_API_BASE_URL +'/mentors/regStatus',
+    getAdminMentorReports: process.env.REACT_APP_API_BASE_URL +'/reports/allMentorReports'
 };
 const API = 'O10ZPA0jZS38wP7cO9EhI3jaDf24WmKX62nWw870';
 

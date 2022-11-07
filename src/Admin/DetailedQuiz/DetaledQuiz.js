@@ -155,11 +155,12 @@ const DetaledQuiz = (props) => {
                             <Row>
                                 <Col md={6}>
                                     <p>
-                                        {t("teacher.question")} #
+                                        {t("teacher.question")}
+                                         {/* #
                                         {props.adminCourseQst.data &&
                                             props.adminCourseQst.data[0] &&
                                             props.adminCourseQst.data[0]
-                                                .question_no}
+                                                .question_no} */}
                                     </p>
                                 </Col>
                             </Row>

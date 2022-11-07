@@ -928,6 +928,7 @@ const PlayVideoCourses = (props) => {
             setImage(img);
             setFileName(event.target.files[0].name);
         }
+        event.target.files = null;
     };
     const removeSelectedImage = () => {
         setSeletedFiles();
@@ -1027,9 +1028,9 @@ const PlayVideoCourses = (props) => {
             <div className="courses-page">
                 <Row className="courses-head view-head py-5">
                     <Col md={12} lg={9} className="mb-5 mb-md-5 mb-lg-0">
-                        <p className="course-breadcrum">
+                        {/* <p className="course-breadcrum">
                             Courses <BsChevronRight /> Courses details
-                        </p>
+                        </p> */}
                         <div className="courses-type">
                             <BsLayoutTextSidebarReverse />
                             <span className="card-type">
@@ -1073,7 +1074,7 @@ const PlayVideoCourses = (props) => {
                             }}
                         >
                             <div className="assement-info">
-                                <p className="content-title">Course Lessons</p>
+                                <p className="content-title">Lessons</p>
                                 <div className="view-head"></div>
                                 {/* <div className='courses-type pb-3'>
                   <BsDot />
@@ -1361,6 +1362,7 @@ const PlayVideoCourses = (props) => {
                                             >
                                                 Unisolve Worksheet
                                             </CardTitle>
+                                        
                                             {worksheetResponce.response ===
                                             null ? (
                                                 <p>
@@ -1380,7 +1382,7 @@ const PlayVideoCourses = (props) => {
                                                         href={
                                                             process.env
                                                                 .REACT_APP_API_IMAGE_BASE_URL +
-                                                            'assets/defaults/default_worksheet.pdf'
+                                                                worksheetResponce?.attachments
                                                         }
                                                         target="_blank"
                                                         rel="noreferrer"
@@ -1422,7 +1424,7 @@ const PlayVideoCourses = (props) => {
                                                     btnClass=" mx-4"
                                                     size="small"
                                                     type="submit"
-                                                    style={{background:"#067de1"}}
+                                                    style={{background:"#00ced1",color:"#fff"}}
                                                     onClick={() => {
                                                         handleNextCourse();
                                                         dispatch(
@@ -1591,7 +1593,7 @@ const PlayVideoCourses = (props) => {
                                                         courseData.description
                                                 }}
                                             ></div>
-                                            {courseData &&
+                                            {/* {courseData &&
                                             courseData.course_module_id == 1 ? (
                                                 <div>
                                                     <Button
@@ -1603,9 +1605,20 @@ const PlayVideoCourses = (props) => {
                                                         }
                                                     />
                                                 </div>
-                                            ) : (
-                                                ''
-                                            )}
+                                            ) : ( */}
+                                                <div>
+                                                    <Button
+                                                        label="CONTINUE COURSE"
+                                                        btnClass="primary mt-4"
+                                                        size="small"
+                                                        onClick={(e) =>
+                                                            startContinueCourse(
+                                                                e
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
+                                            {/* )} */}
                                         </CardBody>
                                     </Card>
                                 </Fragment>
@@ -1642,8 +1655,16 @@ const PlayVideoCourses = (props) => {
                                                 onPlay={handlePlayerPlay}
                                                 onSeeked={handleSeeked}
                                                 onTimeUpdate={handleTimeUpdate}
-                                                onEnd={() =>
-                                                    handleVimeoOnEnd(id)
+                                                onEnd={() =>{
+                                                    if(backToQuiz){
+                                                        setBackToQuiz(false);
+                                                        setItem('');
+                                                        setHideQuiz(true);
+                                                        setQuizTopic('');
+                                                        return;
+                                                    } 
+                                                    handleVimeoOnEnd(id);
+                                                }
                                                 }
                                                 showTitle
                                             />

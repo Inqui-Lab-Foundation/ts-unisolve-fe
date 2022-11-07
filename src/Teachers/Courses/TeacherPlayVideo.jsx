@@ -102,6 +102,10 @@ const TeacherPlayVideo = (props) => {
     const [worksheet, setWorksheetByWorkSheetId] = useState([]);
     const [certificate, setCertificate] = useState(false);
     const [instructions, setInstructions] = useState(false);
+    const [continueObj, setContinueObj] = useState([]);
+    const [courseData, setCourseData] = useState(null);
+
+
 
     useEffect(() => {
         props.getTeacherCourseDetailsActions(course_id, language);
@@ -115,6 +119,9 @@ const TeacherPlayVideo = (props) => {
     useEffect(() => {
         var topicArrays = [];
         var firstObjectArray = [];
+        var continueArrays = [];
+        var continueObjectArrays = [];
+
         setAdminCourse(
             props.adminCoursesDetails && props.adminCoursesDetails[0]
         );
@@ -137,9 +144,17 @@ const TeacherPlayVideo = (props) => {
             );
         setTopicArray(topicArrays);
         if (topicArrays.length > 0) {
+            topicArrays.map((item, i) => {
+                if (item.progress == 'COMPLETED') {
+                    continueArrays.push(item);
+                }
+            });
             firstObjectArray.push(topicArrays[0]);
+            continueObjectArrays.push(continueArrays[continueArrays.length - 1]);
+            setContinueObj(continueObjectArrays);
+            firstObjectArray.push(topicArrays[0]);
+            setFirstObj(firstObjectArray);
         }
-        setFirstObj(firstObjectArray);
     }, [props.teaherCoursesDetails]);
 
     async function fetchData(videoId) {
@@ -709,6 +724,7 @@ const TeacherPlayVideo = (props) => {
                     data.mentor_course_topic_id === couseId
             );
         const topicObj = setTopicArrays[topic_Index + 1];
+        // const topicObj = setTopicArrays[topic_Index + 1];
         setTopicObj(topicObj);
         if (type === 'ATTACHMENT') {
             setWorksheetId(topicId);
@@ -854,12 +870,24 @@ const TeacherPlayVideo = (props) => {
     };
 
     const startFirstCourse = (e) => {
+        setCourseData(null);
         modulesListUpdateApi(firstObj[0].mentor_course_topic_id);
         handleSelect(
             firstObj[0].topic_type_id,
             firstObj[0].mentor_course_topic_id,
             firstObj[0].topic_type
         );
+    };
+
+    const startContinueCourse = (e) => {
+        setCourseData(null);
+        modulesListUpdateApi(continueObj[0].course_topic_id);
+        handleSelect(
+            continueObj[0].topic_type_id,
+            continueObj[0].course_topic_id,
+            continueObj[0].topic_type
+        );
+        // toggle(continueObj[0].course_module_id);
     };
 
     const handleDownload = (path) => {
@@ -899,7 +927,7 @@ const TeacherPlayVideo = (props) => {
                             className="course-assement order-2 order-xl-1 "
                         >
                             <div className="assement-info">
-                                <p className="content-title">Course Lessons</p>
+                                <p className="content-title">Lessons</p>
                                 <div className="view-head"></div>
                                 <div className="assement-item" id="scrollbar">
                                     {teacherCourseDetails &&
@@ -934,6 +962,9 @@ const TeacherPlayVideo = (props) => {
                                                                 md={12}
                                                                 className="my-auto"
                                                                 onClick={() => {
+                                                                    setCourseData(
+                                                                        course
+                                                                    );
                                                                     handleSelect(
                                                                         course.topic_type_id,
                                                                         course.mentor_course_topic_id,
@@ -1196,16 +1227,35 @@ const TeacherPlayVideo = (props) => {
                                                     <div dangerouslySetInnerHTML={{ __html: teacherCourse &&
                                                         teacherCourse.description }}></div>
                                                 </text>
-                                                <div>
-                                                    <Button
-                                                        label="START COURSE"
-                                                        btnClass="primary mt-4"
-                                                        size="small"
-                                                        onClick={(e) =>
-                                                            startFirstCourse(e)
-                                                        }
-                                                    />
-                                                </div>
+                                                {firstObj[0] &&
+                                                firstObj[0].progress ==
+                                                    'INCOMPLETE' ? (
+                                                    <div>
+                                                        <Button
+                                                            label="START COURSE"
+                                                            btnClass="primary mt-4"
+                                                            size="small"
+                                                            onClick={(e) =>
+                                                                startFirstCourse(
+                                                                    e
+                                                                )
+                                                            }
+                                                        />
+                                                    </div>
+                                                ) : (
+                                                    <div>
+                                                        <Button
+                                                            label="CONTINUE COURSE"
+                                                            btnClass="primary mt-4"
+                                                            size="small"
+                                                            onClick={(e) =>
+                                                                startContinueCourse(
+                                                                    e
+                                                                )
+                                                            }
+                                                        />
+                                                    </div>
+                                                )}
                                             </CardBody>
                                         </Card>
                                     </Fragment>
