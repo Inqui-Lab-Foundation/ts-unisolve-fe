@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, List, Label, Card } from 'reactstrap';
 import { Tabs, Space } from 'antd';
 import TicketDataTable from './TicketDataTable';
 import Layout from '../Layout';
@@ -136,7 +136,7 @@ const TicketsPage = (props) => {
                             onClick={() => handleDelete(params)}
                             // style={{marginRight:"20px"}}
                         >
-                            { params.student_count === 0 && <div className="btn btn-danger btn-lg mr-5 ">{t('teacher_teams.delete')}</div>}
+                            { params.student_count <= 2 && <div className="btn btn-danger btn-lg mr-5 ">{t('teacher_teams.delete')}</div>}
                         </Link>,
                     ];
                 },
@@ -492,6 +492,20 @@ const TicketsPage = (props) => {
                             </TabPane> */}
                         </Tabs>
                     </div>
+                </Row>
+                <Row className="pt-5">
+                    <Card className='w-100 p-5'>
+                        <Label>
+                        Instructions
+                        </Label>
+                        <List>
+                            <li>Each team needs to have a minimum of 2 members.</li>
+                            <li>Only 5 students in total can be added per team.</li>
+                            <li>Delete team members will be active only once you add 3 members to the team.</li>
+                            <li>You can edit details of the team member by using edit option.</li>
+                            <li>You can delete the team by using Delete Option</li>
+                        </List>
+                    </Card>
                 </Row>
             </Container>
         </Layout>

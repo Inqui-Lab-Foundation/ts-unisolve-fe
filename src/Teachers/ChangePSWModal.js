@@ -214,10 +214,10 @@ const ChangePSWModal = (props) => {
                                     ) : null}
                                 </Col>
                             </div>
-                            <p style={{ fontWeight: 'bold', color: 'red' }}>
+                            <b style={{color: '#3BB143'}}>
                                 {error}
                                 {responce}
-                            </p>
+                            </b>
                             <div
                                 className="swal2-actions"
                                 style={{
