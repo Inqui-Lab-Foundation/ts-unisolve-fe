@@ -368,7 +368,7 @@
         "student_name_pl": "Enter Student Name",
         "student_age": "Enter age between 10 and 18",
         "student_grade": "Enter Grade",
-        "student_gender": "Select Gender..",
+        "student_gender": "Select Gender",
         "student_gender_male": "Male",
         "student_gender_female": "Female",
         "student_gender_others": "Others",

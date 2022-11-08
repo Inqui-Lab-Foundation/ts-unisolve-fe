@@ -30,7 +30,7 @@ const CreateMultipleMembers = ({ id }) => {
         team_id: id,
         role: 'STUDENT',
         full_name: '',
-        Age: 10,
+        Age: '',
         Grade: '',
         Gender: ''
     };
@@ -149,7 +149,7 @@ const CreateMultipleMembers = ({ id }) => {
                         <hr />
                         <Row className="mb-3">
                             <Col md={4}>
-                                <Label className="name-req" htmlFor="fullName">
+                                <Label className="name-req-create-member" htmlFor="fullName">
                                     {t('teacher_teams.student_name')}
                                 </Label>
                                 <InputBox
@@ -171,7 +171,7 @@ const CreateMultipleMembers = ({ id }) => {
                                 ) : null}
                             </Col>
                             <Col md={2} className="mb-5 mb-xl-0">
-                                <Label className="name-req" htmlFor="age">
+                                <Label className="name-req-create-member" htmlFor="age">
                                     {t('teacher_teams.age')}
                                 </Label>
                                 <div className="dropdown CalendarDropdownComp ">
@@ -196,7 +196,7 @@ const CreateMultipleMembers = ({ id }) => {
                                 ) : null}
                             </Col>
                             <Col md={3}>
-                                <Label className="name-req" htmlFor="grade">
+                                <Label className="name-req-create-member" htmlFor="grade">
                                     Class
                                 </Label>
                                 <div className="dropdown CalendarDropdownComp ">
@@ -221,7 +221,7 @@ const CreateMultipleMembers = ({ id }) => {
                                 ) : null}
                             </Col>
                             <Col md={3} className="mb-5 mb-xl-0">
-                                <Label className="name-req" htmlFor="gender">
+                                <Label className="name-req-create-member" htmlFor="gender">
                                     {t('teacher_teams.gender')}
                                 </Label>
 
@@ -452,7 +452,7 @@ const CreateTeamMember = (props) => {
                                         <Row>
                                             <Col md={4}>
                                                 <Label
-                                                    className="name-req"
+                                                    className="name-req-create-member"
                                                     htmlFor="fullName"
                                                 >
                                                     {t(
@@ -486,7 +486,7 @@ const CreateTeamMember = (props) => {
                                                 className="mb-5 mb-xl-0"
                                             >
                                                 <Label
-                                                    className="name-req"
+                                                    className="name-req-create-member"
                                                     htmlFor="age"
                                                 >
                                                     {t('teacher_teams.age')}
@@ -530,7 +530,7 @@ const CreateTeamMember = (props) => {
                                             </Col>
                                             <Col md={3}>
                                                 <Label
-                                                    className="name-req"
+                                                    className="name-req-create-member"
                                                     htmlFor="grade"
                                                 >
                                                     Class
@@ -584,7 +584,7 @@ const CreateTeamMember = (props) => {
                                                 className="mb-5 mb-xl-0"
                                             >
                                                 <Label
-                                                    className="name-req"
+                                                    className="name-req-create-member"
                                                     htmlFor="gender"
                                                 >
                                                     {t('teacher_teams.gender')}
