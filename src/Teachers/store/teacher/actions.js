@@ -80,7 +80,7 @@ export const teacherCreateMultipleStudent = (data, history) => async () => {
     } catch (error) {
         openNotificationWithIcon(
             'error',
-            'Something went wrong'
+            error?.response?.data?.message
         );
     }
 };

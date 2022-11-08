@@ -22,8 +22,18 @@ const studentBody = {
     Grade: '',
     Gender: ''
 };
+const grades = [6, 7, 8, 9, 10, 11, 12];
+const allowedAge = [10, 11, 12, 13, 14, 15, 16, 17, 18];
 
 const CreateMultipleMembers = ({ id }) => {
+    const tempStudentData = {
+        team_id: id,
+        role: 'STUDENT',
+        full_name: '',
+        Age: 10,
+        Grade: '',
+        Gender: ''
+    };
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const [itemDataErrors, setItemDataErrors] = useState([studentBody]);
@@ -33,7 +43,7 @@ const CreateMultipleMembers = ({ id }) => {
             team_id: id,
             role: 'STUDENT',
             full_name: '',
-            Age: 10,
+            Age: '',
             Grade: '',
             Gender: ''
         },
@@ -41,12 +51,11 @@ const CreateMultipleMembers = ({ id }) => {
             team_id: id,
             role: 'STUDENT',
             full_name: '',
-            Age: 10,
+            Age: '',
             Grade: '',
             Gender: ''
         }
     ]);
-    const grades = [6, 7, 8, 9, 10, 11, 12];
     const handleChange = (e, i) => {
         let newItem = [...studentData];
         const dataKeys = Object.keys(studentBody);
@@ -90,8 +99,34 @@ const CreateMultipleMembers = ({ id }) => {
             return true;
         }
     };
+    const addItem = () => {
+        if (!validateItemData()) {
+            return;
+        } else {
+            setStudentData([...studentData, tempStudentData]);
+        }
+    };
+    const containsDuplicates=(array) => {
+        if (array.length !== new Set(array).size) {
+          return true;
+        }
+        return false;
+      };
+    const removeItem = (i) => {
+        let newItems = [...studentData];
+        newItems.splice(i, 1);
+        setStudentData(newItems);
+    };
     const handleSumbit = () => {
         if (!validateItemData()) return;
+        const checkDuplicateName = containsDuplicates(studentData.map(item=>item.full_name));
+        if(checkDuplicateName){
+            openNotificationWithIcon(
+                'error',
+                'Student already exists'
+            );
+            return;
+        }
         dispatch(teacherCreateMultipleStudent(studentData, history));
     };
     return (
@@ -99,8 +134,18 @@ const CreateMultipleMembers = ({ id }) => {
             {studentData.map((item, i) => {
                 const foundErrObject = { ...itemDataErrors[i] };
                 return (
-                    <div key={i} className="mb-5">
-                        <h6 className="">Student {i + 1} Details</h6>
+                    <div key={i + item} className="mb-5">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <h6 className="">Student {i + 1} Details</h6>
+                            {i > 1 && (
+                                <Button
+                                    label={'Remove'}
+                                    onClick={() => removeItem(i)}
+                                    btnClass={'secondary float-end'}
+                                    size="small"
+                                />
+                            )}
+                        </div>
                         <hr />
                         <Row className="mb-3">
                             <Col md={4}>
@@ -129,30 +174,21 @@ const CreateMultipleMembers = ({ id }) => {
                                 <Label className="name-req" htmlFor="age">
                                     {t('teacher_teams.age')}
                                 </Label>
-
-                                <InputBox
-                                    className={'defaultInput'}
-                                    placeholder={'Enter Age'}
-                                    type="number"
-                                    id="Age"
-                                    name="Age"
-                                    onChange={(e) => {
-                                        if (e.target.value.length === 3)
-                                            return false;
-                                        if (
-                                            Math.sign(
-                                                parseInt(e.target.value)
-                                            ) === -1
-                                        )
-                                            return false;
-                                        if (parseInt(e.target.value) < 10)
-                                            return false;
-                                        if (parseInt(e.target.value) > 18)
-                                            return false;
-                                        handleChange(e, i);
-                                    }}
-                                    value={item.Age}
-                                />
+                                <div className="dropdown CalendarDropdownComp ">
+                                    <select
+                                        name="Age"
+                                        className="form-control custom-dropdown"
+                                        value={item.Age}
+                                        onChange={(e) => handleChange(e, i)}
+                                    >
+                                        <option value={''}>Select Age</option>
+                                        {allowedAge.map((item) => (
+                                            <option key={item} value={item}>
+                                                {item}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
                                 {foundErrObject?.Age ? (
                                     <small className="error-cls">
                                         {foundErrObject.Age}
@@ -170,7 +206,7 @@ const CreateMultipleMembers = ({ id }) => {
                                         value={item.Grade}
                                         onChange={(e) => handleChange(e, i)}
                                     >
-                                        <option value="">Select Class..</option>
+                                        <option value="">Select Class</option>
                                         {grades.map((item) => (
                                             <option key={item} value={item}>
                                                 Class {item}
@@ -237,6 +273,16 @@ const CreateMultipleMembers = ({ id }) => {
                         btnClass={'primary float-end'}
                         size="small"
                     />
+                    {studentData.length < 5 && (
+                        <div className="mx-5">
+                            <Button
+                                label={'Add More'}
+                                onClick={addItem}
+                                btnClass={'primary me-3 float-end'}
+                                size="small"
+                            />
+                        </div>
+                    )}
                 </Col>
             </Row>
         </div>
@@ -369,7 +415,17 @@ const CreateTeamMember = (props) => {
                         }
                     })
                     .catch(function (error) {
-                        console.log(error);
+                        if (error.response.status === 406) {
+                            openNotificationWithIcon(
+                                'error',
+                                error?.response?.data?.message
+                            );
+                        } else {
+                            openNotificationWithIcon(
+                                'error',
+                                'Opps! Something Wrong'
+                            );
+                        }
                     });
             }
         }
@@ -435,21 +491,36 @@ const CreateTeamMember = (props) => {
                                                 >
                                                     {t('teacher_teams.age')}
                                                 </Label>
-
-                                                <InputBox
-                                                    className={'defaultInput'}
-                                                    placeholder={t(
-                                                        'teacher_teams.student_age'
-                                                    )}
-                                                    id="age"
-                                                    name="age"
-                                                    onChange={
-                                                        formik.handleChange
-                                                    }
-                                                    onBlur={formik.handleBlur}
-                                                    value={formik.values.age}
-                                                />
-
+                                                <div className="dropdown CalendarDropdownComp ">
+                                                    <select
+                                                        className="form-control custom-dropdown"
+                                                        id="age"
+                                                        name="age"
+                                                        onChange={
+                                                            formik.handleChange
+                                                        }
+                                                        onBlur={
+                                                            formik.handleBlur
+                                                        }
+                                                        value={
+                                                            formik.values.age
+                                                        }
+                                                    >
+                                                        <option value={''}>
+                                                            Select Age
+                                                        </option>
+                                                        {allowedAge.map(
+                                                            (item) => (
+                                                                <option
+                                                                    key={item}
+                                                                    value={item}
+                                                                >
+                                                                    {item}
+                                                                </option>
+                                                            )
+                                                        )}
+                                                    </select>
+                                                </div>
                                                 {formik.touched.age &&
                                                 formik.errors.age ? (
                                                     <small className="error-cls">
@@ -465,19 +536,6 @@ const CreateTeamMember = (props) => {
                                                     Class
                                                 </Label>
                                                 <div className="dropdown CalendarDropdownComp ">
-                                                    {/* <InputBox
-                                                    className={'defaultInput'}
-                                                    placeholder={t(
-                                                        'teacher_teams.student_grade'
-                                                    )}
-                                                    id="grade"
-                                                    name="grade"
-                                                    onChange={
-                                                        formik.handleChange
-                                                    }
-                                                    onBlur={formik.handleBlur}
-                                                    value={formik.values.grade}
-                                                /> */}
                                                     <select
                                                         name="grade"
                                                         className="form-control custom-dropdown"
