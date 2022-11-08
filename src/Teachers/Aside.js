@@ -37,7 +37,6 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
     const dispatch = useDispatch();
     const { schedules } = useSelector((state) => state.schedules);
     const language = useSelector(state=>state?.mentors.mentorLanguage);
-   
     // for future use
     // useLayoutEffect(() => {
     //     dispatch(getSchedulesForTeacherAndStudents());
