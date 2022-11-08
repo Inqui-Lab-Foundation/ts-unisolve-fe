@@ -24,16 +24,22 @@ const LanguageSelectorComp = ({ module }) => {
             : globalLang?.name
     );
     const handleSelector = (item) => {
+        let forMentor;
+        if(item && item.code !=="en"){
+            forMentor={...item};
+            forMentor.code ="en";
+            forMentor.name ="English";
+        }
         setLanguage(item.name);
         i18next.changeLanguage(item.code);
         if (module === 'admin') {
             dispatch(getAdminGlobalLanguage(item));
         } else if (module === 'mentor') {
-            dispatch(getMentorGlobalLanguage(item));
+            dispatch(getMentorGlobalLanguage(forMentor));
         } else if (module === 'general') {
             dispatch(getGlobalLanguage(item));
             dispatch(getStudentGlobalLanguage(item));
-            dispatch(getMentorGlobalLanguage(item));
+            dispatch(getMentorGlobalLanguage(forMentor));
         } else {
             dispatch(getStudentGlobalLanguage(item));
         }
