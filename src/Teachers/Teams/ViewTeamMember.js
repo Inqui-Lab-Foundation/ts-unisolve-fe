@@ -55,14 +55,12 @@ const ViewTeamMember = () => {
     };
     const [count, setCount] = useState(0);
     // eslint-disable-next-line no-unused-vars
-    const [teamMembersListArray, setTeamMembersArray] = useState([]);
     const [teamsMembersList, setTeamsMemers] = useState([]);
     // eslint-disable-next-line no-unused-vars
     const [pending, setPending] = React.useState(true);
     const [rows, setRows] = React.useState([]);
 
     useEffect(() => {
-        // props.getAdminTeamMembersListAction(teamId);
         handleteamMembersAPI(teamId);
     }, [teamId, count]);
 
@@ -84,23 +82,17 @@ const ViewTeamMember = () => {
             .then(function (response) {
                 if (response.status === 200) {
                     console.log('response.data.data', response.data.data);
-                    setTeamsMemers(response.data && response.data.data);
+                    const updatedWithKey = response.data && response.data.data.map((item, i) => {
+                        const upd = { ...item }; upd["key"] = i + 1;
+                        return upd;
+                    });
+                    setTeamsMemers(updatedWithKey && updatedWithKey);
                 }
             })
             .catch(function (error) {
                 console.log(error);
             });
     }
-
-    useEffect(() => {
-        var teamsMembersArrays = [];
-        teamsMembersList.length > 0 &&
-            teamsMembersList.map((teams, index) => {
-                var key = index + 1;
-                return teamsMembersArrays.push({ ...teams, key });
-            });
-        setTeamMembersArray(teamsMembersArrays);
-    }, [teamsMembersList.length > 0, count]);
 
     const handleResetPassword = (data) => {
         const swalWithBootstrapButtons = Swal.mixin({
@@ -138,19 +130,24 @@ const ViewTeamMember = () => {
         data: teamsMembersList.length > 0 && teamsMembersList,
         columns: [
             {
-                name: 'User Name',
-                selector: 'user.username',
-                width: '15%'
+                name: 'S.No',
+                selector: 'key',
+                width: '6%'
             },
             {
-                name: 'Password',
+                name: 'User Name',
+                selector: 'user.username',
+                width: '16%'
+            },
+            {
+                name: 'Default Password',
                 selector: 'UUID',
-                width: '10%'
+                width: '20%'
             },
             {
                 name: t('teacher_teams.student_name'),
                 selector: 'full_name',
-                width: '15%'
+                width: '16%'
             },
             {
                 name: "Class",
@@ -160,13 +157,13 @@ const ViewTeamMember = () => {
             {
                 name: t('teacher_teams.age'),
                 selector: 'Age',
-                width: '9%'
+                width: '10%'
             },
 
             {
                 name: t('teacher_teams.gender'),
                 selector: 'Gender',
-                width: '12%'
+                width: '10%'
             },
             {
                 name: t('teacher_teams.actions'),
@@ -180,7 +177,7 @@ const ViewTeamMember = () => {
                             />
                         </a>,
                         <a onClick={() => handleDeleteTeamMember(params)}>
-                            {teamsMembersList && teamsMembersList.length >2 && <i
+                            {teamsMembersList && teamsMembersList.length > 2 && <i
                                 key={params.team_id}
                                 className="fa fa-trash"
                                 style={{ marginRight: '10px' }}
@@ -191,7 +188,7 @@ const ViewTeamMember = () => {
                         </a>
                     ];
                 },
-                width: '15%',
+                width: '12%',
                 center: true
             }
         ]

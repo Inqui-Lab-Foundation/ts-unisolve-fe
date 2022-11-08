@@ -18,23 +18,22 @@ import { useTranslation } from 'react-i18next';
 
 const EditTeamMember = (props) => {
     const { t } = useTranslation();
-
+    const allowedAge = [10, 11, 12, 13, 14, 15, 16, 17, 18];
     const history = useHistory();
     const currentUser = getCurrentUser('current_user');
-    // console.log("==============", history && history);
     const teamMemberData =
         (history && history.location && history.location.item) || {};
 
     const headingDetails = {
-        title: t("teacher_teams.edit_team_member_details"),
+        title: t('teacher_teams.edit_team_member_details'),
 
         options: [
             {
-                title: t("teacher_teams.teamslist"),
+                title: t('teacher_teams.teamslist'),
                 path: '/teacher/teamlist'
             },
             {
-                title: t("teacher_teams.edit_team_member")
+                title: t('teacher_teams.edit_team_member')
             }
         ]
     };
@@ -49,19 +48,19 @@ const EditTeamMember = (props) => {
 
         validationSchema: Yup.object({
             fullName: Yup.string()
-            .required('Please Enter valid Full Name')
-            .max(40)
-            .required(),
-        age: Yup.number()
-            .integer()
-            .min(10, 'Min age is 10')
-            .max(18, 'Max age is 18')
-            .required('required'),
-        gender: Yup.string().required('Please select valid gender'),
-        grade: Yup.string()
-            .matches('', 'Please enter valid class')
-            .max(40)
-            .required('Please enter valid class')
+                .required('Please Enter valid Full Name')
+                .max(40)
+                .required(),
+            age: Yup.number()
+                .integer()
+                .min(10, 'Min age is 10')
+                .max(18, 'Max age is 18')
+                .required('required'),
+            gender: Yup.string().required('Please select valid gender'),
+            grade: Yup.string()
+                .matches('', 'Please enter valid class')
+                .max(40)
+                .required('Please enter valid class')
         }),
 
         onSubmit: (values) => {
@@ -101,7 +100,10 @@ const EditTeamMember = (props) => {
                     }
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    openNotificationWithIcon(
+                        'error',
+                        error?.response?.data?.message
+                    );
                 });
         }
     });
@@ -128,11 +130,15 @@ const EditTeamMember = (props) => {
                                                 className="name-req"
                                                 htmlFor="fullName"
                                             >
-                                                {t("teacher_teams.student_name")}
+                                                {t(
+                                                    'teacher_teams.student_name'
+                                                )}
                                             </Label>
                                             <InputBox
                                                 className={'defaultInput'}
-                                                placeholder={t("teacher_teams.student_name_pl")}
+                                                placeholder={t(
+                                                    'teacher_teams.student_name_pl'
+                                                )}
                                                 id="fullName"
                                                 name="fullName"
                                                 onChange={formik.handleChange}
@@ -151,18 +157,33 @@ const EditTeamMember = (props) => {
                                                 className="name-req"
                                                 htmlFor="age"
                                             >
-                                                {t("teacher_teams.age")}
+                                                {t('teacher_teams.age')}
                                             </Label>
 
-                                            <InputBox
-                                                className={'defaultInput'}
-                                                placeholder={t("teacher_teams.student_age")}
-                                                id="age"
-                                                name="age"
-                                                onChange={formik.handleChange}
-                                                onBlur={formik.handleBlur}
-                                                value={formik.values.age}
-                                            />
+                                            <div className="dropdown CalendarDropdownComp ">
+                                                <select
+                                                    className="form-control custom-dropdown"
+                                                    id="age"
+                                                    name="age"
+                                                    onChange={
+                                                        formik.handleChange
+                                                    }
+                                                    onBlur={formik.handleBlur}
+                                                    value={formik.values.age}
+                                                >
+                                                    <option value={''}>
+                                                        Select Age
+                                                    </option>
+                                                    {allowedAge.map((item) => (
+                                                        <option
+                                                            key={item}
+                                                            value={item}
+                                                        >
+                                                            {item}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
 
                                             {formik.touched.age &&
                                             formik.errors.age ? (
@@ -182,42 +203,39 @@ const EditTeamMember = (props) => {
                                                 Class
                                             </Label>
                                             <div className="dropdown CalendarDropdownComp ">
-                                                {/* <InputBox
-                                                    className={'defaultInput'}
-                                                    placeholder={t("teacher_teams.student_grade")}
-                                                    id="grade"
+                                                <select
                                                     name="grade"
+                                                    className="form-control custom-dropdown"
+                                                    value={formik.values.grade}
                                                     onChange={
                                                         formik.handleChange
                                                     }
-                                                    onBlur={formik.handleBlur}
-                                                    value={formik.values.grade}
-                                                /> */}
-                                                <select
-                                                name="grade"
-                                                className="form-control custom-dropdown"
-                                                value={formik.values.grade}
-                                                onChange={formik.handleChange}
-                                            >
-                                                 <option value="">
-                                                 Select Class..
-                                                </option>
-                                                <option value="6">Class 6
-                                                </option>
-                                                <option value="7">Class 7
-                                                </option>
-                                                <option value="8">Class 8
-                                                </option>
-                                                <option value="9">Class 9
-                                                </option>
-                                                <option value="10">Class 10
-                                                </option>
-                                                <option value="11">Class 11
-                                                </option>
-                                                <option value="12">Class 12
-                                                </option>
-                                               
-                                            </select>
+                                                >
+                                                    <option value="">
+                                                        Select Class..
+                                                    </option>
+                                                    <option value="6">
+                                                        Class 6
+                                                    </option>
+                                                    <option value="7">
+                                                        Class 7
+                                                    </option>
+                                                    <option value="8">
+                                                        Class 8
+                                                    </option>
+                                                    <option value="9">
+                                                        Class 9
+                                                    </option>
+                                                    <option value="10">
+                                                        Class 10
+                                                    </option>
+                                                    <option value="11">
+                                                        Class 11
+                                                    </option>
+                                                    <option value="12">
+                                                        Class 12
+                                                    </option>
+                                                </select>
                                             </div>
                                             {formik.touched.grade &&
                                             formik.errors.grade ? (
@@ -231,7 +249,7 @@ const EditTeamMember = (props) => {
                                                 className="name-req"
                                                 htmlFor="gender"
                                             >
-                                                {t("teacher_teams.gender")}
+                                                {t('teacher_teams.gender')}
                                             </Label>
 
                                             <select
@@ -241,17 +259,17 @@ const EditTeamMember = (props) => {
                                                 onChange={formik.handleChange}
                                             >
                                                 <option value="">
-                                                    {t("teacher_teams.gender")}
+                                                    {t('teacher_teams.gender')}
                                                 </option>
                                                 <option value="MALE">
-                                                    {t("teacher_teams.male")}
+                                                    {t('teacher_teams.male')}
                                                 </option>
                                                 <option value="FEMALE">
-                                                    {t("teacher_teams.female")}
+                                                    {t('teacher_teams.female')}
                                                 </option>
-                                               
+
                                                 <option value="OTHERS">
-                                                Prefer not to mention
+                                                    Prefer not to mention
                                                 </option>
                                             </select>
 
@@ -269,7 +287,7 @@ const EditTeamMember = (props) => {
                                 <Row>
                                     <Col className="col-xs-12 col-sm-6">
                                         <Button
-                                            label={t("teacher_teams.discard")}
+                                            label={t('teacher_teams.discard')}
                                             btnClass="secondary"
                                             size="small"
                                             onClick={() =>
@@ -281,7 +299,7 @@ const EditTeamMember = (props) => {
                                     </Col>
                                     <Col className="submit-btn col-xs-12 col-sm-6">
                                         <Button
-                                            label={t("teacher_teams.submit")}
+                                            label={t('teacher_teams.submit')}
                                             type="submit"
                                             btnClass={
                                                 !(
