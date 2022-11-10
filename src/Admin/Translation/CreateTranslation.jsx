@@ -136,7 +136,9 @@ const CreateTranslation = (props) => {
                             <Col>
                                 <Label className="mb-2 mt-5">From_Key</Label>
                                 <Col className="form-group" md={12}>
-                                    <div style={{ height: '211px' }}>
+                                    <div 
+                                    // style={{ height: '211px' }}
+                                    >
                                         <RichText
                                             name="answer"
                                             value={formik.values.from_key}
@@ -185,7 +187,9 @@ const CreateTranslation = (props) => {
                             <Col>
                                 <Label className="mb-2 mt-5">To_Value</Label>
                                 <Col className="form-group" md={12}>
-                                    <div style={{ height: '211px' }}>
+                                    <div 
+                                    // style={{ height: '211px' }}
+                                    >
                                         <RichText
                                             name="to_value"
                                             value={formik.values.to_value}
