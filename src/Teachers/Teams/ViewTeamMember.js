@@ -42,7 +42,7 @@ const ViewTeamMember = () => {
         teamID.team_id;
 
     const headingDetails = {
-        title: t('teacher_teams.view_team_member_details'),
+        title: teamID.team_name + t('teacher_teams.view_team_member_details'),
         options: [
             {
                 title: t('teacher_teams.teamslist'),
@@ -135,7 +135,7 @@ const ViewTeamMember = () => {
                 width: '6%'
             },
             {
-                name: 'User Name',
+                name: 'User Id',
                 selector: 'user.username',
                 width: '16%'
             },
@@ -293,10 +293,10 @@ const ViewTeamMember = () => {
                             </div>
                         </Col>
                     </Row>
-
+                    {/* 
                     <p>
                         {t('teacher_teams.team_name')}: {teamID.team_name}
-                    </p>
+                    </p> */}
                     <div className="ticket-data">
                         <Tabs defaultActiveKey="1">
                             <div className="my-2">
