@@ -120,23 +120,23 @@ const TicketsPage = (props) => {
                             onClick={() => handleView(params)}
                             // style={{marginRight:"20px"}}
                         >
-                            <div className="btn btn-primary btn-lg mr-5">{t('teacher_teams.view')}</div>
+                            <div className="btn btn-primary btn-lg mr-5 mx-2">{t('teacher_teams.view')}</div>
                         </Link>,
-                        <Link
-                            key={params}
-                            exact='true'
-                            onClick={() => handleEditTeam(params)}
-                            // style={{marginRight:"20px"}}
-                        >
-                            <div className="btn btn-warning btn-lg mr-5 mx-2">{t('teacher_teams.edit')}</div>
-                        </Link>,
+                        // <Link
+                        //     key={params}
+                        //     exact='true'
+                        //     onClick={() => handleEditTeam(params)}
+                        //     // style={{marginRight:"20px"}}
+                        // >
+                        //     <div className="btn btn-warning btn-lg mr-5 mx-2">{t('teacher_teams.edit')}</div>
+                        // </Link>,
                         <Link
                             key={params}
                             exact='true'
                             onClick={() => handleDelete(params)}
                             // style={{marginRight:"20px"}}
                         >
-                            { params.student_count <= 2 && <div className="btn btn-danger btn-lg mr-5 ">{t('teacher_teams.delete')}</div>}
+                            { params.student_count <= 2 && <div className="btn btn-danger btn-lg mr-5 mx-2">{t('teacher_teams.delete')}</div>}
                         </Link>,
                     ];
                 },
