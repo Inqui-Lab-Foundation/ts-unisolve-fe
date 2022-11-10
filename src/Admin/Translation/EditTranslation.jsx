@@ -28,14 +28,14 @@ const EditTranslation = (props) => {
         setEditorStateOfFromKey(
             EditorState.createWithContent(
                 ContentState.createFromBlockArray(
-                    convertFromHTML(translationData.key)
+                    convertFromHTML(translationData.key ? translationData.key : '')
                 )
             )
         );
         setEditorStateOfToValue(
             EditorState.createWithContent(
                 ContentState.createFromBlockArray(
-                    convertFromHTML(translationData.value)
+                    convertFromHTML(translationData.value ? translationData.value : '')
                 )
             )
         );
