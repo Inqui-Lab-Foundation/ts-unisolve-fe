@@ -262,7 +262,7 @@ const ViewTeamMember = () => {
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
                         t('teacher_teams.delete_cancelled'),
-                        t('teacher_teams.delete_member_warning'),
+                        t('teacher_teams.delete_member_cancel'),
                         'error'
                     );
                 }
