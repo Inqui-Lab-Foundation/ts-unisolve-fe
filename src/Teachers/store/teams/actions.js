@@ -6,7 +6,8 @@ import {
     ADMIN_TEAMS_LIST_ERROR,
     ADMIN_TEAMS_MEMBERS_LIST,
     ADMIN_TEAMS_MEMBERS_LIST_SUCCESS,
-    ADMIN_TEAMS_MEMBERS_LIST_ERROR
+    ADMIN_TEAMS_MEMBERS_LIST_ERROR,
+    TEAM_MEMBER_STATUS
 } from '../../../redux/actions.js';
 import { URL, KEY } from '../../../constants/defaultValues.js';
 import { getNormalHeaders } from '../../../helpers/Utils.js';
@@ -45,7 +46,6 @@ export const getAdminTeamsList = (item) => async (dispatch) => {
                 result.data.data[0] &&
                 result.data.data[0].dataValues;
             dispatch(getAdminTeamsListSuccess(data));
-            // history.push("/teams");
         } else {
             dispatch(getAdminTeamsListError(result.statusText));
         }
@@ -95,5 +95,38 @@ export const getAdminTeamMembersList = (teamId) => async (dispatch) => {
         }
     } catch (error) {
         dispatch(getAdminTeamMembersListError({}));
+    }
+};
+
+
+export const getTeamMemberStatusSuccess = (user) => async (dispatch) => {
+    dispatch({
+        type: TEAM_MEMBER_STATUS,
+        payload: user
+    });
+};
+export const getTeamMemberStatus = (teamId) => async (dispatch) => {
+    try {
+        const axiosConfig = getNormalHeaders(KEY.User_API_Key);
+        const result = await axios
+            .get(
+                `${
+                    URL.getTeamMemberStatusEndpoint +
+                    teamId 
+                }`,
+                axiosConfig
+            )
+            .then((user) => user)
+            .catch((err) => {
+                return err.response;
+            });
+        if (result && result.status === 200) {
+            const data = result.data && result.data.data;
+            dispatch(getTeamMemberStatusSuccess(data));
+        } else {
+            dispatch(getTeamMemberStatusSuccess(result.statusText));
+        }
+    } catch (error) {
+        dispatch(getTeamMemberStatusSuccess([]));
     }
 };
