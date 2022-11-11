@@ -145,7 +145,7 @@ const TicketsPage = (props) => {
                             // style={{marginRight:"20px"}}
                         >
                             {params.student_count <= 2 && (
-                                <div className="btn btn-danger btn-lg mr-5 ">
+                                <div className="btn btn-danger btn-lg mx-2">
                                     {t('teacher_teams.delete')}
                                 </div>
                             )}
