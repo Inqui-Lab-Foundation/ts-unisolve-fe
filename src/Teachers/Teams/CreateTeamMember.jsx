@@ -56,6 +56,8 @@ const CreateMultipleMembers = ({ id }) => {
             Gender: ''
         }
     ]);
+    let pattern = /[A-Za-z0-9 ]*$/;
+
     const handleChange = (e, i) => {
         let newItem = [...studentData];
         const dataKeys = Object.keys(studentBody);
@@ -64,6 +66,19 @@ const CreateMultipleMembers = ({ id }) => {
                 if (e.target.name === item) {
                     newItem[i][e.target.name] = e.target.value;
                     let errCopy = [...itemDataErrors];
+                    if(item==="full_name"){
+                        let check = e.target.value;
+                        if (check && check.match(pattern)){
+                            const {index} = check.match(pattern);
+                            if(index){
+                                const foo = { ...errCopy[i] };
+                                foo[e.target.name] = 'Only alphanumeric are allowed';
+                                errCopy[i] = { ...foo };
+                                setItemDataErrors(errCopy);
+                                return;
+                            }
+                        }
+                    }
                     const foo = { ...errCopy[i] };
                     foo[e.target.name] = '';
                     errCopy[i] = { ...foo };
@@ -77,6 +92,12 @@ const CreateMultipleMembers = ({ id }) => {
         const errors = studentData.map((item, i) => {
             let err = {};
             if (!item.full_name) err['full_name'] = 'Full name is Required';
+            if (item.full_name && item.full_name.match(pattern)){
+                const {index} = item.full_name.match(pattern);
+                if(index){
+                    err['full_name'] = 'Only alphanumeric are allowed';
+                }
+            }
             if (!item.Age) err['Age'] = 'Age is Required';
             if (!item.Grade) err['Grade'] = 'Class is Required';
             if (!item.Gender) err['Gender'] = 'Gender is Required';
@@ -362,7 +383,11 @@ const CreateTeamMember = (props) => {
             fullName: Yup.string()
                 .required('Please Enter valid Full Name')
                 .max(40)
-                .required(),
+                .required()
+                .matches(
+                    /^[A-Za-z0-9 ]*$/,
+                    'Please enter only alphanumeric characters'
+                ),
             age: Yup.number()
                 .integer()
                 .min(10, 'Min age is 10')
