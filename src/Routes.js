@@ -584,7 +584,7 @@ const Routers = () => {
                     />
                     <ProtectedRoute
                         exact={true}
-                        path="/teacher/create-team-member"
+                        path="/teacher/create-team-member/:id/:count"
                         component={TeacherTeamMember}
                     />
                     <ProtectedRoute
