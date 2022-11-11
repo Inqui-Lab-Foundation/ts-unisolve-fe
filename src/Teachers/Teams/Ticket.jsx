@@ -155,8 +155,9 @@ const TicketsPage = (props) => {
     };
     const handleCreate = (item) => {
         history.push({
-            pathname: '/teacher/create-team-member',
-            item: item
+            pathname: `/teacher/create-team-member/${item.team_id}/${
+                item.student_count ? item.student_count : 'new'
+            }`
         });
     };
     const handleEditTeam = (item) => {
@@ -215,7 +216,6 @@ const TicketsPage = (props) => {
                     };
                     axios(config)
                         .then(function (response) {
-                            console.log(response);
                             if (response.status === 200) {
                                 setCount(count + 1);
                                 openNotificationWithIcon(
