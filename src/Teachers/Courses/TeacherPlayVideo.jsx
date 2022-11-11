@@ -108,7 +108,7 @@ const TeacherPlayVideo = (props) => {
     const getLastCourseStatus = (data = []) => {
         const length = data && data.length > 0 ? data.length - 1 : 0;
         if (length) {
-            return true;
+           return  data[length]?.progress === 'INCOMPLETE' ? false : true;
         }
         return false;
     };
@@ -838,7 +838,12 @@ const TeacherPlayVideo = (props) => {
                                                         {getLastCourseStatus(
                                                             teacherCourseDetails
                                                         ) ? (
-                                                            <h2 className='text-success text-center'>Congratulations ! your course completed successfully !</h2>
+                                                            <h2 className="text-success text-center">
+                                                                Congratulations
+                                                                ! your course
+                                                                completed
+                                                                successfully !
+                                                            </h2>
                                                         ) : (
                                                             <Button
                                                                 label={`CONTINUE COURSE`}
