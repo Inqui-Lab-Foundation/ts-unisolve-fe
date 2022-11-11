@@ -44,6 +44,7 @@ const TicketsPage = (props) => {
 
     const currentUser = getCurrentUser('current_user');
     const [pending, setPending] = React.useState(true);
+    const [loading, setLoading] = React.useState(false);
     const [rows, setRows] = React.useState([]);
 
     React.useEffect(() => {
@@ -54,16 +55,19 @@ const TicketsPage = (props) => {
         return () => clearTimeout(timeout);
     }, []);
     useEffect(() => {
-        props.getAdminTeamsListAction(currentUser.data[0].mentor_id);
+        setLoading(true);
+        props.getAdminTeamsListAction(currentUser.data[0].mentor_id).then(()=>setLoading(false));
     }, [count]);
 
     useEffect(() => {
+        setLoading(true);
         var teamsArrays = [];
         props.teamsList.map((teams, index) => {
             var key = index + 1;
             return teamsArrays.push({ ...teams, key });
         });
         setTeamsArray(teamsArrays);
+        setLoading(false);
     }, [props.teamsList]);
 
     useEffect(() => {
@@ -264,7 +268,7 @@ const TicketsPage = (props) => {
                     </Row>
                     <div className="ticket-data">
                         <Tabs defaultActiveKey="1">
-                            {teamsArray && !teamsArray.length > 0 ? (
+                            {loading && teamsArray && !teamsArray.length > 0 ? (
                                 <DoubleBounce />
                             ) : (
                                 <div className="my-2">
