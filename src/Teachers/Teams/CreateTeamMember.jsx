@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import './styles.scss';
 import { Row, Col, Form, Label } from 'reactstrap';
-import { withRouter } from 'react-router-dom';
+import { useLocation, withRouter } from 'react-router-dom';
 import Layout from '../Layout';
 import { Button } from '../../stories/Button';
 import { InputBox } from '../../stories/InputBox/InputBox';
@@ -56,6 +56,8 @@ const CreateMultipleMembers = ({ id }) => {
             Gender: ''
         }
     ]);
+    let pattern = /[A-Za-z0-9 ]*$/;
+
     const handleChange = (e, i) => {
         let newItem = [...studentData];
         const dataKeys = Object.keys(studentBody);
@@ -64,6 +66,19 @@ const CreateMultipleMembers = ({ id }) => {
                 if (e.target.name === item) {
                     newItem[i][e.target.name] = e.target.value;
                     let errCopy = [...itemDataErrors];
+                    if(item==="full_name"){
+                        let check = e.target.value;
+                        if (check && check.match(pattern)){
+                            const {index} = check.match(pattern);
+                            if(index){
+                                const foo = { ...errCopy[i] };
+                                foo[e.target.name] = 'Only alphanumeric are allowed';
+                                errCopy[i] = { ...foo };
+                                setItemDataErrors(errCopy);
+                                return;
+                            }
+                        }
+                    }
                     const foo = { ...errCopy[i] };
                     foo[e.target.name] = '';
                     errCopy[i] = { ...foo };
@@ -77,6 +92,12 @@ const CreateMultipleMembers = ({ id }) => {
         const errors = studentData.map((item, i) => {
             let err = {};
             if (!item.full_name) err['full_name'] = 'Full name is Required';
+            if (item.full_name && item.full_name.match(pattern)){
+                const {index} = item.full_name.match(pattern);
+                if(index){
+                    err['full_name'] = 'Only alphanumeric are allowed';
+                }
+            }
             if (!item.Age) err['Age'] = 'Age is Required';
             if (!item.Grade) err['Grade'] = 'Class is Required';
             if (!item.Gender) err['Gender'] = 'Gender is Required';
@@ -106,12 +127,12 @@ const CreateMultipleMembers = ({ id }) => {
             setStudentData([...studentData, tempStudentData]);
         }
     };
-    const containsDuplicates=(array) => {
+    const containsDuplicates = (array) => {
         if (array.length !== new Set(array).size) {
-          return true;
+            return true;
         }
         return false;
-      };
+    };
     const removeItem = (i) => {
         let newItems = [...studentData];
         newItems.splice(i, 1);
@@ -119,12 +140,11 @@ const CreateMultipleMembers = ({ id }) => {
     };
     const handleSumbit = () => {
         if (!validateItemData()) return;
-        const checkDuplicateName = containsDuplicates(studentData.map(item=>item.full_name));
-        if(checkDuplicateName){
-            openNotificationWithIcon(
-                'error',
-                'Student already exists'
-            );
+        const checkDuplicateName = containsDuplicates(
+            studentData.map((item) => item.full_name)
+        );
+        if (checkDuplicateName) {
+            openNotificationWithIcon('error', 'Student already exists');
             return;
         }
         dispatch(teacherCreateMultipleStudent(studentData, history));
@@ -149,7 +169,10 @@ const CreateMultipleMembers = ({ id }) => {
                         <hr />
                         <Row className="mb-3">
                             <Col md={4}>
-                                <Label className="name-req-create-member" htmlFor="fullName">
+                                <Label
+                                    className="name-req-create-member"
+                                    htmlFor="fullName"
+                                >
                                     {t('teacher_teams.student_name')}
                                 </Label>
                                 <InputBox
@@ -171,7 +194,10 @@ const CreateMultipleMembers = ({ id }) => {
                                 ) : null}
                             </Col>
                             <Col md={2} className="mb-5 mb-xl-0">
-                                <Label className="name-req-create-member" htmlFor="age">
+                                <Label
+                                    className="name-req-create-member"
+                                    htmlFor="age"
+                                >
                                     {t('teacher_teams.age')}
                                 </Label>
                                 <div className="dropdown CalendarDropdownComp ">
@@ -196,7 +222,10 @@ const CreateMultipleMembers = ({ id }) => {
                                 ) : null}
                             </Col>
                             <Col md={3}>
-                                <Label className="name-req-create-member" htmlFor="grade">
+                                <Label
+                                    className="name-req-create-member"
+                                    htmlFor="grade"
+                                >
                                     Class
                                 </Label>
                                 <div className="dropdown CalendarDropdownComp ">
@@ -221,7 +250,10 @@ const CreateMultipleMembers = ({ id }) => {
                                 ) : null}
                             </Col>
                             <Col md={3} className="mb-5 mb-xl-0">
-                                <Label className="name-req-create-member" htmlFor="gender">
+                                <Label
+                                    className="name-req-create-member"
+                                    htmlFor="gender"
+                                >
                                     {t('teacher_teams.gender')}
                                 </Label>
 
@@ -290,15 +322,12 @@ const CreateMultipleMembers = ({ id }) => {
 };
 
 const CreateTeamMember = (props) => {
-    const history = useHistory();
+    const loc = useLocation();
+    const params = loc.pathname.split('/');
+    const pl = params.length;
     const { t } = useTranslation();
-
-    const teamID = JSON.parse(localStorage.getItem('teamId'));
-    const id =
-        history && history.location && history.location.item
-            ? history.location.item.team_id
-            : teamID.team_id;
-
+    const id = params[pl - 2];
+    const studentCount = params[pl - 1];
     const currentUser = getCurrentUser('current_user');
     const [teamMemberData, setTeamMemberData] = useState({});
 
@@ -354,7 +383,11 @@ const CreateTeamMember = (props) => {
             fullName: Yup.string()
                 .required('Please Enter valid Full Name')
                 .max(40)
-                .required(),
+                .required()
+                .matches(
+                    /^[A-Za-z0-9 ]*$/,
+                    'Please enter only alphanumeric characters'
+                ),
             age: Yup.number()
                 .integer()
                 .min(10, 'Min age is 10')
@@ -391,7 +424,7 @@ const CreateTeamMember = (props) => {
                     method: 'post',
                     url:
                         process.env.REACT_APP_API_BASE_URL +
-                        '/students/register',
+                        '/students/addStudent',
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${currentUser.data[0].token}`
@@ -400,7 +433,6 @@ const CreateTeamMember = (props) => {
                 };
                 axios(config)
                     .then(function (response) {
-                        console.log(response);
                         if (response.status === 201) {
                             openNotificationWithIcon(
                                 'success',
@@ -436,12 +468,9 @@ const CreateTeamMember = (props) => {
                 <Row>
                     <Col className="col-xl-10 offset-xl-1 offset-md-0">
                         <BreadcrumbTwo {...headingDetails} />
-                        {props.location?.item &&
-                        props.location.item.student_count < 2 ? (
-                            <CreateMultipleMembers
-                                teamData={props?.location?.item}
-                                id={props?.location?.item?.team_id}
-                            />
+                        {studentCount &&
+                        (studentCount === 'new' || studentCount < 2) ? (
+                            <CreateMultipleMembers id={id} />
                         ) : (
                             <div>
                                 <Form

@@ -3,9 +3,11 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import 'antd/dist/antd.css';
 import { Progress } from 'reactstrap';
 import { Table } from 'antd';
-import { getAdminTeamsList } from '../store/teams/actions';
+import { getAdminTeamsList, getTeamMemberStatus } from '../store/teams/actions';
 import { useSelector } from 'react-redux';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -50,84 +52,92 @@ export const options = {
     }
 };
 
-const dataSource = [
-    {
-        key: '1',
-        name: 'Mike',
-        age: 32,
-        address: '10 Downing Street'
-    },
-    {
-        key: '2',
-        name: 'John',
-        age: 42,
-        address: '10 Downing Street'
-    }
-];
-
-const columns = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name'
-    },
-    {
-        title: 'Start Date',
-        dataIndex: 'age',
-        render: () => <div>10-10-2022</div>
-    },
-    {
-        title: 'Progress',
-        dataIndex: 'address',
-        // render: (_, record) => (
-        render: () => (
-            <Progress
-                key={'25'}
-                className="progress-height"
-                animated
-                value="25"
-            >
-                25%
-            </Progress>
-        )
-    }
-];
-
 export default function DoughnutChart({ user }) {
-    const { teamsList } = useSelector((state) => state.teams);
+    const dispatch = useDispatch();
+    const { teamsList, teamsMembersStatus } = useSelector(
+        (state) => state.teams
+    );
+    const [teamId, setTeamId] = useState(null);
+    useEffect(() => {
+        dispatch(getTeamMemberStatus(teamId));
+    }, [teamId]);
+    const percentageBWNumbers = (a, b) => {
+        return (((a - b) / a) * 100).toFixed(2);
+    };
+
     useLayoutEffect(() => {
-        getAdminTeamsList(user.data[0].user_id);
-    }, [user.data[0].user_id]);
+        dispatch(getAdminTeamsList(user[0].mentor_id));
+    }, [user[0].mentor_id]);
+
+    const columns = [
+        {
+            title: 'Name',
+            dataIndex: 'full_name'
+        },
+        {
+            title: 'Progress',
+            dataIndex: 'address',
+            render: (_, record) => (
+                <Progress
+                    key={'25'}
+                    className="progress-height"
+                    animated
+                    value="25"
+                >
+                    {Math.round(
+                        100 -
+                            percentageBWNumbers(
+                                record.all_topics_count,
+                                record.topics_completed_count
+                            )
+                    )}
+                    %
+                </Progress>
+            )
+        }
+    ];
     return (
         <>
             <div style={{ width: '50%' }} className="select-team">
-                <div className="row flex-column p-4">
-                    <label htmlFor="teams" className="mb-3">
-                        Choose a Team:
-                    </label>
+                {
+                    <div className="row flex-column p-4">
+                        <label htmlFor="teams" className="mb-3">
+                            Choose a Team:
+                        </label>
 
-                    <select
-                        onChange={() => console.log('selected')}
-                        name="teams"
-                        id="teams"
+                        <select
+                            onChange={(e) => setTeamId(e.target.value)}
+                            name="teams"
+                            id="teams"
+                        >
+                            <option value="">Select Team</option>
+                            {teamsList && teamsList.length > 0 ? (
+                                teamsList.map((item, i) => (
+                                    <option key={i} value={item.team_id}>
+                                        {item.team_name}
+                                    </option>
+                                ))
+                            ) : (
+                                <option value="">No Data found</option>
+                            )}
+                        </select>
+                    </div>
+                }
+                {teamsMembersStatus.length > 0 ? (
+                    <Table
+                        bordered
+                        pagination={false}
+                        dataSource={teamsMembersStatus}
+                        columns={columns}
+                    />
+                ) : (
+                    <div
+                        className="d-flex justify-content-center align-items-center"
+                        style={{ minHeight: '25rem' }}
                     >
-                        {teamsList && teamsList.length > 0 ? (
-                            teamsList.map((item, i) => (
-                                <option key={i} value={item.team_name}>
-                                    {item.team_name}
-                                </option>
-                            ))
-                        ) : (
-                            <option value="volvo">No Data found</option>
-                        )}
-                    </select>
-                </div>
-                <Table
-                    bordered
-                    pagination={false}
-                    dataSource={dataSource}
-                    columns={columns}
-                />
+                        <h2 className='text-primary'>Please Select a Team*</h2>
+                    </div>
+                )}
             </div>
             {/* <div style={{ width: '50%' }}>
                 <Doughnut options={options} data={data} />

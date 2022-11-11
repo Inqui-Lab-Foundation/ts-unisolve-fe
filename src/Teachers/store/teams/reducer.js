@@ -5,12 +5,14 @@ import {
     ADMIN_TEAMS_LIST_ERROR,
     ADMIN_TEAMS_MEMBERS_LIST,
     ADMIN_TEAMS_MEMBERS_LIST_SUCCESS,
-    ADMIN_TEAMS_MEMBERS_LIST_ERROR
+    ADMIN_TEAMS_MEMBERS_LIST_ERROR,
+    TEAM_MEMBER_STATUS
 } from '../../../redux/actions.js';
 
 const INIT_STATE = {
     teamsList: [],
-    teamsMembersList: []
+    teamsMembersList: [],
+    teamsMembersStatus: [],
 };
 
 export default (state = INIT_STATE, action) => {
@@ -47,6 +49,13 @@ export default (state = INIT_STATE, action) => {
             loading: false,
             teamsMembersList: [],
             error: action.payload.message
+        };
+    case TEAM_MEMBER_STATUS:
+        return {
+            ...state,
+            loading: false,
+            teamsMembersStatus: action.payload,
+            error: ''
         };
     default:
         return newState;

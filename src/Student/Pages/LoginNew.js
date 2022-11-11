@@ -333,7 +333,7 @@ const LoginNew = (props) => {
                                                 }
                                                 disabled={!(formik.dirty && formik.isValid)}
                                             />
-                                        </Col>
+                                        </Col> */}
                                         {/* <Space>
                       <Button
                         onClick={() =>

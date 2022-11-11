@@ -305,6 +305,11 @@ const Home = () => {
             id: 5,
             title: `${t('home_tl.faq_qn_5')}`,
             desc: `${t('home_tl.faq_ans_5')}`
+        },
+        {
+            id: 6,
+            title: `${t('home_tl.faq_qn_6')}`,
+            desc: `${t('home_tl.faq_ans_6')}`
         }
     ];
 
