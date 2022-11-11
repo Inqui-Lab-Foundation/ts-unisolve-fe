@@ -105,9 +105,9 @@ const TeacherPlayVideo = (props) => {
     const [continueObj, setContinueObj] = useState([]);
     const [courseData, setCourseData] = useState(null);
 
-    const getLastCourseStatus = (data=[])=>{
-        const length = data && data.length>0 ?data.length -1 : 0;
-        if(length){
+    const getLastCourseStatus = (data = []) => {
+        const length = data && data.length > 0 ? data.length - 1 : 0;
+        if (length) {
             return true;
         }
         return false;
@@ -115,7 +115,7 @@ const TeacherPlayVideo = (props) => {
     useEffect(() => {
         props.getTeacherCourseDetailsActions(course_id, language);
     }, [course_id, language]);
-    
+
     useLayoutEffect(() => {
         props.getMentorCourseAttachmentsActions();
     }, []);
@@ -154,7 +154,9 @@ const TeacherPlayVideo = (props) => {
                 }
             });
             firstObjectArray.push(topicArrays[0]);
-            continueObjectArrays.push(continueArrays[continueArrays.length - 1]);
+            continueObjectArrays.push(
+                continueArrays[continueArrays.length - 1]
+            );
             setContinueObj(continueObjectArrays);
             firstObjectArray.push(topicArrays[0]);
             setFirstObj(firstObjectArray);
@@ -804,12 +806,17 @@ const TeacherPlayVideo = (props) => {
                                         <Card className="course-sec-basic p-5">
                                             <CardBody>
                                                 <text
-                                                    // style={{
-                                                    //     whiteSpace: 'pre-wrap'
-                                                    // }}
+                                                // style={{
+                                                //     whiteSpace: 'pre-wrap'
+                                                // }}
                                                 >
-                                                    <div dangerouslySetInnerHTML={{ __html: teacherCourse &&
-                                                        teacherCourse.description }}></div>
+                                                    <div
+                                                        dangerouslySetInnerHTML={{
+                                                            __html:
+                                                                teacherCourse &&
+                                                                teacherCourse.description
+                                                        }}
+                                                    ></div>
                                                 </text>
                                                 {firstObj[0] &&
                                                 firstObj[0].progress ==
@@ -828,18 +835,22 @@ const TeacherPlayVideo = (props) => {
                                                     </div>
                                                 ) : (
                                                     <div>
-                                                        <Button
-                                                            label={`${getLastCourseStatus(teacherCourseDetails) ? "COURSE COMPLETED" : "CONTINUE COURSE"}`}
-                                                            btnClass={`${getLastCourseStatus(teacherCourseDetails) ? "secondary" : "primary"} mt-4`}
-                                                            size="small"
-                                                            onClick={(e) =>{
-                                                                if(getLastCourseStatus(teacherCourseDetails)) return;
-                                                                startContinueCourse(
-                                                                    e
-                                                                );
-                                                            }
-                                                            }
-                                                        />
+                                                        {getLastCourseStatus(
+                                                            teacherCourseDetails
+                                                        ) ? (
+                                                            <h2 className='text-success text-center'>Congratulations ! your course completed successfully !</h2>
+                                                        ) : (
+                                                            <Button
+                                                                label={`CONTINUE COURSE`}
+                                                                btnClass={`primary mt-4`}
+                                                                size="small"
+                                                                onClick={(e) =>
+                                                                    startContinueCourse(
+                                                                        e
+                                                                    )
+                                                                }
+                                                            />
+                                                        )}
                                                     </div>
                                                 )}
                                             </CardBody>

@@ -24,6 +24,7 @@ import DataTableExtensions from 'react-data-table-component-extensions';
 import 'react-data-table-component-extensions/dist/index.css';
 import { BreadcrumbTwo } from '../../stories/BreadcrumbTwo/BreadcrumbTwo';
 import { useTranslation } from 'react-i18next';
+import DoubleBounce from '../../components/Loaders/DoubleBounce';
 
 // const { TabPane } = Tabs;
 
@@ -299,7 +300,7 @@ const ViewTeamMember = () => {
                     </p> */}
                     <div className="ticket-data">
                         <Tabs defaultActiveKey="1">
-                            <div className="my-2">
+                            {teamsMembersList && !teamsMembersList.length > 0 ? <DoubleBounce /> : <div className="my-2">
                                 <DataTableExtensions
                                     print={false}
                                     export={false}
@@ -315,7 +316,7 @@ const ViewTeamMember = () => {
                                         subHeaderAlign={Alignment.Center}
                                     />
                                 </DataTableExtensions>
-                            </div>
+                            </div>}
                         </Tabs>
                     </div>
                 </Row>
