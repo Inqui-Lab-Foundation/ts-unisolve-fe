@@ -68,7 +68,7 @@ export const teacherCreateMultipleStudent = (data, history) => async () => {
         if (result && result.status === 201) {
             openNotificationWithIcon(
                 'success',
-                result.data
+                result.data.data
             );
             history.push("/teacher/teamlist");
         } else {
