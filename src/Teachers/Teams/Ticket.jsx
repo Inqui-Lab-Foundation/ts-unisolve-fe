@@ -197,12 +197,8 @@ const TicketsPage = (props) => {
             })
             .then((result) => {
                 if (result.isConfirmed) {
-                    const body = JSON.stringify({
-                        status: 'INACTIVE',
-                        team_name: item.team_name
-                    });
                     var config = {
-                        method: 'put',
+                        method: 'delete',
                         url:
                             process.env.REACT_APP_API_BASE_URL +
                             '/teams/' +
@@ -211,8 +207,7 @@ const TicketsPage = (props) => {
                             'Content-Type': 'application/json',
                             // Accept: "application/json",
                             Authorization: `Bearer ${currentUser.data[0].token}`
-                        },
-                        data: body
+                        }
                     };
                     axios(config)
                         .then(function (response) {
