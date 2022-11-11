@@ -146,7 +146,7 @@ const Dashboard = () => {
                     <Row className="">
                         <Col style={{ flex: 3 }}>
                             <div className="d-flex flex-wrap">
-                                <DoughnutChart user={currentUser} />
+                                <DoughnutChart user={currentUser?.data} />
                                 {/* <BarChart /> */}
                             </div>
                         </Col>

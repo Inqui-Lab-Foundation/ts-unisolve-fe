@@ -391,7 +391,7 @@ const CreateTeamMember = (props) => {
                     method: 'post',
                     url:
                         process.env.REACT_APP_API_BASE_URL +
-                        '/students/register',
+                        '/students/addStudent',
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${currentUser.data[0].token}`
