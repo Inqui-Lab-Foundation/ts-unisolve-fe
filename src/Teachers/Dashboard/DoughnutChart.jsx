@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { useLayoutEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import moment from 'moment';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -74,12 +73,6 @@ export default function DoughnutChart({ user }) {
         {
             title: 'Name',
             dataIndex: 'full_name'
-        },
-        {
-            title: 'Start Date',
-            render: (_, record) => (
-                <div>{moment(record.created_at).format('DD MMM YYYY')}</div>
-            )
         },
         {
             title: 'Progress',
