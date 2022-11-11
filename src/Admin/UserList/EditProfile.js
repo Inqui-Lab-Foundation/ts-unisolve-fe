@@ -95,7 +95,7 @@ const EditProfile = (props) => {
             axios(config)
                 .then(function (response) {
                     if (response.status === 200) {
-                        props.history.push('/admin/userlist');
+                        props.history.push(mentorData.where === 'Dashbord' ? '/admin/dashboard' : '/admin/userlist');
                     }
                 })
                 .catch(function (error) {
@@ -222,7 +222,7 @@ const EditProfile = (props) => {
                                             size="small"
                                             onClick={() =>
                                                 props.history.push(
-                                                    '/admin/userlist'
+                                                    mentorData.where === 'Dashbord' ? '/admin/dashboard' : '/admin/userlist'
                                                 )
                                             }
                                         />
