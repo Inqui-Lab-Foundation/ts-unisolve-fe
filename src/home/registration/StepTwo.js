@@ -12,13 +12,16 @@ import { useDispatch } from 'react-redux';
 import { registerStepData } from '../../redux/actions';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import CryptoJS from 'crypto-js';
+
 
 function StepTwo({
     setUserData,
     orgData,
     setHideTwo,
     // setHideThree,
-    setHideFour
+    // setHideFour
+    setHideFive
 }) {
     const { t } = useTranslation();
     const dispatch = useDispatch();
@@ -43,9 +46,12 @@ function StepTwo({
         placeholder: `${t('teacehr_red.faculty_name_pl')}`,
         className: 'defaultInput'
     };
-
-    // const mobile1 = JSON.parse(localStorage.getItem('mobile'));
-    // console.log(mobile1);
+    const password = {
+        type: 'password',
+        placeholder: `${t('teacehr_red.enter_pass')}`,
+        className: 'defaultInput'
+    };
+   
     const formik = useFormik({
         initialValues: {
             full_name: '',
@@ -54,22 +60,34 @@ function StepTwo({
             organization_code: orgData?.organization_code,
             role: 'MENTOR',
             qualification: '-',
-            reg_status: stepTwoData?.username ? true : false
+            reg_status: stepTwoData?.username ? true : false,
+            password: '',
         },
 
         validationSchema: Yup.object({
             full_name: Yup.string()
+                .trim()
                 .min(2, 'Enter Name')
                 .matches(/^[aA-zZ\s]+$/, 'Not allowed')
                 .required('Required'),
             mobile: Yup.string()
                 .required('required')
+                .trim()
                 .matches(phoneRegExp, 'Phone number is not valid')
                 .min(10, 'Please enter valid number')
                 .max(10, 'Please enter valid number'),
             username: Yup.string()
+                .trim()
                 .email('Invalid username format')
-                .required('Required')
+                .required('Required'),
+            password: Yup.string()
+                .trim()
+                .required('Password is required')
+                .min(8, 'Your password should be minimum 8 characters')
+                .matches(
+                    /[a-zA-Z0-9]/,
+                    'Password should be only alphanumeric'
+                ),
         }),
 
         onSubmit: async (values) => {
@@ -93,7 +111,7 @@ function StepTwo({
                         if (mentorRegRes?.data?.status == 202) {
                             setUserData(mentorRegRes?.data?.data[0]);
                             setHideTwo(false);
-                            setHideFour(true);
+                            setHideFive(true);
                         }
                     })
                     .catch((err) => {
@@ -103,6 +121,18 @@ function StepTwo({
                         return err.response;
                     });
             } else {
+                values.password = values.password.trim();
+                const key = CryptoJS.enc.Hex.parse(
+                    '253D3FB468A0E24677C28A624BE0F939'
+                );
+                const iv = CryptoJS.enc.Hex.parse(
+                    '00000000000000000000000000000000'
+                );
+                const encrypted = CryptoJS.AES.encrypt(values.password, key, {
+                    iv: iv,
+                    padding: CryptoJS.pad.NoPadding
+                }).toString();
+                values.password = encrypted;
                 await axios
                     .post(
                         `${URL.mentorRegister}`,
@@ -114,7 +144,7 @@ function StepTwo({
                         if (mentorRegRes?.data?.status == 201) {
                             setUserData(mentorRegRes?.data?.data[0]);
                             setHideTwo(false);
-                            setHideFour(true);
+                            setHideFive(true);
                         }
                     })
                     .catch((err) => {
@@ -164,7 +194,7 @@ function StepTwo({
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             value={formik.values.full_name}
-                            // isDisabled={stepTwoData.mobile ? true : false}
+                        // isDisabled={stepTwoData.mobile ? true : false}
                         />
 
                         {formik.touched.full_name && formik.errors.full_name ? (
@@ -205,7 +235,7 @@ function StepTwo({
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             value={formik.values.username}
-                            // isDisabled={stepTwoData.mobile ? true : false}
+                        // isDisabled={stepTwoData.mobile ? true : false}
                         />
 
                         {formik.touched.username && formik.errors.username ? (
@@ -214,13 +244,35 @@ function StepTwo({
                             </small>
                         ) : null}
                     </FormGroup>
+                    <FormGroup className="form-group mt-5" md={12}>
+                        <Label className="mb-2" htmlFor="new_password">
+                            {t('teacehr_red.enter_pass')}
+                        </Label>
+
+                        <InputBox
+                            {...password}
+                            id="password"
+                            placeholder={"Enter minimum 8 characters"}
+                            name="password"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.password}
+                        />
+
+                        {formik.touched.password &&
+                                formik.errors.password ? (
+                                <small className="error-cls">
+                                    {formik.errors.password}
+                                </small>
+                            ) : null}
+                    </FormGroup>
                     <div className="mt-5">
                         <Button
                             label={t('teacehr_red.continue')}
                             // btnClass='primary w-100'
                             btnClass={
                                 !(formik.dirty && formik.isValid) &&
-                                !stepTwoData?.mobile
+                                    !stepTwoData?.mobile
                                     ? 'default'
                                     : 'primary'
                             }
