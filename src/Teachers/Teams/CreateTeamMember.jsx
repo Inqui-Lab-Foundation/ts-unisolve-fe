@@ -91,7 +91,7 @@ const CreateMultipleMembers = ({ id }) => {
     const validateItemData = () => {
         const errors = studentData.map((item, i) => {
             let err = {};
-            if (!item.full_name) err['full_name'] = 'Full name is Required';
+            if (!item.full_name.trim()) err['full_name'] = 'Full name is Required';
             if (item.full_name && item.full_name.match(pattern)){
                 const {index} = item.full_name.match(pattern);
                 if(index){
@@ -387,7 +387,7 @@ const CreateTeamMember = (props) => {
                 .matches(
                     /^[A-Za-z0-9 ]*$/,
                     'Please enter only alphanumeric characters'
-                ),
+                ).trim(),
             age: Yup.number()
                 .integer()
                 .min(10, 'Min age is 10')
