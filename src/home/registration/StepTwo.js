@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Col, Form, FormGroup } from 'react-bootstrap';
 import { Label, UncontrolledAlert } from 'reactstrap';
 import axios from 'axios';
@@ -13,7 +13,7 @@ import { registerStepData } from '../../redux/actions';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import CryptoJS from 'crypto-js';
-
+import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
 function StepTwo({
     setUserData,
@@ -47,11 +47,10 @@ function StepTwo({
         className: 'defaultInput'
     };
     const password = {
-        type: 'password',
         placeholder: `${t('teacehr_red.enter_pass')}`,
         className: 'defaultInput'
     };
-   
+
     const formik = useFormik({
         initialValues: {
             full_name: '',
@@ -61,7 +60,7 @@ function StepTwo({
             role: 'MENTOR',
             qualification: '-',
             reg_status: stepTwoData?.username ? true : false,
-            password: '',
+            password: ''
         },
 
         validationSchema: Yup.object({
@@ -84,10 +83,7 @@ function StepTwo({
                 .trim()
                 .required('Password is required')
                 .min(8, 'Your password should be minimum 8 characters')
-                .matches(
-                    /[a-zA-Z0-9]/,
-                    'Password should be only alphanumeric'
-                ),
+                .matches(/[a-zA-Z0-9]/, 'Password should be only alphanumeric')
         }),
 
         onSubmit: async (values) => {
@@ -157,6 +153,8 @@ function StepTwo({
         }
     });
 
+    const [showPassword, setShowPassword] = useState(false);
+
     return (
         <Modal.Body>
             <div className="form-row row  mt-0 pt-5">
@@ -194,7 +192,7 @@ function StepTwo({
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             value={formik.values.full_name}
-                        // isDisabled={stepTwoData.mobile ? true : false}
+                            // isDisabled={stepTwoData.mobile ? true : false}
                         />
 
                         {formik.touched.full_name && formik.errors.full_name ? (
@@ -235,7 +233,7 @@ function StepTwo({
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             value={formik.values.username}
-                        // isDisabled={stepTwoData.mobile ? true : false}
+                            // isDisabled={stepTwoData.mobile ? true : false}
                         />
 
                         {formik.touched.username && formik.errors.username ? (
@@ -248,23 +246,54 @@ function StepTwo({
                         <Label className="mb-2" htmlFor="new_password">
                             {t('teacehr_red.enter_pass')}
                         </Label>
+                        <div style={{ position: 'relative' }}>
+                            <InputBox
+                                {...password}
+                                id="password"
+                                placeholder={'Enter minimum 8 characters'}
+                                name="password"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.password}
+                                type={showPassword ? 'text' : 'password'}
+                            />
 
-                        <InputBox
-                            {...password}
-                            id="password"
-                            placeholder={"Enter minimum 8 characters"}
-                            name="password"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.password}
-                        />
+                            {showPassword ? (
+                                <EyeOutlined
+                                    onClick={() =>
+                                        setShowPassword(
+                                            (lastPassword) => !lastPassword
+                                        )
+                                    }
+                                    className="position-absolute"
+                                    style={{
+                                        top: '25%',
+                                        left: '90%',
+                                        fontSize: '2.6rem'
+                                    }}
+                                />
+                            ) : (
+                                <EyeInvisibleOutlined
+                                    onClick={() =>
+                                        setShowPassword(
+                                            (lastPassword) => !lastPassword
+                                        )
+                                    }
+                                    className="position-absolute"
+                                    style={{
+                                        top: '25%',
+                                        left: '90%',
+                                        fontSize: '2.6rem'
+                                    }}
+                                />
+                            )}
+                        </div>
 
-                        {formik.touched.password &&
-                                formik.errors.password ? (
-                                <small className="error-cls">
-                                    {formik.errors.password}
-                                </small>
-                            ) : null}
+                        {formik.touched.password && formik.errors.password ? (
+                            <small className="error-cls">
+                                {formik.errors.password}
+                            </small>
+                        ) : null}
                     </FormGroup>
                     <div className="mt-5">
                         <Button
@@ -272,7 +301,7 @@ function StepTwo({
                             // btnClass='primary w-100'
                             btnClass={
                                 !(formik.dirty && formik.isValid) &&
-                                    !stepTwoData?.mobile
+                                !stepTwoData?.mobile
                                     ? 'default'
                                     : 'primary'
                             }
