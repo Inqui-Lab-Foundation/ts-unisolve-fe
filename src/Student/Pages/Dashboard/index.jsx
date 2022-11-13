@@ -96,7 +96,7 @@ const Dashboard = () => {
     }, []);
     const cardData = {
         idea: {
-            heading: 'Idea Registration',
+            heading: 'Notice Board',
             deadline: `${
                 dashboardChallengesStatus
                     ? dashboardChallengesStatus?.end_date

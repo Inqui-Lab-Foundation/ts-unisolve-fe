@@ -21,7 +21,7 @@ const TopSectionCard = ({
             <div className="bg-white card-height d-flex rounded p-3">
                 {position === 1 ? (
                     <div className="card-left">
-                        <p className="dead-line">
+                        {/* <p className="dead-line">
                             <span className="text-muted">DEADLINE</span> :{' '}
                             <span>{deadline},</span>
                         </p>
@@ -39,7 +39,8 @@ const TopSectionCard = ({
                                         />
                                     ))}
                             </div>
-                        </div>
+                        </div> */}
+                        <p>All the best for your journey</p>
                     </div>
                 ) : position === 2 ? (
                     <div className="card-left">
@@ -82,7 +83,7 @@ const TopSectionCard = ({
                         <p className="sub-heading">{subHeading}</p>
                         <div className="dashboard-card-footer">
                             <p className="text-muted small">{footerText}</p>
-                            <div className="d-flex">
+                            <div className="d-flex">sfffs
                                 {teamImages.map((item, i) => (
                                     <img
                                         key={i}
