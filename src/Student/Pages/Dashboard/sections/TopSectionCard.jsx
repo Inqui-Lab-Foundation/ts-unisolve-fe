@@ -53,7 +53,7 @@ const TopSectionCard = ({
                             {type !== 'teacher' ? (
                                 <div className="d-flex flex-column">
                                     <p className="sub-heading"> {name}</p>
-                                    <p>UDISE:{mentorData?.organization_code}</p>
+                                    {/* <p>UDISE:{mentorData?.organization_code}</p> */}
                                     <p className="small">{email}</p>
                                 </div>
                             ) : (
