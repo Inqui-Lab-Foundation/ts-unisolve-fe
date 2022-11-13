@@ -29,6 +29,33 @@ import { useDispatch, useSelector } from 'react-redux';
 import getStart from '../../assets/media/getStart.png';
 import { useTranslation } from 'react-i18next';
 import { updateStudentBadges } from '../../redux/studentRegistration/actions';
+import { Modal } from 'react-bootstrap';
+import ChildrensDaysGif from '../../assets/media/childrensdays.gif';
+
+const GreetingModal = (props) => {
+    return (
+        <Modal
+            show={props.show}
+            size="lg"
+            centered
+            className="modal-popup text-center"
+            onHide={props.handleClose}
+            backdrop={true}
+        >
+            <Modal.Header closeButton></Modal.Header>
+
+            <Modal.Body>
+                <figure>
+                    <img
+                        src={ChildrensDaysGif}
+                        alt="Happy Children's Day"
+                        className="img-fluid"
+                    />
+                </figure>
+            </Modal.Body>
+        </Modal>
+    );
+};
 
 const PreSurvey = () => {
     const { t } = useTranslation();
@@ -42,6 +69,7 @@ const PreSurvey = () => {
         (state) => state?.studentRegistration?.studentLanguage
     );
     const [show, setShow] = useState(false);
+    const [greetChildrensDay, setGreetChildrensDay] = useState(true);
 
     const formik = useFormik({
         initialValues: {},
@@ -100,6 +128,7 @@ const PreSurvey = () => {
             }
         }
     });
+
     useEffect(() => {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         axios
@@ -126,8 +155,17 @@ const PreSurvey = () => {
         setShow(true);
     };
 
+    const handleClose = () => {
+        setGreetChildrensDay(false);
+    };
+
     return (
         <Layout>
+            <GreetingModal
+                handleClose={handleClose}
+                show={greetChildrensDay}
+            ></GreetingModal>
+
             <Container className="presuervey mb-50 mt-5 ">
                 <Row className="justify-content-center aside p-4 bg-transparent">
                     {!show && preSurveyStatus != 'COMPLETED' ? (
