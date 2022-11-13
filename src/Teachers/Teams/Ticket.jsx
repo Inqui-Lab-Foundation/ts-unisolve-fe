@@ -313,6 +313,12 @@ const TicketsPage = (props) => {
                             <li>
                                 You can delete the team by using Delete Option
                             </li>
+                            <li>
+                                Special characters are not allowed in team name & Student name
+                            </li>
+                            <li>
+                                25 to 30 students to be enrolled in Project per School
+                            </li>
                         </List>
                     </Card>
                 </Row>

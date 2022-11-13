@@ -67,8 +67,7 @@ const PreSurvey = () => {
             } else {
                 return await axios
                     .post(
-                        `${
-                            URL.getPreSurveyList
+                        `${URL.getPreSurveyList
                         }/${quizSurveyId}/responses?${getLanguage(language)}`,
                         JSON.stringify(submitData, null, 2),
                         axiosConfig
@@ -207,59 +206,67 @@ const PreSurvey = () => {
                                                                 formik.handleBlur
                                                             }
                                                         >
-                                                            <FormGroup check>
-                                                                <Label check>
-                                                                    <Input
-                                                                        type="radio"
-                                                                        name={`radioGroup${i}`}
-                                                                        id="radioOption1"
-                                                                        value={`${eachQuestion.quiz_survey_question_id} -- ${eachQuestion.option_a}`}
-                                                                    />{' '}
-                                                                    {
-                                                                        eachQuestion.option_a
-                                                                    }
-                                                                </Label>
-                                                            </FormGroup>
-                                                            <FormGroup check>
-                                                                <Label check>
-                                                                    <Input
-                                                                        type="radio"
-                                                                        name={`radioGroup${i}`}
-                                                                        id="radioOption2"
-                                                                        value={`${eachQuestion.quiz_survey_question_id} -- ${eachQuestion.option_b}`}
-                                                                    />{' '}
-                                                                    {
-                                                                        eachQuestion.option_b
-                                                                    }
-                                                                </Label>
-                                                            </FormGroup>
-                                                            <FormGroup check>
-                                                                <Label check>
-                                                                    <Input
-                                                                        type="radio"
-                                                                        name={`radioGroup${i}`}
-                                                                        id="radioOption3"
-                                                                        value={`${eachQuestion.quiz_survey_question_id} -- ${eachQuestion.option_c}`}
-                                                                    />{' '}
-                                                                    {
-                                                                        eachQuestion.option_c
-                                                                    }
-                                                                </Label>
-                                                            </FormGroup>
+                                                            {eachQuestion.option_a && (
+                                                                <FormGroup check>
+                                                                    <Label check>
+                                                                        <Input
+                                                                            type="radio"
+                                                                            name={`radioGroup${i}`}
+                                                                            id="radioOption1"
+                                                                            value={`${eachQuestion.quiz_survey_question_id} -- ${eachQuestion.option_a}`}
+                                                                        />{' '}
+                                                                        {
+                                                                            eachQuestion.option_a
+                                                                        }
+                                                                    </Label>
+                                                                </FormGroup>
+                                                            )}
+                                                            {eachQuestion.option_b && (
+                                                                <FormGroup check>
+                                                                    <Label check>
+                                                                        <Input
+                                                                            type="radio"
+                                                                            name={`radioGroup${i}`}
+                                                                            id="radioOption2"
+                                                                            value={`${eachQuestion.quiz_survey_question_id} -- ${eachQuestion.option_b}`}
+                                                                        />{' '}
+                                                                        {
+                                                                            eachQuestion.option_b
+                                                                        }
+                                                                    </Label>
+                                                                </FormGroup>
+                                                            )}
+                                                            {eachQuestion.option_c && (
+                                                                <FormGroup check>
+                                                                    <Label check>
+                                                                        <Input
+                                                                            type="radio"
+                                                                            name={`radioGroup${i}`}
+                                                                            id="radioOption3"
+                                                                            value={`${eachQuestion.quiz_survey_question_id} -- ${eachQuestion.option_c}`}
+                                                                        />{' '}
+                                                                        {
+                                                                            eachQuestion.option_c
+                                                                        }
+                                                                    </Label>
+                                                                </FormGroup>
+                                                            )}
+                                                            {eachQuestion.option_d && (
+                                                                <FormGroup check>
+                                                                    <Label check>
+                                                                        <Input
+                                                                            type="radio"
+                                                                            name={`radioGroup${i}`}
+                                                                            id="radioOption4"
+                                                                            value={`${eachQuestion.quiz_survey_question_id} -- ${eachQuestion.option_d}`}
+                                                                        />{' '}
+                                                                        {
+                                                                            eachQuestion.option_d
+                                                                        }
+                                                                    </Label>
+                                                                </FormGroup>
+                                                            )}
 
-                                                            <FormGroup check>
-                                                                <Label check>
-                                                                    <Input
-                                                                        type="radio"
-                                                                        name={`radioGroup${i}`}
-                                                                        id="radioOption4"
-                                                                        value={`${eachQuestion.quiz_survey_question_id} -- ${eachQuestion.option_d}`}
-                                                                    />{' '}
-                                                                    {
-                                                                        eachQuestion.option_d
-                                                                    }
-                                                                </Label>
-                                                            </FormGroup>
                                                         </FormGroup>
                                                     </div>
                                                 </Card>
