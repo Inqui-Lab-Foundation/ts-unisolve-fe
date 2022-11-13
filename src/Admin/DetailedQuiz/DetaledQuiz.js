@@ -64,6 +64,9 @@ const DetaledQuiz = (props) => {
             SetType();
         }
     };
+    const goToTop = () => {
+        window.scrollTo(0,0);
+    };
     const handleNxtQst = () => {
         Setloading(true);
         setTimeout(() => {
@@ -72,6 +75,7 @@ const DetaledQuiz = (props) => {
             props.getAdminQuizQuestionsActions(props.quizId, language);
             SetSelectOption();
             SetType();
+            goToTop();
         }, 500);
     };
     const handlevideo = (id) => {
