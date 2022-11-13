@@ -246,7 +246,7 @@ const Dashboard = () => {
                     />
                    
                     <DashboardOverviewCard
-                        title={'Completed WorkSheets'}
+                        title={'Completed Worksheets'}
                         count={
                             dashboardStatus &&
                             dashboardStatus?.worksheet_completed_count
