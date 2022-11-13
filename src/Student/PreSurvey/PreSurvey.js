@@ -69,7 +69,7 @@ const PreSurvey = () => {
         (state) => state?.studentRegistration?.studentLanguage
     );
     const [show, setShow] = useState(false);
-    const [greetChildrensDay, setGreetChildrensDay] = useState(true);
+    const [greetChildrensDay, setGreetChildrensDay] = useState(false);
 
     const formik = useFormik({
         initialValues: {},
@@ -158,6 +158,13 @@ const PreSurvey = () => {
     const handleClose = () => {
         setGreetChildrensDay(false);
     };
+
+    useEffect(() => {
+        if (!localStorage.getItem('greetingChildren')) {
+            localStorage.setItem('greetingChildren', true);
+            setGreetChildrensDay(true);
+        }
+    }, []);
 
     return (
         <Layout>
