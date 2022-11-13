@@ -56,7 +56,9 @@ const TicketsPage = (props) => {
     }, []);
     useEffect(() => {
         setLoading(true);
-        props.getAdminTeamsListAction(currentUser.data[0].mentor_id).then(()=>setLoading(false));
+        props
+            .getAdminTeamsListAction(currentUser.data[0].mentor_id)
+            .then(() => setLoading(false));
     }, [count]);
 
     useEffect(() => {
@@ -285,6 +287,10 @@ const TicketsPage = (props) => {
                                             highlightOnHover
                                             fixedHeader
                                             subHeaderAlign={Alignment.Center}
+                                            paginationRowsPerPageOptions={[
+                                                25, 50, 100
+                                            ]}
+                                            paginationPerPage={25}
                                         />
                                     </DataTableExtensions>
                                 </div>
