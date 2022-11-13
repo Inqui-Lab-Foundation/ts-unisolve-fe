@@ -39,14 +39,14 @@ const MapdataCard = ({ values, all,districtName }) => {
                         </div>
                     </div>
                     <div className="mb-5 d-flex align-items-center ">
-                        <img src={team} alt="teams" className="mx-4" />
+                        <img src={people} alt="teams" className="mx-4" />
                         <div>
                             <h4>{values?.teams ? values?.teams : '0'}</h4>
                             <small className="blue">{t('home_tl.student_teams')}</small>
                         </div>
                     </div>
                     <div className="mb-5 d-flex align-items-center ">
-                        <img src={people} alt="teams" className="mx-4" />
+                        <img src={team} alt="teams" className="mx-4" />
                         <div>
                             <h4>{values?.students ? values?.students : '0'}</h4>
                             <small className="blue">{t('home_tl.students')}</small>
@@ -83,14 +83,14 @@ const MapdataCard = ({ values, all,districtName }) => {
                         </div>
                     </div>
                     <div className="mb-5 d-flex align-items-center ">
-                        <img src={team} alt="teams" className="mx-4" />
+                        <img src={people} alt="teams" className="mx-4" />
                         <div>
                             <h4>{all?.teams ? all?.teams : '0'}</h4>
                             <small className="blue">{t('home_tl.student_teams')}</small>
                         </div>
                     </div>
                     <div className="mb-5 d-flex align-items-center ">
-                        <img src={people} alt="teams" className="mx-4" />
+                        <img src={team} alt="teams" className="mx-4" />
                         <div>
                             <h4>{all?.students ? all?.students : '0'}</h4>
                             <small className="blue">{t('home_tl.students')}</small>
