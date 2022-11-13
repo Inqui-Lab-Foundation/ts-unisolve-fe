@@ -111,10 +111,13 @@ const PlayVideoCourses = (props) => {
     const [seletedFilesName, setSeletedFilesName] = useState([]);
     const [seletedFiles, setSeletedFiles] = useState([]);
     const [open, setOpen] = useState('0');
+    const [first, setFirst] = useState(false);
     const [badge, setBadge] = useState('0');
+    console.log(open);
     const toggle = (id) => {
         if (id == 1) {
             setOpen('1');
+            setFirst(true);
             setBadge('the_inspirer');
         } else if (open === id) {
             setOpen();
@@ -123,22 +126,29 @@ const PlayVideoCourses = (props) => {
         } else if (id === 2) {
             setOpen('2');
             setBadge('the_team_player');
+            setFirst(true);
         } else if (id === 3) {
             setOpen('3');
             setBadge('the_finder');
+            setFirst(true);
         } else if (id === 4) {
             setOpen(4);
             setBadge('the_explorer');
+            setFirst(true);
         } else if (id === 5) {
             setOpen('5');
             setBadge('the_ideator');
+            setFirst(true);
         } else if (id === 6) {
             setOpen('6');
             setBadge('the_solver');
+            setFirst(true);
         } else if (id === 7) {
             setOpen('7');
+            setFirst(true);
         } else {
             setOpen(id);
+            setFirst(true);
         }
     };
 
@@ -1011,8 +1021,12 @@ const PlayVideoCourses = (props) => {
             continueObj[0].topic_type
         );
         toggle(continueObj[0].course_module_id);
+        if(open !== 1 ){
+            setFirst(false);
+        }else{
+            setFirst(true);
+        }
     };
-
     const startCourseModule = (e) => {
         modulesListUpdateApi(
             selectedCourseModule.course_topics[0].course_topic_id
@@ -1023,6 +1037,7 @@ const PlayVideoCourses = (props) => {
             selectedCourseModule.course_topics[0].topic_type
         );
     };
+    console.log(first);
     return (
         <Layout>
             <div className="courses-page">
@@ -1091,7 +1106,8 @@ const PlayVideoCourses = (props) => {
                                             adminCourseDetails.map(
                                                 (course, index) => {
                                                     const str = index + 1;
-                                                    const str1 = str.toString();
+                                                    const str1 = str === 1 ? !first ? "1" :"" : str.toString();
+                                                    console.log(str1,str);
                                                     return (
                                                         <AccordionItem
                                                             className="m-0 course-items"
@@ -1731,7 +1747,7 @@ const PlayVideoCourses = (props) => {
                                     </Fragment>
                                 )
                             )}
-                            {showQuiz ? (
+                            {showQuiz && !first ? (
                                 <DetaledQuiz
                                     course_id={course_id}
                                     quizId={quizId}
