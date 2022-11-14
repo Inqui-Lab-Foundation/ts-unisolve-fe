@@ -1043,7 +1043,7 @@ const PlayVideoCourses = (props) => {
     const comingSoonText = t('dummytext.student_course');
     return (
         <Layout>
-            {!showPage ? <CommonPage text={comingSoonText}/> :
+            {showPage ? <CommonPage text={comingSoonText}/> :
             <div className="courses-page">
                 <Row className="courses-head view-head py-5">
                     <Col md={12} lg={9} className="mb-5 mb-md-5 mb-lg-0">
@@ -1238,14 +1238,13 @@ const PlayVideoCourses = (props) => {
                                                                                                     ''
                                                                                                 )}
                                                                                             </p>
-                                                                                            <p className="course-time mb-0 px-5 my-auto">
+                                                                                            {/* <p className="course-time mb-0 px-5 my-auto">
                                                                                                 {videoType(
                                                                                                     lecture.topic_type
                                                                                                 )}
-                                                                                                {/* <IoTimeOutline className='my-auto' /> */}
                                                                                                 {lecture.video_duration && (
                                                                                                     <span className="px-2">
-                                                                                                        {/* {lecture.video_duration} */}
+                                                                                                        
                                                                                                         {Math.floor(
                                                                                                             lecture.video_duration /
                                                                                                                 60
@@ -1255,8 +1254,9 @@ const PlayVideoCourses = (props) => {
                                                                                                         }{' '}
                                                                                                         min
                                                                                                     </span>
-                                                                                                )}
-                                                                                            </p>
+                                                                                                )
+                                                                                                }
+                                                                                            </p> */}
                                                                                         </Col>
                                                                                     </Row>
                                                                                 </div>
