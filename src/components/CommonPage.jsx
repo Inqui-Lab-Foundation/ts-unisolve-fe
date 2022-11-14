@@ -3,7 +3,6 @@ import { Card, Container } from 'reactstrap';
 import Congo from '../assets/media/survey-success.jpg';
 
 const CommonPage = ({text}) => {
-    console.log(text);
     return (
         <Container className="presuervey mb-50 mt-5 ">
             <Fragment>
