@@ -55,14 +55,13 @@ export const options = {
 
 export default function DoughnutChart({ user }) {
     const dispatch = useDispatch();
-    const { teamsList, teamsMembersStatus,teamsMembersStatusErr } = useSelector(
-        (state) => state.teams
-    );
+    const { teamsList, teamsMembersStatus, teamsMembersStatusErr } =
+        useSelector((state) => state.teams);
     const [teamId, setTeamId] = useState(null);
     const [showDefault, setshowDefault] = useState(true);
     useEffect(() => {
-        dispatch(getTeamMemberStatus(teamId,setshowDefault));
-    }, [teamId,dispatch]);
+        dispatch(getTeamMemberStatus(teamId, setshowDefault));
+    }, [teamId, dispatch]);
     const percentageBWNumbers = (a, b) => {
         return (((a - b) / a) * 100).toFixed(2);
     };
@@ -80,23 +79,34 @@ export default function DoughnutChart({ user }) {
         {
             title: 'Progress',
             dataIndex: 'address',
-            render: (_, record) => (
-                <Progress
-                    key={'25'}
-                    className="progress-height"
-                    animated
-                    value="25"
-                >
-                    {Math.round(
-                        100 -
-                            percentageBWNumbers(
-                                record.all_topics_count,
-                                record.topics_completed_count
-                            )
-                    )}
-                    %
-                </Progress>
-            )
+            render: (_, record) => {
+                let percent =
+                    100 -
+                    percentageBWNumbers(
+                        record.all_topics_count,
+                        record.topics_completed_count
+                    );
+                return (
+                    <Progress
+                        className="progress-height"
+                        animated
+                        color={
+                            percent
+                                ? percent <= 25
+                                    ? 'danger'
+                                    : percent > 25 && percent <= 50
+                                        ? 'info'
+                                        : percent > 50 && percent <= 75
+                                            ? 'warning'
+                                            : 'sucess'
+                                : 'danger'
+                        }
+                        value={percent}
+                    >
+                        {Math.round(percent) ? Math.round(percent) :  '0'}%
+                    </Progress>
+                );
+            }
         }
     ];
     return (
@@ -141,14 +151,15 @@ export default function DoughnutChart({ user }) {
                         dataSource={teamsMembersStatus}
                         columns={columns}
                     />
+                ) : teamsMembersStatusErr ? (
+                    <div
+                        className="d-flex justify-content-center align-items-center"
+                        style={{ minHeight: '25rem' }}
+                    >
+                        <p className="text-primary">{teamsMembersStatusErr}*</p>
+                    </div>
                 ) : (
-                    teamsMembersStatusErr ? 
-                        <div
-                            className="d-flex justify-content-center align-items-center"
-                            style={{ minHeight: '25rem' }}
-                        >
-                            <p className="text-primary">{teamsMembersStatusErr}*</p>
-                        </div> : <DoubleBounce />
+                    <DoubleBounce />
                 )}
             </div>
             {/* <div style={{ width: '50%' }}>

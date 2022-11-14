@@ -18,7 +18,7 @@ import Layout from '../Layout';
 import { useDispatch } from 'react-redux';
 import { getDashboardStates } from '../store/dashboard/actions';
 import DoubleBounce from '../../components/Loaders/DoubleBounce';
-// import DoughnutChart from './DoughnutChart';
+import DoughnutChart from './DoughnutChart';
 
 
 const Dashboard = () => {
@@ -151,7 +151,7 @@ const Dashboard = () => {
                     <Row className="">
                         <Col style={{ flex: 3 }}>
                             <div className="d-flex flex-wrap">
-                                {/* <DoughnutChart user={currentUser?.data} /> */}
+                                <DoughnutChart user={currentUser?.data} />
                                 {/* <BarChart /> */}
                             </div>
                         </Col>
