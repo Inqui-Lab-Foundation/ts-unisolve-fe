@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Col, Form, FormGroup } from 'react-bootstrap';
 import { Label, UncontrolledAlert } from 'reactstrap';
 import axios from 'axios';
@@ -12,13 +12,16 @@ import { useDispatch } from 'react-redux';
 import { registerStepData } from '../../redux/actions';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import CryptoJS from 'crypto-js';
+import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
 function StepTwo({
     setUserData,
     orgData,
     setHideTwo,
     // setHideThree,
-    setHideFour
+    // setHideFour
+    setHideFive
 }) {
     const { t } = useTranslation();
     const dispatch = useDispatch();
@@ -43,9 +46,11 @@ function StepTwo({
         placeholder: `${t('teacehr_red.faculty_name_pl')}`,
         className: 'defaultInput'
     };
+    const password = {
+        placeholder: `${t('teacehr_red.enter_pass')}`,
+        className: 'defaultInput'
+    };
 
-    // const mobile1 = JSON.parse(localStorage.getItem('mobile'));
-    // console.log(mobile1);
     const formik = useFormik({
         initialValues: {
             full_name: '',
@@ -54,22 +59,31 @@ function StepTwo({
             organization_code: orgData?.organization_code,
             role: 'MENTOR',
             qualification: '-',
-            reg_status: stepTwoData?.username ? true : false
+            reg_status: stepTwoData?.username ? true : false,
+            password: ''
         },
 
         validationSchema: Yup.object({
             full_name: Yup.string()
+                .trim()
                 .min(2, 'Enter Name')
                 .matches(/^[aA-zZ\s]+$/, 'Not allowed')
                 .required('Required'),
             mobile: Yup.string()
                 .required('required')
+                .trim()
                 .matches(phoneRegExp, 'Phone number is not valid')
                 .min(10, 'Please enter valid number')
                 .max(10, 'Please enter valid number'),
             username: Yup.string()
+                .trim()
                 .email('Invalid username format')
-                .required('Required')
+                .required('Required'),
+            password: Yup.string()
+                .trim()
+                .required('Password is required')
+                .min(8, 'Your password should be minimum 8 characters')
+                .matches(/[a-zA-Z0-9]/, 'Password should be only alphanumeric')
         }),
 
         onSubmit: async (values) => {
@@ -93,7 +107,7 @@ function StepTwo({
                         if (mentorRegRes?.data?.status == 202) {
                             setUserData(mentorRegRes?.data?.data[0]);
                             setHideTwo(false);
-                            setHideFour(true);
+                            setHideFive(true);
                         }
                     })
                     .catch((err) => {
@@ -103,6 +117,18 @@ function StepTwo({
                         return err.response;
                     });
             } else {
+                values.password = values.password.trim();
+                const key = CryptoJS.enc.Hex.parse(
+                    '253D3FB468A0E24677C28A624BE0F939'
+                );
+                const iv = CryptoJS.enc.Hex.parse(
+                    '00000000000000000000000000000000'
+                );
+                const encrypted = CryptoJS.AES.encrypt(values.password, key, {
+                    iv: iv,
+                    padding: CryptoJS.pad.NoPadding
+                }).toString();
+                values.password = encrypted;
                 await axios
                     .post(
                         `${URL.mentorRegister}`,
@@ -114,7 +140,7 @@ function StepTwo({
                         if (mentorRegRes?.data?.status == 201) {
                             setUserData(mentorRegRes?.data?.data[0]);
                             setHideTwo(false);
-                            setHideFour(true);
+                            setHideFive(true);
                         }
                     })
                     .catch((err) => {
@@ -126,6 +152,8 @@ function StepTwo({
             }
         }
     });
+
+    const [showPassword, setShowPassword] = useState(false);
 
     return (
         <Modal.Body>
@@ -211,6 +239,59 @@ function StepTwo({
                         {formik.touched.username && formik.errors.username ? (
                             <small className="error-cls">
                                 {formik.errors.username}
+                            </small>
+                        ) : null}
+                    </FormGroup>
+                    <FormGroup className="form-group mt-5" md={12}>
+                        <Label className="mb-2" htmlFor="new_password">
+                            {t('teacehr_red.enter_pass')}
+                        </Label>
+                        <div style={{ position: 'relative' }}>
+                            <InputBox
+                                {...password}
+                                id="password"
+                                placeholder={'Enter minimum 8 characters'}
+                                name="password"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.password}
+                                type={showPassword ? 'text' : 'password'}
+                            />
+
+                            {showPassword ? (
+                                <EyeOutlined
+                                    onClick={() =>
+                                        setShowPassword(
+                                            (lastPassword) => !lastPassword
+                                        )
+                                    }
+                                    className="position-absolute"
+                                    style={{
+                                        top: '25%',
+                                        left: '90%',
+                                        fontSize: '2.6rem'
+                                    }}
+                                />
+                            ) : (
+                                <EyeInvisibleOutlined
+                                    onClick={() =>
+                                        setShowPassword(
+                                            (lastPassword) => !lastPassword
+                                        )
+                                    }
+                                    className="position-absolute"
+                                    style={{
+                                        top: '25%',
+                                        left: '90%',
+                                        fontSize: '2.6rem'
+                                    }}
+                                />
+                            )}
+                        </div>
+
+                        {formik.touched.password && formik.errors.password ? (
+                            <small className="error-cls">
+                                {formik.errors.password}
                             </small>
                         ) : null}
                     </FormGroup>

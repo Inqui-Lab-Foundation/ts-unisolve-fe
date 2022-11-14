@@ -115,7 +115,7 @@ const ChangePSW = (props) => {
         className: 'defaultInput'
     };
     const handleOnCancel = () => {
-        history.push('/teacher/dashboard');
+        history.push('/dashboard');
     };
     return (
         <Layout>

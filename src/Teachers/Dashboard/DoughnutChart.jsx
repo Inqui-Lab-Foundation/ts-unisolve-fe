@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { useLayoutEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import DoubleBounce from '../../components/Loaders/DoubleBounce';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -54,18 +55,20 @@ export const options = {
 
 export default function DoughnutChart({ user }) {
     const dispatch = useDispatch();
-    const { teamsList, teamsMembersStatus } = useSelector(
+    const { teamsList, teamsMembersStatus,teamsMembersStatusErr } = useSelector(
         (state) => state.teams
     );
     const [teamId, setTeamId] = useState(null);
+    const [showDefault, setshowDefault] = useState(true);
     useEffect(() => {
-        dispatch(getTeamMemberStatus(teamId));
-    }, [teamId]);
+        dispatch(getTeamMemberStatus(teamId,setshowDefault));
+    }, [teamId,dispatch]);
     const percentageBWNumbers = (a, b) => {
         return (((a - b) / a) * 100).toFixed(2);
     };
 
     useLayoutEffect(() => {
+        setshowDefault(true);
         dispatch(getAdminTeamsList(user[0].mentor_id));
     }, [user[0].mentor_id]);
 
@@ -123,7 +126,15 @@ export default function DoughnutChart({ user }) {
                         </select>
                     </div>
                 }
-                {teamsMembersStatus.length > 0 ? (
+                {showDefault && (
+                    <div
+                        className="d-flex justify-content-center align-items-center"
+                        style={{ minHeight: '25rem' }}
+                    >
+                        <h2 className="text-primary">Please Select a Team*</h2>
+                    </div>
+                )}
+                {teamsMembersStatus.length > 0 && !showDefault ? (
                     <Table
                         bordered
                         pagination={false}
@@ -131,12 +142,13 @@ export default function DoughnutChart({ user }) {
                         columns={columns}
                     />
                 ) : (
-                    <div
-                        className="d-flex justify-content-center align-items-center"
-                        style={{ minHeight: '25rem' }}
-                    >
-                        <h2 className='text-primary'>Please Select a Team*</h2>
-                    </div>
+                    teamsMembersStatusErr ? 
+                        <div
+                            className="d-flex justify-content-center align-items-center"
+                            style={{ minHeight: '25rem' }}
+                        >
+                            <p className="text-primary">{teamsMembersStatusErr}*</p>
+                        </div> : <DoubleBounce />
                 )}
             </div>
             {/* <div style={{ width: '50%' }}>

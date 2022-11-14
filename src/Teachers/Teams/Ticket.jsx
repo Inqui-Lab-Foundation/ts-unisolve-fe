@@ -56,7 +56,9 @@ const TicketsPage = (props) => {
     }, []);
     useEffect(() => {
         setLoading(true);
-        props.getAdminTeamsListAction(currentUser.data[0].mentor_id).then(()=>setLoading(false));
+        props
+            .getAdminTeamsListAction(currentUser.data[0].mentor_id)
+            .then(() => setLoading(false));
     }, [count]);
 
     useEffect(() => {
@@ -285,6 +287,10 @@ const TicketsPage = (props) => {
                                             highlightOnHover
                                             fixedHeader
                                             subHeaderAlign={Alignment.Center}
+                                            paginationRowsPerPageOptions={[
+                                                25, 50, 100
+                                            ]}
+                                            paginationPerPage={25}
                                         />
                                     </DataTableExtensions>
                                 </div>
@@ -312,6 +318,12 @@ const TicketsPage = (props) => {
                             </li>
                             <li>
                                 You can delete the team by using Delete Option
+                            </li>
+                            <li>
+                                Special characters are not allowed in team name & Student name
+                            </li>
+                            <li>
+                                25 to 30 students to be enrolled in Project per School
                             </li>
                         </List>
                     </Card>

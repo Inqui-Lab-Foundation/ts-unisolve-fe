@@ -270,7 +270,7 @@
         "faq_qn_3": "How many teams and teachers/mentors can participate in the program?",
         "faq_ans_3": "<p>The platform does not have any limitation in terms of the number of teams or students. But it is suggested that teacher/mentor:teams ratio be maintained as 1:5.</p>",
         "faq_qn_4": "How to register your institution for this program?",
-        "faq_ans_4": "<p>Open the website and click register. Register your school/Institution thereby entering the UDISE code/Unique ID and then filling in all required details. Once the registration process is completed, you can log in to your account either by entering a password or with OTP.<p/>",
+        "faq_ans_4": "<p>Open the website and click register. Register your school/Institution there by entering the UDISE code/Unique ID and then filling in all required details. Once the registration process is completed, you can log in to your account by entering a password.<p/>",
         "faq_qn_5": "What are the next steps involved after registering my school on the website?",
         "faq_ans_5": "<p>The following are the next steps involved after you register your school/institution:</p><ol><li><p>Identify students who can participate in the program.</p></li><li><p>Form teams with the interested or nominated participant group.</p></li><li><p>Students have to log in to the website and start doing the online course with the team.</p></li><li><p>Teams will complete the learning course and submit one idea as their challenge project. </p></li></ol>",
         "faq_qn_6":"How many students per school can participate in SIDP project? ",
@@ -290,6 +290,7 @@
         "roadmpa_six_desc": "<p>Solutions selected in the final event are provided support to actualize their solutions and implement their ideas</p>",
         "power_by": "powered by",
         "engagement": "Engagement & Impact",
+        "students": "STUDENTS",
         "student_teams": "STUDENT TEAMS",
         "institutions": "INSTITUTIONS",
         "ideas": "IDEAS",
@@ -442,7 +443,14 @@
         "please_download": "Please Download Handbook..."
     },
     "dummytext":{
-        "student_idea_sub":"<p>Dear Participant, we hope you are having a great learning experience along with your team.</p><p>You can submit your idea once the Idea Submissions are open. Your Guide Teacher will share the details about this and assist you and your team.</p><p>All the best! : )</p>",
-        "student_my_cer":"Please complete post survey to get course completion certificate"
+        "student_idea_sub":"Dear Student, idea submission will be active once you and your team members complete the learning journey. Your guide teacher will support you with this.",
+        "student_my_cer":"Dear Student, you will receive your certificate once you complete the course, submit idea and take post survey. All the best :)",
+        "student_post_survey":"Dear Students, Post-Survey will be active once your team submits the idea. Hope you and your team are learning a lot of new things. : )",        
+        "student_course":"Dear Student, your SIDP learning journey will begin soon. Please discuss with your School SIDP Head cum Guide Teacher and prepare yourself for this journey. All the best 🙂"       
+
+    },
+    "badges":{
+        "congratulations":"Congratulations",
+        "earn":"you've just earned a new badge"
     }
 }
