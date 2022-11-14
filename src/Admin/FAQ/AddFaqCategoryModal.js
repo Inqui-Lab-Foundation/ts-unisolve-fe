@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { useEffect, Fragment } from 'react';
 import { Modal } from 'react-bootstrap';
 import { Col, Form } from 'reactstrap';
@@ -20,6 +21,7 @@ const AddFaqCategoryModal = (props) => {
     const formik = useFormik({
         initialValues: {
             category_name: ''
+            // a
         },
 
         validationSchema: Yup.object({
