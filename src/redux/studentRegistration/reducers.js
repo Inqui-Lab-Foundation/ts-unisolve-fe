@@ -15,6 +15,7 @@ import {
     GET_STUDENT_DASHBOARD_TUTORIALS
 } from '../actions';
 
+const localLang = JSON.parse(localStorage.getItem("s_language"));
 
 const INIT_STATE = {
     loading: false,
@@ -24,7 +25,7 @@ const INIT_STATE = {
     teamMember:{},
     challengeQuestions:[],
     challengesSubmittedResponse:[],
-    studentLanguage:languageOptions[0],
+    studentLanguage:localLang ? localLang :languageOptions[0],
     badges:"",
     dashboardStatus:null,
     dashboardChallengesStatus:null,
