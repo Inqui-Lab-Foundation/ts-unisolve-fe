@@ -20,6 +20,7 @@ const AddFaqCategoryModal = (props) => {
     const formik = useFormik({
         initialValues: {
             category_name: '',
+            
         },
 
         validationSchema: Yup.object({
