@@ -117,7 +117,7 @@ const PlayVideoCourses = (props) => {
     const [badge, setBadge] = useState('0');
     const [showPage, setshowPage] = useState(true);
     const toggle = (id) => {
-        if (id == 1) {
+        if (id === 1) {
             setOpen('1');
             setBadge('the_inspirer');
         } else if (open === id) {
@@ -131,7 +131,7 @@ const PlayVideoCourses = (props) => {
             setOpen('3');
             setBadge('the_finder');
         } else if (id === 4) {
-            setOpen(4);
+            setOpen('4');
             setBadge('the_explorer');
         } else if (id === 5) {
             setOpen('5');
