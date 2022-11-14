@@ -240,9 +240,10 @@ const PlayVideoCourses = (props) => {
     };
 
     async function modulesListUpdateApi(courseTopicId) {
+        console.log("course topic id", courseTopicId);
         const body1 = JSON.stringify({
             user_id: JSON.stringify(currentUser.data[0].user_id),
-            course_topic_id: JSON.stringify(courseTopicId),
+            course_topic_id: courseTopicId.toString(),
             status: 'Completed'
         });
         var config = {
@@ -263,6 +264,7 @@ const PlayVideoCourses = (props) => {
         await axios(config)
             .then(function (response) {
                 if (response.status === 201) {
+                    console.log(response.data,"response");
                     setUpdateModuleResponce(
                         response.data && response.data.data[0]
                     );
@@ -1030,7 +1032,7 @@ const PlayVideoCourses = (props) => {
     const comingSoonText = t('dummytext.student_course');
     return (
         <Layout>
-            {showPage ? <CommonPage text={comingSoonText}/> :
+            {!showPage ? <CommonPage text={comingSoonText}/> :
             <div className="courses-page">
                 <Row className="courses-head view-head py-5">
                     <Col md={12} lg={9} className="mb-5 mb-md-5 mb-lg-0">
