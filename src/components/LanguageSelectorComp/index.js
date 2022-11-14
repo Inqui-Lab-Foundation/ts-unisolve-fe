@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import './style.scss';
 import i18next from 'i18next';
@@ -26,6 +26,14 @@ const LanguageSelectorComp = ({ module }) => {
             ? selectedLanguage?.name
             : globalLang?.name
     );
+    const localLang = JSON.parse(localStorage.getItem("s_language"));
+    useEffect(() => {
+        if(localLang){
+            i18next.changeLanguage(localLang.code);
+            dispatch(getStudentGlobalLanguage(localLang));
+        }
+    }, []);
+    
     const handleSelector = (item) => {
         let forMentor;
         if (item && item.code !== "en") {
@@ -45,6 +53,9 @@ const LanguageSelectorComp = ({ module }) => {
             dispatch(getMentorGlobalLanguage(forMentor));
         } else {
             dispatch(getStudentGlobalLanguage(item));
+            if(module==='student'){
+                localStorage.setItem("s_language", JSON.stringify(item));
+            }
         }
     };
     return (
@@ -52,7 +63,7 @@ const LanguageSelectorComp = ({ module }) => {
             id="language-selector-btn"
             title={
                 <span>
-                    <FaGlobeAsia /> {language}
+                    <FaGlobeAsia /> { (localLang && localLang.name) || language}
                 </span>
             }
         >
