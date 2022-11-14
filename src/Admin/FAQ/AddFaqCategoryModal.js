@@ -22,6 +22,7 @@ const AddFaqCategoryModal = (props) => {
         initialValues: {
             category_name: ''
             // a
+            // b
         },
 
         validationSchema: Yup.object({
