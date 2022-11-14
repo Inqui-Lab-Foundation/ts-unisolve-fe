@@ -55,7 +55,7 @@ export const getTeacherByID = (id) => async (dispatch) => {
         dispatch(getTeacherByIdSuccess(""));
     }
 };
-export const teacherCreateMultipleStudent = (data, history) => async () => {
+export const teacherCreateMultipleStudent = (data, history,setIsClicked) => async () => {
     try {
 
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
@@ -71,17 +71,20 @@ export const teacherCreateMultipleStudent = (data, history) => async () => {
                 result.data.data
             );
             history.push("/teacher/teamlist");
+            setIsClicked(false);
         } else {
             openNotificationWithIcon(
                 'error',
                 'Something went wrong'
             );
+            setIsClicked(false);
         }
     } catch (error) {
         openNotificationWithIcon(
             'error',
             error?.response?.data?.message
         );
+        setIsClicked(false);
     }
 };
 export const studentResetPassword = (body) => async () => {

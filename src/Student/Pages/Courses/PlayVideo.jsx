@@ -116,7 +116,7 @@ const PlayVideoCourses = (props) => {
     const [open, setOpen] = useState('0');
     const [first, setFirst] = useState(false);
     const [badge, setBadge] = useState('0');
-    const [showPage, setshowPage] = useState(false);
+    const [showPage, setshowPage] = useState(true);
     const toggle = (id) => {
         if (id == 1) {
             setOpen('1');
@@ -1024,11 +1024,11 @@ const PlayVideoCourses = (props) => {
             continueObj[0].topic_type
         );
         toggle(continueObj[0].course_module_id);
-        if(open !== 1 ){
-            setFirst(false);
-        }else{
-            setFirst(true);
-        }
+        // if(open !== 1 ){
+        //     setFirst(false);
+        // }else{
+        //     setFirst(true);
+        // }
     };
     const startCourseModule = (e) => {
         modulesListUpdateApi(
@@ -1604,19 +1604,6 @@ const PlayVideoCourses = (props) => {
                                                         courseData.description
                                                 }}
                                             ></div>
-                                            {/* {courseData &&
-                                            courseData.course_module_id == 1 ? (
-                                                <div>
-                                                    <Button
-                                                        label="START COURSE"
-                                                        btnClass="primary mt-4"
-                                                        size="small"
-                                                        onClick={(e) =>
-                                                            startFirstCourse(e)
-                                                        }
-                                                    />
-                                                </div>
-                                            ) : ( */}
                                                 <div>
                                                     <Button
                                                         label="CONTINUE COURSE"
@@ -1629,7 +1616,6 @@ const PlayVideoCourses = (props) => {
                                                         }
                                                     />
                                                 </div>
-                                            {/* )} */}
                                         </CardBody>
                                     </Card>
                                 </Fragment>

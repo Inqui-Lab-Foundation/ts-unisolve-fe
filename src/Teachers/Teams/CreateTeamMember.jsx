@@ -38,6 +38,7 @@ const CreateMultipleMembers = ({ id }) => {
     const dispatch = useDispatch();
     const [itemDataErrors, setItemDataErrors] = useState([studentBody]);
     const history = useHistory();
+    const [isClicked, setIsClicked] = useState(false);
     const [studentData, setStudentData] = useState([
         {
             team_id: id,
@@ -66,13 +67,14 @@ const CreateMultipleMembers = ({ id }) => {
                 if (e.target.name === item) {
                     newItem[i][e.target.name] = e.target.value;
                     let errCopy = [...itemDataErrors];
-                    if(item==="full_name"){
+                    if (item === 'full_name') {
                         let check = e.target.value;
-                        if (check && check.match(pattern)){
-                            const {index} = check.match(pattern);
-                            if(index){
+                        if (check && check.match(pattern)) {
+                            const { index } = check.match(pattern);
+                            if (index) {
                                 const foo = { ...errCopy[i] };
-                                foo[e.target.name] = 'Only alphanumeric are allowed';
+                                foo[e.target.name] =
+                                    'Only alphanumeric are allowed';
                                 errCopy[i] = { ...foo };
                                 setItemDataErrors(errCopy);
                                 return;
@@ -91,10 +93,11 @@ const CreateMultipleMembers = ({ id }) => {
     const validateItemData = () => {
         const errors = studentData.map((item, i) => {
             let err = {};
-            if (!item.full_name.trim()) err['full_name'] = 'Full name is Required';
-            if (item.full_name && item.full_name.match(pattern)){
-                const {index} = item.full_name.match(pattern);
-                if(index){
+            if (!item.full_name.trim())
+                err['full_name'] = 'Full name is Required';
+            if (item.full_name && item.full_name.match(pattern)) {
+                const { index } = item.full_name.match(pattern);
+                if (index) {
                     err['full_name'] = 'Only alphanumeric are allowed';
                 }
             }
@@ -140,6 +143,7 @@ const CreateMultipleMembers = ({ id }) => {
     };
     const handleSumbit = () => {
         if (!validateItemData()) return;
+        setIsClicked(true);
         const checkDuplicateName = containsDuplicates(
             studentData.map((item) => item.full_name)
         );
@@ -147,7 +151,9 @@ const CreateMultipleMembers = ({ id }) => {
             openNotificationWithIcon('error', 'Student already exists');
             return;
         }
-        dispatch(teacherCreateMultipleStudent(studentData, history));
+        dispatch(
+            teacherCreateMultipleStudent(studentData, history, setIsClicked)
+        );
     };
     return (
         <div className="create-ticket register-blockt">
@@ -298,13 +304,23 @@ const CreateMultipleMembers = ({ id }) => {
                     />
                 </Col>
                 <Col className="col-xs-12 col-sm-6">
-                    <Button
-                        label={t('teacher_teams.submit')}
-                        type="submit"
-                        onClick={handleSumbit}
-                        btnClass={'primary float-end'}
-                        size="small"
-                    />
+                    {!isClicked ? (
+                        <Button
+                            label={t('teacher_teams.submit')}
+                            type="submit"
+                            onClick={handleSumbit}
+                            btnClass={'primary float-end'}
+                            size="small"
+                        />
+                    ) : (
+                        <Button
+                            label={t('teacher_teams.submit')}
+                            type="button"
+                            btnClass={'default float-end'}
+                            size="small"
+                            disabled={true}
+                        />
+                    )}
                     {studentData.length < 5 && (
                         <div className="mx-5">
                             <Button
@@ -330,6 +346,7 @@ const CreateTeamMember = (props) => {
     const studentCount = params[pl - 1];
     const currentUser = getCurrentUser('current_user');
     const [teamMemberData, setTeamMemberData] = useState({});
+    const [isClicked, setIsClicked] = useState(false);
 
     const headingDetails = {
         title: t('teacher_teams.create_team_members'),
@@ -387,7 +404,8 @@ const CreateTeamMember = (props) => {
                 .matches(
                     /^[A-Za-z0-9 ]*$/,
                     'Please enter only alphanumeric characters'
-                ).trim(),
+                )
+                .trim(),
             age: Yup.number()
                 .integer()
                 .min(10, 'Min age is 10')
@@ -410,6 +428,7 @@ const CreateTeamMember = (props) => {
                     'Team Members Maximum Count All Ready Exist'
                 );
             } else {
+                setIsClicked(true);
                 const body = {
                     team_id: id,
                     role: 'STUDENT',
@@ -444,6 +463,7 @@ const CreateTeamMember = (props) => {
                                 'error',
                                 'Opps! Something Wrong'
                             );
+                            setIsClicked(false);
                         }
                     })
                     .catch(function (error) {
@@ -458,10 +478,12 @@ const CreateTeamMember = (props) => {
                                 'Opps! Something Wrong'
                             );
                         }
+                        setIsClicked(false);
                     });
             }
         }
     });
+    console.log(isClicked);
     return (
         <Layout>
             <div className="EditPersonalDetails new-member-page">
@@ -674,27 +696,39 @@ const CreateTeamMember = (props) => {
                                             />
                                         </Col>
                                         <Col className="submit-btn col-xs-12 col-sm-6">
-                                            <Button
-                                                label={t(
-                                                    'teacher_teams.submit'
-                                                )}
-                                                type="submit"
-                                                btnClass={
-                                                    !(
-                                                        formik.dirty &&
-                                                        formik.isValid
-                                                    )
-                                                        ? 'default'
-                                                        : 'primary'
-                                                }
-                                                size="small"
-                                                disabled={
-                                                    !(
-                                                        formik.dirty &&
-                                                        formik.isValid
-                                                    )
-                                                }
-                                            />
+                                            {!isClicked ? (
+                                                <Button
+                                                    label={t(
+                                                        'teacher_teams.submit'
+                                                    )}
+                                                    type="submit"
+                                                    btnClass={
+                                                        !(
+                                                            formik.dirty &&
+                                                            formik.isValid
+                                                        )
+                                                            ? 'default'
+                                                            : 'primary'
+                                                    }
+                                                    size="small"
+                                                    disabled={
+                                                        !(
+                                                            formik.dirty &&
+                                                            formik.isValid
+                                                        )
+                                                    }
+                                                />
+                                            ) : (
+                                                <Button
+                                                    label={t(
+                                                        'teacher_teams.submit'
+                                                    )}
+                                                    type="button"
+                                                    btnClass="default"
+                                                    size="small"
+                                                    disabled={true}
+                                                />
+                                            )}
                                         </Col>
                                     </Row>
                                 </Form>
