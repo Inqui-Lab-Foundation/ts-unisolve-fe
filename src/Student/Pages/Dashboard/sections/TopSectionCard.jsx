@@ -40,7 +40,7 @@ const TopSectionCard = ({
                                     ))}
                             </div>
                         </div> */}
-                        <p>All the best for your journey</p>
+                        <h5 style={{fontSize:"2rem", fontWeight: '600'}}>All the best for your journey</h5>
                     </div>
                 ) : position === 2 ? (
                     <div className="card-left">

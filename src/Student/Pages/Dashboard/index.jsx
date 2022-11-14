@@ -292,7 +292,7 @@ const Dashboard = () => {
                         </div>
                     </Col>
                     <Col md={12} className="flex-2">
-                        <h2>Support</h2>
+                        <h2>Introduction to SIDP by Mr. C. Shunmugaraj, EDII-TN</h2>
                         <div className="bg-white learning-statistics rounded p-3">
                             <div className="flex-2 px-3">
                                 <div
