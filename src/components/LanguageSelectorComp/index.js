@@ -17,18 +17,21 @@ const LanguageSelectorComp = ({ module }) => {
     const selectedLanguage = useSelector(
         (state) => state?.mentors.mentorLanguage
     );
+    const studentLanguage = useSelector(
+        (state) => state?.studentRegistration?.studentLanguage
+    );
     const globalLang = useSelector((state) => state?.home.globalLanguage);
-    const [language, setLanguage] = useState(
+    const [language, setLanguage] = useState(module === 'student' ? studentLanguage.name :
         selectedLanguage && selectedLanguage?.name
             ? selectedLanguage?.name
             : globalLang?.name
     );
     const handleSelector = (item) => {
         let forMentor;
-        if(item && item.code !=="en"){
-            forMentor={...item};
-            forMentor.code ="en";
-            forMentor.name ="English";
+        if (item && item.code !== "en") {
+            forMentor = { ...item };
+            forMentor.code = "en";
+            forMentor.name = "English";
         }
         setLanguage(item.name);
         i18next.changeLanguage(item.code);
