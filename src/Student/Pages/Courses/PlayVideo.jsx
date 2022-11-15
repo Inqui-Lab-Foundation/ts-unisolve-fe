@@ -116,6 +116,7 @@ const PlayVideoCourses = (props) => {
     const [open, setOpen] = useState('0');
     const [badge, setBadge] = useState('0');
     const [showPage, setshowPage] = useState(true);
+    const [showCompleteMessage, setShowCompleteMessage] = useState(false);
     const toggle = (id) => {
         if (id === 1) {
             setOpen('1');
@@ -988,14 +989,18 @@ const PlayVideoCourses = (props) => {
             });
     };
     const handleNextCourse = () => {
-        toggle(topicObj.course_module_id);
-        modulesListUpdateApi(topicObj.course_topic_id);
-        setTopic(topicObj);
-        handleSelect(
-            topicObj.topic_type_id,
-            topicObj.course_topic_id,
-            topicObj.topic_type
-        );
+        if (topicObj) {
+            toggle(topicObj.course_module_id);
+            modulesListUpdateApi(topicObj.course_topic_id);
+            setTopic(topicObj);
+            handleSelect(
+                topicObj.topic_type_id,
+                topicObj.course_topic_id,
+                topicObj.topic_type
+            );
+        } else {
+            setShowCompleteMessage(true);
+        }
     };
 
     const startFirstCourse = (e) => {
@@ -1032,6 +1037,7 @@ const PlayVideoCourses = (props) => {
         );
     };
     const comingSoonText = t('dummytext.student_course');
+    console.log(worksheetResponce, 'ds');
     return (
         <Layout>
             {!showPage ? (
@@ -1330,28 +1336,28 @@ const PlayVideoCourses = (props) => {
                                                     Test your course skills in a
                                                     short test challenge!
                                                 </p>
-                                                {/* <div className="row justify-content-center text-center">
-                                                <div className="col col-lg-3">
-                                                    <p>
-                                                        <VscCircleFilled
-                                                            style={{
-                                                                color: '#067DE1'
-                                                            }}
-                                                        />
-                                                        Questions
-                                                    </p>
+                                                <div className="row justify-content-center text-center">
+                                                    <div className="col col-lg-3">
+                                                        <p>
+                                                            <VscCircleFilled
+                                                                style={{
+                                                                    color: '#067DE1'
+                                                                }}
+                                                            />
+                                                            Questions
+                                                        </p>
+                                                    </div>
+                                                    <div className="col col-lg-3">
+                                                        <p>
+                                                            <VscCircleFilled
+                                                                style={{
+                                                                    color: '#067DE1'
+                                                                }}
+                                                            />{' '}
+                                                            Minutes
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                                <div className="col col-lg-3">
-                                                    <p>
-                                                        <VscCircleFilled
-                                                            style={{
-                                                                color: '#067DE1'
-                                                            }}
-                                                        />{' '}
-                                                        Minutes
-                                                    </p>
-                                                </div>
-                                            </div> */}
                                             </Modal.Header>
 
                                             <Modal.Body>
@@ -1377,249 +1383,122 @@ const PlayVideoCourses = (props) => {
                                     <Fragment>
                                         <Card className="course-sec-basic p-5">
                                             <CardBody>
-                                                <div>
-                                                    {worksheetResponce.response !=
-                                                        null &&
-                                                    worksheetResponce.worksheet_id ===
-                                                        setTopicArrays[
-                                                            setTopicArrays?.length -
-                                                                1
-                                                        ]?.topic_type_id ? (
-                                                        <CourseSuccessMessage />
-                                                    ) : (
-                                                        <div>
-                                                            <CardTitle
-                                                                className=" text-left pt-4 pb-4"
-                                                                tag="h2"
-                                                            >
-                                                                Unisolve
-                                                                Worksheet
-                                                            </CardTitle>
+                                                {showCompleteMessage ? (
+                                                    <CourseSuccessMessage />
+                                                ) : (
+                                                    <div>
+                                                        <CardTitle
+                                                            className=" text-left pt-4 pb-4"
+                                                            tag="h2"
+                                                        >
+                                                            Unisolve Worksheet
+                                                        </CardTitle>
+
+                                                        <p>
+                                                            {t(
+                                                                'student.worksheet'
+                                                            )}
+                                                        </p>
+                                                        <div className="text-right">
                                                             {worksheetResponce.response ===
                                                             null ? (
-                                                                <p>
-                                                                    Please
-                                                                    Upload
-                                                                    Assign
-                                                                    WorkSheet...
-                                                                </p>
+                                                                <a
+                                                                    href={
+                                                                        process
+                                                                            .env
+                                                                            .REACT_APP_API_IMAGE_BASE_URL +
+                                                                        worksheetResponce?.attachments
+                                                                    }
+                                                                    target="_blank"
+                                                                    rel="noreferrer"
+                                                                    className="primary"
+                                                                >
+                                                                    <Button
+                                                                        button="submit"
+                                                                        label="Download Worksheet"
+                                                                        btnClass="primary mt-4"
+                                                                        size="small"
+                                                                        style={{
+                                                                            marginRight:
+                                                                                '2rem'
+                                                                        }}
+                                                                    />
+                                                                </a>
                                                             ) : (
-                                                                <p>
-                                                                    Thanks for
-                                                                    Upload
-                                                                    Assign
-                                                                    WorkSheet...
-                                                                </p>
+                                                                <a
+                                                                    href={
+                                                                        process
+                                                                            .env
+                                                                            .REACT_APP_API_IMAGE_BASE_URL +
+                                                                        worksheet
+                                                                    }
+                                                                    target="_blank"
+                                                                    rel="noreferrer"
+                                                                    className="primary"
+                                                                >
+                                                                    <Button
+                                                                        button="submit"
+                                                                        label="Download Worksheet"
+                                                                        btnClass="primary mt-4"
+                                                                        size="small"
+                                                                    />
+                                                                </a>
                                                             )}
-                                                            <div className="text-right">
-                                                                {worksheetResponce.response ===
-                                                                null ? (
-                                                                    <a
-                                                                        href={
-                                                                            process
-                                                                                .env
-                                                                                .REACT_APP_API_IMAGE_BASE_URL +
-                                                                            worksheetResponce?.attachments
-                                                                        }
-                                                                        target="_blank"
-                                                                        rel="noreferrer"
-                                                                        className="primary"
-                                                                    >
-                                                                        <Button
-                                                                            button="submit"
-                                                                            label="Download Worksheet"
-                                                                            btnClass="primary mt-4"
-                                                                            size="small"
-                                                                            style={{
-                                                                                marginRight:
-                                                                                    '2rem'
-                                                                            }}
-                                                                        />
-                                                                    </a>
-                                                                ) : (
-                                                                    <a
-                                                                        href={
-                                                                            process
-                                                                                .env
-                                                                                .REACT_APP_API_IMAGE_BASE_URL +
-                                                                            worksheet
-                                                                        }
-                                                                        target="_blank"
-                                                                        rel="noreferrer"
-                                                                        className="primary"
-                                                                    >
-                                                                        <Button
-                                                                            button="submit"
-                                                                            label="Download Worksheet"
-                                                                            btnClass="primary mt-4"
-                                                                            size="small"
-                                                                        />
-                                                                    </a>
-                                                                )}
+                                                            <Button
+                                                                label="Continue"
+                                                                btnClass=" mx-4"
+                                                                size="small"
+                                                                type="submit"
+                                                                style={{
+                                                                    background:
+                                                                        '#00ced1',
+                                                                    color: '#fff'
+                                                                }}
+                                                                onClick={() => {
+                                                                    handleNextCourse();
+                                                                    dispatch(
+                                                                        updateStudentBadges(
+                                                                            {
+                                                                                badge_slugs:
+                                                                                    [
+                                                                                        badge
+                                                                                    ]
+                                                                            },
+                                                                            currentUser
+                                                                                .data[0]
+                                                                                .user_id,
+                                                                            language
+                                                                        )
+                                                                    );
+                                                                }}
+                                                            />
+
+                                                            {worksheetResponce.response !=
+                                                                null &&
+                                                            worksheetResponce.worksheet_id !==
+                                                                setTopicArrays[
+                                                                    setTopicArrays?.length -
+                                                                        1
+                                                                ]
+                                                                    ?.topic_type_id ? (
                                                                 <Button
-                                                                    label="Skip & Continue"
-                                                                    btnClass=" mx-4"
+                                                                    label="Go to Next Course"
+                                                                    btnClass="primary w-auto"
                                                                     size="small"
                                                                     type="submit"
-                                                                    style={{
-                                                                        background:
-                                                                            '#00ced1',
-                                                                        color: '#fff'
-                                                                    }}
-                                                                    onClick={() => {
-                                                                        handleNextCourse();
-                                                                        dispatch(
-                                                                            updateStudentBadges(
-                                                                                {
-                                                                                    badge_slugs:
-                                                                                        [
-                                                                                            badge
-                                                                                        ]
-                                                                                },
-                                                                                currentUser
-                                                                                    .data[0]
-                                                                                    .user_id,
-                                                                                language
-                                                                            )
-                                                                        );
-                                                                    }}
+                                                                    onClick={
+                                                                        handleNextCourse
+                                                                    }
                                                                 />
-                                                                {worksheetResponce.response !=
-                                                                    null &&
-                                                                worksheetResponce.worksheet_id !==
-                                                                    setTopicArrays[
-                                                                        setTopicArrays?.length -
-                                                                            1
-                                                                    ]
-                                                                        ?.topic_type_id ? (
-                                                                    <Button
-                                                                        label="Go to Next Course"
-                                                                        btnClass="primary w-auto"
-                                                                        size="small"
-                                                                        type="submit"
-                                                                        onClick={
-                                                                            handleNextCourse
-                                                                        }
-                                                                    />
-                                                                ) : null}
-                                                            </div>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                                {worksheetResponce.response ===
-                                                null ? (
-                                                    <Row className="my-5">
-                                                        <Col md={3}>
-                                                            {!image ? (
-                                                                <div className="wrapper">
-                                                                    <div className="btnimg">
-                                                                        Upload
-                                                                        File
-                                                                    </div>
-                                                                    <input
-                                                                        type="file"
-                                                                        name="file"
-                                                                        multiple
-                                                                        accept=".csv,,.pdf"
-                                                                        onChange={(
-                                                                            e
-                                                                        ) =>
-                                                                            changeHandler(
-                                                                                e
-                                                                            )
-                                                                        }
-                                                                    />
-                                                                </div>
                                                             ) : null}
-                                                        </Col>
-                                                        <Col md={9}>
-                                                            <Row>
-                                                                {/* <Col
-                                                                md={2}
-                                                                className="my-auto"
-                                                            >
-                                                                {image &&
-                                                                url ===
-                                                                    'csv' ? (
-                                                                    <img
-                                                                        src={`${Csv}`}
-                                                                        className="img-fluid"
-                                                                        alt="Thumb"
-                                                                    />
-                                                                ) : image &&
-                                                                  url ===
-                                                                      'pdf' ? (
-                                                                    <img
-                                                                        src={`${Pdf}`}
-                                                                        className="img-fluid"
-                                                                        alt="Thumb"
-                                                                    />
-                                                                ) : null}
-                                                            </Col> */}
-                                                                {seletedFiles &&
-                                                                    seletedFiles.length >
-                                                                        0 && (
-                                                                        <Col
-                                                                            md={
-                                                                                6
-                                                                            }
-                                                                            className="my-auto"
-                                                                        >
-                                                                            <p>
-                                                                                {seletedFiles &&
-                                                                                    seletedFiles.length}{' '}
-                                                                                Files
-                                                                            </p>
-                                                                        </Col>
-                                                                    )}
-                                                                <Col
-                                                                    md={2}
-                                                                    className="my-auto"
-                                                                >
-                                                                    {seletedFiles &&
-                                                                    seletedFiles.length >
-                                                                        0 ? (
-                                                                        <Button
-                                                                            onClick={
-                                                                                removeSelectedImage
-                                                                            }
-                                                                            btnClass="primary py-2 px-4"
-                                                                            size="small"
-                                                                            label="Remove"
-                                                                        >
-                                                                            Remove
-                                                                        </Button>
-                                                                    ) : null}
-                                                                </Col>
-                                                                <Col
-                                                                    md={2}
-                                                                    className="my-auto"
-                                                                >
-                                                                    {seletedFiles &&
-                                                                    seletedFiles.length >
-                                                                        0 ? (
-                                                                        <Button
-                                                                            btnClass="primary py-2 px-4"
-                                                                            size="small"
-                                                                            label="Submit"
-                                                                            onClick={(
-                                                                                e
-                                                                            ) =>
-                                                                                handleSubmit(
-                                                                                    e
-                                                                                )
-                                                                            }
-                                                                        />
-                                                                    ) : null}
-                                                                </Col>
-                                                            </Row>
-                                                        </Col>
-                                                    </Row>
-                                                ) : null}
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </CardBody>
+                                            
                                         </Card>
                                     </Fragment>
-                                ) : courseData !== null ? (
+                                ) : courseData !== null && !showQuiz ? (
                                     <Fragment>
                                         <Card
                                             className="course-sec-basic p-5"
