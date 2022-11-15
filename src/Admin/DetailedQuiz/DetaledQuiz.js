@@ -31,7 +31,7 @@ const DetaledQuiz = (props) => {
     const [condition, SetCondition] = useState(true);
     const [video, SetVideo] = useState(true);
     const [qst, SetQst] = useState({});
-    const language = useSelector((state) => state?.mentors?.mentorLanguage);
+    const language = useSelector((state) => state?.studentRegistration?.studentLanguage);
     const currentUser = getCurrentUser('current_user');
     const role = currentUser.data[0].role;
     useEffect(() => {
