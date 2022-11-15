@@ -22,7 +22,7 @@ const Quiz = (props) => {
     const [selectOption, SetSelectOption] = useState('');
     const [type, SetType] = useState('');
     const [video] = useState(true);
-    const language = useSelector(state=>state?.admin?.adminLanguage);
+    const language = useSelector(state=>state?.studentRegistration?.studentLanguage);
 
 
     useEffect(() => {
