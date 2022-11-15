@@ -46,6 +46,7 @@ import { useTranslation } from 'react-i18next';
 //https://github.com/u-wave/react-vimeo/blob/default/test/util/createVimeo.js
 
 const PlayVideoCourses = (props) => {
+    const scrollRef = React.createRef();
     const { t } = useTranslation();
     const language = useSelector(
         (state) => state?.studentRegistration?.studentLanguage
@@ -812,6 +813,7 @@ const PlayVideoCourses = (props) => {
     };
 
     const handleSelect = (topicId, couseId, type) => {
+        scrollRef.current.scrollIntoView();  
         setCourseTopicId(couseId);
         const topic_Index =
             setTopicArrays &&
@@ -1043,7 +1045,7 @@ const PlayVideoCourses = (props) => {
             {!showPage ? (
                 <CommonPage text={comingSoonText} />
             ) : (
-                <div className="courses-page">
+                <div className="courses-page"  ref={scrollRef}>
                     <Row className="courses-head view-head py-5">
                         <Col md={12} lg={9} className="mb-5 mb-md-5 mb-lg-0">
                             {/* <p className="course-breadcrum">
@@ -1081,7 +1083,7 @@ const PlayVideoCourses = (props) => {
                         />
                     </div>
 
-                    <div className=" px-5 mt-2 container-fluid">
+                    <div className=" px-3 px-md-5 mt-2 container-fluid">
                         <Row className="m-0 courser-video-section ">
                             <Col
                                 xl={4}
@@ -1312,7 +1314,7 @@ const PlayVideoCourses = (props) => {
 
                             <Col
                                 xl={8}
-                                className="course-video order-1 order-xl-2 mb-5"
+                                className="course-video order-1 order-xl-2 mb-5 px-md-3 px-0"
                                 style={{
                                     width: `${
                                         fullScreen.isFullSCreen
@@ -1416,7 +1418,7 @@ const PlayVideoCourses = (props) => {
                                                                     <Button
                                                                         button="submit"
                                                                         label="Download Worksheet"
-                                                                        btnClass="primary mt-4"
+                                                                        btnClass="primary mt-4 mb-2"
                                                                         size="small"
                                                                         style={{
                                                                             marginRight:
@@ -1439,7 +1441,7 @@ const PlayVideoCourses = (props) => {
                                                                     <Button
                                                                         button="submit"
                                                                         label="Download Worksheet"
-                                                                        btnClass="primary mt-4"
+                                                                        btnClass="primary mt-4 mb-2"
                                                                         size="small"
                                                                     />
                                                                 </a>

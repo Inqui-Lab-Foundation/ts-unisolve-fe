@@ -104,6 +104,7 @@ const TeacherPlayVideo = (props) => {
     const [instructions, setInstructions] = useState(false);
     const [continueObj, setContinueObj] = useState([]);
     const [courseData, setCourseData] = useState(null);
+    const scrollRef = React.createRef();
 
     const getLastCourseStatus = (data = []) => {
         const length = data && data.length > 0 ? data.length - 1 : 0;
@@ -324,6 +325,7 @@ const TeacherPlayVideo = (props) => {
     };
 
     const handleSelect = (topicId, couseId, type) => {
+        scrollRef.current.scrollIntoView(); 
         setCourseTopicId(couseId);
         const topic_Index =
             setTopicArrays &&
@@ -502,7 +504,7 @@ const TeacherPlayVideo = (props) => {
     };
     return (
         <Layout>
-            <div className="courses-page">
+            <div className="courses-page" ref={scrollRef}>
                 <div
                     className="pb-5 my-5 px-5 container-fluid"
                     style={{ minHeight: '72vh' }}

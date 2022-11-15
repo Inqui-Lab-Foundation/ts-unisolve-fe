@@ -173,7 +173,7 @@ const PreSurvey = () => {
             ></GreetingModal>
 
             <Container className="presuervey mb-50 mt-5 ">
-                <Row className="justify-content-center aside p-4 bg-transparent">
+                <Row className="justify-content-center aside p-0 p-md-4 bg-transparent">
                     {!show && preSurveyStatus != 'COMPLETED' ? (
                         <Card className="p-5">
                             <Row>
