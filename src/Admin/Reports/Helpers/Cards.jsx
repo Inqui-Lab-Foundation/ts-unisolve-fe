@@ -37,7 +37,7 @@ const Cards = ({ heading, list }) => {
                             </Link>
                         </li>
                     ) : (
-                        <li>
+                        <li key={i}>
                             <Link
                                 to="#"
                                 exact
