@@ -1495,6 +1495,7 @@ const PlayVideoCourses = (props) => {
                                                     </div>
                                                 )}
                                             </CardBody>
+                                            
                                         </Card>
                                     </Fragment>
                                 ) : courseData !== null && !showQuiz ? (
