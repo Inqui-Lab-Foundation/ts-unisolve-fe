@@ -1198,6 +1198,8 @@ const PlayVideoCourses = (props) => {
                                                                                                     lecture.topic_type
                                                                                                 );
                                                                                                 setHideQuiz(false);
+                                                                                                setQuizTopic('');
+                                                                                                setBackToQuiz(false);
                                                                                             }}
                                                                                         >
                                                                                             <p className="course-icon mb-0">
