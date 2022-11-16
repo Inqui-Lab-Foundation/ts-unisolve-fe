@@ -126,7 +126,7 @@ const DetaledQuiz = (props) => {
                                     <span></span>
                                 </div>
                                 <div className="mt-4 d-flex justify-content-center align-items-center">
-                                    <span>Quiz Successfully Completed</span>
+                                    <span>{t('student.quiz_completed')}</span>
                                 </div>
                                 <div className="results-heading mt-4">
                                     <img src={ResultStar} alt="star" />
@@ -135,7 +135,7 @@ const DetaledQuiz = (props) => {
                                     <div className="text-right">
                                         {props.instructions === 'yes' ? (
                                             <Button
-                                                label={'Continue'}
+                                                label={t('student.continue')}
                                                 btnClass="primary w-auto"
                                                 size="small"
                                                 type="submit"
@@ -149,7 +149,7 @@ const DetaledQuiz = (props) => {
                                             />
                                         ) : (
                                             <Button
-                                                label={'Continue'}
+                                                label={t('student.continue')}
                                                 btnClass="primary w-auto"
                                                 size="small"
                                                 type="submit"
@@ -286,7 +286,7 @@ const DetaledQuiz = (props) => {
                                                                 btnClass="primary px-5 mx-sm-3 mx-1 mb-3"
                                                                 size="small"
                                                                 // Icon={BsPlusLg}
-                                                                label="Refer Video"
+                                                                label={t('teacher.refer_video')}
                                                                 onClick={() =>
                                                                     handlevideo(
                                                                         props.adminQstResponce &&
