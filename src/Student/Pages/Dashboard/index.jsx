@@ -74,16 +74,15 @@ const Dashboard = () => {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         axios
             .get(
-                `${URL.getStudentPreSurveyList}?role=STUDENT&${getLanguage(language)}`,
+                `${URL.getStudentPreSurveyList}?role=STUDENT&${getLanguage(
+                    language
+                )}`,
                 axiosConfig
             )
             .then((preSurveyRes) => {
                 if (preSurveyRes?.status == 200) {
                     console.log(preSurveyRes);
-                    if (
-                        preSurveyRes.data.data[0].progress !==
-                        'COMPLETED'
-                    )
+                    if (preSurveyRes.data.data[0].progress !== 'COMPLETED')
                         history.push('/student/pre-survey');
                 }
             })
@@ -97,9 +96,10 @@ const Dashboard = () => {
     const cardData = {
         idea: {
             heading: 'Notice Board',
-            deadline: `${dashboardChallengesStatus
-                ? dashboardChallengesStatus?.end_date
-                : '-'
+            deadline: `${
+                dashboardChallengesStatus
+                    ? dashboardChallengesStatus?.end_date
+                    : '-'
             }`,
             subHeading: 'Idea  Submission',
             footerText: 'With Team Members',
@@ -148,29 +148,35 @@ const Dashboard = () => {
         {
             title: 'Progress',
             dataIndex: 'address',
-            render: (_, record) => (
-                <Progress
-                    key={'25'}
-                    className="progress-height"
-                    animated
-                    value={
-                        100 -
-                        percentageBWNumbers(
-                            record.all_topics_count,
-                            record.topics_completed_count
-                        )
-                    }
-                >
-                    {Math.round(
-                        100 -
-                        percentageBWNumbers(
-                            record.all_topics_count,
-                            record.topics_completed_count
-                        )
-                    )}{' '}
-                    %
-                </Progress>
-            )
+            render: (_, record) => {
+                let percent =
+                    100 -
+                    percentageBWNumbers(
+                        record.all_topics_count,
+                        record.topics_completed_count
+                    );
+                return (
+                    <Progress
+                        key={'25'}
+                        className="progress-height"
+                        animated
+                        color={
+                            percent
+                                ? percent <= 25
+                                    ? 'danger'
+                                    : percent > 25 && percent <= 50
+                                        ? 'info'
+                                        : percent > 50 && percent <= 75
+                                            ? 'warning'
+                                            : 'sucess'
+                                : 'danger'
+                        }
+                        value={percent}
+                    >
+                        {Math.round(percent) ? Math.round(percent) :  '0'}%
+                    </Progress>
+                );
+            }
         }
     ];
     return (
@@ -227,7 +233,7 @@ const Dashboard = () => {
                         title={'Completed Videos'}
                         count={
                             dashboardStatus &&
-                                dashboardStatus?.videos_completed_count
+                            dashboardStatus?.videos_completed_count
                                 ? dashboardStatus?.videos_completed_count
                                 : 0
                         }
@@ -237,7 +243,7 @@ const Dashboard = () => {
                         title={'Completed Quiz'}
                         count={
                             dashboardStatus &&
-                                dashboardStatus?.quiz_completed_count
+                            dashboardStatus?.quiz_completed_count
                                 ? dashboardStatus?.quiz_completed_count
                                 : 0
                         }
@@ -248,7 +254,7 @@ const Dashboard = () => {
                         title={'Completed Worksheets'}
                         count={
                             dashboardStatus &&
-                                dashboardStatus?.worksheet_completed_count
+                            dashboardStatus?.worksheet_completed_count
                                 ? dashboardStatus?.worksheet_completed_count
                                 : 0
                         }
@@ -259,10 +265,10 @@ const Dashboard = () => {
                         count={
                             Math.round(
                                 100 -
-                                percentageBWNumbers(
-                                    dashboardStatus?.all_topics_count,
-                                    dashboardStatus?.topics_completed_count
-                                )
+                                    percentageBWNumbers(
+                                        dashboardStatus?.all_topics_count,
+                                        dashboardStatus?.topics_completed_count
+                                    )
                             ) + ' %'
                         }
                         image={vector}
@@ -292,7 +298,9 @@ const Dashboard = () => {
                         </div>
                     </Col>
                     <Col md={12} className="flex-2">
-                        <h2>Introduction to SIDP by Mr. C. Shunmugaraj, EDII-TN</h2>
+                        <h2>
+                            Introduction to SIDP by Mr. C. Shunmugaraj, EDII-TN
+                        </h2>
                         <div className="bg-white learning-statistics rounded p-3">
                             <div className="flex-2 px-3">
                                 <div
@@ -302,16 +310,9 @@ const Dashboard = () => {
                                         position: 'relative'
                                     }}
                                 >
-                                    {
-                                        <Vimeo
-                                            video={770500069}
-                                            volume={true}
-                                        />
-
-                                    }
+                                    {<Vimeo video={770500069} volume={true} />}
                                 </div>
                             </div>
-
                         </div>
                         {/* <div className="bg-white learning-statistics rounded p-3">
                             <div className="flex-2 px-3">

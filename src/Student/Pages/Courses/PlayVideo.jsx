@@ -244,10 +244,9 @@ const PlayVideoCourses = (props) => {
     };
 
     async function modulesListUpdateApi(courseTopicId) {
-        console.log('course topic id', courseTopicId);
         const body1 = JSON.stringify({
             user_id: JSON.stringify(currentUser.data[0].user_id),
-            course_topic_id: courseTopicId.toString(),
+            course_topic_id: JSON.stringify(courseTopicId),
             status: 'Completed'
         });
         var config = {
@@ -268,7 +267,6 @@ const PlayVideoCourses = (props) => {
         await axios(config)
             .then(function (response) {
                 if (response.status === 201) {
-                    console.log(response.data, 'response');
                     setUpdateModuleResponce(
                         response.data && response.data.data[0]
                     );
@@ -813,7 +811,7 @@ const PlayVideoCourses = (props) => {
     };
 
     const handleSelect = (topicId, couseId, type) => {
-        scrollRef.current.scrollIntoView();  
+        scrollRef.current.scrollIntoView();
         setCourseTopicId(couseId);
         const topic_Index =
             setTopicArrays &&
@@ -981,7 +979,7 @@ const PlayVideoCourses = (props) => {
                         updateStudentBadges(
                             { badge_slugs: [badge] },
                             currentUser.data[0].user_id,
-                            language
+                            language,t
                         )
                     );
                 }
@@ -1039,13 +1037,12 @@ const PlayVideoCourses = (props) => {
         );
     };
     const comingSoonText = t('dummytext.student_course');
-    console.log(worksheetResponce, 'ds');
     return (
         <Layout>
             {!showPage ? (
                 <CommonPage text={comingSoonText} />
             ) : (
-                <div className="courses-page"  ref={scrollRef}>
+                <div className="courses-page" ref={scrollRef}>
                     <Row className="courses-head view-head py-5">
                         <Col md={12} lg={9} className="mb-5 mb-md-5 mb-lg-0">
                             {/* <p className="course-breadcrum">
@@ -1060,13 +1057,13 @@ const PlayVideoCourses = (props) => {
                                 <span className="card-type">
                                     {adminCourse &&
                                         adminCourse.course_modules_count}{' '}
-                                    Modules
+                                    {t('student_course.modules')}
                                 </span>
                                 <RiAwardFill className="lessonsvg" />
                                 <span className="card-type points">
                                     {adminCourse &&
                                         adminCourse.course_videos_count}{' '}
-                                    Videos
+                                    {t('student_course.videos')}
                                 </span>
                             </div>
                         </Col>
@@ -1095,7 +1092,9 @@ const PlayVideoCourses = (props) => {
                                 }}
                             >
                                 <div className="assement-info">
-                                    <p className="content-title">Lessons</p>
+                                    <p className="content-title">
+                                        {t('student_course.lessons')}
+                                    </p>
                                     <div className="view-head"></div>
                                     <div
                                         className="assement-item "
@@ -1150,7 +1149,9 @@ const PlayVideoCourses = (props) => {
                                                                                 {
                                                                                     course.videos_count
                                                                                 }{' '}
-                                                                                Videos
+                                                                                {t(
+                                                                                    'student.videos'
+                                                                                )}
                                                                             </span>
 
                                                                             {/* <span>
@@ -1332,11 +1333,12 @@ const PlayVideoCourses = (props) => {
                                         <div className="modal-content">
                                             <Modal.Header>
                                                 <Modal.Title className="w-100 d-block mb-2">
-                                                    Ready for a quick test?
+                                                    {t('student.quiz_heading')}
                                                 </Modal.Title>
                                                 <p className="w-100 d-block">
-                                                    Test your course skills in a
-                                                    short test challenge!
+                                                    {t(
+                                                        'student.take_challenge'
+                                                    )}
                                                 </p>
                                                 <div className="row justify-content-center text-center">
                                                     <div className="col col-lg-3">
@@ -1346,7 +1348,9 @@ const PlayVideoCourses = (props) => {
                                                                     color: '#067DE1'
                                                                 }}
                                                             />
-                                                            Questions
+                                                            {t(
+                                                                'student.questions'
+                                                            )}
                                                         </p>
                                                     </div>
                                                     <div className="col col-lg-3">
@@ -1356,7 +1360,9 @@ const PlayVideoCourses = (props) => {
                                                                     color: '#067DE1'
                                                                 }}
                                                             />{' '}
-                                                            Minutes
+                                                            {t(
+                                                                'student.minutes'
+                                                            )}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -1371,7 +1377,9 @@ const PlayVideoCourses = (props) => {
                                                     />
                                                 </figure>
                                                 <Button
-                                                    label="Let's Start"
+                                                    label={t(
+                                                        'student.lets_start'
+                                                    )}
                                                     btnClass="primary mt-4"
                                                     size="small"
                                                     onClick={() =>
@@ -1393,14 +1401,20 @@ const PlayVideoCourses = (props) => {
                                                             className=" text-left pt-4 pb-4"
                                                             tag="h2"
                                                         >
-                                                            Unisolve Worksheet
-                                                        </CardTitle>
-
-                                                        <p>
+                                                            Unisolve{' '}
                                                             {t(
-                                                                'student.worksheet'
+                                                                'student.w_sheet'
                                                             )}
-                                                        </p>
+                                                        </CardTitle>
+                                                        <text>
+                                                            <div
+                                                                dangerouslySetInnerHTML={{
+                                                                    __html: t(
+                                                                        'student.worksheet'
+                                                                    )
+                                                                }}
+                                                            ></div>
+                                                        </text>
                                                         <div className="text-right">
                                                             {worksheetResponce.response ===
                                                             null ? (
@@ -1417,7 +1431,9 @@ const PlayVideoCourses = (props) => {
                                                                 >
                                                                     <Button
                                                                         button="submit"
-                                                                        label="Download Worksheet"
+                                                                        label={t(
+                                                                            'student.download_worksheet'
+                                                                        )}
                                                                         btnClass="primary mt-4 mb-2"
                                                                         size="small"
                                                                         style={{
@@ -1440,14 +1456,18 @@ const PlayVideoCourses = (props) => {
                                                                 >
                                                                     <Button
                                                                         button="submit"
-                                                                        label="Download Worksheet"
+                                                                        label={t(
+                                                                            'student.download_worksheet'
+                                                                        )}
                                                                         btnClass="primary mt-4 mb-2"
                                                                         size="small"
                                                                     />
                                                                 </a>
                                                             )}
                                                             <Button
-                                                                label="Continue"
+                                                                label={t(
+                                                                    'student.continue'
+                                                                )}
                                                                 btnClass=" mx-4"
                                                                 size="small"
                                                                 type="submit"
@@ -1469,7 +1489,7 @@ const PlayVideoCourses = (props) => {
                                                                             currentUser
                                                                                 .data[0]
                                                                                 .user_id,
-                                                                            language
+                                                                            language,t
                                                                         )
                                                                     );
                                                                 }}
@@ -1497,7 +1517,6 @@ const PlayVideoCourses = (props) => {
                                                     </div>
                                                 )}
                                             </CardBody>
-                                            
                                         </Card>
                                     </Fragment>
                                 ) : courseData !== null && !showQuiz ? (
@@ -1516,7 +1535,9 @@ const PlayVideoCourses = (props) => {
                                                 ></div>
                                                 <div>
                                                     <Button
-                                                        label="CONTINUE COURSE"
+                                                        label={t(
+                                                            'student_course.continue course'
+                                                        )}
                                                         btnClass="primary mt-4"
                                                         size="small"
                                                         onClick={(e) =>
@@ -1541,7 +1562,9 @@ const PlayVideoCourses = (props) => {
                                                 </h3>
                                                 {backToQuiz && (
                                                     <Button
-                                                        label="Back to Quiz"
+                                                        label={t(
+                                                            'student.backto_quiz'
+                                                        )}
                                                         btnClass="primary"
                                                         size="small"
                                                         onClick={() => {
@@ -1617,7 +1640,9 @@ const PlayVideoCourses = (props) => {
                                                         'INCOMPLETE' ? (
                                                         <div>
                                                             <Button
-                                                                label="START COURSE"
+                                                                label={t(
+                                                                    'student_course.start course'
+                                                                )}
                                                                 btnClass="primary mt-4"
                                                                 size="small"
                                                                 onClick={(e) =>
@@ -1630,7 +1655,9 @@ const PlayVideoCourses = (props) => {
                                                     ) : (
                                                         <div>
                                                             <Button
-                                                                label="CONTINUE COURSE"
+                                                                label={t(
+                                                                    'student_course.continue course'
+                                                                )}
                                                                 btnClass="primary mt-4"
                                                                 size="small"
                                                                 onClick={(e) =>
