@@ -336,7 +336,7 @@
     },
     "student" : {
         "profile": "My Profile",
-        "worksheet":"Please download worksheet..."
+        "worksheet":"<p>Dear Student,</p><p>Step-1: Download and print this worksheet or get a copy from your SIDP guide teacher.</p><p>Step-2: Complete this worksheet along with your team members.</p><p>Step-3: Handover the worksheet to your guide teacher once your team completes the worksheet without fail. This needs to be submitted to District Coordinator during regional level boot-camp.</p><p>Step-4: Continue to next lesson only after you complete the worksheet.</p><p>Hope you and your team learn new things and enjoy completing this worksheet.</p>"
         
     },
     "teacher_presurvey": {

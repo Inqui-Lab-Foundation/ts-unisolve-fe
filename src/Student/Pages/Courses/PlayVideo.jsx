@@ -244,7 +244,6 @@ const PlayVideoCourses = (props) => {
     };
 
     async function modulesListUpdateApi(courseTopicId) {
-        console.log('course topic id', courseTopicId);
         const body1 = JSON.stringify({
             user_id: JSON.stringify(currentUser.data[0].user_id),
             course_topic_id: courseTopicId.toString(),
@@ -268,7 +267,6 @@ const PlayVideoCourses = (props) => {
         await axios(config)
             .then(function (response) {
                 if (response.status === 201) {
-                    console.log(response.data, 'response');
                     setUpdateModuleResponce(
                         response.data && response.data.data[0]
                     );
@@ -813,7 +811,7 @@ const PlayVideoCourses = (props) => {
     };
 
     const handleSelect = (topicId, couseId, type) => {
-        scrollRef.current.scrollIntoView();  
+        scrollRef.current.scrollIntoView();
         setCourseTopicId(couseId);
         const topic_Index =
             setTopicArrays &&
@@ -1039,13 +1037,12 @@ const PlayVideoCourses = (props) => {
         );
     };
     const comingSoonText = t('dummytext.student_course');
-    console.log(worksheetResponce, 'ds');
     return (
         <Layout>
             {!showPage ? (
                 <CommonPage text={comingSoonText} />
             ) : (
-                <div className="courses-page"  ref={scrollRef}>
+                <div className="courses-page" ref={scrollRef}>
                     <Row className="courses-head view-head py-5">
                         <Col md={12} lg={9} className="mb-5 mb-md-5 mb-lg-0">
                             {/* <p className="course-breadcrum">
@@ -1395,12 +1392,15 @@ const PlayVideoCourses = (props) => {
                                                         >
                                                             Unisolve Worksheet
                                                         </CardTitle>
-
-                                                        <p>
-                                                            {t(
-                                                                'student.worksheet'
-                                                            )}
-                                                        </p>
+                                                        <text>
+                                                            <div
+                                                                dangerouslySetInnerHTML={{
+                                                                    __html: t(
+                                                                        'student.worksheet'
+                                                                    )
+                                                                }}
+                                                            ></div>
+                                                        </text>
                                                         <div className="text-right">
                                                             {worksheetResponce.response ===
                                                             null ? (
@@ -1497,7 +1497,6 @@ const PlayVideoCourses = (props) => {
                                                     </div>
                                                 )}
                                             </CardBody>
-                                            
                                         </Card>
                                     </Fragment>
                                 ) : courseData !== null && !showQuiz ? (
