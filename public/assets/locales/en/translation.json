@@ -454,5 +454,14 @@
     "badges":{
         "congratulations":"Congratulations",
         "earn":"you've just earned a new badge"
+    },
+    "student_course":{
+        "modules":"Modules",
+        "videos":"Videos",
+        "start course":"Start Course",
+        "full screen":"Full Screen",
+        "lessons":"Lessons",
+        "continue course":"Continue Course",
+        "exitfullscreen":"Exit Full Screen"
     }
 }
