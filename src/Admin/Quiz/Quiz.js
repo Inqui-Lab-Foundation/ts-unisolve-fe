@@ -147,7 +147,7 @@ const Quiz = (props) => {
                                         .is_correct === false && (
                                         <Col md={12} className="text-right">
                                             <Button
-                                                btnClass="primary px-5 mx-3"
+                                                btnClass="primary px-5 mx-sm-3 mx-1 mb-3"
                                                 size="small"
                                                 // Icon={BsPlusLg}
                                                 label="Refer Video"

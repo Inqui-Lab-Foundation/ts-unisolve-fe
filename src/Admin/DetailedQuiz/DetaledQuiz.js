@@ -283,7 +283,7 @@ const DetaledQuiz = (props) => {
                                                             .redirect_to !=
                                                             null && (
                                                             <Button
-                                                                btnClass="primary px-5 mx-3"
+                                                                btnClass="primary px-5 mx-sm-3 mx-1 mb-3"
                                                                 size="small"
                                                                 // Icon={BsPlusLg}
                                                                 label="Refer Video"
