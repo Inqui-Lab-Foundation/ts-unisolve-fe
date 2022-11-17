@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import { Card, Row, Col } from 'reactstrap';
 import { Fragment } from 'react';
-// import { QuizContext } from '../../context/quiz.context';
 import Question from './Question';
 import { Button } from '../../stories/Button';
 import './quiz.scss';
@@ -19,9 +18,6 @@ import { useTranslation } from 'react-i18next';
 
 const Quiz = (props) => {
     const { t } = useTranslation();
-
-    // const [dispatch] = useContext(QuizContext);
-
     const [selectOption, SetSelectOption] = useState('');
     const [type, SetType] = useState('');
     const [video] = useState(true);
@@ -29,7 +25,6 @@ const Quiz = (props) => {
 
 
     useEffect(() => {
-        // dispatch({ type: 'LATEST' });
         props.getAdminRefQuizQstActions(props.refQstId,language);
     }, [props.refQstId,language]);
 
