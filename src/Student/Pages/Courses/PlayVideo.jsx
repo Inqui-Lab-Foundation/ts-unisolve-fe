@@ -743,7 +743,7 @@ const PlayVideoCourses = (props) => {
                     topicObj.topic_type_id,
                     topicObj.course_topic_id,
                     topicObj.topic_type
-                );
+                    );
                 handlePlayerPlay();
             } else {
                 setVideoCompleted(true);
@@ -811,7 +811,7 @@ const PlayVideoCourses = (props) => {
     };
 
     const handleSelect = (topicId, couseId, type) => {
-        scrollRef.current.scrollIntoView();
+        
         setCourseTopicId(couseId);
         const topic_Index =
             setTopicArrays &&
@@ -842,6 +842,7 @@ const PlayVideoCourses = (props) => {
             setItem('');
             setHideQuiz(false);
         }
+        scrollRef.current.scrollIntoView();
         // }
     };
 
@@ -1189,7 +1190,9 @@ const PlayVideoCourses = (props) => {
                                                                                                 background:
                                                                                                     currentTopicId ===
                                                                                                         lecture.course_topic_id &&
-                                                                                                    '#f0f3f8'
+                                                                                                    '#f0f3f8',
+                                                                                                position:"relative",
+                                                                                                left:"0.75rem"
                                                                                             }}
                                                                                             className={`justify-content-between w-100 px-4 py-3 ${
                                                                                                 lecture.progress ===
