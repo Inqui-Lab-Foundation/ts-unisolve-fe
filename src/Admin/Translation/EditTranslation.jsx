@@ -28,14 +28,14 @@ const EditTranslation = (props) => {
         setEditorStateOfFromKey(
             EditorState.createWithContent(
                 ContentState.createFromBlockArray(
-                    convertFromHTML(translationData.key)
+                    convertFromHTML(translationData.key ? translationData.key : '')
                 )
             )
         );
         setEditorStateOfToValue(
             EditorState.createWithContent(
                 ContentState.createFromBlockArray(
-                    convertFromHTML(translationData.value)
+                    convertFromHTML(translationData.value ? translationData.value : '')
                 )
             )
         );
@@ -156,7 +156,9 @@ const EditTranslation = (props) => {
                             <Col>
                                 <Label className="mb-2 mt-5">From_Key</Label>
                                 <Col className="form-group" md={12}>
-                                    <div style={{ height: '211px' }}>
+                                    <div 
+                                    // style={{ height: '211px' }}
+                                    >
                                         <RichText
                                             name="answer"
                                             value={formik.values.from_key}
@@ -205,7 +207,9 @@ const EditTranslation = (props) => {
                             <Col>
                                 <Label className="mb-2 mt-5">To_Value</Label>
                                 <Col className="form-group" md={12}>
-                                    <div style={{ height: '211px' }}>
+                                    <div 
+                                    // style={{ height: '211px' }}
+                                    >
                                         <RichText
                                             name="to_value"
                                             value={formik.values.to_value}

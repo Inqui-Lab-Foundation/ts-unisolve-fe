@@ -305,6 +305,11 @@ const Home = () => {
             id: 5,
             title: `${t('home_tl.faq_qn_5')}`,
             desc: `${t('home_tl.faq_ans_5')}`
+        },
+        {
+            id: 6,
+            title: `${t('home_tl.faq_qn_6')}`,
+            desc: `${t('home_tl.faq_ans_6')}`
         }
     ];
 
@@ -345,7 +350,7 @@ const Home = () => {
                 </Link>
                 <Link className="menu-item" onClick={() => setSidebar(false)}>
                     <Button
-                        label="Register"
+                        label={t('home_tl.register')}
                         btnClass="primary px-0 register"
                         size="small"
                         onClick={() => setModalShow(true)}

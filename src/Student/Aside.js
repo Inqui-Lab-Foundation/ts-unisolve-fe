@@ -294,7 +294,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     <MenuItem
                         icon={<FaHouseUser />}
                         className={
-                            location.pathname === '/teacher/my-profile' &&
+                            location.pathname === '/my-profile' &&
                             'sidebar-active'
                         }
                     >
@@ -309,7 +309,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     <MenuItem
                         icon={<RiLockPasswordFill />}
                         className={
-                            location.pathname === '/teacher/change-password' &&
+                            location.pathname === '/change-password' &&
                             'sidebar-active'
                         }
                     >
