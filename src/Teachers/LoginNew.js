@@ -24,6 +24,7 @@ import { teacherLoginUser } from '../redux/actions';
 import CryptoJS from 'crypto-js';
 import ForgotPassword from './ForgotPassword';
 import { openNotificationWithIcon } from '../helpers/Utils';
+import i18next from 'i18next';
 
 const LoginNew = (props) => {
     const { t } = useTranslation();
@@ -31,6 +32,7 @@ const LoginNew = (props) => {
     const [password, handlePassword] = useState('password');
     const [showPopUp, setShowPopUp] = useState(false);
     useLayoutEffect(() => {
+        i18next.changeLanguage('en');
         const moduleName = localStorage.getItem("module");
         if (localStorage.getItem("current_user") && localStorage.getItem("module")) {
             moduleName === "MENTOR" ? history.push("/teacher/dashboard") : moduleName === "ADMIN" ? history.push("/admin/dashboard") : history.push("/dashboard");

@@ -5,7 +5,14 @@ import Cards from './Helpers/Cards';
 import './reports.scss';
 
 const Reports = () => {
-    const survey =['Download Teachers Report',"Download Students Report"];
+    const survey = [
+        'Download Teachers Report',
+        'Download Students Report',
+        'Registered Teachers List',
+        'Not Registered Teachers List',
+        'Teachers Pre Survey',
+        'Teachers Course Completion'
+    ];
     return (
         <Layout>
             <Container className="mt-5 report-wrapper mb-5 pb-5">

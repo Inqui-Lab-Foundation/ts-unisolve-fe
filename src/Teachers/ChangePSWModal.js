@@ -41,7 +41,7 @@ const ChangePSWModal = (props) => {
             if (values.newPassword.length < 8) {
                 SetError('New Password must be 8-character minimum');
             } else if (values.oldPassword === values.newPassword) {
-                SetError('Old Password and New Passwordare same');
+                SetError('Old Password and New Password are same');
             } else if (values.newPassword !== values.confirmPassword) {
                 SetError('New Password and Confirm Password not same');
             } else {
@@ -214,10 +214,10 @@ const ChangePSWModal = (props) => {
                                     ) : null}
                                 </Col>
                             </div>
-                            <p style={{ fontWeight: 'bold', color: 'red' }}>
+                            <b style={{color: '#3BB143'}}>
                                 {error}
                                 {responce}
-                            </p>
+                            </b>
                             <div
                                 className="swal2-actions"
                                 style={{

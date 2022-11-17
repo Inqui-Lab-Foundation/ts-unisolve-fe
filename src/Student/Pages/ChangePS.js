@@ -115,7 +115,7 @@ const ChangePSW = (props) => {
         className: 'defaultInput'
     };
     const handleOnCancel = () => {
-        history.push('/teacher/dashboard');
+        history.push('/dashboard');
     };
     return (
         <Layout>
@@ -208,7 +208,7 @@ const ChangePSW = (props) => {
                                     ) : null}
                                 </Col>
                             </div>
-                            <b style={{color: 'red' }}>
+                            <b style={{color: '#3BB143'}}>
                             {error}
                             {responce}
                             </b>
