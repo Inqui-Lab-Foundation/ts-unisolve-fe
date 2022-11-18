@@ -6,7 +6,7 @@ import './reports.scss';
 
 const Reports = () => {
     const survey = [
-        'Students Report'
+        'Download Students Report'
         // 'Students Download'
         // 'Download Teachers Report',
         // 'Registered Teachers List',
@@ -20,7 +20,7 @@ const Reports = () => {
         'Teachers Pre Survey Completed List',
         'Teachers Pre Survey Not Completed List',
         'Teachers Course Completion List',
-        'Download Teacher Report'
+        'Download Teachers Report'
     ];
     return (
         <Layout>

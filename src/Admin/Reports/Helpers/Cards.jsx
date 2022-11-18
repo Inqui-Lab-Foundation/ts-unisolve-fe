@@ -100,28 +100,30 @@ const Cards = ({ heading, list, reports, props }) => {
                             return (
                                 <tr key={key}>
                                     <td>{val}</td>
-                                    {key > 4 ? (
-                                        <Link
-                                            to={`/admin/selected-report?report=${slug}`}
-                                            exact
-                                            className="d-flex"
-                                        >
-                                            <button className="btn">
-                                                <i className="fa fa-filter"></i>{' '}
-                                                Filter
+                                    <td>
+                                        {key > 4 ? (
+                                            <Link
+                                                to={`/admin/selected-report?report=${slug}`}
+                                                exact
+                                                className="d-flex"
+                                            >
+                                                <button className="btn">
+                                                    <i className="fa fa-filter"></i>{' '}
+                                                    Filter
+                                                </button>
+                                            </Link>
+                                        ) : (
+                                            <button
+                                                className="btn"
+                                                onClick={() => {
+                                                    handleDownload(val);
+                                                }}
+                                            >
+                                                <i className="fa fa-download"></i>{' '}
+                                                Download
                                             </button>
-                                        </Link>
-                                    ) : (
-                                        <button
-                                            className="btn"
-                                            onClick={() => {
-                                                handleDownload(val);
-                                            }}
-                                        >
-                                            <i className="fa fa-download"></i>{' '}
-                                            Download
-                                        </button>
-                                    )}
+                                        )}
+                                    </td>
                                 </tr>
                             );
                         })}
