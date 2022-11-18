@@ -463,5 +463,9 @@
         "lessons":"Lessons",
         "continue course":"Continue Course",
         "exitfullscreen":"Exit Full Screen"
+    },
+    "translation":{
+        "tamil":"Tamil Content :-",
+        "tamil_to":"tn"
     }
 }
