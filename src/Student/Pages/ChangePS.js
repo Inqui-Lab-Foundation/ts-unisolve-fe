@@ -86,8 +86,7 @@ const ChangePSW = (props) => {
                         }, 1000);
                     })
                     .catch(function (error) {
-                        // setErrorText("User's current password doesn't match");
-                        console.log(error);
+                        SetError(error.response.data.message);
                     });
             }
         }
