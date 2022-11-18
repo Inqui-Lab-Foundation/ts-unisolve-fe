@@ -67,6 +67,7 @@ import ScrollToTop from 'react-scroll-to-top';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { getSchedulesForTeacherAndStudents } from '../redux/schedules/actions';
 import { compareDates } from '../helpers/Utils';
+import i18next from 'i18next';
 
 const Home = () => {
     const { t } = useTranslation();
@@ -79,9 +80,16 @@ const Home = () => {
     //     dispatch(getSchedulesForTeacherAndStudents());
     // }, []);
     useLayoutEffect(() => {
-        const moduleName = localStorage.getItem("module");
-        if (localStorage.getItem("current_user") && localStorage.getItem("module")) {
-            moduleName === "MENTOR" ? history.push("/teacher/dashboard") : moduleName === "ADMIN" ? history.push("/admin/dashboard") : history.push("/dashboard");
+        const moduleName = localStorage.getItem('module');
+        if (
+            localStorage.getItem('current_user') &&
+            localStorage.getItem('module')
+        ) {
+            moduleName === 'MENTOR'
+                ? history.push('/teacher/dashboard')
+                : moduleName === 'ADMIN'
+                ? history.push('/admin/dashboard')
+                : history.push('/dashboard');
         }
     }, []);
     const [nav1, setNav1] = useState(null);
@@ -515,9 +523,14 @@ const Home = () => {
                                                 to="/teacher"
                                             >
                                                 <Button
-                                                    // label="Login"
                                                     label={t('home_tl.login')}
                                                     btnClass="primary "
+                                                    onClick={() => {
+                                                        history.push("/teacher");
+                                                        i18next.changeLanguage(
+                                                            'en'
+                                                        );
+                                                    }}
                                                     size="small"
                                                 />
                                             </Link>
@@ -645,7 +658,6 @@ const Home = () => {
                     </Row>
                 </Container>
             </section>
-
             {/* <section className="mentor-student">
         <Container className="both">
             <Row>
@@ -716,7 +728,6 @@ const Home = () => {
             </Row>
         </Container>
     </section> */}
-
             <section className="road-map" id="roadmap">
                 <div className="heading">
                     <h2 className="sub-heading w-100 text-center">
@@ -848,7 +859,6 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-
             <section className="state-map" id="impact">
                 <div className="heading">
                     <h2 className="sub-heading text-center">
@@ -857,7 +867,6 @@ const Home = () => {
                 </div>
                 <TamilNaduMap />
             </section>
-
             <section className="blog">
                 <Container>
                     <Row className="text-center justify-content-md-center">
@@ -929,7 +938,6 @@ const Home = () => {
                     </Row>
                 </Container>
             </section>
-
             <section className="testimonials ">
                 <Container>
                     <Row className="text-center justify-content-md-center">
@@ -975,7 +983,6 @@ const Home = () => {
                     </Row>
                 </Container>
             </section>
-
             <section className="uni-partners counter" id="partners">
                 <Container className="text-center">
                     <Row className="counter-card">
@@ -1141,7 +1148,6 @@ const Home = () => {
                     </Row>
                 </Container>
             </section>
-
             <section className="faq " id="faq">
                 <Container>
                     <Row className="text-center justify-content-md-center">
@@ -1180,7 +1186,6 @@ const Home = () => {
                     </Row>
                 </Container>
             </section>
-
             <footer className="footer">
                 <Container>
                     <Row>
@@ -1261,7 +1266,6 @@ const Home = () => {
                     </Col>
                 </Row>
             </footer>
-
             {modalShow && (
                 <RegisterPopup
                     show={modalShow}
