@@ -1,0 +1,12 @@
+/* <button class="btn"><i class="fa fa-download"></i> Download</button> */
+.btn {
+    background-color: DodgerBlue;
+    border: none;
+    color: white;
+    padding: 3px 10px;
+    cursor: pointer;
+    font-size: 10px;
+}
+.btn:hover {
+    background-color: RoyalBlue;
+}
