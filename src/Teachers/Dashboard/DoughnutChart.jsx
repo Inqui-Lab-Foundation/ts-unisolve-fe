@@ -87,12 +87,13 @@ export default function DoughnutChart({ user }) {
                 record?.pre_survey_status ? (
                     <FaCheckCircle size={20} color="green" />
                 ) : (
-                    <FaTimesCircle size={20} color="grey" />
+                    <FaTimesCircle size={20} color="red" />
                 )
         },
         {
-            title: 'Progress',
+            title: 'Lesson Progress',
             dataIndex: 'address',
+            align:"center",
             width: '30%',
             render: (_, record) => {
                 let percent =
@@ -133,7 +134,7 @@ export default function DoughnutChart({ user }) {
             align:"center",
             width: '20%',
             render: (_, record) =>
-                record?.idea_submission ? <FaCheckCircle size={20} color="green"/> : <FaTimesCircle size={20} color="grey" />
+                record?.idea_submission ? <FaCheckCircle size={20} color="green"/> : <FaTimesCircle size={20} color="red" />
         },
         {
             title: 'Post Survey',
@@ -144,7 +145,7 @@ export default function DoughnutChart({ user }) {
                 record?.post_survey_status ? (
                     <FaCheckCircle size={20} color="green"/>
                 ) : (
-                    <FaTimesCircle size={20} color="grey" />
+                    <FaTimesCircle size={20} color="red" />
                 )
         },
         {
@@ -156,7 +157,7 @@ export default function DoughnutChart({ user }) {
                 record?.certificate_status ? (
                     <FaCheckCircle size={20} color="green"/>
                 ) : (
-                    <FaTimesCircle size={20} color="grey" />
+                    <FaTimesCircle size={20} color="red" />
                 )
         }
     ];
