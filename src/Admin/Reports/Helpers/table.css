@@ -7,19 +7,29 @@
 }
 
 table {
-    border: 2px solid rgb(10, 18, 10);
+    border-collapse: collapse;
     width: 100%;
+    /* border: 2px solid rgb(10, 18, 10);
     /* height: 150px; */
 }
-.th-background-color {
-    background-color: rgb(235, 244, 244);
+table,
+th,
+td {
+    border-bottom: 1px solid rgb(206, 164, 164);
+    padding: 1rem;
 }
 .column-size {
     width: 75%;
     height: 30px;
 }
+.th-background-color {
+    background-color: aliceblue;
+}
 th {
     border-bottom: 1px solid black;
+}
+.hr-width {
+    width: 100%;
 }
 
 td {
