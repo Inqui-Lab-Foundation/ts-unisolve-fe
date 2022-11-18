@@ -477,5 +477,9 @@
         "continue course":"Continue Course",
         "exitfullscreen":"Exit Full Screen",
         "quiz_completed":"Successfully Completed!"
+    },
+    "translation":{
+        "tamil":"Tamil Content :-",
+        "tamil_to":"tn"
     }
 }
