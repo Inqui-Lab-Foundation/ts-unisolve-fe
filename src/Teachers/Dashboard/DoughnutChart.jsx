@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { useLayoutEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import DoubleBounce from '../../components/Loaders/DoubleBounce';
+// import DoubleBounce from '../../components/Loaders/DoubleBounce';
 import { FaCheckCircle,FaTimesCircle } from 'react-icons/fa';
 
 
@@ -163,9 +163,9 @@ export default function DoughnutChart({ user }) {
 
     return (
         <>
-            <div  className="select-team">
+            <div  className="select-team w-100">
                 {
-                    <div style={{ width: '50%' }} className="row flex-column p-4">
+                    <div className="row flex-column p-4" >
                         <label htmlFor="teams" className="mb-3">
                             Choose a Team:
                         </label>
@@ -208,10 +208,11 @@ export default function DoughnutChart({ user }) {
                         className="d-flex justify-content-center align-items-center"
                         style={{ minHeight: '25rem' }}
                     >
-                        <p className="text-primary">{teamsMembersStatusErr}*</p>
+                        <p className="text-primary">{null}</p>
+                        {/* <p className="text-primary">{"No Data Found"}*</p> */}
                     </div>
                 ) : (
-                    <DoubleBounce />
+                    null
                 )}
             </div>
             {/* <div style={{ width: '50%' }}>
