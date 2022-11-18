@@ -225,7 +225,6 @@ const PlayVideoCourses = (props) => {
         };
         axios(config)
             .then(function (response) {
-                // console.log("===============responc", response);
                 if (response.status === 200) {
                     SetWorksheetResponce(response.data.data[0]);
                     const worksheet =
@@ -246,7 +245,7 @@ const PlayVideoCourses = (props) => {
     async function modulesListUpdateApi(courseTopicId) {
         const body1 = JSON.stringify({
             user_id: JSON.stringify(currentUser.data[0].user_id),
-            course_topic_id: courseTopicId.toString(),
+            course_topic_id: JSON.stringify(courseTopicId),
             status: 'Completed'
         });
         var config = {
@@ -262,8 +261,6 @@ const PlayVideoCourses = (props) => {
             },
             data: body1
         };
-        // let response = await axios(config);
-        // console.log("res", response);
         await axios(config)
             .then(function (response) {
                 if (response.status === 201) {
@@ -277,377 +274,6 @@ const PlayVideoCourses = (props) => {
                 console.log(error);
             });
     }
-    const progressBar = {
-        label: 'Progress',
-        options: [{ id: 1, teams: 'CSK', percent: 75, status: 'active' }]
-    };
-
-    const assmentList = [
-        {
-            icon: <VscCheck />,
-            title: '1. Module Name',
-            time: ' 7 mins',
-            id: 115783408
-        }
-    ];
-    const items = [
-        {
-            section: 'Inspiration',
-            info: '1 lectures mins',
-            lectures: [
-                {
-                    name: '1. Inspiration video',
-                    time: '01:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    status: 'done',
-                    compteted: true
-                },
-                {
-                    name: '2. Inspiration video',
-                    time: '11:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    status: 'done',
-                    compteted: true
-                },
-                {
-                    name: '3. Inspiration video',
-                    time: '02:50',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    status: 'done',
-                    compteted: true
-                },
-                {
-                    name: '4. Inspiration video',
-                    time: '04:50',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-
-                    compteted: false
-                },
-                {
-                    name: 'Work Sheet',
-                    time: '00:19',
-                    type: 'doc',
-                    Icon: GrDocument,
-                    status: 'done',
-                    compteted: false
-                },
-                {
-                    name: 'Quiz',
-                    time: '05:00',
-                    type: 'quiz',
-                    Icon: BsQuestionCircle,
-                    status: 'done',
-                    compteted: true
-                }
-            ],
-            sectionLectures: 4,
-            sectionDuration: 18,
-            id: 'one'
-        },
-        {
-            section: 'Me & Us ',
-            info: '1 lectures mins',
-            lectures: [
-                {
-                    name: '5. Me & Us video',
-                    time: '03:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: '6. Me & Us video',
-                    time: '15:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: 'Work Sheet',
-                    time: '10:19',
-                    type: 'doc',
-                    Icon: GrDocument,
-                    compteted: false
-                },
-                {
-                    name: 'Quiz',
-                    time: '10:00',
-                    type: 'quiz',
-                    Icon: BsQuestionCircle,
-                    compteted: false
-                },
-                {
-                    name: '',
-                    time: '10:00',
-                    type: 'modal',
-                    Icon: BsQuestionCircle,
-                    compteted: true
-                }
-            ],
-            id: 'two',
-            sectionLectures: 2,
-            sectionDuration: 8
-        },
-        {
-            section: 'Feel and Find ',
-            info: '1 lectures mins',
-            lectures: [
-                {
-                    name: '7. Feel and Find video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: '8. Feel and Find video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: '9. Feel and Find video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: '10. Feel and Find video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: 'Work Sheet',
-                    time: '00:19',
-                    type: 'doc',
-                    Icon: GrDocument,
-                    compteted: false
-                },
-                {
-                    name: 'Quiz',
-                    time: '05:00',
-                    type: 'quiz',
-                    Icon: BsQuestionCircle,
-                    compteted: false
-                }
-            ],
-            id: 'three',
-            sectionLectures: 6,
-            sectionDuration: 20
-        },
-        {
-            section: 'Explore',
-            info: '1 lectures mins',
-            lectures: [
-                {
-                    name: '11. Explore Video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: '12. Explore Video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: '13. Explore Video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: '14. Explore Video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: 'Work Sheet',
-                    time: '10:19',
-                    type: 'doc',
-                    Icon: GrDocument,
-                    compteted: false
-                },
-                {
-                    name: 'Quiz',
-                    time: '05:00',
-                    type: 'quiz',
-                    Icon: BsQuestionCircle,
-                    compteted: false
-                }
-            ],
-            id: 'four',
-            sectionLectures: 4,
-            sectionDuration: 20
-        },
-        {
-            section: 'Give Ideas ',
-            info: '1 lectures mins',
-            lectures: [
-                {
-                    name: '15. Give Ideas video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: '16. Give Ideas video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: '17. Give Ideas video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: '18. Give Ideas video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: 'Work Sheet',
-                    time: '00:19',
-                    type: 'doc',
-                    Icon: GrDocument,
-                    compteted: false
-                },
-                {
-                    name: 'Quiz',
-                    time: '15:00',
-                    type: 'quiz',
-                    Icon: BsQuestionCircle,
-                    compteted: false
-                }
-            ],
-            id: 'five',
-            sectionLectures: 5,
-            sectionDuration: 20
-        },
-        {
-            section: 'Make & Test ',
-            info: '1 lectures mins',
-            lectures: [
-                {
-                    name: '19. Make & Test video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: '20. Make & Test video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: '21. Make & Test video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: '22. Make & Test video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: '23. Make & Test video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: 'Work Sheet',
-                    time: '00:19',
-                    type: 'doc',
-                    Icon: GrDocument,
-                    compteted: false
-                },
-                {
-                    name: 'Quiz',
-                    time: '08:00',
-                    type: 'quiz',
-                    Icon: BsQuestionCircle,
-                    compteted: false
-                }
-            ],
-            id: 'six',
-            sectionLectures: 5,
-            sectionDuration: 21
-        },
-        {
-            section: 'Conclusion ',
-            info: '1 lectures mins',
-            lectures: [
-                {
-                    name: '24. Conclusion Video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: '25. Conclusion Video',
-                    time: '05:00',
-                    type: 'video',
-                    Icon: AiFillPlayCircle,
-                    compteted: false
-                },
-                {
-                    name: 'Work Sheet',
-                    time: '00:30',
-                    type: 'doc',
-                    Icon: GrDocument,
-                    compteted: false
-                },
-                {
-                    name: 'Quiz',
-                    time: '10:00',
-                    type: 'quiz',
-                    Icon: BsQuestionCircle,
-                    compteted: false
-                },
-                {
-                    name: 'Assesment',
-                    time: '10:00',
-                    type: 'quiz',
-                    Icon: BsQuestionCircle,
-                    compteted: false
-                }
-            ],
-            id: 'seven',
-            sectionLectures: 2,
-            sectionDuration: 7
-        }
-    ];
 
     const handlePause = (event) => {
         setPaused(event.target.checked);
@@ -743,7 +369,7 @@ const PlayVideoCourses = (props) => {
                     topicObj.topic_type_id,
                     topicObj.course_topic_id,
                     topicObj.topic_type
-                );
+                    );
                 handlePlayerPlay();
             } else {
                 setVideoCompleted(true);
@@ -811,7 +437,7 @@ const PlayVideoCourses = (props) => {
     };
 
     const handleSelect = (topicId, couseId, type) => {
-        scrollRef.current.scrollIntoView();
+        
         setCourseTopicId(couseId);
         const topic_Index =
             setTopicArrays &&
@@ -842,6 +468,7 @@ const PlayVideoCourses = (props) => {
             setItem('');
             setHideQuiz(false);
         }
+        scrollRef.current.scrollIntoView();
         // }
     };
 
@@ -869,28 +496,6 @@ const PlayVideoCourses = (props) => {
         }
     };
 
-    const videoType = (type) => {
-        if (type === 'VIDEO') {
-            return <AiFillPlayCircle />;
-            // } else if (type === "WORKSHEET") {
-            //   // return <GrDocument />;
-            // } else if (type === "QUIZ") {
-            // return <BsQuestionCircle />;
-        }
-
-        // if (type === "doc" && status === true) {
-        //   return done;
-        // } else if (type === "doc" && status === false) {
-        //   return notDone;
-        // }
-
-        // if (type === "quiz" && status === true) {
-        //   return done;
-        // } else if (type === "quiz" && status === false) {
-        //   return notDone;
-        // }
-    };
-
     const handleClose = (item) => {
         // alert("item" + item);
         setItem('WORKSHEET');
@@ -908,10 +513,6 @@ const PlayVideoCourses = (props) => {
     const handleAssesmentClose = () => {
         modulesListUpdateApi(topicObj.course_topic_id);
         setItem('VIDEO');
-        // const video_Id_Index =
-        //   setArrays && setArrays.findIndex((data) => data === videoId);
-        // const Video_id = setArrays[video_Id_Index + 1];
-        // setVideoId(Video_id);
         setTopic(topicObj);
         handleSelect(
             topicObj.topic_type_id,
@@ -979,7 +580,7 @@ const PlayVideoCourses = (props) => {
                         updateStudentBadges(
                             { badge_slugs: [badge] },
                             currentUser.data[0].user_id,
-                            language
+                            language,t
                         )
                     );
                 }
@@ -1092,7 +693,9 @@ const PlayVideoCourses = (props) => {
                                 }}
                             >
                                 <div className="assement-info">
-                                    <p className="content-title">{t('student_course.lessons')}</p>
+                                    <p className="content-title">
+                                        {t('student_course.lessons')}
+                                    </p>
                                     <div className="view-head"></div>
                                     <div
                                         className="assement-item "
@@ -1147,7 +750,9 @@ const PlayVideoCourses = (props) => {
                                                                                 {
                                                                                     course.videos_count
                                                                                 }{' '}
-                                                                                Videos
+                                                                                {t(
+                                                                                    'student.videos'
+                                                                                )}
                                                                             </span>
 
                                                                             {/* <span>
@@ -1185,7 +790,9 @@ const PlayVideoCourses = (props) => {
                                                                                                 background:
                                                                                                     currentTopicId ===
                                                                                                         lecture.course_topic_id &&
-                                                                                                    '#f0f3f8'
+                                                                                                    '#f0f3f8',
+                                                                                                position:"relative",
+                                                                                                left:"0.75rem"
                                                                                             }}
                                                                                             className={`justify-content-between w-100 px-4 py-3 ${
                                                                                                 lecture.progress ===
@@ -1329,11 +936,12 @@ const PlayVideoCourses = (props) => {
                                         <div className="modal-content">
                                             <Modal.Header>
                                                 <Modal.Title className="w-100 d-block mb-2">
-                                                    Ready for a quick test?
+                                                    {t('student.quiz_heading')}
                                                 </Modal.Title>
                                                 <p className="w-100 d-block">
-                                                    Test your course skills in a
-                                                    short test challenge!
+                                                    {t(
+                                                        'student.take_challenge'
+                                                    )}
                                                 </p>
                                                 <div className="row justify-content-center text-center">
                                                     <div className="col col-lg-3">
@@ -1343,7 +951,9 @@ const PlayVideoCourses = (props) => {
                                                                     color: '#067DE1'
                                                                 }}
                                                             />
-                                                            Questions
+                                                            {t(
+                                                                'student.questions'
+                                                            )}
                                                         </p>
                                                     </div>
                                                     <div className="col col-lg-3">
@@ -1353,7 +963,9 @@ const PlayVideoCourses = (props) => {
                                                                     color: '#067DE1'
                                                                 }}
                                                             />{' '}
-                                                            Minutes
+                                                            {t(
+                                                                'student.minutes'
+                                                            )}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -1368,7 +980,9 @@ const PlayVideoCourses = (props) => {
                                                     />
                                                 </figure>
                                                 <Button
-                                                    label="Let's Start"
+                                                    label={t(
+                                                        'student.lets_start'
+                                                    )}
                                                     btnClass="primary mt-4"
                                                     size="small"
                                                     onClick={() =>
@@ -1390,7 +1004,10 @@ const PlayVideoCourses = (props) => {
                                                             className=" text-left pt-4 pb-4"
                                                             tag="h2"
                                                         >
-                                                            Unisolve Worksheet
+                                                            Unisolve{' '}
+                                                            {t(
+                                                                'student.w_sheet'
+                                                            )}
                                                         </CardTitle>
                                                         <text>
                                                             <div
@@ -1417,7 +1034,9 @@ const PlayVideoCourses = (props) => {
                                                                 >
                                                                     <Button
                                                                         button="submit"
-                                                                        label="Download Worksheet"
+                                                                        label={t(
+                                                                            'student.download_worksheet'
+                                                                        )}
                                                                         btnClass="primary mt-4 mb-2"
                                                                         size="small"
                                                                         style={{
@@ -1440,14 +1059,18 @@ const PlayVideoCourses = (props) => {
                                                                 >
                                                                     <Button
                                                                         button="submit"
-                                                                        label="Download Worksheet"
+                                                                        label={t(
+                                                                            'student.download_worksheet'
+                                                                        )}
                                                                         btnClass="primary mt-4 mb-2"
                                                                         size="small"
                                                                     />
                                                                 </a>
                                                             )}
                                                             <Button
-                                                                label="Continue"
+                                                                label={t(
+                                                                    'student.continue'
+                                                                )}
                                                                 btnClass=" mx-4"
                                                                 size="small"
                                                                 type="submit"
@@ -1469,7 +1092,7 @@ const PlayVideoCourses = (props) => {
                                                                             currentUser
                                                                                 .data[0]
                                                                                 .user_id,
-                                                                            language
+                                                                            language,t
                                                                         )
                                                                     );
                                                                 }}
@@ -1515,7 +1138,9 @@ const PlayVideoCourses = (props) => {
                                                 ></div>
                                                 <div>
                                                     <Button
-                                                        label={t('student_course.continue course')}
+                                                        label={t(
+                                                            'student_course.continue course'
+                                                        )}
                                                         btnClass="primary mt-4"
                                                         size="small"
                                                         onClick={(e) =>
@@ -1540,7 +1165,9 @@ const PlayVideoCourses = (props) => {
                                                 </h3>
                                                 {backToQuiz && (
                                                     <Button
-                                                        label="Back to Quiz"
+                                                        label={t(
+                                                            'student.backto_quiz'
+                                                        )}
                                                         btnClass="primary"
                                                         size="small"
                                                         onClick={() => {
@@ -1616,7 +1243,9 @@ const PlayVideoCourses = (props) => {
                                                         'INCOMPLETE' ? (
                                                         <div>
                                                             <Button
-                                                                label={t('student_course.start course')}
+                                                                label={t(
+                                                                    'student_course.start course'
+                                                                )}
                                                                 btnClass="primary mt-4"
                                                                 size="small"
                                                                 onClick={(e) =>
@@ -1629,7 +1258,9 @@ const PlayVideoCourses = (props) => {
                                                     ) : (
                                                         <div>
                                                             <Button
-                                                                label={t('student_course.continue course')}
+                                                                label={t(
+                                                                    'student_course.continue course'
+                                                                )}
                                                                 btnClass="primary mt-4"
                                                                 size="small"
                                                                 onClick={(e) =>
