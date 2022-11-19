@@ -207,8 +207,10 @@ const ChangePSW = (props) => {
                                     ) : null}
                                 </Col>
                             </div>
-                            <b style={{color: '#3BB143'}}>
+                            <b style={{color: 'red'}}>
                             {error}
+                            </b>
+                            <b style={{color: '#3BB143'}}>
                             {responce}
                             </b>
                             <div
