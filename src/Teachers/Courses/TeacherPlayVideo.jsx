@@ -967,24 +967,24 @@ const TeacherPlayVideo = (props) => {
                                                     className=" text-left pt-4 pb-4"
                                                     tag="h2"
                                                 >
-                                                    Unisolve Instructions
+                                                    Unisolve Worksheets
                                                 </CardTitle>
                                                 <CardBody>
-                                                    <p className="text-primary">
+                                                    {/* <p className="text-primary">
                                                         <b>
                                                             Additional Resources
                                                         </b>
-                                                    </p>
+                                                    </p> */}
                                                     <p>Dear Guide Teachers,</p>
                                                     <p>
                                                         In addition to the
                                                         teacher handbook there
-                                                        are two other resources
+                                                        are worksheets
                                                         for your student teams
                                                         which will aid in this
                                                         SIDP learning journey:
                                                     </p>
-                                                    <p className="mb-0">
+                                                    {/* <p className="mb-0">
                                                         A. Worksheets
                                                     </p>
                                                     <p className="mb-3">
@@ -993,7 +993,7 @@ const TeacherPlayVideo = (props) => {
 
                                                     <p className="text-decoration-underline">
                                                         <b>A.Worksheets </b>
-                                                    </p>
+                                                    </p> */}
                                                     <p className="mb-0">
                                                         1. This document has one
                                                         worksheet per lesson.
@@ -1065,7 +1065,7 @@ const TeacherPlayVideo = (props) => {
                                                         )}
                                                 </div>
 
-                                                <p className="text-decoration-underline">
+                                                {/* <p className="text-decoration-underline">
                                                     <b>
                                                         B. Additional Readings{' '}
                                                     </b>
@@ -1084,7 +1084,7 @@ const TeacherPlayVideo = (props) => {
                                                     students. We recommend to
                                                     share the soft copy or print
                                                     it for future reference.
-                                                </p>
+                                                </p> */}
                                                 <div className="text-left mb-5">
                                                     {worksheetResponce &&
                                                         worksheetResponce?.length >
