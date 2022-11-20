@@ -480,7 +480,8 @@ const TeacherPlayVideo = (props) => {
     const handleDownload = (path) => {
         let a = document.createElement('a');
         a.target = '_blank';
-        a.href = process.env.REACT_APP_API_IMAGE_BASE_URL + path;
+        //a.href = process.env.REACT_APP_API_IMAGE_BASE_URL + path;
+        a.href = path;
         a.click();
         handleVimeoOnEnd();
         setInstructions(true);
@@ -489,7 +490,8 @@ const TeacherPlayVideo = (props) => {
     const handleInstructionDownload = (path) => {
         let a = document.createElement('a');
         a.target = '_blank';
-        a.href = process.env.REACT_APP_API_IMAGE_BASE_URL + path;
+        //a.href = process.env.REACT_APP_API_IMAGE_BASE_URL + path;
+        a.href = path;
         a.click();
     };
     const handleCertificateDownload = () => {
