@@ -797,13 +797,14 @@ const TeacherPlayVideo = (props) => {
                                                 </div>
                                             </CardBody>
                                             <div className="text-left mb-2">
-                                                <div className="d-flex ">
+                                                <div>
                                                     {worksheetResponce &&
                                                         worksheetResponce?.length >
                                                             0 &&
                                                         worksheetResponce.map(
                                                             (item, i) => (
                                                                 <Button
+                                                                style={{margin:"5px"}}
                                                                     key={i}
                                                                     label={`Download ${item
                                                                         .split(
@@ -1033,6 +1034,7 @@ const TeacherPlayVideo = (props) => {
                                                             (item, i) =>
                                                                 i > 1 && (
                                                                     <Button
+                                                                    style={{margin:"5px"}}
                                                                         key={i}
                                                                         label={`Download ${item
                                                                             .split(
@@ -1090,7 +1092,8 @@ const TeacherPlayVideo = (props) => {
                                                         worksheetResponce.map(
                                                             (item, i) =>
                                                                 i <= 1 && (
-                                                                    <Button
+                                                                    <Button 
+                                                                    style={{margin:"5px"}}
                                                                         key={i}
                                                                         label={`Download ${item
                                                                             .split(
