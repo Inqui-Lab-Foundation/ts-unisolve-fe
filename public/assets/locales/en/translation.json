@@ -193,7 +193,8 @@
         "get_new_Started": "Register",
         "badges":"Badges",
         "idea_submission":"Idea Submission",
-        "my_profile":"My Profile"
+        "my_profile":"My Profile",
+        "change_pass":"Change Password"
 
     },
     "home_tl1": {
@@ -317,7 +318,8 @@
         "logout": "Logout",
         "question": "Question",
         "submit": "Submit",
-        "continue": "Continue"
+        "continue": "Continue",
+        "refer_video":"Refer Video"
     },
     "teacher_get_started": {
         "heading": "Welcome SIDP School Head/Guide Teacher!",
@@ -335,7 +337,20 @@
         "submit" : "Submit"
     },
     "student" : {
-        "profile": "My Profile"
+        "profile": "My Profile",
+        "worksheet":"<p>Dear Student,</p><p>Step-1: Download and print this worksheet or get a copy from your SIDP guide teacher.</p><p>Step-2: Complete this worksheet along with your team members.</p><p>Step-3: Handover the worksheet to your guide teacher once your team completes the worksheet without fail. This needs to be submitted to District Coordinator during regional level boot-camp.</p><p>Step-4: Continue to next lesson only after you complete the worksheet.</p><p>Hope you and your team learn new things and enjoy completing this worksheet.</p>",
+        "download_worksheet":"Download Worksheet",
+        "continue":"Continue",
+        "w_sheet":"Worksheet",
+        "quiz_heading":"Ready for a quick test?",
+        "take_challenge":"Test your course skills in a short test challenge!",
+        "questions":"Questions",
+        "minutes":"Minutes",
+        "lets_start":"Let's Start",
+        "videos":"Videos",
+        "backto_quiz":"Back to Quiz",
+        "quiz_completed":"Quiz Successfully Completed",
+        "ref_quiz_heading":"Let's think about a few things you learnt in the video"
     },
     "teacher_presurvey": {
         "completed_text": "Your survey has been successfully submitted!"
@@ -414,7 +429,10 @@
         "attempt_logout": "You are attempting to logout of Unisolve.",
         "are_you_sure": "Are you sure?",
         "btn_logout": "Logout",
-        "btn_cancel": "Cancel"
+        "btn_cancel": "Cancel",
+        "btn_ok":"ok",
+        "cancelled":"Cancelled",
+        "logged_in":"You are Logged in"
     },
     "teacehr_red": {
         "heading": "REGISTER",
@@ -451,6 +469,21 @@
     },
     "badges":{
         "congratulations":"Congratulations",
-        "earn":"you've just earned a new badge"
+        "earn":"you've just earned a new badge",
+        "ok":"OK"
+    },
+    "student_course":{
+        "modules":"Modules",
+        "videos":"Videos",
+        "start course":"Start Course",
+        "full screen":"Full Screen",
+        "lessons":"Lessons",
+        "continue course":"Continue Course",
+        "exitfullscreen":"Exit Full Screen",
+        "quiz_completed":"Successfully Completed!"
+    },
+    "translation":{
+        "tamil":"Tamil Content :-",
+        "tamil_to":"tn"
     }
 }
