@@ -213,8 +213,10 @@ const ChangePSWModal = (props) => {
                                     ) : null}
                                 </Col>
                             </div>
+                            <b style={{color: 'red'}}>
+                            {error}
+                            </b>
                             <b style={{color: '#3BB143'}}>
-                                {error}
                                 {responce}
                             </b>
                             <div

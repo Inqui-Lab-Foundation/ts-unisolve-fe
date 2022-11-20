@@ -338,7 +338,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                             //onClick={(e) => handleClick(e, '')}
                             to={'/change-password'}
                         >
-                            {t('teacher.password')}
+                            {t('home.change_pass')}
                         </NavLink>
                     </MenuItem>
                     <MenuItem
