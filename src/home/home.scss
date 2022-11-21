@@ -62,7 +62,7 @@
   
   section.about-us{
     padding: 10rem 0;
-    // background-color:  var(--color-white-3);
+    background-color:  var(--color-white-3);
     position: relative;
 
     &::before {
@@ -89,7 +89,16 @@
       animation: pulse-animation 1.5s linear infinite;
     
       }
-      
+      .sidp_row{
+        background-color: rgba(255, 203, 52, 0.2);
+        border-radius: 0.8rem;
+        .sidp_video_box{
+          img{
+            border-bottom: 0.4rem solid var(--color-blue);
+            border-radius: 1.5rem;
+          }
+        }
+      }
      
   }
 
@@ -131,6 +140,11 @@
             margin-left: 1rem !important;
             margin-right: 1rem !important;
           }
+        }
+        li.nav-item a:hover{
+          padding-bottom:0.3rem;
+          border-bottom: 0.3rem solid var(--color-yellow);
+          transition: all 300ms ease;
         }
 
         
@@ -913,6 +927,9 @@
   .partner-btn{display: inherit !important; }
 
   section.locate-unisolve {
+    background-image: linear-gradient(0deg, rgba(255, 203, 52, 0.4), rgba(255, 203, 52, 0.4)), url("../assets/media/home/background-join-us.png");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     padding: 10rem 0;
     @media (max-width: 991px) {
       padding: 0rem 0 10rem 0;
@@ -1270,7 +1287,8 @@ $color6: #0f93ff;
 
 section.road-map{
   padding: 10rem 0;
-  background-color: var(--color-white-3);
+  // background-color: var(--color-white-3);
+  background-color: rgba(255, 203, 52, 0.2);
   
   .timeline {
     display: flex;
