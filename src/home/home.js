@@ -571,7 +571,7 @@ const Home = () => {
                             </div>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row className="sidp_row p-3">
                         <Col md={6}>
                             <div
                                 dangerouslySetInnerHTML={{
@@ -580,7 +580,7 @@ const Home = () => {
                             ></div>
                         </Col>
                         <Col md={6} className="my-auto ">
-                            <div className="position-relative">
+                            <div className="position-relative sidp_video_box">
                                 <FancyVideo
                                     source={taVideo}
                                     poster={tnVideoCover}
