@@ -62,18 +62,16 @@ import Blog1 from '../assets/media/home/blog/walker_elders.jpg';
 import Blog2 from '../assets/media/home/blog/agriculture_bag.jpeg';
 import Blog3 from '../assets/media/home/blog/sweeping_machine.png';
 import RegisterPopup from './registration/RegisterPopup';
-import TamilNaduMap from '../components/MapCard/TamilNaduMap';
+import KarnatakaMap from '../components/MapCard/KarnatakaMap';
 import { getDistrictData, getDistrictLiveData } from '../redux/home/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import FancyVideo from 'react-videojs-fancybox';
-import taVideo from '../assets/media/tn-brands/ta-video.mp4';
-import tnVideoCover from '../assets/media/tn-brands/videoCover.png';
 import SchoolRegisterPopup from './SchoolRegisterPopup';
 import axios from 'axios';
 import ScrollToTop from 'react-scroll-to-top';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { getSchedulesForTeacherAndStudents } from '../redux/schedules/actions';
 import { compareDates } from '../helpers/Utils';
+import Vimeo from '@u-wave/react-vimeo';
 
 const Home = () => {
     const { t } = useTranslation();
@@ -320,6 +318,7 @@ const Home = () => {
             title: `${t('home_tl.faq_qn_5')}`,
             desc: `${t('home_tl.faq_ans_5')}`
         }
+        
     ];
 
     const blogs = [
@@ -542,9 +541,14 @@ const Home = () => {
                                                 to="/teacher"
                                             >
                                                 <Button
-                                                    // label="Login"
                                                     label={t('home_tl.login')}
                                                     btnClass="primary "
+                                                    onClick={() => {
+                                                        history.push("/teacher");
+                                                        i18next.changeLanguage(
+                                                            'en'
+                                                        );
+                                                    }}
                                                     size="small"
                                                 />
                                             </Link>
@@ -593,13 +597,11 @@ const Home = () => {
                                 }}
                             ></div>
                         </Col>
-                        <Col md={6} className="my-auto ">
-                            <div className="position-relative">
-                                <FancyVideo
-                                    source={taVideo}
-                                    poster={tnVideoCover}
-                                    id={'sintel'}
-                                />
+                        <Col md={6} className="position-relative">
+                            <div className="position-absolute" style={{width:"100%",height:"100%"}}>
+                            <Vimeo 
+                                video={772457997}
+                            />  
                             </div>
                         </Col>
                     </Row>
@@ -879,7 +881,7 @@ const Home = () => {
                         {t('home_tl.engagement')}
                     </h2>
                 </div>
-                <TamilNaduMap />
+                <KarnatakaMap />
             </section>
             <section className="blog">
                 <Container>
