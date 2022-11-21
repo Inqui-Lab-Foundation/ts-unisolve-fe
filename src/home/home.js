@@ -49,7 +49,14 @@ import Yuwaah_Tamilnadu from '../assets/media/tn-brands/5_Yuwaah_Tamilnadu.jpg';
 import IIF_Tamilnadu from '../assets/media/tn-brands/7_IIF_Tamilnadu.png';
 import SS_Tamilnadu from '../assets/media/tn-brands/8_SS_Tamilnadu.jpg';
 import Unicef_OOI_Tamilnadu from '../assets/media/tn-brands/9_Unicef OOI_Tamilnadu.jpg';
-import LogoTn from '../assets/media/tn-brands/UPSHIFT_SIDP_TN_logo.png';
+import LogoTn from '../assets/media/tn-brands/UPSHIFT_BLACK.png';
+import LogoTs1 from '../assets/media/1_SSA_Telangana.png';
+import LogoTs2 from '../assets/media/2_TSIC_Telangana.png';
+
+import LogoTsF1 from '../assets/media/ts_footer/2_TSIC_Telangana1.png';
+import LogoTsF2 from '../assets/media/ts_footer/1_SSA_Telangana1.png';
+import LogoTsF3 from '../assets/media/ts_footer/5_nif_karnataka2.png';
+import LogoTsF4 from '../assets/media/ts_footer/5_Yuwaah_Tamilnadu.png';
 
 import Blog1 from '../assets/media/home/blog/walker_elders.jpg';
 import Blog2 from '../assets/media/home/blog/agriculture_bag.jpeg';
@@ -79,9 +86,16 @@ const Home = () => {
     //     dispatch(getSchedulesForTeacherAndStudents());
     // }, []);
     useLayoutEffect(() => {
-        const moduleName = localStorage.getItem("module");
-        if (localStorage.getItem("current_user") && localStorage.getItem("module")) {
-            moduleName === "MENTOR" ? history.push("/teacher/dashboard") : moduleName === "ADMIN" ? history.push("/admin/dashboard") : history.push("/dashboard");
+        const moduleName = localStorage.getItem('module');
+        if (
+            localStorage.getItem('current_user') &&
+            localStorage.getItem('module')
+        ) {
+            moduleName === 'MENTOR'
+                ? history.push('/teacher/dashboard')
+                : moduleName === 'ADMIN'
+                ? history.push('/admin/dashboard')
+                : history.push('/dashboard');
         }
     }, []);
     const [nav1, setNav1] = useState(null);
@@ -162,7 +176,7 @@ const Home = () => {
             id: 1,
             key: 'SSA',
             // imageUrl: Unicef
-            imageUrl: SSA_Tamilnadu
+            imageUrl: SIDP_tamilnadu
         },
         {
             id: 2,
@@ -305,11 +319,6 @@ const Home = () => {
             id: 5,
             title: `${t('home_tl.faq_qn_5')}`,
             desc: `${t('home_tl.faq_ans_5')}`
-        },
-        {
-            id: 6,
-            title: `${t('home_tl.faq_qn_6')}`,
-            desc: `${t('home_tl.faq_ans_6')}`
         }
     ];
 
@@ -409,6 +418,24 @@ const Home = () => {
                                         <figure>
                                             <img
                                                 src={LogoTn}
+                                                alt="logo"
+                                                className="img-fluid w-5 logoImg"
+                                            />
+                                        </figure>
+                                    </Link>
+                                    <Link className="" exact="true" to="/">
+                                        <figure>
+                                            <img
+                                                src={LogoTs1}
+                                                alt="logo"
+                                                className="img-fluid w-5 logoImg"
+                                            />
+                                        </figure>
+                                    </Link>
+                                    <Link className="" exact="true" to="/">
+                                        <figure>
+                                            <img
+                                                src={LogoTs2}
                                                 alt="logo"
                                                 className="img-fluid w-5 logoImg"
                                             />
@@ -645,7 +672,6 @@ const Home = () => {
                     </Row>
                 </Container>
             </section>
-
             {/* <section className="mentor-student">
         <Container className="both">
             <Row>
@@ -716,7 +742,6 @@ const Home = () => {
             </Row>
         </Container>
     </section> */}
-
             <section className="road-map" id="roadmap">
                 <div className="heading">
                     <h2 className="sub-heading w-100 text-center">
@@ -731,7 +756,7 @@ const Home = () => {
                             <img src={map_icon_awa} />
                         </div>
                         <div className="timeline__event__date text-white">
-                            {t('home_tl.step')}-1
+                            Step-1
                         </div>
                         <div className="timeline__event__content ">
                             <div className="timeline__event__title">
@@ -751,7 +776,7 @@ const Home = () => {
                             <img src={map_icon_reg} />
                         </div>
                         <div className="timeline__event__date text-white">
-                            {t('home_tl.step')}-2
+                            Step-2
                         </div>
                         <div className="timeline__event__content">
                             <div className="timeline__event__title">
@@ -771,7 +796,7 @@ const Home = () => {
                             <img src={map_icon_prob} />
                         </div>
                         <div className="timeline__event__date text-white">
-                            {t('home_tl.step')}-3
+                            Step-3
                         </div>
                         <div className="timeline__event__content">
                             <div className="timeline__event__title">
@@ -791,7 +816,7 @@ const Home = () => {
                             <img src={map_icon_test} />
                         </div>
                         <div className="timeline__event__date text-white">
-                            {t('home_tl.step')}-4
+                            Step-4
                         </div>
                         <div className="timeline__event__content">
                             <div className="timeline__event__title">
@@ -811,7 +836,7 @@ const Home = () => {
                             <img src={map_icon_pitch} />
                         </div>
                         <div className="timeline__event__date text-white">
-                            {t('home_tl.step')}-5
+                            Step-5
                         </div>
                         <div className="timeline__event__content">
                             <div className="timeline__event__title">
@@ -831,7 +856,7 @@ const Home = () => {
                             <img src={map_icon_incu} />
                         </div>
                         <div className="timeline__event__date text-white">
-                            {t('home_tl.step')}-6
+                            Step-6
                         </div>
                         <div className="timeline__event__content">
                             <div className="timeline__event__title">
@@ -848,7 +873,6 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-
             <section className="state-map" id="impact">
                 <div className="heading">
                     <h2 className="sub-heading text-center">
@@ -857,7 +881,6 @@ const Home = () => {
                 </div>
                 <TamilNaduMap />
             </section>
-
             <section className="blog">
                 <Container>
                     <Row className="text-center justify-content-md-center">
@@ -929,7 +952,6 @@ const Home = () => {
                     </Row>
                 </Container>
             </section>
-
             <section className="testimonials ">
                 <Container>
                     <Row className="text-center justify-content-md-center">
@@ -975,7 +997,6 @@ const Home = () => {
                     </Row>
                 </Container>
             </section>
-
             <section className="uni-partners counter" id="partners">
                 <Container className="text-center">
                     <Row className="counter-card">
@@ -1141,7 +1162,6 @@ const Home = () => {
                     </Row>
                 </Container>
             </section>
-
             <section className="faq " id="faq">
                 <Container>
                     <Row className="text-center justify-content-md-center">
@@ -1180,7 +1200,6 @@ const Home = () => {
                     </Row>
                 </Container>
             </section>
-
             <footer className="footer">
                 <Container>
                     <Row>
@@ -1261,7 +1280,6 @@ const Home = () => {
                     </Col>
                 </Row>
             </footer>
-
             {modalShow && (
                 <RegisterPopup
                     show={modalShow}
