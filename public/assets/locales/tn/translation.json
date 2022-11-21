@@ -360,12 +360,12 @@
         "others": "Others"
     },
     "home_nav_links": {
-        "about": "ಬಗ್ಗೆ",
-        "road_map": "ರಸ್ತೆ ನಕ್ಷೆ",
-        "impact": "ಪ್ರಭಾವ",
-        "partners": "ಪಾಲುದಾರರು",
-        "faq": "ಪ್ರಶ್ನೆಗಳು",
-        "btn_login": "ಲಾಗಿನ್",
+        "about": "గురించి",
+        "road_map": "రోడ్ మ్యాప్",
+        "impact": "ప్రభావం ",
+        "partners": "కీలక భాగస్వాములు",
+        "faq": "ఎఫ్ ఎ క్యూ",
+        "btn_login": "లాగిన్",
         "rights": "All Rights Reserved."
     },
     "general_req": {
