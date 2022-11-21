@@ -49,7 +49,14 @@ import Yuwaah_Tamilnadu from '../assets/media/tn-brands/5_Yuwaah_Tamilnadu.jpg';
 import IIF_Tamilnadu from '../assets/media/tn-brands/7_IIF_Tamilnadu.png';
 import SS_Tamilnadu from '../assets/media/tn-brands/8_SS_Tamilnadu.jpg';
 import Unicef_OOI_Tamilnadu from '../assets/media/tn-brands/9_Unicef OOI_Tamilnadu.jpg';
-import LogoTn from '../assets/media/tn-brands/UPSHIFT_SIDP_TN_logo.png';
+import LogoTn from '../assets/media/tn-brands/UPSHIFT_BLACK.png';
+import LogoTs1 from '../assets/media/1_SSA_Telangana.png';
+import LogoTs2 from '../assets/media/2_TSIC_Telangana.png';
+
+import LogoTsF1 from '../assets/media/ts_footer/2_TSIC_Telangana1.png';
+import LogoTsF2 from '../assets/media/ts_footer/1_SSA_Telangana1.png';
+import LogoTsF3 from '../assets/media/ts_footer/5_nif_karnataka2.png';
+import LogoTsF4 from '../assets/media/ts_footer/5_Yuwaah_Tamilnadu.png';
 
 import Blog1 from '../assets/media/home/blog/walker_elders.jpg';
 import Blog2 from '../assets/media/home/blog/agriculture_bag.jpeg';
@@ -169,7 +176,7 @@ const Home = () => {
             id: 1,
             key: 'SSA',
             // imageUrl: Unicef
-            imageUrl: SSA_Tamilnadu
+            imageUrl: SIDP_tamilnadu
         },
         {
             id: 2,
@@ -411,6 +418,24 @@ const Home = () => {
                                         <figure>
                                             <img
                                                 src={LogoTn}
+                                                alt="logo"
+                                                className="img-fluid w-5 logoImg"
+                                            />
+                                        </figure>
+                                    </Link>
+                                    <Link className="" exact="true" to="/">
+                                        <figure>
+                                            <img
+                                                src={LogoTs1}
+                                                alt="logo"
+                                                className="img-fluid w-5 logoImg"
+                                            />
+                                        </figure>
+                                    </Link>
+                                    <Link className="" exact="true" to="/">
+                                        <figure>
+                                            <img
+                                                src={LogoTs2}
                                                 alt="logo"
                                                 className="img-fluid w-5 logoImg"
                                             />
