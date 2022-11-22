@@ -42,7 +42,7 @@ import map_icon_incu from '../assets/media/home/icon_incubation.png';
 
 // ta brans
 import SSA_Tamilnadu from '../assets/media/tn-brands/1_govt_ts.png';
-import SIDP_tamilnadu from '../assets/media/tn-brands/2_SSA_ts.png';
+import SIC_tamilnadu from '../assets/media/tn-brands/2_SSA_ts.png';
 import EDII_tamilnadu from '../assets/media/tn-brands/3_nif_ts.png';
 import UpShift_Tamilnadu from '../assets/media/tn-brands/4_UpShift_ts.png';
 import Yuwaah_Tamilnadu from '../assets/media/tn-brands/5_Yuwaah_ts.png';
@@ -172,9 +172,9 @@ const Home = () => {
         },
         {
             id: 2,
-            key: 'SIDP',
+            key: 'SIC',
             // imageUrl: Telangana
-            imageUrl: SIDP_tamilnadu
+            imageUrl: SIC_tamilnadu
         },
         {
             id: 3,
