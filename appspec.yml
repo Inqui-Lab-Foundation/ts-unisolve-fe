@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
     - source: /
-      destination: /var/www/html/ka-unisolve-fe
+      destination: /var/www/html/ap-unisolve-fe
 file_exists_behavior: OVERWRITE
 hooks:
   BeforeInstall:
