@@ -15,6 +15,7 @@ import {
     getAdminRefQuizQst
 } from '../../redux/actions';
 import { useTranslation } from 'react-i18next';
+import succesImg from "../../assets/media/success1.jpeg";
 
 const Quiz = (props) => {
     const { t } = useTranslation();
@@ -175,6 +176,7 @@ const Quiz = (props) => {
                                             <img src={ResultStar} alt="star" />
                                         </div>
                                         <div className="congratulations">
+                                            <img src={succesImg} alt="" style={{width:"20rem"}}/><br/>
                                             {t('student_course.quiz_completed')}
                                         </div>
                                        

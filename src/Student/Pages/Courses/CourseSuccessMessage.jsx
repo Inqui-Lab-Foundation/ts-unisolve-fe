@@ -2,7 +2,7 @@ import Confetti from 'react-confetti';
 import { useHistory } from 'react-router-dom';
 import ResultStar from '../../../assets/media/quiz-result-star.png';
 import { Button } from '../../../stories/Button';
-
+import succesImg from "../../../assets/media/success1.jpeg";
 
 const CourseSuccessMessage = () => {
     const history = useHistory();
@@ -15,6 +15,7 @@ const CourseSuccessMessage = () => {
                         <img src={ResultStar} alt="star" />
                     </div>
                     <div className="congratulations text-center">
+                        <img src={succesImg} alt="" style={{ width: "20rem" }} /><br />
                         Course Completed Successfully!
                     </div>
                     <div className='text-center'>
