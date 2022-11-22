@@ -12,7 +12,9 @@ export const URL = {
     addMentor: process.env.REACT_APP_API_BASE_URL + '/mentors/create',
     addAdminCourses: process.env.REACT_APP_API_BASE_URL + '/course',
     submitChallengeResponse:
-        process.env.REACT_APP_API_BASE_URL + '/challenge/1/responses',
+        process.env.REACT_APP_API_BASE_URL + '/challenge/1/submission',
+    initiateChallenge:
+        process.env.REACT_APP_API_BASE_URL + '/challenge/1/initiate?team_id=',
     postAdminRefQuizResponce:
         process.env.REACT_APP_API_BASE_URL + '/reflectiveQuiz/',
     createMentorSupportTickets:

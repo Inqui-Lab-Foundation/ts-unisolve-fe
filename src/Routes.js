@@ -41,7 +41,7 @@ import TeamMemberPage from './Student/Pages/TeamsMentors/TeamMember';
 import AddNewMember from './Student/Pages/TeamsMentors/AddNewMember';
 import EditMember from './Student/Pages/TeamsMentors/EditMember';
 // import IdeasPage from './Student/Pages/Ideas/IdeasPage';
-import IdeasPageNew from './Student/Pages/Ideas/IdeasPageCopy';
+import IdeasPageNew from './Student/Pages/Ideas/IdeaSubmission';
 import SDG from './Student/Pages/Ideas/SDG';
 import SubmittedIdeas from './Student/Pages/Ideas/SubmittedIdeas';
 import TicketViewDetails from './Student/Pages/HelpPages/TicketViewDetails';
@@ -110,6 +110,7 @@ import TeacherTeamList from './Teachers/Teams/Ticket';
 import TeacherCreateTeam from './Teachers/Teams/CreateTeam';
 import TeacherPreservey from './Teachers/PreSurvey/PreSurvey';
 import StudentPreservey from './Student/PreSurvey/PreSurvey';
+import StudentCertificate from './Student/Pages/Certificate/MyCertificate';
 import TeacherEditTeam from './Teachers/Teams/EditTeam';
 import TeacherTeamMember from './Teachers/Teams/CreateTeamMember';
 import TeacherViewTeamMember from './Teachers/Teams/ViewTeamMember';
@@ -127,7 +128,8 @@ import Translation from './Admin/Translation/Translation';
 import EditTranslation from './Admin/Translation/EditTranslation'; 
 import CreateTranslation from './Admin/Translation/CreateTranslation'; 
 //import IdeasubmissionunderCOn from './Student/Ideasubsaticundercon';
-import DummyStuMyCer from './Student/DummyStudentMyCertificate';
+// import DummyStuMyCer from './Student/DummyStudentMyCertificate';
+
 
 const Routers = () => {
     // const history = useHistory();
@@ -662,7 +664,7 @@ const Routers = () => {
                     <ProtectedRoute
                         exact={true}
                         path="/student/my-certificate"
-                        component={DummyStuMyCer}
+                        component={StudentCertificate}
                     />
                     <ProtectedRoute exact={true} path="/admin/translation" component={Translation} />
                     <ProtectedRoute exact={true} path="/admin/edit-translation" component={EditTranslation} />

@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import './style.scss';
 import Layout from '../../Layout.jsx';
 import {
@@ -11,18 +10,29 @@ import { useTranslation } from 'react-i18next';
 import CommonPage from '../../../components/CommonPage';
 import { Button } from '../../../stories/Button';
 import { cardData } from './SDGData';
+import { useDispatch, useSelector } from 'react-redux';
+import { initiateIdea } from '../../../redux/studentRegistration/actions';
+import { useHistory } from 'react-router-dom';
 
-const SDG = () => {
+const SDG = ({setShowChallenges}) => {
     const currentUser = getCurrentUser('current_user');
+    const language = useSelector(
+        (state) => state?.studentRegistration?.studentLanguage
+    );
+    const dispatch = useDispatch();
+    const history = useHistory();
     const { t } = useTranslation();
-    console.log(currentUser);
     const comingSoonText = t('dummytext.student_idea_sub');
-    const [showPage, setshowPage] = useState(true);
-    console.log(setshowPage);
-
+    const showPage =true;
+    const handleSelect = (data)=>{
+        const initialSizeData = {
+            sdg:data
+        };
+        dispatch(initiateIdea(currentUser?.data[0]?.team_id,language,history,initialSizeData,setShowChallenges));
+    };
     return (
         <Layout>
-            {showPage ? (
+            {!showPage ? (
                 <CommonPage text={comingSoonText} />
             ) : (
                 <Container className="mb-50 mt-5 ">
@@ -73,7 +83,7 @@ const SDG = () => {
                                                             item?.bg_color
                                                     }}
                                                 >
-                                                    <h1 className=".text-muted">
+                                                    <h1 className="text-light opacity-50">
                                                         {item?.goal_number}
                                                     </h1>
                                                     <h2 className="text-white">
@@ -83,8 +93,7 @@ const SDG = () => {
                                                     <div className="choose_btn_box fixed-bottom mb-3">
                                                         <Button
                                                             btnClass="secondary"
-                                                            onClick={() => {
-                                                            }}
+                                                            onClick={()=>handleSelect(item?.goal_title)}
                                                             size="small"
                                                             label="Select"
                                                         />
