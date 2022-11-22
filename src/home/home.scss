@@ -46,7 +46,7 @@
     font-size: 4.2rem;
   }
   p {
-    font-size: 2.2rem;
+    font-size: 2rem;
     line-height: 150%;
     color: #676767;
     @media (max-width: 991px) {
@@ -90,8 +90,6 @@
     
       }
       .sidp_row{
-        background-color: rgba(255, 203, 52, 0.2);
-        border-radius: 0.8rem;
         .sidp_video_box{
           img{
             border-bottom: 0.4rem solid var(--color-blue);
@@ -153,7 +151,7 @@
       @media (max-width: 991px) {
         display: none;
       }
-      
+     
     }
     @media (max-width: 1199px) {
       .multi-actions.main-menu .dropdown #language-selector-btn {
@@ -252,7 +250,7 @@
         color: var(--color-black-2);
       }
       p {
-        font-size: 2rem;
+        font-size: 1.8rem;
         color: var(--color-grey-light-5);
         line-height: 120%;
       }
@@ -286,6 +284,7 @@
         display: none;
       }
     }
+    
   }
 
   .mentor-student {
@@ -927,7 +926,7 @@
   .partner-btn{display: inherit !important; }
 
   section.locate-unisolve {
-    background-image: linear-gradient(0deg, rgba(255, 203, 52, 0.4), rgba(255, 203, 52, 0.4)), url("../assets/media/home/background-join-us.png");
+    background-image: linear-gradient(0deg, rgba(255, 203, 52, 0.2), rgba(255, 203, 52, 0.2));
     background-attachment: fixed;
     background-repeat: no-repeat;
     padding: 10rem 0;
@@ -1064,9 +1063,9 @@
         }
       }
       &-body p {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         @media (max-width: 576px) {
-          font-size: 1.6rem;
+          font-size: 1.4rem;
         }
       }
 
@@ -1267,7 +1266,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 }
 
 
-$content-width: calc(40vw - 84px);
+$content-width: calc(55vw - 84px);
 $margin: 20px;
 $spacing: 20px;
 $bdrs: 6px;
@@ -1303,9 +1302,9 @@ section.road-map{
       margin: $spacing 0;
       border-radius: $bdrs;
       align-self: center;
-      width: 50vw;
+      width: 65vw;
       @media (max-width: 786px) {
-        width: 75vw;
+        width: 85vw;
       }
   
       &:nth-child(2n + 1) {

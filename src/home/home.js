@@ -410,11 +410,11 @@ const Home = () => {
             <section className="header ">
                 <div className="home-banner">
                     <Container>
-                        <Row className="justify-content-between  pt-5">
+                        <Row className="justify-content-between  pt-5 fixed-top p-5 pb-0 mb-5 nav_row">
                             <Col md={5} className="my-auto mobile-menu">
                                 <h2 className="logo">
                                     <Link className="" exact="true" to="/">
-                                        <figure>
+                                        <figure className="m-0">
                                             <img
                                                 src={LogoTn}
                                                 alt="logo"
