@@ -15,7 +15,9 @@ const CourseSuccessMessage = () => {
                         <img src={ResultStar} alt="star" />
                     </div>
                     <div className="congratulations text-center">
-                        <img src={succesImg} alt="" style={{ width: "20rem" }} /><br />
+                        <div className="success_img text-center w-100">
+                            <img src={succesImg} alt=".." /><br />
+                        </div>
                         Course Completed Successfully!
                     </div>
                     <div className='text-center'>

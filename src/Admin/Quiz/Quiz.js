@@ -176,7 +176,9 @@ const Quiz = (props) => {
                                             <img src={ResultStar} alt="star" />
                                         </div>
                                         <div className="congratulations">
-                                            <img src={succesImg} alt="" style={{width:"20rem"}}/><br/>
+                                            <div className="success_img text-center w-100">
+                                                <img src={succesImg} alt=".." /><br />
+                                            </div>
                                             {t('student_course.quiz_completed')}
                                         </div>
                                        

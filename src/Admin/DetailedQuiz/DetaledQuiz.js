@@ -126,11 +126,11 @@ const DetaledQuiz = (props) => {
                                 <div className="results-heading">
                                     <span></span>
                                 </div>
-                                <div className="mt-4 d-flex justify-content-center align-items-center">
-                                    <div>
-                                        <img src={succesImg} alt="" style={{width:"20rem"}}/><br/>
-                                        <span>{t('student.quiz_completed')}</span>
+                                <div className="mt-4 text-center">
+                                     <div className="success_img text-center w-100">
+                                        <img src={succesImg} alt=".." /><br />
                                     </div>
+                                    <span>{t('student.quiz_completed')}</span>
                                 </div>
                                 <div className="results-heading mt-4">
                                     <img src={ResultStar} alt="star" />
