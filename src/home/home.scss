@@ -46,12 +46,13 @@
     font-size: 4.2rem;
   }
   p {
-    font-size: 2rem;
+    font-size: 1.9rem;
     line-height: 150%;
     color: #676767;
     @media (max-width: 991px) {
       font-size: 1.6rem !important;
     }
+    text-align: justify;
   }
 
   .landing-menu{
@@ -96,6 +97,10 @@
             border-radius: 1.5rem;
           }
         }
+      }
+      .upshift{
+        background-color: rgba(255, 203, 52, 0.2);
+        border-radius: 1rem;
       }
      
   }
