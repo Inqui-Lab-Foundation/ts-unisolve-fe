@@ -352,6 +352,7 @@ const Home = () => {
                 className="landing-menu"
                 isOpen={sidebar}
                 onOpen={() => setSidebar(!sidebar)}
+                onClose={() => setSidebar(!sidebar)}
             >
                 <Link className="menu-item" to="/login">
                     {t('home_nav_links.btn_login')}
@@ -405,6 +406,9 @@ const Home = () => {
                             {t('home_nav_links.faq')}
                         </AnchorLink>
                     </NavItem>
+                     <NavItem className="mt-3 ms-3">
+                        <LanguageSelectorComp module="general" />
+                    </NavItem>
                 </Nav>
             </Menu>
             <section className="header ">
@@ -412,7 +416,7 @@ const Home = () => {
                     <Container>
                         <Row className="justify-content-between  pt-5 fixed-top p-5 pb-0 mb-5 nav_row">
                             <Col md={5} className="my-auto mobile-menu">
-                                <h2 className="logo">
+                                <h2 className="logo mb-3">
                                     <Link className="" exact="true" to="/">
                                         <figure className="m-0">
                                             <img
@@ -471,8 +475,11 @@ const Home = () => {
                                                 {t('home_nav_links.faq')}
                                             </AnchorLink>
                                         </NavItem>
+                                        <NavItem>
+                                            <LanguageSelectorComp module="general" />
+                                        </NavItem>
                                     </Nav>
-                                    <LanguageSelectorComp module="general" />
+                                    {/* <LanguageSelectorComp module="general" /> */}
                                 </div>
                             </Col>
                         </Row>

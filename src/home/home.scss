@@ -155,7 +155,7 @@
     }
     @media (max-width: 1199px) {
       .multi-actions.main-menu .dropdown #language-selector-btn {
-        display: none;
+        // display: none;
       }
     }
 
@@ -284,7 +284,18 @@
         display: none;
       }
     }
-    
+   
+  }
+  .bm-burger-button{
+    z-index: 1050 !important;
+  }
+  .nav_row{
+    background: linear-gradient(
+      135deg,
+      rgba(219, 235, 248, 1) 10%,
+      rgba(255, 255, 255, 1) 46%,
+      rgba(255, 255, 255, 1) 100%
+    );
   }
 
   .mentor-student {
