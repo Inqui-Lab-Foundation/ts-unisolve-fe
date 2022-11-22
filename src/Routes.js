@@ -125,10 +125,12 @@ import MyCertificate from './Teachers/Certificate/MyCertificate';
 import PageNotFound from '../src/PageNotFound';
 import ChangePSWModal from './Teachers/ChangePSWModal';
 import Translation from './Admin/Translation/Translation';
-import EditTranslation from './Admin/Translation/EditTranslation'; 
-import CreateTranslation from './Admin/Translation/CreateTranslation'; 
+import EditTranslation from './Admin/Translation/EditTranslation';
+import CreateTranslation from './Admin/Translation/CreateTranslation';
 //import IdeasubmissionunderCOn from './Student/Ideasubsaticundercon';
 // import DummyStuMyCer from './Student/DummyStudentMyCertificate';
+
+import EditSchool from './Admin/Schools/EditSchool';
 
 
 const Routers = () => {
@@ -666,9 +668,26 @@ const Routers = () => {
                         path="/student/my-certificate"
                         component={StudentCertificate}
                     />
-                    <ProtectedRoute exact={true} path="/admin/translation" component={Translation} />
-                    <ProtectedRoute exact={true} path="/admin/edit-translation" component={EditTranslation} />
-                    <ProtectedRoute exact={true} path="/admin/create-translation" component={CreateTranslation} />
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/register-edit-schools"
+                        component={EditSchool}
+                    />
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/translation"
+                        component={Translation}
+                    />
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/edit-translation"
+                        component={EditTranslation}
+                    />
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/create-translation"
+                        component={CreateTranslation}
+                    />
                     <Route component={PageNotFound} path="*" />
                 </Switch>
             </Router>
