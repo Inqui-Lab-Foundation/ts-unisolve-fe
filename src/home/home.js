@@ -41,7 +41,6 @@ import map_icon_pitch from '../assets/media/home/icon_solution_pichting.png';
 import map_icon_incu from '../assets/media/home/icon_incubation.png';
 
 // ta brans
-import SSA_Tamilnadu from '../assets/media/tn-brands/1_SSA_Tamilnadu.jpg';
 import SIDP_tamilnadu from '../assets/media/tn-brands/2_SIDP_tamilnadu.jpg';
 import EDII_tamilnadu from '../assets/media/tn-brands/3_EDII_tamilnadu.jpg';
 import UpShift_Tamilnadu from '../assets/media/tn-brands/4_UpShift_Tamilnadu.png';
