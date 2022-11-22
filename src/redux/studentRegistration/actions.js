@@ -13,7 +13,8 @@ import {
     GET_STUDENT_DASHBOARD_STATUS,
     GET_STUDENT_DASHBOARD_CHALLENGES_STATUS,
     GET_STUDENT_DASHBOARD_TEAMPROGRESS,
-    GET_STUDENT_DASHBOARD_TUTORIALS
+    GET_STUDENT_DASHBOARD_TUTORIALS,
+    SET_PRESURVEY_STATUS
 } from '../actions';
 import { URL, KEY } from '../../constants/defaultValues';
 import { getNormalHeaders } from '../../helpers/Utils';
@@ -241,7 +242,7 @@ export const getStudentBadges = (id, language) => async (dispatch) => {
     }
 };
 
-export const updateStudentBadges = (data, id, language) => async (dispatch) => {
+export const updateStudentBadges = (data, id, language,t) => async (dispatch) => {
     try {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         const result = await axios
@@ -256,12 +257,12 @@ export const updateStudentBadges = (data, id, language) => async (dispatch) => {
 
                 swalWithBootstrapButtons
                     .fire({
-                        title: `Congratulations`,
-                        text:`you've just earned a new badge`,
+                        title: t('badges.congratulations'),
+                        text:t('badges.earn'),
                         // text:`You have Earned a New Badge ${data.badge_slugs[0].replace("_"," ").toUpperCase()}`,
                         imageUrl: `${logout}`,
                         showCloseButton: true,
-                        confirmButtonText: "OK",
+                        confirmButtonText: t('badges.ok'),
                         showCancelButton: false,
                         reverseButtons: false
                     });
@@ -368,6 +369,13 @@ export const getStudentDashboardTeamProgressStatus = (id, language) => async (di
         dispatch(getStudentDashboardTeamProgressStatusSuccess(null));
     }
 };
+export const setPresurveyStatus =
+    (data) => async (dispatch) => {
+        dispatch({
+            type: SET_PRESURVEY_STATUS,
+            payload: data
+        });
+    };
 export const getStudentDashboardTutorialVideosSuccess =
     (data) => async (dispatch) => {
         dispatch({
