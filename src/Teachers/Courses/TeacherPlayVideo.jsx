@@ -712,7 +712,7 @@ const TeacherPlayVideo = (props) => {
                                                         Guidelines for Handbook
                                                     </b>
                                                 </p>
-                                                <p>Dear Guide Teachers,</p>
+                                                <p>Dear SIC Incharge Teachers,</p>
                                                 <p>
                                                     This handbook is an
                                                     important document which
@@ -733,8 +733,8 @@ const TeacherPlayVideo = (props) => {
                                                     ensure all your (each and
                                                     every) students understand
                                                     the concepts/knowledge
-                                                    delivered in lesson 1 to
-                                                    lesson 6 of the video
+                                                    delivered in Module 1 to
+                                                    Module 6 of the video
                                                     course.{' '}
                                                 </p>
                                                 <p>
@@ -758,11 +758,10 @@ const TeacherPlayVideo = (props) => {
                                                 <div>
                                                     <p className="mb-0">
                                                         A. Watching the videos
-                                                        as team/individually
+                                                        individually
                                                     </p>
                                                     <p className="mb-0">
-                                                        B. Complete the quiz
-                                                        individually{' '}
+                                                        B.Complete the Reflective Questions & quiz individually
                                                     </p>
                                                     <p className="mb-0">
                                                         C. Complete the
@@ -998,7 +997,7 @@ const TeacherPlayVideo = (props) => {
                                                     </p> */}
                                                     <p className="mb-0">
                                                         1. This document has one
-                                                        worksheet per lesson.
+                                                        worksheet per Module.
                                                     </p>
                                                     <p className="mb-0">
                                                         2. Worksheets are
@@ -1006,8 +1005,8 @@ const TeacherPlayVideo = (props) => {
                                                         completed/filled by the
                                                         SIC students (as a
                                                         TEAM) when they are
-                                                        watching Lesson 1 to
-                                                        Lesson 6.
+                                                        watching Module 1 to
+                                                        Module 6.
                                                     </p>
                                                     <p className="mb-0">
                                                         3. Download, Print/Xerox
@@ -1019,13 +1018,6 @@ const TeacherPlayVideo = (props) => {
                                                         SIC students to
                                                         complete the worksheets
                                                         if they need help.
-                                                    </p>
-                                                    <p className="mb-0">
-                                                        5. Collect the completed
-                                                        worksheet and hand them
-                                                        over to the SIC
-                                                        District Head by 30th
-                                                        December, 2022.
                                                     </p>
                                                 </CardBody>
                                                 <div className="text-left mb-5">
