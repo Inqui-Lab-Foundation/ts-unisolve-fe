@@ -77,7 +77,7 @@ const MapdataCard = ({ values, all,districtName }) => {
                             <h4>
                                 {!all?.overall_schools
                                     ? '0'
-                                    : `${all?.reg_schools} of ${all?.overall_schools}`}
+                                    : `${all?.reg_schools}`}
                             </h4>
                             <small className="lightgreen">{t('home_tl.institutions')}</small>
                         </div>
