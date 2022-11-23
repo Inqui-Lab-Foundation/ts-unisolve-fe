@@ -3,7 +3,7 @@ import React, { useLayoutEffect, useState } from 'react';
 import { Row, Col, Form, FormGroup, Label, Input} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { InputBox } from '../../stories/InputBox/InputBox.jsx';
-import { Button } from '../../stories/Button.jsx';
+// import { Button } from '../../stories/Button.jsx';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -78,10 +78,10 @@ const LoginNew = (props) => {
     };
 
 
-    const logInBtn = {
-        label: t('login.logIn'),
-        size: 'large'
-    };
+    // const logInBtn = {
+    //     label: t('login.logIn'),
+    //     size: 'large'
+    // };
 
     // const openNotificationWithIcon = (type, item) => {
     //   notification[type]({
@@ -310,9 +310,9 @@ const LoginNew = (props) => {
                                     {/* {props.error} */}
 
                                     <div className="form-row row mb-5">
-                                        {/* <p>Student login will be launched shortly. Please wait for notice from the program coordinators.</p> */}
+                                        <p>Student login will be launched shortly. Please wait for notice from the program coordinators.</p>
                                         {/* Login button */}
-                                        <Col
+                                        {/* <Col
 
                                             className="form-group"
                                             xs={12}
@@ -333,7 +333,7 @@ const LoginNew = (props) => {
                                                 }
                                                 disabled={!(formik.dirty && formik.isValid)}
                                             />
-                                        </Col>
+                                        </Col> */}
                                         {/* <Space>
                       <Button
                         onClick={() =>
