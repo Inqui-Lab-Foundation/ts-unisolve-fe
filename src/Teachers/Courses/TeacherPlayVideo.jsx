@@ -220,7 +220,6 @@ const TeacherPlayVideo = (props) => {
     };
 
     async function modulesListUpdateApi(courseTopicId) {
-        // console.log(courseTopicId);
         const body1 = JSON.stringify({
             user_id: JSON.stringify(currentUser.data[0].user_id),
             mentor_course_topic_id: JSON.stringify(courseTopicId),
@@ -324,7 +323,6 @@ const TeacherPlayVideo = (props) => {
     };
 
     const handleSelect = (topicId, couseId, type) => {
-        scrollRef.current.scrollIntoView();
         setCourseTopicId(couseId);
         const topic_Index =
             setTopicArrays &&
@@ -334,6 +332,7 @@ const TeacherPlayVideo = (props) => {
                     data.mentor_course_topic_id === couseId
             );
         const topicObj = setTopicArrays[topic_Index + 1];
+
         setTopicObj(topicObj);
         if (type === 'ATTACHMENT') {
             setWorksheetId(topicId);
@@ -351,6 +350,7 @@ const TeacherPlayVideo = (props) => {
             setItem('');
             setHideQuiz(false);
         }
+        scrollRef.current.scrollIntoView();
     };
 
     const videoStatus = (type, status) => {
@@ -468,10 +468,18 @@ const TeacherPlayVideo = (props) => {
 
     const startContinueCourse = (e) => {
         setCourseData(null);
-        modulesListUpdateApi(continueObj[0].course_topic_id);
+        modulesListUpdateApi(continueObj[0].mentor_course_topic_id);
+        if(continueObj[0].title ==="Handbook"){
+            setHandbook(true);
+            setInstructions(false);
+        }
+        if(continueObj[0].title ==="Additional Resources"){
+            setInstructions(true);
+            setHandbook(false);
+        }
         handleSelect(
             continueObj[0].topic_type_id,
-            continueObj[0].course_topic_id,
+            continueObj[0].mentor_course_topic_id,
             continueObj[0].topic_type
         );
         // toggle(continueObj[0].course_module_id);
