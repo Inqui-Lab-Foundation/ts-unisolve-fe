@@ -39,7 +39,7 @@ const TelanganaMap = () => {
             <Row className="w-100">
                 <Col md={6}>
                     <svg
-                        viewBox="0 0 559 582"
+                        viewBox="-100 0 680 695"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                     >
