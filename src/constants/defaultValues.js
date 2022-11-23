@@ -100,8 +100,8 @@ export const URL = {
     getMentorAttachments:
         process.env.REACT_APP_API_BASE_URL + '/mentorAttachments',
     getDistricts: process.env.REACT_APP_API_BASE_URL + '/dashboard/mapStats',
-    getDistrictsLive:
-        process.env.REACT_APP_API_BASE_URL + '/dashboard/refreshMapStatsLive',
+    // getDistrictsLive:
+    //     process.env.REACT_APP_API_BASE_URL + '/dashboard/refreshMapStatsLive',
     getScheduleDates: process.env.REACT_APP_API_BASE_URL + '/auth/roadMap',
     getAdminReports: process.env.REACT_APP_API_BASE_URL + '/quizSurveys/',
     getAdminMentorRegStatusReports:
