@@ -68,7 +68,7 @@ import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { getSchedulesForTeacherAndStudents } from '../redux/schedules/actions';
 import { compareDates } from '../helpers/Utils';
 import i18next from 'i18next';
-
+// new push
 const Home = () => {
     const { t } = useTranslation();
     const [open, setOpen] = useState('1');
