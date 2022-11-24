@@ -132,7 +132,6 @@ const IdeasPageNew = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
-        console.log(answerResponses);
         let responses = answerResponses.map((eachValues) => {
             return {
                 challenge_question_id: eachValues.challenge_question_id,
