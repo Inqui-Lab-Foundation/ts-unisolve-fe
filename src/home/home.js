@@ -422,7 +422,7 @@ const Home = () => {
                                             <img
                                                 src={LogoTn}
                                                 alt="logo"
-                                                className="img-fluid w-5 logoImg"
+                                                className="w-5 logoImg"
                                             />
                                         </figure>
                                     </Link>
@@ -596,9 +596,11 @@ const Home = () => {
                             </div>
                         </Col>
                     </Row>
-                    <Row className="my-5 py-5 upshift p-3">
+                </Container>
+                <div className="bg-white mx-0 p-md-5 p-2">
+                    <Row className="my-5 p-5 upshift p-3 ">
                         <Col md={12} lg={5} className="teacher ">
-                            <figure className="text-left">
+                            <figure className="text-center">
                                 <img
                                     src={upshift}
                                     alt="mentor"
@@ -609,7 +611,7 @@ const Home = () => {
                         <Col
                             md={12}
                             lg={7}
-                            className="my-auto teacher-heading "
+                            className="my-auto teacher-heading pe-md-5"
                         >
                             <div
                                 dangerouslySetInnerHTML={{
@@ -623,47 +625,49 @@ const Home = () => {
                             ></div>
                         </Col>
                     </Row>
-
-                    <Row className="student">
-                        <Col
-                            md={12}
-                            lg={6}
-                            className="my-auto mx-auto student-heading px-5 "
-                        >
-                            <h2 className="mb-5 sub-heading">
-                                UPSHIFT {t('home_tl.power_by')}{' '}
-                                <span className="green">UNISOLVE</span>{' '}
-                            </h2>
-                            <div
-                                dangerouslySetInnerHTML={{
-                                    __html: t('home_tl.upshift_power_desc')
-                                }}
-                            ></div>
-                            {/* <Link
-                                className="landing-page-actions"
-                                exact="true"
-                                to="/login"
+                </div>
+                <Container className="py-md-4 py-2">
+                    <Row className="student py-md-4 py-2">
+                            <Col
+                                md={12}
+                                lg={6}
+                                className="my-auto mx-auto student-heading px-5 "
                             >
-                                <Button
-                                    label={t(
-                                        'home.learners_students_new_button'
-                                    )}
-                                    btnClass="primary mx-3"
-                                    size="small"
-                                />
-                            </Link> */}
-                        </Col>
-                        <Col md={12} lg={6}>
-                            <figure className="my-0">
-                                <img
-                                    src={LearnMentor}
-                                    alt="learn"
-                                    className="img-fluid"
-                                />
-                            </figure>
-                        </Col>
+                                <h2 className="mb-5 sub-heading">
+                                    UPSHIFT {t('home_tl.power_by')}{' '}
+                                    <span className="green">UNISOLVE</span>{' '}
+                                </h2>
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: t('home_tl.upshift_power_desc')
+                                    }}
+                                ></div>
+                                {/* <Link
+                                    className="landing-page-actions"
+                                    exact="true"
+                                    to="/login"
+                                >
+                                    <Button
+                                        label={t(
+                                            'home.learners_students_new_button'
+                                        )}
+                                        btnClass="primary mx-3"
+                                        size="small"
+                                    />
+                                </Link> */}
+                            </Col>
+                            <Col md={12} lg={6}>
+                                <figure className="my-0">
+                                    <img
+                                        src={LearnMentor}
+                                        alt="learn"
+                                        className="img-fluid"
+                                    />
+                                </figure>
+                            </Col>
                     </Row>
                 </Container>
+                
             </section>
             {/* <section className="mentor-student">
         <Container className="both">
@@ -1266,7 +1270,7 @@ const Home = () => {
                 </Container>
                 <Row className="w-100 mt-5 footer-sub">
                     <Col md={12} className="text-center">
-                        <p className="my-0 py-3 text-white">
+                        <p className="my-0 py-3 text-white text-center">
                             © UNISOLVE, UNICEF {new Date().getFullYear()}.{' '}
                             {t('home_nav_links.rights')}{' '}
                         </p>
