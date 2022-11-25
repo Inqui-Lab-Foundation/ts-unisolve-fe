@@ -423,7 +423,9 @@
         "lessons": "పాఠాలు",
         "continue course": "కోర్సు కొనసాగించండి",
         "exitfullscreen": "పూర్తి స్క్రీన్ నుండి నిష్క్రమించండి",
-        "quiz_completed": "విజయవంతంగా పూర్తైంది!"
+        "quiz_completed": "విజయవంతంగా పూర్తైంది!",
+        "course_scc":"కోర్సు విజయవంతంగా పూర్తయింది",
+        "go_to":"సవాళ్లకు వెళ్లండి"
     },
     "translation":{
         "tamil":"Telugu Content :-",

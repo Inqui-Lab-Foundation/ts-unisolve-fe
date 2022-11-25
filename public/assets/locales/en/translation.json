@@ -436,7 +436,9 @@
         "lessons":"Lessons",
         "continue course":"Continue Course",
         "exitfullscreen":"Exit Full Screen",
-        "quiz_completed":"Successfully Completed!"
+        "quiz_completed":"Successfully Completed!",
+        "course_scc":"Course Completed Successfully!",
+        "go_to":"Go to Challenges"
     },
     "translation":{
         "tamil":"Telugu Content :-",
