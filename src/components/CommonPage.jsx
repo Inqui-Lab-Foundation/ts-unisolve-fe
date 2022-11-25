@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import { Card, Container } from 'reactstrap';
 import Congo from '../assets/media/survey-success.jpg';
+import IdeaSuccessImg from '../assets/media/idea-success.jpg';
 import { Button } from '../stories/Button';
 
 const CommonPage = ({text, showButton, showChallenges}) => {
@@ -10,7 +11,7 @@ const CommonPage = ({text, showButton, showChallenges}) => {
                 <Card className="course-sec-basic p-5">
                     <div className="text-center">
                         <div>
-                            <img className="img-fluid w-25" src={Congo}></img>
+                            <img className={`${showButton?'w-50':'w-25'} img-fluid `} src={showButton?IdeaSuccessImg:Congo}></img>
                         </div>
                         <div>
                             <h2 className="common-flex">
