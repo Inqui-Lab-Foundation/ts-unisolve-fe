@@ -15,6 +15,7 @@ import {
     GET_STUDENT_DASHBOARD_TEAMPROGRESS,
     GET_STUDENT_DASHBOARD_TUTORIALS,
     SET_PRESURVEY_STATUS,
+    SET_POSTSURVEY_STATUS,
 } from '../actions';
 import { URL, KEY } from '../../constants/defaultValues';
 import { getNormalHeaders, openNotificationWithIcon } from '../../helpers/Utils';
@@ -230,10 +231,11 @@ export const initiateIdea = async (id, language,history,data,setShowChallenges) 
             setShowChallenges(true);
             history.push('/challenges');
         } else {
-            openNotificationWithIcon('error','Idea initiation went wrong');
+            openNotificationWithIcon('error',`${result?.data?.data[0]?.initiated_by} Already Initiated the Idea`);
+            // openNotificationWithIcon('error','Idea has already been initiated');
         }
     } catch (error) {
-        openNotificationWithIcon('error','Idea initiation went wrong');
+        openNotificationWithIcon('error',`${error?.response?.data?.data[0]?.initiated_by} Already Initiated the Idea`);
     }
 };
 
@@ -441,5 +443,30 @@ export const updateStudentCertificate = async (id) => {
             });
     } catch (error) {
         openNotificationWithIcon("error","Something went wrong!");
+    }
+};
+export const studentPostSurveyCertificateSuccess =
+    (data) => async (dispatch) => {
+        dispatch({
+            type: SET_POSTSURVEY_STATUS,
+            payload: data
+        });
+    };
+export const studentPostSurveyCertificate =  (language) => async (dispatch)=>{
+    try {
+        const axiosConfig = getNormalHeaders(KEY.User_API_Key);
+        await axios
+            .get(`${URL.getPostSurveyList}?role=STUDENT&${getLanguage(language)}`, axiosConfig)
+            .then((postSurveyRes) => {
+                if(postSurveyRes?.status === 200){
+                    dispatch(studentPostSurveyCertificateSuccess(
+                        postSurveyRes.data.data[0].dataValues[1].progress
+                    ));
+                }})
+            .catch((err) => {
+                return err.response;
+            });
+    } catch (error) {
+        dispatch(studentPostSurveyCertificateSuccess(null));
     }
 };

@@ -1,30 +1,27 @@
-import { Fragment, useLayoutEffect, useRef, useState } from 'react';
-import { Card, CardBody, CardTitle, Container } from 'reactstrap';
+import { Fragment, useLayoutEffect, useRef } from 'react';
+import { Card, CardBody, CardTitle, Col, Container, Row } from 'reactstrap';
 import { Button } from '../../../stories/Button';
 import Layout from '../../Layout';
 import jsPDF from 'jspdf';
-import { getCurrentUser, getNormalHeaders } from '../../../helpers/Utils';
+import { getCurrentUser } from '../../../helpers/Utils';
 import TeacherCertificate from '../../../assets/media/img/teacher_certificate_V2.png';
 import { useTranslation } from 'react-i18next';
-import { KEY, URL } from '../../../constants/defaultValues';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLanguage } from '../../../constants/languageOptions';
-import Congo from '../../../assets/media/survey-success.jpg';
-import axios from 'axios';
-import { updateStudentCertificate } from '../../../redux/studentRegistration/actions';
+import {
+    getStudentDashboardStatus,
+    studentPostSurveyCertificate,
+    updateStudentCertificate
+} from '../../../redux/studentRegistration/actions';
+import CommonPage from '../../../components/CommonPage';
+import moment from 'moment';
 
-const MyCertificate = () => {
+const Certificate = ({ type, currentUser,postSurveyStatus,certDate }) => {
     const { t } = useTranslation();
     const pdfRef = useRef(null);
-    const currentUser = getCurrentUser('current_user');
-    const language = useSelector(
-        (state) => state?.studentRegistration?.studentLanguage
-    );
-    const [postSurveyStatus, setPostSurveyStatus] = useState('');
+    const partRef = useRef(null);
     const dispatch = useDispatch();
-
     const handleCertificateDownload = () => {
-        const content = pdfRef.current;
+        const content = type ? partRef.current : pdfRef.current;
         const doc = new jsPDF('l', 'px', [210, 297]);
         doc.html(content, {
             callback: function (doc) {
@@ -33,102 +30,97 @@ const MyCertificate = () => {
         });
         dispatch(updateStudentCertificate(currentUser?.data[0]?.student_id));
     };
+    return (
+        <Card className="course-sec-basic p-5 m-4" style={{backgroundColor:`${postSurveyStatus ? "":"lightgrey"}`}}>
+            <CardBody>
+                <CardTitle className=" text-left pt-4 pb-4" tag="h2">
+                    {type
+                        ? t('teacher_certificate.participate_certificate')
+                        : t('teacher_certificate.certificate')}
+                </CardTitle>
+                <p>
+                    {type
+                        ? t('teacher_certificate.part_certificate_desc')
+                        : t('teacher_certificate.certificate_desc')}
+                </p>
 
+                <div ref={type ? partRef : pdfRef} className="common-flex">
+                    <div className='position-relative' style={{width:"fit-content"}}>
+                        <span
+                            className="text-capitalize"
+                            style={{
+                                position: 'absolute',
+                                top: '8rem',
+                                left: '2.3rem',
+                                fontSize: '0.8rem'
+                            }}
+                        >
+                            {currentUser?.data[0]?.full_name} on {type ? moment(certDate?.course_completed_date).format("DD-MM-YYYY") : moment(certDate?.post_survey_completed_date).format("DD-MM-YYYY")}
+                        </span>
+                        <img
+                            src={type ? TeacherCertificate : TeacherCertificate}
+                            alt="certificate"
+                            className='img-fluid mx-auto'
+                            style={{
+                                width: '297px',
+                                height: '209px'
+                            }}
+                        />
+                    </div>
+                </div>
+                <div className="text-center">
+                    <Button
+                        button="submit"
+                        disabled={!postSurveyStatus}
+                        label={
+                            type
+                                ? t('teacher_certificate.download_participate')
+                                : t('teacher_certificate.download')
+                        }
+                        btnClass={`${postSurveyStatus ? "primary":"default" } mt-4`}
+                        size="small"
+                        style={{ marginRight: '2rem' }}
+                        onClick={handleCertificateDownload}
+                    />
+                </div>
+            </CardBody>
+        </Card>
+    );
+};
+
+const MyCertificate = () => {
+    const { t } = useTranslation();
+    const language = useSelector((state) => state?.studentRegistration?.studentLanguage);
+    const { postSurveyStatusGl } = useSelector((state) => state?.studentRegistration);
+    const {dashboardStatus} = useSelector((state) => state?.studentRegistration);
+    let {all_topics_count,topics_completed_count} = dashboardStatus ? dashboardStatus : {all_topics_count:null,topics_completed_count:null};
+    const currentUser = getCurrentUser('current_user');
+    const dispatch = useDispatch();
     useLayoutEffect(() => {
-        let axiosConfig = getNormalHeaders(KEY.User_API_Key);
-        const lang = getLanguage(language);
-        const final = lang.split('=');
-        axiosConfig['params'] = {
-            role: 'STUDENT',
-            locale: final[1]
-        };
-        axios
-            .get(`${URL.getPostSurveyList}`, axiosConfig)
-            .then((postSurveyRes) => {
-                if (postSurveyRes?.status == 200) {
-                    setPostSurveyStatus(
-                        postSurveyRes.data.data[0].dataValues[1].progress
-                    );
-                }
-            })
-            .catch((err) => {
-                return err.response;
-            });
+        dispatch(getStudentDashboardStatus(currentUser.data[0].user_id, language));
+        dispatch(studentPostSurveyCertificate(language));
     }, [language]);
-
+    const enablePostSurvey = postSurveyStatusGl && postSurveyStatusGl === "COMPLETED";
     return (
         <Layout>
             <Container className="presuervey mb-50 mt-5 ">
                 <Fragment>
-                    <Card className="course-sec-basic p-5">
-                        {postSurveyStatus &&
-                        postSurveyStatus === 'COMPLETED' ? (
-                                <CardBody>
-                                    <CardTitle
-                                        className=" text-left pt-4 pb-4"
-                                        tag="h2"
-                                    >
-                                        {t('teacher_certificate.certificate')}
-                                    </CardTitle>
-                                    <p>
-                                        {t('teacher_certificate.certificate_desc')}
-                                    </p>
-
-                                    <div
-                                        ref={pdfRef}
-                                        style={{ position: 'relative' }}
-                                    >
-                                        <span
-                                            className="text-capitalize"
-                                            style={{
-                                                position: 'absolute',
-                                                top: '8rem',
-                                                left: '2.5rem',
-                                                fontSize: 'inherit'
-                                            }}
-                                        >
-                                            {currentUser?.data[0]?.full_name}
-                                        </span>
-                                        <img
-                                            src={TeacherCertificate}
-                                            alt="certificate"
-                                            style={{
-                                                width: '297px',
-                                                height: '209px'
-                                            }}
-                                        />
-                                    </div>
-                                    <div className="text-right">
-                                        <Button
-                                            button="submit"
-                                            label={t(
-                                                'teacher_certificate.download'
-                                            )}
-                                            btnClass="primary mt-4"
-                                            size="small"
-                                            style={{ marginRight: '2rem' }}
-                                            onClick={handleCertificateDownload}
-                                        />
-                                    </div>
-                                </CardBody>
-                            ) : (
-                                <Fragment>
-                                    <div className="text-center">
-                                        <div>
-                                            <img
-                                                className="img-fluid w-25"
-                                                src={Congo}
-                                            ></img>
-                                        </div>
-                                        <div>
-                                            <h2 className='common-flex'>
-                                                {t('dummytext.student_my_cer')}
-                                            </h2>
-                                        </div>
-                                    </div>
-                                </Fragment>
-                            )}
-                    </Card>
+                    {all_topics_count === topics_completed_count ? (
+                        <Row>
+                            <Col className='d-lg-flex'> 
+                                <Certificate
+                                    type={'participate'}
+                                    currentUser={currentUser}
+                                    postSurveyStatus={true}
+                                    certDate={dashboardStatus}
+                                />
+                                <Certificate currentUser={currentUser} certDate={dashboardStatus} postSurveyStatus={enablePostSurvey}/>
+                            </Col>
+                        </Row>
+                    ) : (
+                        <CommonPage text={t('dummytext.student_my_cer')} />
+                    )
+                    }
                 </Fragment>
             </Container>
         </Layout>

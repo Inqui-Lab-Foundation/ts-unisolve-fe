@@ -35,6 +35,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
 import logout from '../../../assets/media/logout.svg';
 import { cardData } from './SDGData';
+import moment from 'moment';
+import { InputBox } from '../../../stories/InputBox/InputBox';
 
 const IdeasPageNew = () => {
     const { t } = useTranslation();
@@ -244,6 +246,7 @@ const IdeasPageNew = () => {
         setIsDisabled(false);
         scroll();
     };
+    console.log(challengesSubmittedResponse);
     const comingSoonText = t('dummytext.student_idea_sub');
     return (
         <Layout>
@@ -252,6 +255,23 @@ const IdeasPageNew = () => {
             ) : (
                 <Container className="presuervey mb-50 mt-5 " id="start">
                     <Col>
+                        {initiatedBy &&
+                            initiatedBy !== currentUser?.data[0]?.user_id && (
+                                <div className="d-md-flex justify-content-end px-4">
+                                    <Card className="p-3">
+                                        Initiated By{' '}
+                                        {
+                                            challengesSubmittedResponse[0]
+                                                ?.initiated_name
+                                        }{' '}
+                                        on{' '}
+                                        {moment(
+                                            challengesSubmittedResponse[0]
+                                                ?.created_at
+                                        ).format('DD-MM-YYYY')}
+                                    </Card>
+                                </div>
+                            )}
                         <Row className=" justify-content-center">
                             <div className="aside  mb-5 p-4">
                                 <CardBody>
@@ -365,7 +385,10 @@ const IdeasPageNew = () => {
                                             {challengeQuestions.map(
                                                 (eachQuestion, i) => (
                                                     <>
-                                                        <Row key={i} className="card mb-4 my-3 comment-card px-0 px-5 py-3 card">
+                                                        <Row
+                                                            key={i}
+                                                            className="card mb-4 my-3 comment-card px-0 px-5 py-3 card"
+                                                        >
                                                             <div className="question quiz mb-0">
                                                                 <b
                                                                     style={{
@@ -424,6 +447,10 @@ const IdeasPageNew = () => {
                                                                                         disabled={
                                                                                             isDisabled
                                                                                         }
+                                                                                        maxLength={
+                                                                                            eachQuestion?.word_limit ||
+                                                                                            100
+                                                                                        }
                                                                                         value={filterAnswer(
                                                                                             eachQuestion.challenge_question_id
                                                                                         )}
@@ -461,8 +488,9 @@ const IdeasPageNew = () => {
                                                                         {eachQuestion.type ===
                                                                             'MRQ' && (
                                                                             <>
-                                                                                {
-                                                                                    eachQuestion.option_a && eachQuestion.option_a!=="" &&                                                
+                                                                                {eachQuestion.option_a &&
+                                                                                    eachQuestion.option_a !==
+                                                                                        '' && (
                                                                                         <FormGroup
                                                                                             check
                                                                                             className="mx-5"
@@ -481,6 +509,16 @@ const IdeasPageNew = () => {
                                                                                                     disabled={
                                                                                                         isDisabled
                                                                                                     }
+                                                                                                    checked={
+                                                                                                        filterAnswer(
+                                                                                                            eachQuestion.challenge_question_id
+                                                                                                        ) &&
+                                                                                                        filterAnswer(
+                                                                                                            eachQuestion.challenge_question_id
+                                                                                                        ).includes(
+                                                                                                            eachQuestion.option_a
+                                                                                                        )
+                                                                                                    }
                                                                                                     onChange={(
                                                                                                         e
                                                                                                     ) =>
@@ -495,9 +533,10 @@ const IdeasPageNew = () => {
                                                                                                 }
                                                                                             </Label>
                                                                                         </FormGroup>
-                                                                                }
-                                                                                {
-                                                                                    eachQuestion.option_b && eachQuestion.option_b!=="" &&
+                                                                                    )}
+                                                                                {eachQuestion.option_b &&
+                                                                                    eachQuestion.option_b !==
+                                                                                        '' && (
                                                                                         <FormGroup
                                                                                             check
                                                                                             className="mx-5"
@@ -516,6 +555,16 @@ const IdeasPageNew = () => {
                                                                                                     disabled={
                                                                                                         isDisabled
                                                                                                     }
+                                                                                                    checked={
+                                                                                                        filterAnswer(
+                                                                                                            eachQuestion.challenge_question_id
+                                                                                                        ) &&
+                                                                                                        filterAnswer(
+                                                                                                            eachQuestion.challenge_question_id
+                                                                                                        ).includes(
+                                                                                                            eachQuestion.option_a
+                                                                                                        )
+                                                                                                    }
                                                                                                     onChange={(
                                                                                                         e
                                                                                                     ) =>
@@ -530,9 +579,10 @@ const IdeasPageNew = () => {
                                                                                                 }
                                                                                             </Label>
                                                                                         </FormGroup>
-                                                                                }
-                                                                                {
-                                                                                    eachQuestion.option_c && eachQuestion.option_c!=="" &&                                                                                    
+                                                                                    )}
+                                                                                {eachQuestion.option_c &&
+                                                                                    eachQuestion.option_c !==
+                                                                                        '' && (
                                                                                         <FormGroup
                                                                                             check
                                                                                             className="mx-5"
@@ -565,10 +615,11 @@ const IdeasPageNew = () => {
                                                                                                 }
                                                                                             </Label>
                                                                                         </FormGroup>
-                                                                                }
+                                                                                    )}
 
-                                                                                {
-                                                                                    eachQuestion.option_d && eachQuestion.option_d!=="" && 
+                                                                                {eachQuestion.option_d &&
+                                                                                    eachQuestion.option_d !==
+                                                                                        '' && (
                                                                                         <FormGroup
                                                                                             check
                                                                                             className="mx-5"
@@ -601,7 +652,7 @@ const IdeasPageNew = () => {
                                                                                                 }
                                                                                             </Label>
                                                                                         </FormGroup>
-                                                                                }
+                                                                                    )}
                                                                             </>
                                                                         )}
                                                                         {eachQuestion.type ===
@@ -793,7 +844,31 @@ const IdeasPageNew = () => {
                                                     </>
                                                 )
                                             )}
-
+                                            <Row className="card mb-4 my-3 comment-card px-0 px-5 py-3 card">
+                                                <div className="question quiz mb-0">
+                                                    <b
+                                                        style={{
+                                                            fontSize: '1.6rem'
+                                                        }}
+                                                    >
+                                                        10. Upload images/video
+                                                        of your prototype.
+                                                    </b>
+                                                </div>
+                                                <div className="wrapper mx-5 my-3">
+                                                    <div className="btnimg">
+                                                    Upload File
+                                                    </div>
+                                                    <input
+                                                        type="file"
+                                                        name="file"
+                                                        accept={'.pdf,.csv'}
+                                                        // onChange={(e) =>
+                                                        //     changeHandler(e)
+                                                        // }
+                                                    />
+                                                </div>
+                                            </Row>
                                             {initiatedBy &&
                                                 initiatedBy ===
                                                     currentUser?.data[0]
