@@ -42,6 +42,7 @@ import { updateStudentBadges } from '../../../redux/studentRegistration/actions'
 import { useDispatch } from 'react-redux';
 import CommonPage from '../../../components/CommonPage';
 import { useTranslation } from 'react-i18next';
+import { getStudentDashboardStatus } from '../../../redux/studentRegistration/actions';
 //VIMEO REFERENCE
 //https://github.com/u-wave/react-vimeo/blob/default/test/util/createVimeo.js
 
@@ -120,16 +121,22 @@ const PlayVideoCourses = (props) => {
     const [showCompleteMessage, setShowCompleteMessage] = useState(false);
 
     //----if course is completed and navigated to this page, course success msg will display first
-    // const { dashboardStatus } = useSelector((state) => state?.studentRegistration);
-    // console.warn(dashboardStatus);
-    // React.useEffect(()=>{
-    //     if(dashboardStatus && dashboardStatus?.all_topics_count===dashboardStatus?.topics_completed_count){
-    //         setShowCompleteMessage(true);
-    //     }else{
-    //         setShowCompleteMessage(false);
-    //     }
+    const { dashboardStatus } = useSelector((state) => state?.studentRegistration);
+    React.useEffect(()=>{
+        if(!dashboardStatus){
+            dispatch(
+                getStudentDashboardStatus(currentUser.data[0].user_id, language)
+            );
+        }
+    },[]);
+    React.useEffect(()=>{
+        if(dashboardStatus && dashboardStatus?.all_topics_count===dashboardStatus?.topics_completed_count){
+            setShowCompleteMessage(true);
+        }else{
+            setShowCompleteMessage(false);
+        }
 
-    // },[dashboardStatus]);
+    },[dashboardStatus]);
 
     const toggle = (id) => {
         if (id === 1) {
@@ -450,7 +457,7 @@ const PlayVideoCourses = (props) => {
     };
 
     const handleSelect = (topicId, couseId, type) => {
-        
+        setShowCompleteMessage(false);
         setCourseTopicId(couseId);
         const topic_Index =
             setTopicArrays &&
@@ -843,7 +850,6 @@ const PlayVideoCourses = (props) => {
                                                                                                     setBackToQuiz(
                                                                                                         false
                                                                                                     );
-                                                                                                    // setShowCompleteMessage(false);
 
                                                                                                 }}
                                                                                             >
@@ -1018,9 +1024,7 @@ const PlayVideoCourses = (props) => {
                                                 <Fragment>
                                                                 <Card className="course-sec-basic p-5">
                                                                     <CardBody>
-                                                                        {showCompleteMessage ? (
-                                                                            <CourseSuccessMessage />
-                                                                        ) : (
+                                                                       
                                                                             <div>
                                                                                 <CardTitle
                                                                                     className=" text-left pt-4 pb-4"
@@ -1142,7 +1146,7 @@ const PlayVideoCourses = (props) => {
                                                                                     ) : null}
                                                                                 </div>
                                                                             </div>
-                                                                        )}
+                                                                      
                                                                     </CardBody>
                                                                 </Card>
                                                 </Fragment>
