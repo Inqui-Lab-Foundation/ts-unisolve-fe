@@ -49,6 +49,7 @@ import Yuwaah_Tamilnadu from '../assets/media/tn-brands/5_Yuwaah_ts.png';
 import IIF_Tamilnadu from '../assets/media/tn-brands/6_IIF_ts.png';
 import SS_Tamilnadu from '../assets/media/tn-brands/7_SS_ts.png';
 import Unicef_OOI_Tamilnadu from '../assets/media/tn-brands/8_Unicef_ts.png';
+import YHub from '../assets/media/tn-brands/9_Y_hub.png';
 import LogoTn from '../assets/media/tn-brands/TS_LOGO.png';
 
 import Blog1 from '../assets/media/home/blog/walker_elders.jpg';
@@ -172,42 +173,48 @@ const Home = () => {
         },
         {
             id: 2,
+            key: 'YHub',
+            // imageUrl: Congnizant
+            imageUrl: YHub
+        },
+        {
+            id: 3,
             key: 'SIC',
             // imageUrl: Telangana
             imageUrl: SIC_tamilnadu
         },
         {
-            id: 3,
+            id: 4,
             key: 'EDII',
             // imageUrl: Inquilab
             imageUrl: EDII_tamilnadu
         },
         {
-            id: 4,
+            id: 5,
             key: 'UpShift',
             // imageUrl: Yuwaah
             imageUrl: UpShift_Tamilnadu
         },
         {
-            id: 5,
+            id: 6,
             key: 'Yuwaah',
             // imageUrl: YoungWarrior
             imageUrl: Yuwaah_Tamilnadu
         },
         {
-            id: 6,
+            id: 7,
             key: 'IIF',
             // imageUrl: Congnizant
             imageUrl: IIF_Tamilnadu
         },
         {
-            id: 7,
+            id: 8,
             key: 'SS',
             // imageUrl: Congnizant
             imageUrl: SS_Tamilnadu
         },
         {
-            id: 8,
+            id: 9,
             key: 'Unicef',
             // imageUrl: Congnizant
             imageUrl: Unicef_OOI_Tamilnadu
