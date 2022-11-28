@@ -31,8 +31,8 @@ const Certificate = ({ type, currentUser,postSurveyStatus,certDate }) => {
         dispatch(updateStudentCertificate(currentUser?.data[0]?.student_id));
     };
     const certDateCheck =()=>{
-        const check = type ? moment(certDate?.course_completed_date).format("DD-MM-YYYY") : certDate?.post_survey_completed_date && moment(certDate?.post_survey_completed_date).format("DD-MM-YYYY");
-        return check ? " on "+ check : null;
+        const check = type ? certDate?.course_completed_date && moment(certDate?.course_completed_date).format("DD-MM-YYYY") : certDate?.post_survey_completed_date && moment(certDate?.post_survey_completed_date).format("DD-MM-YYYY");
+        return check ? " on "+ check : "";
     };
     return (
         <Card className="course-sec-basic p-5 m-4" style={{backgroundColor:`${postSurveyStatus ? "":"lightgrey"}`}}>
@@ -109,13 +109,13 @@ const MyCertificate = () => {
         <Layout>
             <Container className="presuervey mb-50 mt-5 ">
                 <Fragment>
-                    {all_topics_count === topics_completed_count ? (
+                    {all_topics_count === topics_completed_count || enablePostSurvey  ? (
                         <Row>
                             <Col className='d-lg-flex'> 
                                 <Certificate
                                     type={'participate'}
                                     currentUser={currentUser}
-                                    postSurveyStatus={true}
+                                    postSurveyStatus={all_topics_count === topics_completed_count}
                                     certDate={dashboardStatus}
                                 />
                                 <Certificate currentUser={currentUser} certDate={dashboardStatus} postSurveyStatus={enablePostSurvey}/>

@@ -258,7 +258,11 @@ const IdeasPageNew = () => {
                             initiatedBy !== currentUser?.data[0]?.user_id && (
                                 <div className="d-md-flex justify-content-end px-4">
                                     <Card className="p-3">
-                                        Initiated By{' '}
+                                        Idea submission is
+                                        {challengesSubmittedResponse[0]
+                                                    ?.status === 'DRAFT' ? " initiated by " : " submitted by "}
+                                        your teammate {' '}
+                                        
                                         {
                                             challengesSubmittedResponse[0]
                                                 ?.initiated_name
@@ -446,6 +450,8 @@ const IdeasPageNew = () => {
                                                                                         disabled={
                                                                                             isDisabled
                                                                                         }
+                                                                                        placeholder={`Maximum length of characters is ${eachQuestion?.word_limit ||
+                                                                                            100} only...`}
                                                                                         maxLength={
                                                                                             eachQuestion?.word_limit ||
                                                                                             100
