@@ -30,6 +30,10 @@ const Certificate = ({ type, currentUser,postSurveyStatus,certDate }) => {
         });
         dispatch(updateStudentCertificate(currentUser?.data[0]?.student_id));
     };
+    const certDateCheck =()=>{
+        const check = type ? moment(certDate?.course_completed_date).format("DD-MM-YYYY") : certDate?.post_survey_completed_date && moment(certDate?.post_survey_completed_date).format("DD-MM-YYYY");
+        return check ? " on "+ check : null;
+    };
     return (
         <Card className="course-sec-basic p-5 m-4" style={{backgroundColor:`${postSurveyStatus ? "":"lightgrey"}`}}>
             <CardBody>
@@ -55,7 +59,7 @@ const Certificate = ({ type, currentUser,postSurveyStatus,certDate }) => {
                                 fontSize: '0.8rem'
                             }}
                         >
-                            {currentUser?.data[0]?.full_name} on {type ? moment(certDate?.course_completed_date).format("DD-MM-YYYY") : moment(certDate?.post_survey_completed_date).format("DD-MM-YYYY")}
+                            {currentUser?.data[0]?.full_name + certDateCheck()}  
                         </span>
                         <img
                             src={type ? TeacherCertificate : TeacherCertificate}

@@ -246,7 +246,6 @@ const IdeasPageNew = () => {
         setIsDisabled(false);
         scroll();
     };
-    console.log(challengesSubmittedResponse);
     const comingSoonText = t('dummytext.student_idea_sub');
     return (
         <Layout>
@@ -562,7 +561,7 @@ const IdeasPageNew = () => {
                                                                                                         filterAnswer(
                                                                                                             eachQuestion.challenge_question_id
                                                                                                         ).includes(
-                                                                                                            eachQuestion.option_a
+                                                                                                            eachQuestion.option_b
                                                                                                         )
                                                                                                     }
                                                                                                     onChange={(
