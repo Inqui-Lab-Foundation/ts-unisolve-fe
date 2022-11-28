@@ -587,11 +587,11 @@ const Home = () => {
                                 }}
                             ></div>
                         </Col>
-                        <Col md={6} className="position-relative">
+                        <Col md={6} className="position-relative" style={{minHeight:'35rem'}}>
                             <div className="position-absolute" style={{width:"100%",height:"100%"}}>
-                            <Vimeo 
-                                video={772458167}
-                            />  
+                                <Vimeo 
+                                    video={772458167}
+                                />  
                             </div>
                         </Col>
                     </Row>
