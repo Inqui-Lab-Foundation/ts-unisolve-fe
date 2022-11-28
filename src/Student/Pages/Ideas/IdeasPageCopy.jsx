@@ -260,9 +260,10 @@ const IdeasPageNew = () => {
                                     <Card className="p-3">
                                         Idea submission is
                                         {challengesSubmittedResponse[0]
-                                                    ?.status === 'DRAFT' ? " initiated by " : " submitted by "}
-                                        your teammate {' '}
-                                        
+                                            ?.status === 'DRAFT'
+                                            ? ' initiated by '
+                                            : ' submitted by '}
+                                        your teammate{' '}
                                         {
                                             challengesSubmittedResponse[0]
                                                 ?.initiated_name
@@ -450,8 +451,10 @@ const IdeasPageNew = () => {
                                                                                         disabled={
                                                                                             isDisabled
                                                                                         }
-                                                                                        placeholder={`Maximum length of characters is ${eachQuestion?.word_limit ||
-                                                                                            100} only...`}
+                                                                                        placeholder={`Maximum length of characters is ${
+                                                                                            eachQuestion?.word_limit ||
+                                                                                            100
+                                                                                        } only...`}
                                                                                         maxLength={
                                                                                             eachQuestion?.word_limit ||
                                                                                             100
@@ -474,20 +477,24 @@ const IdeasPageNew = () => {
                                                                             'DRAW' && (
                                                                             <FormGroup
                                                                                 check
-                                                                                className="mx-5 answers"
+                                                                                className="answers"
                                                                             >
-                                                                                <Label
-                                                                                    check
-                                                                                >
-                                                                                    <Input
+                                                                                <div className="wrapper my-3">
+                                                                                    <div className="btnimg">
+                                                                                        Upload
+                                                                                        File
+                                                                                    </div>
+                                                                                    <input
                                                                                         type="file"
-                                                                                        disabled={
-                                                                                            isDisabled
+                                                                                        name="file"
+                                                                                        accept={
+                                                                                            '.pdf,.csv'
                                                                                         }
-                                                                                        name={`${eachQuestion.challenge_question_id}`}
-                                                                                        // value={`${eachQuestion.challenge_question_id} -- ${""}`}
+                                                                                        // onChange={(e) =>
+                                                                                        //     changeHandler(e)
+                                                                                        // }
                                                                                     />
-                                                                                </Label>
+                                                                                </div>
                                                                             </FormGroup>
                                                                         )}
                                                                         {eachQuestion.type ===
@@ -849,31 +856,6 @@ const IdeasPageNew = () => {
                                                     </>
                                                 )
                                             )}
-                                            <Row className="card mb-4 my-3 comment-card px-0 px-5 py-3 card">
-                                                <div className="question quiz mb-0">
-                                                    <b
-                                                        style={{
-                                                            fontSize: '1.6rem'
-                                                        }}
-                                                    >
-                                                        10. Upload images/video
-                                                        of your prototype.
-                                                    </b>
-                                                </div>
-                                                <div className="wrapper mx-5 my-3">
-                                                    <div className="btnimg">
-                                                    Upload File
-                                                    </div>
-                                                    <input
-                                                        type="file"
-                                                        name="file"
-                                                        accept={'.pdf,.csv'}
-                                                        // onChange={(e) =>
-                                                        //     changeHandler(e)
-                                                        // }
-                                                    />
-                                                </div>
-                                            </Row>
                                             {initiatedBy &&
                                                 initiatedBy ===
                                                     currentUser?.data[0]
