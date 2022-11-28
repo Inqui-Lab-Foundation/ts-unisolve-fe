@@ -206,7 +206,7 @@
         "eng": "English",
         "about_us": "About Us",
         "about_us_heading": "School Innovation Challenge (SIC)",
-        "about_us_desc": "<p>To promote the culture of Design Thinking and Innovation, Telangana State Innovation Cell (TSIC), Govt. of Telangana, in collaboration with UNICEF and Inqui-lab Foundation, has initiated a School Innovation Challenge in 2020. The program also focuses on building the capacity of the teaching community to play a vital role in building an entrepreneurial, innovative ecosystem in schools and be mentors to the evolving minds.<p><p>Over the last 2 years, we could achieve key-outputs like 9,428 government high schools have registered on the School Innovation Challenge portal. 49,047 government school students from classes 6-10 have completed the online module on ‘Design Thinking for Innovation’ and received certificates. 12,070 government high school teachers across all the 33 districts of Telangana have been oriented and trained on “Managing Design Thinking & Innovation in Schools”. A total of 18,130  innovative ideas have been submitted by the students as part of  the Telangana School Innovation Challenge -2020 & 2021. Around 130 Schools from the Minority welfare department have participated in SIC 2021.</p>",
+        "about_us_desc": "<p>To promote the culture of Design Thinking and Innovation, Samagra Shiksha, Govt. of Telangana and Telangana State Innovation Cell (TSIC), in collaboration with UNICEF and Inqui-lab Foundation, has initiated a School Innovation Challenge in 2020. The program also focuses on building the capacity of the teaching community to play a vital role in building an entrepreneurial, innovative ecosystem in schools and be mentors to the evolving minds.</p><p>Over the last 2 years, we could achieve key-outputs like 9,428 government high schools have registered on the School Innovation Challenge portal. 49,047 government school students from classes 6-10 have completed the online module on ‘Design Thinking for Innovation’ and received certificates. 12,070 government high school teachers across all the 33 districts of Telangana have been oriented and trained on “Managing Design Thinking & Innovation in Schools”. A total of 18,130  innovative ideas have been submitted by the students as part of  the Telangana School Innovation Challenge -2020 & 2021. Around 130 Schools from the Minority welfare department have participated in SIC 2021.</p>",
         "about_upshift_heading": "<h2 class='mb-5 sub-heading'>What is <span class='blue'>UPSHIFT</span></h2>",
         "about_upshift_desc": "<p><b>UPSHIFT</b> is a <span class='blue'><b>UNICEF</b></span> global innovation for transferable skills building of adolescents and young people that is now in implementation in 45 countries. <b>UPSHIFT</b> is designed to build transferable skills and create opportunity, with a focus on the young people. <b>UPSHIFT</b> supports the development of skills for life and livelihood and supports youth to positively engage with their local communities as change-makers. <br/>[LEARN MORE ABOUT <a href='https://www.unicef.org/innovation/upshift' target='_target'><u><b>UPSHIFT</b></u></a> ]</p><p>With the goal of engaging and skilling more adolescents and young people, UNICEF, along with State Government, Yuwaah and Inqui-Lab Foundation embarked on the development of UNISOLVE.</p>",
         "upshift_power_desc": "<p><span class='blue'><b>UNISOLVE</b></span> is a digital platform designed to facilitate <b>UPSHIFT</b> delivery through a school-based, teacher-facilitated blended learning model.</p><p><span class='blue'><b>UNISOLVE</b></span> combines the advantages of distance learning opportunities and face-to-face activities to promote creativity and innovation among adolescents and young people. Designed with and for the education system keeping scalability in mind this specially designed platform, <span class='blue'><b>UNISOLVE</b></span>, is a tool to skill students on social innovation and 21st century skills.</p>",
@@ -388,7 +388,8 @@
         "btn_cancel": "Cancel",
         "btn_ok":"ok",
         "cancelled":"Cancelled",
-        "logged_in":"You are Logged in"
+        "logged_in":"You are Logged in",
+        "submit_idea":"You are attempting to submit your idea Which is not revertable"
     },
     "teacehr_red": {
         "heading": "REGISTER",
@@ -435,7 +436,9 @@
         "lessons":"Lessons",
         "continue course":"Continue Course",
         "exitfullscreen":"Exit Full Screen",
-        "quiz_completed":"Successfully Completed!"
+        "quiz_completed":"Successfully Completed!",
+        "course_scc":"Course Completed Successfully!",
+        "go_to":"Go to Challenges"
     },
     "translation":{
         "tamil":"Telugu Content :-",

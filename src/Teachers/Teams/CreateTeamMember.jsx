@@ -491,7 +491,7 @@ const CreateTeamMember = (props) => {
                     <Col className="col-xl-10 offset-xl-1 offset-md-0">
                         <BreadcrumbTwo {...headingDetails} />
                         {studentCount &&
-                        (studentCount === 'new' || studentCount < 2) ? (
+                        (studentCount === 'new' || studentCount < 1) ? (
                             <CreateMultipleMembers id={id} />
                         ) : (
                             <div>
