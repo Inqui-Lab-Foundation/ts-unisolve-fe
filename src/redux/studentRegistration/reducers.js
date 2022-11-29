@@ -14,7 +14,8 @@ import {
     GET_STUDENT_DASHBOARD_TEAMPROGRESS,
     GET_STUDENT_DASHBOARD_TUTORIALS,
     SET_PRESURVEY_STATUS,
-    SET_POSTSURVEY_STATUS
+    SET_POSTSURVEY_STATUS,
+    SET_FILE_SUCCESS
 } from '../actions';
 
 const localLang = JSON.parse(localStorage.getItem("s_language"));
@@ -33,9 +34,12 @@ const INIT_STATE = {
     dashboardChallengesStatus:null,
     dashboardTeamProgressStatus:null,
     dashboardTutorials:null,
+    preSurveyList:[],
+    quizSurveyId:0,
     presuveyStatusGl :null,
     postSurveyStatusGl :null,
-    ideaSubmissionStatus:null
+    ideaSubmissionStatus:null,
+    fileResponse:null
 };
 
 export default (state = INIT_STATE, action) => {
@@ -109,12 +113,19 @@ export default (state = INIT_STATE, action) => {
     case SET_PRESURVEY_STATUS:
         return {
             ...state,
-            presuveyStatusGl:action.payload
+            presuveyStatusGl:action.payload?.progress,
+            preSurveyList:action.payload?.quiz_survey_questions,
+            quizSurveyId:action.payload?.quiz_survey_id
         };
     case SET_POSTSURVEY_STATUS:
         return {
             ...state,
             postSurveyStatusGl:action.payload
+        };
+    case SET_FILE_SUCCESS:
+        return {
+            ...state,
+            fileResponse:action.payload
         };
     default:
         return newState;

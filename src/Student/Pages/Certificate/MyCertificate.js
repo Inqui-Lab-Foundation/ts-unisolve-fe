@@ -95,14 +95,16 @@ const Certificate = ({ type, currentUser,postSurveyStatus,certDate }) => {
 const MyCertificate = () => {
     const { t } = useTranslation();
     const language = useSelector((state) => state?.studentRegistration?.studentLanguage);
-    const { postSurveyStatusGl } = useSelector((state) => state?.studentRegistration);
-    const {dashboardStatus} = useSelector((state) => state?.studentRegistration);
+    const  postSurveyStatusGl  = useSelector((state) => state?.studentRegistration?.postSurveyStatusGl);
+    const dashboardStatus = useSelector((state) => state?.studentRegistration?.dashboardStatus);
     let {all_topics_count,topics_completed_count} = dashboardStatus ? dashboardStatus : {all_topics_count:null,topics_completed_count:null};
     const currentUser = getCurrentUser('current_user');
     const dispatch = useDispatch();
     useLayoutEffect(() => {
-        dispatch(getStudentDashboardStatus(currentUser.data[0].user_id, language));
-        dispatch(studentPostSurveyCertificate(language));
+        if(!dashboardStatus)
+            dispatch(getStudentDashboardStatus(currentUser.data[0].user_id, language));
+        if(!postSurveyStatusGl)
+            dispatch(studentPostSurveyCertificate(language));
     }, [language]);
     const enablePostSurvey = postSurveyStatusGl && postSurveyStatusGl === "COMPLETED";
     return (
