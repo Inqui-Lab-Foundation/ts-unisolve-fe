@@ -28,7 +28,7 @@ import { getLanguage } from '../../constants/languageOptions';
 import { useDispatch, useSelector } from 'react-redux';
 import getStart from '../../assets/media/getStart.png';
 import { useTranslation } from 'react-i18next';
-import { updateStudentBadges } from '../../redux/studentRegistration/actions';
+import { getPresurveyData, updateStudentBadges } from '../../redux/studentRegistration/actions';
 //import { Modal } from 'react-bootstrap';
 //import ChildrensDaysGif from '../../assets/media/childrensdays.gif';
 
@@ -59,17 +59,16 @@ import { updateStudentBadges } from '../../redux/studentRegistration/actions';
 
 const PreSurvey = () => {
     const { t } = useTranslation();
-    const [preSurveyList, setPreSurveyList] = useState([]);
     const currentUser = getCurrentUser('current_user');
-    const [quizSurveyId, setQuizSurveyId] = useState(0);
-    const [preSurveyStatus, setPreSurveyStatus] = useState('COMPLETED');
     const history = useHistory();
     const dispatch = useDispatch();
     const language = useSelector(
         (state) => state?.studentRegistration?.studentLanguage
     );
+    const preSurveyStatus = useSelector((state) => state?.studentRegistration?.presuveyStatusGl);
+    const preSurveyList = useSelector((state) => state?.studentRegistration?.preSurveyList);
+    const quizSurveyId = useSelector((state) => state?.studentRegistration?.quizSurveyId);
     const [show, setShow] = useState(false);
-    //const [greetChildrensDay, setGreetChildrensDay] = useState(false);
 
     const formik = useFormik({
         initialValues: {},
@@ -129,26 +128,9 @@ const PreSurvey = () => {
     });
 
     useEffect(() => {
-        const axiosConfig = getNormalHeaders(KEY.User_API_Key);
-        axios
-            .get(
-                `${URL.getStudentPreSurveyList}?role=STUDENT&${getLanguage(
-                    language
-                )}`,
-                axiosConfig
-            )
-            .then((preSurveyRes) => {
-                if (preSurveyRes?.status == 200) {
-                    setQuizSurveyId(preSurveyRes.data.data[0].quiz_survey_id);
-                    setPreSurveyStatus(preSurveyRes.data.data[0].progress);
-                    let allQuestions = preSurveyRes.data.data[0];
-                    setPreSurveyList(allQuestions.quiz_survey_questions);
-                }
-            })
-            .catch((err) => {
-                return err.response;
-            });
-    }, [language]);
+        if(!preSurveyStatus && !quizSurveyId && !preSurveyList)
+            dispatch(getPresurveyData(language));
+    }, [language,preSurveyStatus,quizSurveyId,preSurveyList]);
 
     const handleStart = () => {
         setShow(true);

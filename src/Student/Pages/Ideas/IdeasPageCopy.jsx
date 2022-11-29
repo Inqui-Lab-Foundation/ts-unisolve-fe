@@ -19,7 +19,8 @@ import Layout from '../../Layout';
 import { useSelector } from 'react-redux';
 import {
     getStudentChallengeQuestions,
-    getStudentChallengeSubmittedResponse
+    getStudentChallengeSubmittedResponse,
+    uploadFiles
 } from '../../../redux/studentRegistration/actions';
 import { useDispatch } from 'react-redux';
 import { getCurrentUser } from '../../../helpers/Utils';
@@ -40,17 +41,23 @@ import { InputBox } from '../../../stories/InputBox/InputBox';
 
 const IdeasPageNew = () => {
     const { t } = useTranslation();
-    const { challengeQuestions } = useSelector(
-        (state) => state?.studentRegistration
+    const challengeQuestions = useSelector(
+        (state) => state?.studentRegistration.challengeQuestions
+    );
+    const fileResponse = useSelector(
+        (state) => state?.studentRegistration.fileResponse
     );
     const showPage = false;
     const [answerResponses, setAnswerResponses] = useState([]);
     const [isDisabled, setIsDisabled] = useState(false);
+    const [loading, setLoading] = useState(false);
     const { challengesSubmittedResponse } = useSelector(
         (state) => state?.studentRegistration
     );
     const initialSDG = challengesSubmittedResponse[0]?.sdg;
     const [sdg, setSdg] = useState(challengesSubmittedResponse[0]?.sdg);
+    // const [files, setFiles] = useState(null);
+    // const [uploadQId, setuploadQId] = useState(null);
     const [others, setOthers] = useState(
         challengesSubmittedResponse[0]?.others
     );
@@ -185,8 +192,13 @@ const IdeasPageNew = () => {
                 }
             });
     };
+    // const fileHandler =(e,id)=>{
+    //     setFiles(e.target.files);
+    //     setuploadQId(id);
+    // };
     const handleSubmit = async (e, type) => {
         e.preventDefault();
+        setLoading(true);
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         let responses = answerResponses.map((eachValues) => {
             return {
@@ -194,6 +206,17 @@ const IdeasPageNew = () => {
                 selected_option: eachValues.selected_option
             };
         });
+        // if(files && uploadQId){
+        //     const formData = new FormData();
+        //     formData.apppend('file',files);
+        //     dispatch(uploadFiles(uploadQId,formData));
+        //     setTimeout(() => {
+        //         responses.push({
+        //             challenge_question_id: uploadQId,
+        //             selected_option: fileResponse.split(",")
+        //         });
+        //     }, 200);
+        // }       
         let submitData = {
             responses,
             status: type ? 'DRAFT' : 'SUBMITTED',
@@ -223,6 +246,7 @@ const IdeasPageNew = () => {
                         );
                         setIsDisabled(true);
                     }, 500);
+                    setLoading(false);
                 }
             })
             .catch((err) => {
@@ -487,11 +511,9 @@ const IdeasPageNew = () => {
                                                                                     <input
                                                                                         type="file"
                                                                                         name="file"
-                                                                                        accept={
-                                                                                            '.pdf,.csv'
-                                                                                        }
-                                                                                        // onChange={(e) =>
-                                                                                        //     changeHandler(e)
+                                                                                        multiple
+                                                                                        // onChange={(e)=>
+                                                                                        //     fileHandler(e,eachQuestion.challenge_question_id)
                                                                                         // }
                                                                                     />
                                                                                 </div>
@@ -918,7 +940,7 @@ const IdeasPageNew = () => {
                                                                             )
                                                                         }
                                                                         size="small"
-                                                                        label="Save as Draft"
+                                                                        label={`${loading? "loading":"Save as Draft"}`}
                                                                     />
                                                                     <Button
                                                                         type="button"
@@ -932,7 +954,7 @@ const IdeasPageNew = () => {
                                                                             swalWrapper
                                                                         }
                                                                         size="small"
-                                                                        label="Submit"
+                                                                        label={`${loading? "loading":"Save as Draft"}`}
                                                                     />
                                                                 </div>
                                                             </div>

@@ -32,9 +32,11 @@ import { getStudentChallengeSubmittedResponse } from '../../redux/studentRegistr
 
 const PostSurvey = () => {
     const { t } = useTranslation();
-    const { ideaSubmissionStatus } = useSelector(
-        (state) => state?.studentRegistration
+    const ideaSubmissionStatus = useSelector(
+        (state) => state?.studentRegistration.ideaSubmissionStatus
     );
+    // const  postSurveyStatusGl  = useSelector((state) => state?.studentRegistration?.postSurveyStatusGl);
+
     const currentUser = getCurrentUser('current_user');
     const dispatch = useDispatch();
     const [postSurveyList, setPostSurveyList] = useState([]);
@@ -90,12 +92,13 @@ const PostSurvey = () => {
         }
     });
     useEffect(() => {
-        dispatch(
-            getStudentChallengeSubmittedResponse(
-                currentUser?.data[0]?.team_id,
-                language
-            )
-        );
+        if(!ideaSubmissionStatus)
+            dispatch(
+                getStudentChallengeSubmittedResponse(
+                    currentUser?.data[0]?.team_id,
+                    language
+                )
+            );
     }, [language, dispatch, currentUser?.data[0]?.team_id]);
     
     useEffect(() => {
