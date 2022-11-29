@@ -187,6 +187,11 @@ export const TEACHER_COURSES_ATTACHMENTS = 'TEACHER_COURSES_ATTACHMENTS';
 export const TEACHER_COURSES_DETAILS_SUCCESS = 'TEACHER_COURSES_DETAILS_SUCCESS';
 export const TEACHER_COURSES_DETAILS_ERROR = 'TEACHER_COURSES_DETAILS_ERROR';
 
+
+export const EVALUATOR_LOGIN_USER = 'EVALUATOR_LOGIN_USER';
+export const EVALUATOR_LOGIN_USER_SUCCESS = 'EVALUATOR_LOGIN_USER_SUCCESS';
+export const EVALUATOR_LOGIN_USER_ERROR = 'EVALUATOR_LOGIN_USER_ERROR';
+
 export * from './auth/actions';
 export * from '../Admin/store/admin/actions';
 export * from '../Teachers/store/mentors/actions';
@@ -201,3 +206,5 @@ export * from './evaluatorsBulkUpload/actions';
 export * from '../Teachers/store/teacher/actions';
 export * from '../Teachers/store/teams/actions';
 export * from '../Teachers/store/courses/actions';
+
+export * from '../Evaluator/store/evaluator/action';
