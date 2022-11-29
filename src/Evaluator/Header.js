@@ -65,7 +65,7 @@ const Header = (props) => {
     return (
         <header>
             <div className="header-comp sticky-top py-3">
-                <div className="header-container">
+                <div className="header-container py-2">
                     <div className="tollbar">
                         <div
                             className={`btn-toggle dfdf`}
