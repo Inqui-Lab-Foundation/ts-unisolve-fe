@@ -703,7 +703,7 @@ const Routers = () => {
                     />
                     <Route
                         exact={true}
-                        path="/evaluator/idea-list"
+                        path="/evaluator/dashboard"
                         component={EvaluatorDashboard}
                     />
                     <Route

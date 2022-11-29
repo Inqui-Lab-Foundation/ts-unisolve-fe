@@ -60,7 +60,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                         className="d-flex logo-section"
                         style={{ height: '5rem' }}
                     >
-                        <Link to={'/evaluator/idea-list'} exact className="d-flex">
+                        <Link to={'/evaluator/dashboard'} exact className="d-flex">
                             {menuCollapse ? (
                                 <img
                                     src={Logo}
@@ -95,11 +95,11 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     <MenuItem
                         icon={ <FaLightbulb />}
                         className={
-                            location.pathname === '/evaluator/idea-list' &&
+                            location.pathname === '/evaluator/dashboard' &&
                             'sidebar-active'
                         }
                     >
-                        <NavLink exact={true} to={'/evaluator/idea-list'}>
+                        <NavLink exact={true} to={'/evaluator/dashboard'}>
                             Idea List
                         </NavLink>
                     </MenuItem>
