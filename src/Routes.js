@@ -132,6 +132,12 @@ import CreateTranslation from './Admin/Translation/CreateTranslation';
 
 import EditSchool from './Admin/Schools/EditSchool';
 
+//evaluator routes
+import LoginEvaluator from './Evaluator/LoginEvaluator';
+import EvaluatorDashboard from './Evaluator/Dashboard/index';
+import EvaluatorChangePassword from './Evaluator/ChangePSWModal';
+import EvaluatorForgotPassword from './Evaluator/ForgotPassword';
+
 
 const Routers = () => {
     // const history = useHistory();
@@ -688,6 +694,29 @@ const Routers = () => {
                         path="/admin/create-translation"
                         component={CreateTranslation}
                     />
+
+                    {/* evaluator routes */}
+                    <Route
+                        exact={true}
+                        path="/evaluator"
+                        render={() => <LoginEvaluator />}
+                    />
+                    <Route
+                        exact={true}
+                        path="/evaluator/idea-list"
+                        component={EvaluatorDashboard}
+                    />
+                    <Route
+                        exact={true}
+                        path="/evaluator/change-password"
+                        component={EvaluatorChangePassword}
+                    />
+                    <Route
+                        exact={true}
+                        path="/evaluator/forgotpassword"
+                        component={EvaluatorForgotPassword}
+                    />
+                    
                     <Route component={PageNotFound} path="*" />
                 </Switch>
             </Router>
