@@ -137,6 +137,7 @@ import LoginEvaluator from './Evaluator/LoginEvaluator';
 import EvaluatorDashboard from './Evaluator/Dashboard/index';
 import EvaluatorChangePassword from './Evaluator/ChangePSWModal';
 import EvaluatorForgotPassword from './Evaluator/ForgotPassword';
+import EvaluatorIdeaList from './Evaluator/IdeaList/IdeaList';
 
 
 const Routers = () => {
@@ -715,6 +716,11 @@ const Routers = () => {
                         exact={true}
                         path="/evaluator/forgotpassword"
                         component={EvaluatorForgotPassword}
+                    />
+                    <Route
+                        exact={true}
+                        path="/evaluator/submitted-ideas"
+                        component={EvaluatorIdeaList}
                     />
                     
                     <Route component={PageNotFound} path="*" />

@@ -16,6 +16,8 @@ import { useHistory } from 'react-router-dom';
 import {RiLogoutBoxRFill, RiLockPasswordFill} from 'react-icons/ri';
 import { useTranslation } from 'react-i18next';
 import {  logout } from "../helpers/Utils";
+import DashboardIcon from '../assets/media/DashboardIcon.svg';
+
 const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
     // const intl = useIntl();
 
@@ -93,7 +95,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                 <Menu iconShape="circle">
                     
                     <MenuItem
-                        icon={ <FaLightbulb />}
+                        icon={<img src={DashboardIcon} style={{width:"20px"}}/>}
                         className={
                             location.pathname === '/evaluator/dashboard' &&
                             'sidebar-active'
@@ -101,6 +103,17 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     >
                         <NavLink exact={true} to={'/evaluator/dashboard'}>
                             Dashboard
+                        </NavLink>
+                    </MenuItem>
+                    <MenuItem
+                        icon={ <FaLightbulb />}
+                        className={
+                            location.pathname === '/evaluator/submitted-ideas' &&
+                            'sidebar-active'
+                        }
+                    >
+                        <NavLink exact={true} to={'/evaluator/submitted-ideas'}>
+                            Submitted Ideas
                         </NavLink>
                     </MenuItem>
                     <MenuItem
