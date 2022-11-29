@@ -18,7 +18,8 @@ import {
     MENTORS_GET_SUPPORT_TICKETS,
     MENTORS_GET_SUPPORT_TICKETS_BY_ID,
     MENTORS_GET_SUPPORT_TICKETS_RESPONSES_BY_ID,
-    MENTORS_SUPPORT_TICKETS_STATUS
+    MENTORS_SUPPORT_TICKETS_STATUS,
+    GET_TEACHERS_PRESURVEY_STATUS
     // MENTORS_CREATE_SUPPORT_TICKETS
 } from '../../../redux/actions.js';
 import { URL, KEY } from '../../../constants/defaultValues.js';
@@ -343,6 +344,32 @@ export const getSupportResponsesTicketById = () => async (dispatch) => {
             'Something went wrong!',
             '');
         
+    }
+};
+export const getTeacherPresurveyStatusSuccess = (data) => async (dispatch) => {
+    dispatch({
+        type: GET_TEACHERS_PRESURVEY_STATUS,
+        payload: data
+    });
+};
+
+export const getTeacherPresurveyStatus = () => async (dispatch) => {
+    try {
+        const axiosConfig = getNormalHeaders(KEY.User_API_Key);
+        const result = await axios
+            .get(`${URL.getPreSurveyList}?role=TEACHER`, axiosConfig)
+            .then((res) => res)
+            .catch((err) => {
+                return err.response;
+            });
+        if (result && result.status === 200) {
+            const data =  result.data.data[0].dataValues[0].progress            ;
+            dispatch(getTeacherPresurveyStatusSuccess(data));
+        } else {
+            dispatch(getTeacherPresurveyStatusSuccess(null));
+        }
+    } catch (error) {
+        dispatch(getTeacherPresurveyStatusSuccess(null));
     }
 };
 

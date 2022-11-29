@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 
 import { FaBars } from 'react-icons/fa';
 import { Row, Col, Navbar } from 'reactstrap';
@@ -11,9 +11,9 @@ import AvatarImg from '../assets/media/img/teacher.png';
 
 // import { InputWithSearch } from "../stories/InputWithSearch/InputWithSearch.stories";
 // import { Badge } from "antd";
-import { getAdminNotificationsList } from "../redux/actions";
+import { getAdminNotificationsList, getTeacherPresurveyStatus } from "../redux/actions";
 import { useHistory } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "../helpers/Utils";
 // import LanguageSelectorComp from "../components/LanguageSelectorComp";
 // import { useTranslation } from 'react-i18next';
@@ -24,6 +24,9 @@ const Header = (props) => {
     const history = useHistory();
     const currentUser = getCurrentUser('current_user');
     const MINUTE_MS = 30000;
+    const dispatch = useDispatch();
+    const presurveyStatus = useSelector(state=>state?.mentors.teacherPresurveyStatus);
+
     // const profileOpt = {
     //     options: [
     //         // { name: "Home", path: "/teacher/dashboard" },
@@ -66,6 +69,10 @@ const Header = (props) => {
 
         return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
     }, []);
+    useLayoutEffect(() => {
+        if(!presurveyStatus)
+            dispatch(getTeacherPresurveyStatus());
+    }, [dispatch]);
     // console.log(
     //   props.notificationsList,
     //   "=============",
