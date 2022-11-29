@@ -100,7 +100,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                         }
                     >
                         <NavLink exact={true} to={'/evaluator/dashboard'}>
-                            Idea List
+                            Dashboard
                         </NavLink>
                     </MenuItem>
                     <MenuItem
