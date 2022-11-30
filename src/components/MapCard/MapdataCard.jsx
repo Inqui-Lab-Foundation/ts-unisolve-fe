@@ -44,7 +44,7 @@ const MapdataCard = ({ values, all,districtName }) => {
                             <h4>
                                 {!values?.teams
                                     ? '0'
-                                    : `${values?.teams} of ${values?.schools_with_teams}`}
+                                    : `${values?.teams} from ${values?.schools_with_teams} Schools`}
                             </h4>
                             <small className="blue">{t('home_tl.student_teams')}</small>
                         </div>
@@ -55,7 +55,7 @@ const MapdataCard = ({ values, all,districtName }) => {
                             <h4>
                                 {!values?.students
                                     ? '0'
-                                    : `${values?.students} of ${values?.schools_with_teams}`}
+                                    : `${values?.students} from ${values?.schools_with_teams} Schools`}
                             </h4>
                             <small className="blue">{t('home_tl.students')}</small>
                         </div>
@@ -96,7 +96,7 @@ const MapdataCard = ({ values, all,districtName }) => {
                             <h4>
                                 {!all?.teams
                                     ? '0'
-                                    : `${all?.teams} of ${all?.schools_with_teams}`}
+                                    : `${all?.teams} frommm ${all?.schools_with_teams} Schools`}
                             </h4>
                             <small className="blue">{t('home_tl.student_teams')}</small>
                         </div>
@@ -107,7 +107,7 @@ const MapdataCard = ({ values, all,districtName }) => {
                             <h4>
                                 {!all?.students
                                     ? '0'
-                                    : `${all?.students} of ${all?.schools_with_teams}`}
+                                    : `${all?.students} frommm ${all?.schools_with_teams} Schools`}
                             </h4>
                             <small className="blue">{t('home_tl.students')}</small>
                         </div>
