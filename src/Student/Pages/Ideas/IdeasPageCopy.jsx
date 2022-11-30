@@ -113,13 +113,14 @@ const IdeasPageNew = () => {
     }, [challengesSubmittedResponse]);
 
     useEffect(() => {
-        dispatch(
-            getStudentChallengeSubmittedResponse(
-                currentUser?.data[0]?.team_id,
-                language
-            )
-        );
-    }, [language, dispatch, currentUser?.data[0]?.team_id]);
+        if(challengesSubmittedResponse.length===0)
+            dispatch(
+                getStudentChallengeSubmittedResponse(
+                    currentUser?.data[0]?.team_id,
+                    language
+                )
+            );
+    }, [language, dispatch, currentUser?.data[0]?.team_id,challengesSubmittedResponse]);
 
     const handleChange = (e) => {
         let newItems = [...answerResponses];
