@@ -128,9 +128,8 @@ const PreSurvey = () => {
     });
 
     useEffect(() => {
-        if(!preSurveyStatus && !quizSurveyId && !preSurveyList)
-            dispatch(getPresurveyData(language));
-    }, [language,preSurveyStatus,quizSurveyId,preSurveyList]);
+        dispatch(getPresurveyData(language));
+    }, [language,dispatch]);
 
     const handleStart = () => {
         setShow(true);
