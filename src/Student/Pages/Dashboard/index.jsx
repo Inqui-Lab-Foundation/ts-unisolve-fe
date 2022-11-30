@@ -20,6 +20,7 @@ import Vimeo from '@u-wave/react-vimeo';
 import { useDispatch } from 'react-redux';
 import { FaCheckCircle,FaTimesCircle } from 'react-icons/fa';
 import {
+    getPresurveyData,
     getStudentByIdData,
     // getStudentDashboardChallengesStatus,
     getStudentDashboardStatus,
@@ -71,7 +72,9 @@ const Dashboard = () => {
         dispatch(getStudentByIdData(currentUser.data[0].student_id));
     }, [dispatch, currentUser.data[0].student_id]);
 
-    
+    useEffect(() => {
+        dispatch(getPresurveyData(language));
+    }, [language,dispatch]);
     useLayoutEffect(() => {
         if(presuveyStatusGl !=='COMPLETED')
             history.push('/student/pre-survey');
