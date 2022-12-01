@@ -13,12 +13,15 @@ import signuplogo from '../assets/media/tn-brands/UPSHIFT_BLACK.png';
 import ellipse_1 from '../assets/media/ellipse.svg';
 import { evaluatorLoginUser } from '../redux/actions';
 
-import CryptoJS from 'crypto-js';
-import { openNotificationWithIcon } from '../helpers/Utils';
+// import CryptoJS from 'crypto-js';
+// import { openNotificationWithIcon } from '../helpers/Utils';
+import Register from './Register';
 
-const LoginEvaluator = (props) => {
+const LoginEvaluator = () => {
     const history = useHistory();
     const [password, handlePassword] = useState("password");
+    //-for evaluator registration modal
+    const [registerModalShow, setRegisterModalShow] = useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -31,29 +34,30 @@ const LoginEvaluator = (props) => {
             password: Yup.string().required('required')
         }),
         // EVALUATOR ROLE
-        onSubmit: (values) => {
-            if(localStorage.getItem("current_user") && localStorage.getItem("module")){
-                openNotificationWithIcon("error",`Another User(${localStorage.getItem("module")}) has already logged in`);
-                return;
-            }
-            const key = CryptoJS.enc.Hex.parse(
-                '253D3FB468A0E24677C28A624BE0F939'
-            );
-            const iv = CryptoJS.enc.Hex.parse(
-                '00000000000000000000000000000000'
-            );
-            const encrypted = CryptoJS.AES.encrypt(values.password, key, {
-                iv: iv,
-                padding: CryptoJS.pad.NoPadding
-            }).toString();
-            console.log(encrypted);
-            const body = {
-                username: values.email,
-                password: encrypted,
-                role: "EVALUATOR"
-            };
-            props.evaluatorLoginUserAction(body, history,"EVALUATOR");
-            console.log('======', body);
+        onSubmit: () => {
+            // if(localStorage.getItem("current_user") && localStorage.getItem("module")){
+            //     openNotificationWithIcon("error",`Another User(${localStorage.getItem("module")}) has already logged in`);
+            //     return;
+            // }
+            // const key = CryptoJS.enc.Hex.parse(
+            //     '253D3FB468A0E24677C28A624BE0F939'
+            // );
+            // const iv = CryptoJS.enc.Hex.parse(
+            //     '00000000000000000000000000000000'
+            // );
+            // const encrypted = CryptoJS.AES.encrypt(values.password, key, {
+            //     iv: iv,
+            //     padding: CryptoJS.pad.NoPadding
+            // }).toString();
+            // console.log(encrypted);
+            // const body = {
+            //     username: values.email,
+            //     password: encrypted,
+            //     role: "EVALUATOR"
+            // };
+            // props.evaluatorLoginUserAction(body, history,"EVALUATOR");
+            // console.log('======', body);
+            history.push('/evaluator/submitted-ideas');
         }
     });
 
@@ -246,14 +250,29 @@ const LoginEvaluator = (props) => {
                                             }
                                             disabled={!(formik.dirty && formik.isValid)}
                                         />
+                                        <div
+                                        className="text-primary text-center fs-4 pointer pt-1 mt-4"
+                                        onClick={() => setRegisterModalShow(true)}
+                                    >
+                                        Sign Up
+                                    </div>
                                     </Col>
+                                    
                                 </div>
+                                
                             </Form>
                         </Col>
                     </Row>
                 </Col>
             </Row>
         </div>
+        {registerModalShow && (
+                <Register
+                    show={registerModalShow}
+                    setShow={setRegisterModalShow}
+                    onHide={() => setRegisterModalShow(false)}
+                />
+            )}
     </React.Fragment>
   );
 };

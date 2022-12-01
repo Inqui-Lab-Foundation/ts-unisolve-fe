@@ -47,7 +47,7 @@ export const evaluatorLoginUser = (data, history,module) => async (dispatch) => 
             localStorage.setItem("module",module);
             dispatch(evaluatorLoginUserSuccess(result));
 
-            history.push('/evaluator/dashboard');
+            history.push('/evaluator/submitted-ideas');
         } else {
             openNotificationWithIcon('error', 'Enter the correct credentials');
             dispatch(evaluatorLoginUserError(result.statusText));

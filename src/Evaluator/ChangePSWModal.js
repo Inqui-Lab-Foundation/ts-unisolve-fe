@@ -115,7 +115,7 @@ const ChangePSWModal = () => {
         className: 'defaultInput',
     };
     const handleOnCancel = () => {
-        history.push('/evaluator/dashboard');
+        history.push('/evaluator/submitted-ideas');
     };
     const handleShowPassword=(name)=>{
         switch(name){

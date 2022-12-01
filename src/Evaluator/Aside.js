@@ -16,7 +16,7 @@ import { useHistory } from 'react-router-dom';
 import {RiLogoutBoxRFill, RiLockPasswordFill} from 'react-icons/ri';
 import { useTranslation } from 'react-i18next';
 import {  logout } from "../helpers/Utils";
-import DashboardIcon from '../assets/media/DashboardIcon.svg';
+// import DashboardIcon from '../assets/media/DashboardIcon.svg';
 
 const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
     // const intl = useIntl();
@@ -62,7 +62,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                         className="d-flex logo-section"
                         style={{ height: '5rem' }}
                     >
-                        <Link to={'/evaluator/dashboard'} exact className="d-flex">
+                        <Link to={'/evaluator/submitted-ideas'} exact className="d-flex">
                             {menuCollapse ? (
                                 <img
                                     src={Logo}
@@ -94,7 +94,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
             <SidebarContent>
                 <Menu iconShape="circle">
                     
-                    <MenuItem
+                    {/* <MenuItem
                         icon={<img src={DashboardIcon} style={{width:"20px"}}/>}
                         className={
                             location.pathname === '/evaluator/dashboard' &&
@@ -104,7 +104,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                         <NavLink exact={true} to={'/evaluator/dashboard'}>
                             Dashboard
                         </NavLink>
-                    </MenuItem>
+                    </MenuItem> */}
                     <MenuItem
                         icon={ <FaLightbulb />}
                         className={
