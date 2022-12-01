@@ -14,6 +14,8 @@ import {
 } from 'reactstrap';
 import { Button } from '../../../stories/Button';
 import { TextArea } from '../../../stories/TextArea/TextArea';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+
 
 import Layout from '../../Layout';
 import { useSelector } from 'react-redux';
@@ -52,18 +54,17 @@ const IdeasPageNew = () => {
     const [isDisabled, setIsDisabled] = useState(false);
     const initialLoadingStatus = {draft:false,submit:false};
     const [loading, setLoading] = useState(initialLoadingStatus);
+    const [wordCount, setWordCount] = useState([]);
     const { challengesSubmittedResponse } = useSelector(
         (state) => state?.studentRegistration
     );
     const initialSDG = challengesSubmittedResponse[0]?.sdg;
     const [sdg, setSdg] = useState(challengesSubmittedResponse[0]?.sdg);
-    const [files, setFiles] = useState(null);
-    const [fileName, setFileName] = useState(null);
+    const [files, setFiles] = useState([]);
     const [uploadQId, setuploadQId] = useState(null);
     const [others, setOthers] = useState(
         challengesSubmittedResponse[0]?.others
     );
-
     const initiatedBy =
         challengesSubmittedResponse &&
         challengesSubmittedResponse.length > 0 &&
@@ -73,9 +74,19 @@ const IdeasPageNew = () => {
         (state) => state?.studentRegistration?.studentLanguage
     );
     const currentUser = getCurrentUser('current_user');
-
     const dispatch = useDispatch();
-
+    const prePopulatingCount = (answers)=>{
+        if (answers && answers !== {}) {
+            const data = Object.entries(answers);
+            const answerFormat = data.map((item) => {
+                return {
+                    i: item[0],
+                    count: (5000-item[1]?.selected_option?.length)
+                };
+            });
+            return answerFormat;
+        }
+    };
     const prePopulatingData = (answers) => {
         if (answers && answers !== {}) {
             const data = Object.entries(answers);
@@ -108,6 +119,11 @@ const IdeasPageNew = () => {
                 ? prePopulatingData(submittedResponse)
                 : []
         );
+        setWordCount(
+            prePopulatingCount(submittedResponse)
+                ? prePopulatingCount(submittedResponse)
+                : []
+        );
     }, []);
     useEffect(() => {
         setSdg(challengesSubmittedResponse[0]?.sdg);
@@ -128,7 +144,32 @@ const IdeasPageNew = () => {
         currentUser?.data[0]?.team_id,
         challengesSubmittedResponse
     ]);
-
+    const handleWordCount = (e,i)=>{
+        let obj = {i,count:5000 - e.target.value.length};
+        let newItems = [...wordCount];
+        const findExistanceIndex = newItems.findIndex((item) =>item?.i ==i);
+        if (findExistanceIndex === -1) {
+            newItems.push(obj);
+        }else {
+            let temp = newItems[findExistanceIndex];
+            newItems[findExistanceIndex] = {
+                ...temp,
+                count: 5000 - e.target.value.length
+            };
+        }
+        setWordCount(newItems);
+    };
+    const filterCount=(id)=>{
+        const data =
+            wordCount &&
+            wordCount.length > 0 &&
+            wordCount.filter(
+                (item) => item.i == id
+            );
+        return data && data.length > 0 && data[0].count
+            ? data[0].count
+            : 5000;
+    };
     const handleChange = (e) => {
         let newItems = [...answerResponses];
         let obj = {
@@ -200,14 +241,32 @@ const IdeasPageNew = () => {
                 }
             });
     };
+    const handleUploadFiles = (addedFiles) =>{
+        const upload = [...files];
+        addedFiles.some(item=>{
+            if(upload.findIndex(i=>i.name ===item.name) ===-1)
+                upload.push(item);
+        });
+        setFiles(upload);
+    };
+    const removeFileHandler = (i)=>{
+        const fileAdded = [...files];
+        fileAdded.splice(i, 1);
+        setFiles(fileAdded);
+    };
     const fileHandler = (e, id) => {
-        setFiles(e.target.files[0]);
-        setFileName(e.target.files[0].name);
+        let choosenFiles = Array.prototype.slice.call(e.target.files);
+        handleUploadFiles(choosenFiles);
         setuploadQId(id);
         e.target.files=null;
     };
+    let lengthCheck = challengeQuestions.length +1;
     const submittingCall = async (type,responses) => {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
+        if(!type && responses.length < lengthCheck ){
+            openNotificationWithIcon("error","Please enter all the fields");
+            return;
+        }
         let submitData = {
             responses,
             status: type ? 'DRAFT' : 'SUBMITTED',
@@ -243,6 +302,7 @@ const IdeasPageNew = () => {
                 return err.response;
             });
     };
+    console.log(files);
     const handleSubmit = async (e, type) => {
         e.preventDefault();
         let responses = answerResponses.map((eachValues) => {
@@ -482,6 +542,7 @@ const IdeasPageNew = () => {
                                                                     <>
                                                                         {eachQuestion.type ===
                                                                             'TEXT' && (
+                                                                            <>
                                                                             <FormGroup
                                                                                 check
                                                                                 className=" answers"
@@ -511,47 +572,60 @@ const IdeasPageNew = () => {
                                                                                         onChange={(
                                                                                             e
                                                                                         ) =>
+                                                                                        {
                                                                                             handleChange(
                                                                                                 e
-                                                                                            )
+                                                                                            );
+                                                                                            handleWordCount(e,eachQuestion.challenge_question_id);
+                                                                                        }
                                                                                         }
                                                                                     />
                                                                                 </Label>
                                                                             </FormGroup>
+                                                                            <div className='float-end'>Characters Remaining : {filterCount(eachQuestion.challenge_question_id)}</div>
+                                                                            </>
                                                                         )}
                                                                         {eachQuestion.type ===
                                                                             'DRAW' && (
-                                                                            <FormGroup
-                                                                                check
-                                                                                className="answers"
-                                                                            >
-                                                                                <div className="wrapper my-3 common-flex">
-                                                                                    <Button
-                                                                                        type="button"
-                                                                                        btnClass={`${ isDisabled ?"secondary" :"primary"} me-3 pointer `}
-                                                                                        size="small"
-                                                                                        label="Upload File"
-                                                                                    />
-                                                                                    <input
-                                                                                        type="file"
-                                                                                        name="file"
-                                                                                        disabled={isDisabled}
-                                                                                        onChange={(
-                                                                                            e
-                                                                                        ) =>
-                                                                                            fileHandler(
-                                                                                                e,
-                                                                                                eachQuestion.challenge_question_id
-                                                                                            )
-                                                                                        }
-                                                                                    />
-                                                                                    <Card className='p-3 fw-bold'>
-                                                                                        {fileName || filterAnswer(
-                                                                                            eachQuestion.challenge_question_id
-                                                                                        ) && "File uploaded already"}
-                                                                                    </Card>
+                                                                            <>
+                                                                                <FormGroup
+                                                                                    check
+                                                                                    className="answers"
+                                                                                >
+                                                                                    <div className="wrapper my-3 common-flex">
+                                                                                        <Button
+                                                                                            type="button"
+                                                                                            btnClass={`${ isDisabled ?"secondary" :"primary"} me-3 pointer `}
+                                                                                            size="small"
+                                                                                            label="Upload File"
+                                                                                        />
+                                                                                        <input
+                                                                                            type="file"
+                                                                                            name="file"
+                                                                                            disabled={isDisabled}
+                                                                                            multiple
+                                                                                            onChange={(
+                                                                                                e
+                                                                                            ) =>
+                                                                                                fileHandler(
+                                                                                                    e,
+                                                                                                    eachQuestion.challenge_question_id
+                                                                                                )
+                                                                                            }
+                                                                                        />
+                                                                                    </div>
+                                                                                </FormGroup>
+                                                                                <div className='mx-4'>
+                                                                                    {files.map((item,i)=>
+                                                                                        <div key={i} className="badge mb-2 bg-info ms-3">
+                                                                                            <span className='p-2'>{item.name}</span> 
+                                                                                            <span className='pointer' onClick={()=>removeFileHandler(i)}>
+                                                                                                <AiOutlineCloseCircle size={20}/>
+                                                                                            </span>
+                                                                                        </div>)
+                                                                                    }   
                                                                                 </div>
-                                                                            </FormGroup>
+                                                                            </>
                                                                         )}
                                                                         {eachQuestion.type ===
                                                                             'MRQ' && (

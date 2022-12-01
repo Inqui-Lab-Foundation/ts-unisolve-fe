@@ -11,6 +11,8 @@ import { useEffect } from 'react';
 // import DoubleBounce from '../../components/Loaders/DoubleBounce';
 import { FaCheckCircle,FaTimesCircle } from 'react-icons/fa';
 import { Button } from '../../stories/Button';
+import IdeaSubmissionCard from '../../components/IdeaSubmissionCard';
+import { getStudentChallengeSubmittedResponse } from '../../redux/studentRegistration/actions';
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -62,8 +64,13 @@ export default function DoughnutChart({ user }) {
         useSelector((state) => state.teams);
     const [teamId, setTeamId] = useState(null);
     const [showDefault, setshowDefault] = useState(true);
+    const [ideaShow, setIdeaShow] = useState(false);
+    const { challengesSubmittedResponse } = useSelector(
+        (state) => state?.studentRegistration
+    );
     useEffect(() => {
         dispatch(getTeamMemberStatus(teamId, setshowDefault));
+        dispatch(getStudentChallengeSubmittedResponse(teamId));
     }, [teamId, dispatch]);
     const percentageBWNumbers = (a, b) => {
         return (((a - b) / a) * 100).toFixed(2);
@@ -190,16 +197,17 @@ export default function DoughnutChart({ user }) {
                         </select>
                     </Col>
                     <Col className='d-flex justify-content-end align-items-center'>
-                        <Card className='p-3 mx-4'>
-                            Idea Status :  Not Started 
+                        <Card className='p-3 mx-4 d-flex flex-row'>
+                            <span className='fw-bold'>IDEA STATUS :</span> 
+                            <span>{" "} {challengesSubmittedResponse[0]?.status ? challengesSubmittedResponse[0]?.status : "NOT STARTED"} </span>
                         </Card>
                         <Button
                             button="button"
                             label="View Idea"
-                            disabled={teamsMembersStatus.length > 0}
+                            disabled={teamsMembersStatus.length > 0 ? false : true}
                             btnClass={`${teamsMembersStatus.length > 0 ? "primary" : "default"}`}
                             size="small"
-                            onClick={()=>console.log("hi")}
+                            onClick={()=>setIdeaShow(true)}
                         />
                     </Col>
                 </div>
@@ -233,6 +241,7 @@ export default function DoughnutChart({ user }) {
             {/* <div style={{ width: '50%' }}>
                 <Doughnut options={options} data={data} />
             </div> */}
+            {ideaShow && <IdeaSubmissionCard show={ideaShow} handleClose={()=>setIdeaShow(false)} response={challengesSubmittedResponse}/>}
         </>
     );
 }
