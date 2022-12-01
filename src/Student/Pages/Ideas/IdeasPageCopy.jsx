@@ -50,14 +50,16 @@ const IdeasPageNew = () => {
     const showPage = false;
     const [answerResponses, setAnswerResponses] = useState([]);
     const [isDisabled, setIsDisabled] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const initialLoadingStatus = {draft:false,submit:false};
+    const [loading, setLoading] = useState(initialLoadingStatus);
     const { challengesSubmittedResponse } = useSelector(
         (state) => state?.studentRegistration
     );
     const initialSDG = challengesSubmittedResponse[0]?.sdg;
     const [sdg, setSdg] = useState(challengesSubmittedResponse[0]?.sdg);
-    // const [files, setFiles] = useState(null);
-    // const [uploadQId, setuploadQId] = useState(null);
+    const [files, setFiles] = useState(null);
+    const [fileName, setFileName] = useState(null);
+    const [uploadQId, setuploadQId] = useState(null);
     const [others, setOthers] = useState(
         challengesSubmittedResponse[0]?.others
     );
@@ -113,13 +115,19 @@ const IdeasPageNew = () => {
     }, [challengesSubmittedResponse]);
 
     useEffect(() => {
-        dispatch(
-            getStudentChallengeSubmittedResponse(
-                currentUser?.data[0]?.team_id,
-                language
-            )
-        );
-    }, [language, dispatch, currentUser?.data[0]?.team_id]);
+        if (challengesSubmittedResponse.length === 0)
+            dispatch(
+                getStudentChallengeSubmittedResponse(
+                    currentUser?.data[0]?.team_id,
+                    language
+                )
+            );
+    }, [
+        language,
+        dispatch,
+        currentUser?.data[0]?.team_id,
+        challengesSubmittedResponse
+    ]);
 
     const handleChange = (e) => {
         let newItems = [...answerResponses];
@@ -192,31 +200,14 @@ const IdeasPageNew = () => {
                 }
             });
     };
-    // const fileHandler =(e,id)=>{
-    //     setFiles(e.target.files);
-    //     setuploadQId(id);
-    // };
-    const handleSubmit = async (e, type) => {
-        e.preventDefault();
-        setLoading(true);
+    const fileHandler = (e, id) => {
+        setFiles(e.target.files[0]);
+        setFileName(e.target.files[0].name);
+        setuploadQId(id);
+        e.target.files=null;
+    };
+    const submittingCall = async (type,responses) => {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
-        let responses = answerResponses.map((eachValues) => {
-            return {
-                challenge_question_id: eachValues.challenge_question_id,
-                selected_option: eachValues.selected_option
-            };
-        });
-        // if(files && uploadQId){
-        //     const formData = new FormData();
-        //     formData.apppend('file',files);
-        //     dispatch(uploadFiles(uploadQId,formData));
-        //     setTimeout(() => {
-        //         responses.push({
-        //             challenge_question_id: uploadQId,
-        //             selected_option: fileResponse.split(",")
-        //         });
-        //     }, 200);
-        // }       
         let submitData = {
             responses,
             status: type ? 'DRAFT' : 'SUBMITTED',
@@ -246,12 +237,43 @@ const IdeasPageNew = () => {
                         );
                         setIsDisabled(true);
                     }, 500);
-                    setLoading(false);
                 }
             })
             .catch((err) => {
                 return err.response;
             });
+    };
+    const handleSubmit = async (e, type) => {
+        e.preventDefault();
+        let responses = answerResponses.map((eachValues) => {
+            return {
+                challenge_question_id: eachValues.challenge_question_id,
+                selected_option: eachValues.selected_option
+            };
+        });
+        if(type){
+            setLoading({...loading,draft:true});
+        }else{
+            setLoading({...loading,submit:true});
+        }
+        if (files && uploadQId) {
+            const formData = new FormData();
+            formData.append('file', files);
+
+            dispatch(uploadFiles(uploadQId, formData)).then(()=>{
+                setTimeout((res) => {
+                    responses.push({
+                        challenge_question_id: uploadQId,
+                        selected_option: fileResponse && fileResponse.split(',').filter(e=>e)
+                    });
+                    submittingCall(type,responses);
+                    setLoading(initialLoadingStatus);
+                }, 1000);
+            });
+        }else{
+            submittingCall(type,responses);
+            setLoading(initialLoadingStatus);
+        }
     };
 
     useEffect(() => {
@@ -503,19 +525,31 @@ const IdeasPageNew = () => {
                                                                                 check
                                                                                 className="answers"
                                                                             >
-                                                                                <div className="wrapper my-3">
-                                                                                    <div className="btnimg">
-                                                                                        Upload
-                                                                                        File
-                                                                                    </div>
+                                                                                <div className="wrapper my-3 common-flex">
+                                                                                    <Button
+                                                                                        type="button"
+                                                                                        btnClass={`${ isDisabled ?"secondary" :"primary"} me-3 pointer `}
+                                                                                        size="small"
+                                                                                        label="Upload File"
+                                                                                    />
                                                                                     <input
                                                                                         type="file"
                                                                                         name="file"
-                                                                                        multiple
-                                                                                        // onChange={(e)=>
-                                                                                        //     fileHandler(e,eachQuestion.challenge_question_id)
-                                                                                        // }
+                                                                                        disabled={isDisabled}
+                                                                                        onChange={(
+                                                                                            e
+                                                                                        ) =>
+                                                                                            fileHandler(
+                                                                                                e,
+                                                                                                eachQuestion.challenge_question_id
+                                                                                            )
+                                                                                        }
                                                                                     />
+                                                                                    <Card className='p-3 fw-bold'>
+                                                                                        {fileName || filterAnswer(
+                                                                                            eachQuestion.challenge_question_id
+                                                                                        ) && "File uploaded already"}
+                                                                                    </Card>
                                                                                 </div>
                                                                             </FormGroup>
                                                                         )}
@@ -940,7 +974,11 @@ const IdeasPageNew = () => {
                                                                             )
                                                                         }
                                                                         size="small"
-                                                                        label={`${loading? "loading":"Save as Draft"}`}
+                                                                        label={`${
+                                                                            loading.draft
+                                                                                ? 'loading'
+                                                                                : 'Save as Draft'
+                                                                        }`}
                                                                     />
                                                                     <Button
                                                                         type="button"
@@ -954,7 +992,11 @@ const IdeasPageNew = () => {
                                                                             swalWrapper
                                                                         }
                                                                         size="small"
-                                                                        label={`${loading? "loading":"Save as Draft"}`}
+                                                                        label={`${
+                                                                            loading.submit
+                                                                                ? 'loading'
+                                                                                : 'Submit'
+                                                                        }`}
                                                                     />
                                                                 </div>
                                                             </div>

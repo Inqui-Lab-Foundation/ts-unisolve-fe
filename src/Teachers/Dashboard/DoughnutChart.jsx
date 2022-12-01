@@ -1,7 +1,7 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 // import { Doughnut } from 'react-chartjs-2';
 import 'antd/dist/antd.css';
-import { Progress } from 'reactstrap';
+import { Card, Col, Progress } from 'reactstrap';
 import { Table } from 'antd';
 import { getAdminTeamsList, getTeamMemberStatus } from '../store/teams/actions';
 import { useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 // import DoubleBounce from '../../components/Loaders/DoubleBounce';
 import { FaCheckCircle,FaTimesCircle } from 'react-icons/fa';
+import { Button } from '../../stories/Button';
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -165,16 +166,16 @@ export default function DoughnutChart({ user }) {
     return (
         <>
             <div  className="select-team w-100">
-                {
-                    <div className="row flex-column p-4" >
-                        <label htmlFor="teams" className="mb-3">
-                            Choose a Team:
-                        </label>
-
+                <label htmlFor="teams" className="">
+                    Team Progress:
+                </label>
+                <div className='d-flex align-items-center'>
+                    <Col className="row p-4" >
                         <select
                             onChange={(e) => setTeamId(e.target.value)}
                             name="teams"
                             id="teams"
+                            style={{backgroundColor:'lavender'}}
                         >
                             <option value="">Select Team</option>
                             {teamsList && teamsList.length > 0 ? (
@@ -187,8 +188,21 @@ export default function DoughnutChart({ user }) {
                                 <option value="">There are no teams</option>
                             )}
                         </select>
-                    </div>
-                }
+                    </Col>
+                    <Col className='d-flex justify-content-end align-items-center'>
+                        <Card className='p-3 mx-4'>
+                            Idea Status :  Not Started 
+                        </Card>
+                        <Button
+                            button="button"
+                            label="View Idea"
+                            disabled={teamsMembersStatus.length > 0}
+                            btnClass={`${teamsMembersStatus.length > 0 ? "primary" : "default"}`}
+                            size="small"
+                            onClick={()=>console.log("hi")}
+                        />
+                    </Col>
+                </div>
                 {showDefault && (
                     <div
                         className="d-flex justify-content-center align-items-center"
