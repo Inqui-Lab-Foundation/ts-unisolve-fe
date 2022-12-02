@@ -28,7 +28,9 @@ const INIT_STATE = {
     supportTicket:{},
     supportTicketRespnses:{},
     mentorLanguage:"",
-    teacherPresurveyStatus:null
+    teacherPresurveyStatus:null,
+    preSurveyList:[],
+    quizSurveyId:0
 };
 
 export default (state = INIT_STATE, action) => {
@@ -102,9 +104,12 @@ export default (state = INIT_STATE, action) => {
             supportTicketRespnses: action.payload,
         };
     case GET_TEACHERS_PRESURVEY_STATUS:
+        var data =  action.payload.data?.data[0];
         return {
             ...state,
-            teacherPresurveyStatus: action.payload,
+            teacherPresurveyStatus: data?.dataValues[0]?.progress,
+            preSurveyList:data?.dataValues[0]?.quiz_survey_questions,
+            quizSurveyId:data?.dataValues[0]?.quiz_survey_id
         };
     default:
         return newState;
