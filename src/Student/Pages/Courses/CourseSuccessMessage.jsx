@@ -3,8 +3,10 @@ import { useHistory } from 'react-router-dom';
 import ResultStar from '../../../assets/media/quiz-result-star.png';
 import { Button } from '../../../stories/Button';
 import succesImg from "../../../assets/media/success1.jpeg";
+import { useTranslation } from 'react-i18next';
 
 const CourseSuccessMessage = () => {
+    const { t } = useTranslation();
     const history = useHistory();
     return (
         <div className="container new-result">
@@ -18,11 +20,11 @@ const CourseSuccessMessage = () => {
                         <div className="success_img text-center w-100">
                             <img src={succesImg} alt=".." /><br />
                         </div>
-                        Course Completed Successfully!
+                        {t('student_course.course_completed_succ')}
                     </div>
                     <div className='d-sm-flex justify-content-center mb-3 text-center'>
                         <Button
-                            label="Go to Idea Submission"
+                            label={t('student_course.go_idea_submission')}
                             btnClass="primary mt-4 mx-2"
                             size="small"
                             onClick={() =>
@@ -31,7 +33,7 @@ const CourseSuccessMessage = () => {
                         />
 
                         <Button
-                            label="Go to My Certificate"
+                            label={t('student_course.go_certificate')}
                             btnClass="primary mt-4 mx-2"
                             size="small"
                             onClick={() =>
