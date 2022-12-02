@@ -15,10 +15,20 @@ import { evaluatorLoginUser } from '../redux/actions';
 
 import CryptoJS from 'crypto-js';
 import { openNotificationWithIcon } from '../helpers/Utils';
+import Register from './Register';
 
 const LoginEvaluator = (props) => {
     const history = useHistory();
     const [password, handlePassword] = useState("password");
+    //-for evaluator registration modal
+    const [registerModalShow, setRegisterModalShow] = useState(false);
+
+    React.useLayoutEffect(() => {
+        const moduleName = localStorage.getItem("module");
+        if (localStorage.getItem("current_user") && localStorage.getItem("module")) {
+            moduleName === "MENTOR" ? history.push("/teacher/dashboard") : moduleName === "ADMIN" ? history.push("/admin/dashboard"): moduleName === "EVALUATOR" ? history.push("/evaluator/submitted-ideas") : history.push("/dashboard");
+        }
+    }, []);
 
     const formik = useFormik({
         initialValues: {
@@ -50,10 +60,11 @@ const LoginEvaluator = (props) => {
             const body = {
                 username: values.email,
                 password: encrypted,
-                role: "EVALUATOR"
+                role: "EVALUATER"
             };
             props.evaluatorLoginUserAction(body, history,"EVALUATOR");
             console.log('======', body);
+            // history.push('/evaluator/submitted-ideas');
         }
     });
 
@@ -246,14 +257,29 @@ const LoginEvaluator = (props) => {
                                             }
                                             disabled={!(formik.dirty && formik.isValid)}
                                         />
+                                        <div
+                                        className="text-primary text-center fs-4 pointer pt-1 mt-4"
+                                        onClick={() => setRegisterModalShow(true)}
+                                    >
+                                        Sign Up
+                                    </div>
                                     </Col>
+                                    
                                 </div>
+                                
                             </Form>
                         </Col>
                     </Row>
                 </Col>
             </Row>
         </div>
+        {registerModalShow && (
+                <Register
+                    show={registerModalShow}
+                    setShow={setRegisterModalShow}
+                    onHide={() => setRegisterModalShow(false)}
+                />
+            )}
     </React.Fragment>
   );
 };
