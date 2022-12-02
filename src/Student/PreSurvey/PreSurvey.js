@@ -106,6 +106,7 @@ const PreSurvey = () => {
                                 'Presurvey has been submitted successfully',
                                 ''
                             );
+                            dispatch(getPresurveyData(language));
                             dispatch(getStudentDashboardStatus(currentUser.data[0].user_id, language));
                             dispatch(
                                 updateStudentBadges(
@@ -128,9 +129,6 @@ const PreSurvey = () => {
         }
     });
 
-    useEffect(() => {
-        dispatch(getPresurveyData(language));
-    }, [language,dispatch]);
 
     const handleStart = () => {
         setShow(true);
