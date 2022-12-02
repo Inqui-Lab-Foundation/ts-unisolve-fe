@@ -484,7 +484,10 @@
         "lessons":"Lessons",
         "continue course":"Continue Course",
         "exitfullscreen":"Exit Full Screen",
-        "quiz_completed":"Successfully Completed!"
+        "quiz_completed":"Successfully Completed!",
+        "go_idea_submission":"Go to Idea Submission",
+        "go_certificate":"Go to My Certificate",
+        "course_completed_succ":"Course Completed Successfully!"
     },
     "translation":{
         "tamil":"Tamil Content :-",
