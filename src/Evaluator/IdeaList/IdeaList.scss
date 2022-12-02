@@ -1,9 +1,19 @@
 .idea_list_wrapper{
-  datalist {
-      display: flex;
-      justify-content: space-between;
-      color: red;
+    .tiles_card{
+      height:14rem;
+      width: 14rem;
+      .card:hover{
+        box-shadow: 5px 10px #88888870 !important;
+        transition: 0.4s ease-out;
+      }
     }
+    .rdt_TableRow{
+      padding-top: 1.2rem;
+      padding-bottom: 1.2rem;
+    }
+    .rdt_TableRow:hover {
+      background-color: rgba(255, 203, 52, 0.2);
+  }
 }
   
   
