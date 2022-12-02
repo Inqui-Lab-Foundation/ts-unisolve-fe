@@ -35,7 +35,7 @@ const Certificate = ({ type, currentUser,postSurveyStatus,certDate }) => {
         return check ? " on "+ check : "";
     };
     return (
-        <Card className="course-sec-basic p-5 m-4" style={{backgroundColor:`${postSurveyStatus ? "":"lightgrey"}`}}>
+        <Card className="course-sec-basic p-5 m-4 w-100" style={{backgroundColor:`${postSurveyStatus ? "":"lightgrey"}`}}>
             <CardBody>
                 <CardTitle className=" text-left pt-4 pb-4" tag="h2">
                     {type
@@ -113,7 +113,7 @@ const MyCertificate = () => {
                 <Fragment>
                     {all_topics_count === topics_completed_count || enablePostSurvey  ? (
                         <Row>
-                            <Col className='d-lg-flex'> 
+                            <Col className='d-lg-flex justify-content-center'> 
                                 <Certificate
                                     type={'participate'}
                                     currentUser={currentUser}

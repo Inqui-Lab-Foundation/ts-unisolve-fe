@@ -28,7 +28,7 @@ import { getLanguage } from '../../constants/languageOptions';
 import { useDispatch, useSelector } from 'react-redux';
 import getStart from '../../assets/media/getStart.png';
 import { useTranslation } from 'react-i18next';
-import { getPresurveyData, updateStudentBadges } from '../../redux/studentRegistration/actions';
+import { getPresurveyData, getStudentDashboardStatus, updateStudentBadges } from '../../redux/studentRegistration/actions';
 //import { Modal } from 'react-bootstrap';
 //import ChildrensDaysGif from '../../assets/media/childrensdays.gif';
 
@@ -106,6 +106,7 @@ const PreSurvey = () => {
                                 'Presurvey has been submitted successfully',
                                 ''
                             );
+                            dispatch(getStudentDashboardStatus(currentUser.data[0].user_id, language));
                             dispatch(
                                 updateStudentBadges(
                                     { badge_slugs: ['survey_champ'] },

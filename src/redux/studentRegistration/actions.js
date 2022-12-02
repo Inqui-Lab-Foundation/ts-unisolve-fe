@@ -251,11 +251,11 @@ export const setFilesSuccess = (badges) => async (dispatch) => {
         payload: badges
     });
 };
-export const uploadFiles = (id, data) => async (dispatch) => {
+export const uploadFiles = (data) => async (dispatch) => {
     try {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         const result = await axios
-            .post(`${URL.uploadFile}${id}`, data, axiosConfig)
+            .post(`${URL.uploadFile}`, data, axiosConfig)
             .then((res) => res)
             .catch((err) => {
                 return err.response;
