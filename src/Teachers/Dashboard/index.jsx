@@ -16,7 +16,6 @@ import { useDispatch } from 'react-redux';
 import { getDashboardStates } from '../store/dashboard/actions';
 import DoubleBounce from '../../components/Loaders/DoubleBounce';
 import DoughnutChart from './DoughnutChart';
-import { getTeacherPresurveyStatus } from '../store/mentors/actions';
 
 
 const Dashboard = () => {
@@ -29,10 +28,7 @@ const Dashboard = () => {
         if(presurveyStatus !== 'COMPLETED')
             history.push('/teacher/pre-survey');
     }, []);
-    useLayoutEffect(() => {
-        if(!presurveyStatus)
-            dispatch(getTeacherPresurveyStatus());
-    }, [dispatch,presurveyStatus]);
+    
     useEffect(() => {
         dispatch(getDashboardStates(currentUser.data[0].user_id));
     }, [dispatch, currentUser.data[0].user_id]);
