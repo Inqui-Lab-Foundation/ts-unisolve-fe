@@ -101,6 +101,7 @@ const Register = (props) => {
                 .min(8, 'Minimum 8 characters required')
                 .matches(/[a-zA-Z0-9]/, 'Required only alphanumeric'),
             confirm_password: Yup.string()
+                .oneOf([Yup.ref('password'), null], 'Passwords must match')
                 .trim()
                 .required('Password is required')
                 .min(8, 'Minimum 8 characters required')
@@ -202,7 +203,7 @@ const Register = (props) => {
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         value={formik.values.full_name}
-                                        // isDisabled={stepTwoData.mobile ? true : false}
+                                        maxLength={100}
                                     />
 
                                     {formik.touched.full_name &&
@@ -226,6 +227,7 @@ const Register = (props) => {
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         value={formik.values.mobile}
+                                        maxLength={10}
                                     />
 
                                     {formik.touched.mobile &&
@@ -254,6 +256,7 @@ const Register = (props) => {
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         value={formik.values.username}
+                                        maxLength={100}
                                         // isDisabled={stepTwoData.mobile ? true : false}
                                     />
 
@@ -321,6 +324,7 @@ const Register = (props) => {
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         value={formik.values.qualification}
+                                        maxLength={50}
                                     />
 
                                     {formik.touched.qualification &&
@@ -344,6 +348,7 @@ const Register = (props) => {
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         value={formik.values.city}
+                                        maxLength={50}
                                     />
 
                                     {formik.touched.city &&
@@ -378,6 +383,7 @@ const Register = (props) => {
                                             onChange={formik.handleChange}
                                             onBlur={formik.handleBlur}
                                             value={formik.values.password}
+                                            maxLength={20}
                                         />
                                         <div
                                             className="pointer position-absolute end-0 me-4 mt-1"
@@ -427,6 +433,7 @@ const Register = (props) => {
                                             value={
                                                 formik.values.confirm_password
                                             }
+                                            maxLength={20}
                                         />
                                         <div
                                             className="pointer position-absolute end-0 me-4 mt-1"

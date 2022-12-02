@@ -23,6 +23,13 @@ const LoginEvaluator = (props) => {
     //-for evaluator registration modal
     const [registerModalShow, setRegisterModalShow] = useState(false);
 
+    React.useLayoutEffect(() => {
+        const moduleName = localStorage.getItem("module");
+        if (localStorage.getItem("current_user") && localStorage.getItem("module")) {
+            moduleName === "MENTOR" ? history.push("/teacher/dashboard") : moduleName === "ADMIN" ? history.push("/admin/dashboard"): moduleName === "EVALUATOR" ? history.push("/evaluator/submitted-ideas") : history.push("/dashboard");
+        }
+    }, []);
+
     const formik = useFormik({
         initialValues: {
             email: '',
