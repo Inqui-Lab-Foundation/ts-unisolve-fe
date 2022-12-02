@@ -203,9 +203,10 @@ const RatingModal = (props) => {
                         </p>
                     </div>
                     <div className="col-12 my-3">
+                        <label htmlFor="floatingTextarea">Comments</label>
                         <div className="form-floating">
-                            <textarea className="form-control" placeholder="Leave a comment here" id="ComentTextarea" style={{height: '10rem'}}></textarea>
-                            <label htmlFor="floatingTextarea">Comments</label>
+                            <textarea className="form-control fs-4 lh-sm" maxLength={500} placeholder="Leave a comment here" id="ComentTextarea" style={{height: '10rem'}}></textarea>
+                            
                         </div>
                     </div>
                 </div>
