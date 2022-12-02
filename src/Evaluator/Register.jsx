@@ -11,10 +11,10 @@ import { Label } from 'reactstrap';
 import { Button } from '../stories/Button';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-// import axios from 'axios';
-// import { getNormalHeaders } from '../../helpers/Utils';
-// import { URL, KEY } from '../../constants/defaultValues';
-// import CryptoJS from 'crypto-js';
+import axios from 'axios';
+import { getNormalHeaders, openNotificationWithIcon } from '../helpers/Utils';
+import { URL, KEY } from '../constants/defaultValues';
+import CryptoJS from 'crypto-js';
 
 const Register = (props) => {
     const handleClose = () => {};
@@ -111,35 +111,37 @@ const Register = (props) => {
         }),
 
         onSubmit: async (values) => {
-            // const axiosConfig = getNormalHeaders(KEY.User_API_Key);
+            const axiosConfig = getNormalHeaders(KEY.User_API_Key);
 
-            // values.password = values.password.trim();
-            // const key = CryptoJS.enc.Hex.parse('253D3FB468A0E24677C28A624BE0F939');
-            // const iv = CryptoJS.enc.Hex.parse('00000000000000000000000000000000');
-            // const encrypted = CryptoJS.AES.encrypt(values.password, key, {
-            //     iv: iv,
-            //     padding: CryptoJS.pad.NoPadding
-            // }).toString();
-            // values.password = encrypted;
-            // await axios
-            //     .post(
-            //         `${URL.mentorRegister}`,
-            //         JSON.stringify(values, null, 2),
-            //         axiosConfig
-            //     )
-            //     .then((mentorRegRes) => {
-            //         if (mentorRegRes?.data?.status == 201) {
-            //             setUserData(mentorRegRes?.data?.data[0]);
-            //             props.setShow(false);
-            //         }
-            //     })
-            //     .catch((err) => {
-            //         formik.setErrors({
-            //             check: err.response && err?.response?.data?.message
-            //         });
-            //         return err.response;
-            //     });
-            console.warn('values', values);
+            values.password = values.password.trim();
+            const key = CryptoJS.enc.Hex.parse('253D3FB468A0E24677C28A624BE0F939');
+            const iv = CryptoJS.enc.Hex.parse('00000000000000000000000000000000');
+            const encrypted = CryptoJS.AES.encrypt(values.password, key, {
+                iv: iv,
+                padding: CryptoJS.pad.NoPadding
+            }).toString();
+            values.password = encrypted;
+            await axios
+                .post(
+                    `${URL.evaluatorRegister}`,
+                    JSON.stringify(values, null, 2),
+                    axiosConfig
+                )
+                .then((evaluatorRegRes) => {
+                    if (evaluatorRegRes?.data?.status == 201) {
+                        // setUserData(evaluatorRegRes?.data?.data[0]);
+                        openNotificationWithIcon('success',evaluatorRegRes?.data?.message);
+                        props.setShow(false);
+                    }
+                })
+                .catch((err) => {
+                    openNotificationWithIcon('error',err.response.data?.message);
+                    formik.setErrors({
+                        check: err.response && err?.response?.data?.message
+                    });
+                    props.setShow(false);
+                    return err.response;
+                });
         }
     });
 
