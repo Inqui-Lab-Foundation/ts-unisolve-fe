@@ -2,8 +2,11 @@
     .tiles_card{
       height:14rem;
       width: 14rem;
+      .card{
+        box-shadow: 5px 10px #88888850 !important;
+      }
       .card:hover{
-        box-shadow: 5px 10px #88888870 !important;
+        box-shadow:none !important;
         transition: 0.4s ease-out;
       }
     }
