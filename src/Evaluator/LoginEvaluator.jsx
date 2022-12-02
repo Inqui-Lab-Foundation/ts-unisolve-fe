@@ -13,11 +13,11 @@ import signuplogo from '../assets/media/tn-brands/UPSHIFT_BLACK.png';
 import ellipse_1 from '../assets/media/ellipse.svg';
 import { evaluatorLoginUser } from '../redux/actions';
 
-// import CryptoJS from 'crypto-js';
-// import { openNotificationWithIcon } from '../helpers/Utils';
+import CryptoJS from 'crypto-js';
+import { openNotificationWithIcon } from '../helpers/Utils';
 import Register from './Register';
 
-const LoginEvaluator = () => {
+const LoginEvaluator = (props) => {
     const history = useHistory();
     const [password, handlePassword] = useState("password");
     //-for evaluator registration modal
@@ -34,30 +34,30 @@ const LoginEvaluator = () => {
             password: Yup.string().required('required')
         }),
         // EVALUATOR ROLE
-        onSubmit: () => {
-            // if(localStorage.getItem("current_user") && localStorage.getItem("module")){
-            //     openNotificationWithIcon("error",`Another User(${localStorage.getItem("module")}) has already logged in`);
-            //     return;
-            // }
-            // const key = CryptoJS.enc.Hex.parse(
-            //     '253D3FB468A0E24677C28A624BE0F939'
-            // );
-            // const iv = CryptoJS.enc.Hex.parse(
-            //     '00000000000000000000000000000000'
-            // );
-            // const encrypted = CryptoJS.AES.encrypt(values.password, key, {
-            //     iv: iv,
-            //     padding: CryptoJS.pad.NoPadding
-            // }).toString();
-            // console.log(encrypted);
-            // const body = {
-            //     username: values.email,
-            //     password: encrypted,
-            //     role: "EVALUATOR"
-            // };
-            // props.evaluatorLoginUserAction(body, history,"EVALUATOR");
-            // console.log('======', body);
-            history.push('/evaluator/submitted-ideas');
+        onSubmit: (values) => {
+            if(localStorage.getItem("current_user") && localStorage.getItem("module")){
+                openNotificationWithIcon("error",`Another User(${localStorage.getItem("module")}) has already logged in`);
+                return;
+            }
+            const key = CryptoJS.enc.Hex.parse(
+                '253D3FB468A0E24677C28A624BE0F939'
+            );
+            const iv = CryptoJS.enc.Hex.parse(
+                '00000000000000000000000000000000'
+            );
+            const encrypted = CryptoJS.AES.encrypt(values.password, key, {
+                iv: iv,
+                padding: CryptoJS.pad.NoPadding
+            }).toString();
+            console.log(encrypted);
+            const body = {
+                username: values.email,
+                password: encrypted,
+                role: "EVALUATER"
+            };
+            props.evaluatorLoginUserAction(body, history,"EVALUATOR");
+            console.log('======', body);
+            // history.push('/evaluator/submitted-ideas');
         }
     });
 
