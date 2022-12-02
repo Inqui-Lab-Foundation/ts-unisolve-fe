@@ -22,7 +22,6 @@ import { useSelector } from 'react-redux';
 import {
     getStudentChallengeQuestions,
     getStudentChallengeSubmittedResponse,
-    uploadFiles
 } from '../../../redux/studentRegistration/actions';
 import { useDispatch } from 'react-redux';
 import { getCurrentUser } from '../../../helpers/Utils';
@@ -39,15 +38,11 @@ import 'sweetalert2/src/sweetalert2.scss';
 import logout from '../../../assets/media/logout.svg';
 import { cardData } from './SDGData';
 import moment from 'moment';
-import { InputBox } from '../../../stories/InputBox/InputBox';
 
 const IdeasPageNew = () => {
     const { t } = useTranslation();
     const challengeQuestions = useSelector(
         (state) => state?.studentRegistration.challengeQuestions
-    );
-    const fileResponse = useSelector(
-        (state) => state?.studentRegistration.fileResponse
     );
     const showPage = false;
     const [answerResponses, setAnswerResponses] = useState([]);
@@ -207,7 +202,17 @@ const IdeasPageNew = () => {
         }
         setAnswerResponses(newItems);
     };
+    let lengthCheck = challengeQuestions.length + (sdg === 'OTHERS' ? 1 :0);
+    const responseData = answerResponses.map((eachValues) => {
+        return {
+            challenge_question_id: eachValues.challenge_question_id,
+            selected_option: eachValues.selected_option
+        };
+    });
     const swalWrapper = (e, type) => {
+        let responses = [...responseData];
+        let responseLength = responses.length + (sdg === 'OTHERS' && others ? 1 :0);
+        
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
                 confirmButton: 'btn btn-success',
@@ -216,7 +221,16 @@ const IdeasPageNew = () => {
             buttonsStyling: false,
             allowOutsideClick: false
         });
-
+        if(!type && responseLength < lengthCheck ){
+            swalWithBootstrapButtons
+            .fire({
+                title: "Not Allowed",
+                text: "Please complete all the fields before submitting",
+                imageUrl: `${logout}`,
+                showCloseButton: true,
+            });
+            return;
+        }
         swalWithBootstrapButtons
             .fire({
                 title: t('general_req.submit_idea'),
@@ -260,13 +274,8 @@ const IdeasPageNew = () => {
         setuploadQId(id);
         e.target.files=null;
     };
-    let lengthCheck = challengeQuestions.length +1;
     const submittingCall = async (type,responses) => {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
-        if(!type && responses.length < lengthCheck ){
-            openNotificationWithIcon("error","Please enter all the fields");
-            return;
-        }
         let submitData = {
             responses,
             status: type ? 'DRAFT' : 'SUBMITTED',
@@ -302,15 +311,9 @@ const IdeasPageNew = () => {
                 return err.response;
             });
     };
-    console.log(files);
     const handleSubmit = async (e, type) => {
+        const responses=[...responseData];
         e.preventDefault();
-        let responses = answerResponses.map((eachValues) => {
-            return {
-                challenge_question_id: eachValues.challenge_question_id,
-                selected_option: eachValues.selected_option
-            };
-        });
         if(type){
             setLoading({...loading,draft:true});
         }else{
@@ -318,18 +321,30 @@ const IdeasPageNew = () => {
         }
         if (files && uploadQId) {
             const formData = new FormData();
-            formData.append('file', files);
-
-            dispatch(uploadFiles(uploadQId, formData)).then(()=>{
-                setTimeout((res) => {
-                    responses.push({
-                        challenge_question_id: uploadQId,
-                        selected_option: fileResponse && fileResponse.split(',').filter(e=>e)
-                    });
-                    submittingCall(type,responses);
-                    setLoading(initialLoadingStatus);
-                }, 1000);
-            });
+            for (let i = 0; i < files.length; i++) {
+                let fieldName = "file" + i ? i :"";
+                formData.append(fieldName, files[i]);                
+            }
+            const axiosConfig = getNormalHeaders(KEY.User_API_Key);
+            const result = await axios
+                .post(`${URL.uploadFile}`, formData, axiosConfig)
+                .then((res) => res)
+                .catch((err) => {
+                    return err.response;
+                });
+            if (result && result.status === 200) {
+                responses.push({
+                    challenge_question_id: uploadQId,
+                    selected_option: result.data?.data[0]?.attachments
+                });
+                submittingCall(type,responses);
+                setLoading(initialLoadingStatus);
+            } else {
+                openNotificationWithIcon('error', `${result?.data?.message}`);
+                setLoading(initialLoadingStatus);
+                return;
+            }
+            
         }else{
             submittingCall(type,responses);
             setLoading(initialLoadingStatus);
@@ -480,6 +495,7 @@ const IdeasPageNew = () => {
                                                                 disabled={
                                                                     isDisabled
                                                                 }
+                                                                placeholder="Enter others description"
                                                                 value={others}
                                                                 onChange={(e) =>
                                                                     setOthers(
@@ -490,6 +506,7 @@ const IdeasPageNew = () => {
                                                             />
                                                         </Label>
                                                     </FormGroup>
+                                                    <div className='text-end'>Characters Remaining : {5000-(others ? others.length:0)}</div>
                                                 </Row>
                                             )}
                                             {challengeQuestions.map(
@@ -616,7 +633,7 @@ const IdeasPageNew = () => {
                                                                                     </div>
                                                                                 </FormGroup>
                                                                                 <div className='mx-4'>
-                                                                                    {files.map((item,i)=>
+                                                                                    {files.length > 0 && files.map((item,i)=>
                                                                                         <div key={i} className="badge mb-2 bg-info ms-3">
                                                                                             <span className='p-2'>{item.name}</span> 
                                                                                             <span className='pointer' onClick={()=>removeFileHandler(i)}>
@@ -624,6 +641,17 @@ const IdeasPageNew = () => {
                                                                                             </span>
                                                                                         </div>)
                                                                                     }   
+                                                                                    {files.length === 0 && filterAnswer(
+                                                                                            eachQuestion.challenge_question_id
+                                                                                        ).length > 0 && filterAnswer(
+                                                                                            eachQuestion.challenge_question_id
+                                                                                        ).map((item,i)=>
+                                                                                        {
+                                                                                            let a_link = item.split("/");
+                                                                                            let count = a_link.length-1;
+                                                                                            return <a key={i} className="badge mb-2 bg-info p-3 ms-3" href={item} target="_blank" rel="noreferrer" >{a_link[count]}</a>;
+                                                                                        }
+                                                                                    )}   
                                                                                 </div>
                                                                             </>
                                                                         )}

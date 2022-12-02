@@ -3,6 +3,14 @@ import { Modal } from 'react-bootstrap';
 import { Card, CardBody, CardTitle } from 'reactstrap';
 import { Button } from '../stories/Button';
 
+const LinkComponent = ({item})=>{    
+    return <>
+        {item && item.length >0 && item.map((ans,i)=>{
+            let a_link = ans.split("/");
+            let count = a_link.length-1;
+            return <a key={i} className="badge mb-2 bg-info p-3 ms-3" href={ans} target="_blank" rel="noreferrer" >{a_link[count]}</a>;})}
+    </>;
+};
 const IdeaSubmissionCard = ({handleClose,show,response}) => {
     const submittedResponse = response[0]?.response;
     const [answers, setAnswers] = useState([]);
@@ -40,7 +48,7 @@ const IdeaSubmissionCard = ({handleClose,show,response}) => {
                 {answers.length>0 && answers.map((item,i)=>    
                     <Card key={i} className="p-2 mb-3">
                         <CardTitle className='fw-bold'>{item.question}</CardTitle>
-                        <CardBody>{item.answer}</CardBody>
+                        <CardBody>{item.question.toLowerCase().search("upload") !== -1 ? <LinkComponent item={item.answer} /> : item.answer}</CardBody>
                     </Card>
                 )
                 }

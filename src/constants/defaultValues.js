@@ -28,7 +28,7 @@ export const URL = {
     createMultiStudent:
         process.env.REACT_APP_API_BASE_URL + '/students/bulkCreateStudent',
     uploadFile:
-        process.env.REACT_APP_API_BASE_URL + '/challenge/fileUpload?challenge_id=1&team_id=',
+        process.env.REACT_APP_API_BASE_URL + '/challenge/fileUpload',
 
     //Put//
     changePassword: process.env.REACT_APP_API_BASE_URL + '/auth/changePassword',

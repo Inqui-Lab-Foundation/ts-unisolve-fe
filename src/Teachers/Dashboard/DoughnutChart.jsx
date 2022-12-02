@@ -204,8 +204,8 @@ export default function DoughnutChart({ user }) {
                         <Button
                             button="button"
                             label="View Idea"
-                            disabled={teamsMembersStatus.length > 0 ? false : true}
-                            btnClass={`${teamsMembersStatus.length > 0 ? "primary" : "default"}`}
+                            disabled={teamsMembersStatus.length > 0 && challengesSubmittedResponse[0]?.status ? false : true}
+                            btnClass={`${teamsMembersStatus.length > 0 && challengesSubmittedResponse[0]?.status ? "primary" : "default"}`}
                             size="small"
                             onClick={()=>setIdeaShow(true)}
                         />

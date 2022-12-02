@@ -28,7 +28,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UncontrolledAlert } from 'reactstrap';
 import CommonPage from '../../components/CommonPage';
 import { useTranslation } from 'react-i18next';
-import { getStudentChallengeSubmittedResponse } from '../../redux/studentRegistration/actions';
+import { getStudentChallengeSubmittedResponse, getStudentDashboardStatus } from '../../redux/studentRegistration/actions';
 
 const PostSurvey = () => {
     const { t } = useTranslation();
@@ -75,13 +75,13 @@ const PostSurvey = () => {
                     )
                     .then((preSurveyRes) => {
                         if (preSurveyRes?.status == 200) {
+                            dispatch(getStudentDashboardStatus(currentUser.data[0].user_id, language));
                             openNotificationWithIcon(
                                 'success',
                                 'PostSurvey is been submitted successfully..!!',
                                 ''
                             );
                             setCount(count + 1);
-
                             formik.resetForm();
                         }
                     })
