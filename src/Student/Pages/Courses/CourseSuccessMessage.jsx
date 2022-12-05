@@ -4,10 +4,23 @@ import ResultStar from '../../../assets/media/quiz-result-star.png';
 import { Button } from '../../../stories/Button';
 import succesImg from "../../../assets/media/success1.jpeg";
 import { useTranslation } from 'react-i18next';
+import { getStudentDashboardStatus } from '../../../redux/studentRegistration/actions';
+import { getCurrentUser } from '../../../helpers/Utils';
+import { useDispatch, useSelector } from 'react-redux';
 
 const CourseSuccessMessage = () => {
     const { t } = useTranslation();
     const history = useHistory();
+    const dispatch = useDispatch();
+    const currentUser = getCurrentUser('current_user');
+    const language = useSelector(
+        (state) => state?.studentRegistration?.studentLanguage
+    );
+
+    const handleClick =(type)=>{
+        dispatch(getStudentDashboardStatus(currentUser.data[0].user_id, language));
+        type ? history.push("/challenges") : history.push("/student/my-certificate");
+    };
     return (
         <div className="container new-result">
             <Confetti className="w-100" />
@@ -27,18 +40,14 @@ const CourseSuccessMessage = () => {
                             label={t('student_course.go_idea_submission')}
                             btnClass="primary mt-4 mx-2"
                             size="small"
-                            onClick={() =>
-                                history.push("/challenges")
-                            }
+                            onClick={() => handleClick(true)}
                         />
 
                         <Button
                             label={t('student_course.go_certificate')}
                             btnClass="primary mt-4 mx-2"
                             size="small"
-                            onClick={() =>
-                                history.push("/student/my-certificate")
-                            }
+                            onClick={() => handleClick(false)}
                         />
                     </div>
                 </div>
