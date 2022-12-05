@@ -48,7 +48,7 @@ const FaqPage = () => {
                             <Col md={10}>
                                 <div className="collapse-sec idea-que-sec pt-2">
                                     <Accordion>
-                                        {response.map((que, index) => {
+                                        {response && response.map((que, index) => {
                                             return (
                                                 <Accordion.Item
                                                     eventKey={index}

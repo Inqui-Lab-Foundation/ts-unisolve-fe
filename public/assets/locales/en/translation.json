@@ -417,7 +417,10 @@
         "back": "Back",
         "male": "Male",
         "female": "Female",
-        "others": "Others"
+        "others": "Others",
+        "edit_idea":"Edit Idea Submission",
+        "draft":"Save as Draft",
+        "loading":"Loading"
     },
     "home_nav_links": {
         "about": "About",
@@ -487,7 +490,11 @@
         "quiz_completed":"Successfully Completed!",
         "go_idea_submission":"Go to Idea Submission",
         "go_certificate":"Go to My Certificate",
-        "course_completed_succ":"Course Completed Successfully!"
+        "course_completed_succ":"Course Completed Successfully!",
+        "sdg":"Which Sustainable development Goal (SDG) are you targeting with your solution ?",
+        "sdg_desc":"(You can refer to the SDGs sheet from FIND Module and pick the right option )",
+        "others":"If you picked the option ‘others’ in the above question, write down which SDG or theme is your solution targeting.",
+        "chars":"Characters Remaining"
     },
     "translation":{
         "tamil":"Tamil Content :-",

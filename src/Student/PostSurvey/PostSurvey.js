@@ -107,7 +107,7 @@ const PostSurvey = () => {
         const final = lang.split('=');
         axiosConfig['params'] = {
             role: "STUDENT",
-            local: final[1]
+            locale: final[1]
         };
         axios
             .get(`${URL.getStudentPostSurveyList}`, axiosConfig)
