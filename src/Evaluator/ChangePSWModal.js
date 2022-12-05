@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Form, Label } from 'reactstrap';
-// import axios from 'axios';
+import axios from 'axios';
 // import '../Student/Pages/SignUp.scss';
 import { InputBox } from '../stories/InputBox/InputBox';
 
-// import CryptoJS from 'crypto-js';
+import CryptoJS from 'crypto-js';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-// import { getCurrentUser } from '../helpers/Utils';
+import { getCurrentUser, openNotificationWithIcon } from '../helpers/Utils';
 
 import { useTranslation } from 'react-i18next';
 import 'sweetalert2/src/sweetalert2.scss';
@@ -18,7 +18,7 @@ import { useHistory } from 'react-router-dom';
 
 
 const ChangePSWModal = () => {
-    // const currentUser = getCurrentUser('current_user');
+    const currentUser = getCurrentUser('current_user');
     const history = useHistory();
     const { t } = useTranslation();
     const [error, SetError] = useState('');
@@ -28,13 +28,13 @@ const ChangePSWModal = () => {
         initialValues: {
             oldPassword: '',
             newPassword: '',
-            confirmPassword: '',
+            confirmPassword: ''
         },
 
         validationSchema: Yup.object({
-            oldPassword: Yup.string().required(t('login.error_required')),
-            newPassword: Yup.string().required(t('login.error_required')),
-            confirmPassword: Yup.string().required(t('login.error_required')),
+            oldPassword: Yup.string().required(t('login.error_required')).min(8, 'Minimum 8 characters required'),
+            newPassword: Yup.string().required(t('login.error_required')).min(8, 'Minimum 8 characters required'),
+            confirmPassword: Yup.string().required(t('login.error_required')).min(8, 'Minimum 8 characters required')
         }),
 
         onSubmit: async (values) => {
@@ -46,49 +46,48 @@ const ChangePSWModal = () => {
             } else if (values.newPassword !== values.confirmPassword) {
                 SetError('New Password and Confirm Password not same');
             } else {
-
-                // const key = CryptoJS.enc.Hex.parse('253D3FB468A0E24677C28A624BE0F939');
-                // const iv = CryptoJS.enc.Hex.parse('00000000000000000000000000000000');
-                // const old1 = CryptoJS.AES.encrypt(values.oldPassword, key, {
-                //     iv: iv,
-                //     padding: CryptoJS.pad.NoPadding,
-                // }).toString();
-                // const new1 = CryptoJS.AES.encrypt(values.newPassword, key, {
-                //     iv: iv,
-                //     padding: CryptoJS.pad.NoPadding,
-                // }).toString();
-
-                // const body = JSON.stringify({
-                //     user_id: JSON.stringify(currentUser.data[0].user_id),
-                //     old_password: old1,
-                //     new_password: new1,
-                // });
-
-
-                // var config = {
-                //     method: 'put',
-                //     url: process.env.REACT_APP_API_BASE_URL + '/admins/changePassword',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //         // Accept: "application/json",
-                //         Authorization: `Bearer ${currentUser.data[0].token}`,
-                //     },
-                //     data: body,
-                // };
-                // axios(config)
-                //     .then(function (response) {
-                //         if (response.status === 202) {
-                //             SetResponce(response.data.message);
-                //             setTimeout(() => {
-                //                 props.btnSubmit();
-                //             }, 1000);
-                //         }
-                //     })
-                //     .catch(function (error) {
-                //         console.log(error);
-                //     });
+                const key = CryptoJS.enc.Hex.parse('253D3FB468A0E24677C28A624BE0F939');
+                const iv = CryptoJS.enc.Hex.parse('00000000000000000000000000000000');
+                const old1 = CryptoJS.AES.encrypt(values.oldPassword, key, {
+                    iv: iv,
+                    padding: CryptoJS.pad.NoPadding,
+                }).toString();
+                const new1 = CryptoJS.AES.encrypt(values.newPassword, key, {
+                    iv: iv,
+                    padding: CryptoJS.pad.NoPadding,
+                }).toString();
+                const body = JSON.stringify({
+                    user_id: JSON.stringify(currentUser.data[0].user_id),
+                    old_password: old1,
+                    new_password: new1,
+                });
+                var config = {
+                    method: 'put',
+                    url: process.env.REACT_APP_API_BASE_URL + '/evaluaters/changePassword',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // Accept: "application/json",
+                        Authorization: `Bearer ${currentUser.data[0].token}`,
+                    },
+                    data: body,
+                };
+                console.warn('config',config);
+                axios(config)
+                    .then(function (response) {
+                        if (response.status === 202) {
+                            SetResponce(response.data.message);
+                            openNotificationWithIcon('success',response?.data?.message);
+                            setTimeout(() => {
+                                history.push('/evaluator/submitted-ideas');
+                            }, 1000);
+                        }
+                    })
+                    .catch(function (error) {
+                        openNotificationWithIcon('error',error?.response?.data?.message);
+                        console.log(error);
+                    });
             }
-        },
+        }
     });
     useEffect(() => {
         SetError('');
@@ -180,7 +179,7 @@ const ChangePSWModal = () => {
                                         onBlur={formik.handleBlur}
                                         value={formik.values.newPassword}
                                     />
-                                    <div className='pointer position-absolute end-0 me-4' style={{bottom:'4rem'}} onClick={()=>{handleShowPassword(newPassword);}}>
+                                    <div className='pointer position-absolute end-0 me-4' style={{top:'4rem'}} onClick={()=>{handleShowPassword(newPassword);}}>
                                         {newPassword?.type==='password'?<FaEyeSlash size={18}/>:<FaEye size={18}/>}
                                     </div>
                                     <small className='mt-2'>
