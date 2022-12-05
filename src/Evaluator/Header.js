@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next';
 const Header = (props) => {
     // const { t } = useTranslation();
     // const history = useHistory();
-    // const currentUser = getCurrentUser("current_user");
+    const currentUser = getCurrentUser("current_user");
     // const MINUTE_MS = 30000;
     // const profileOpt = {
     //     options: [
@@ -83,9 +83,8 @@ const Header = (props) => {
 
                                         <div className="d-flex align-items-center profile">
                                             <img src={AvatarImg} className="img-fluid"  />
-                                            <span className='header-name-size'>
-                                                {/* {currentUser.data[0].full_name} */}
-                                                Evaluator Name
+                                            <span className='header-name-size text-capitalize'>
+                                                {currentUser?.data[0]?.full_name || ''}
                                             </span> 
                                         </div>
 

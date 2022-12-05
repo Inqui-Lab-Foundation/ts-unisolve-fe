@@ -38,11 +38,11 @@ const RatingModal = (props) => {
                             1. Novelity score -{' '}
                             <span
                                 className={
-                                    novelityScore < 2
+                                    novelityScore < 1
                                         ? 'fs-2 text-danger'
-                                        : novelityScore < 4
+                                        : novelityScore < 3
                                         ? 'fs-2 text-primary'
-                                        : novelityScore >3 
+                                        : novelityScore >2 
                                         ? 'fs-2 text-success'
                                         : 'fs-2'
                                 }
@@ -68,11 +68,11 @@ const RatingModal = (props) => {
                             2. Usefulness score -{' '}
                             <span
                                 className={
-                                    usefulnessScore < 2
+                                    usefulnessScore < 1
                                         ? 'fs-2 text-danger'
-                                        : usefulnessScore < 4
+                                        : usefulnessScore < 3
                                         ? 'fs-2 text-primary'
-                                        : usefulnessScore >3 
+                                        : usefulnessScore >2 
                                         ? 'fs-2 text-success'
                                         : 'fs-2'
                                 }
@@ -102,11 +102,11 @@ const RatingModal = (props) => {
                             3. Feasability Score -{' '}
                             <span
                                 className={
-                                    feasabilityScore < 2
+                                    feasabilityScore < 1
                                         ? 'fs-2 text-danger'
-                                        : feasabilityScore < 4
+                                        : feasabilityScore < 3
                                         ? 'fs-2 text-primary'
-                                        : feasabilityScore >3 
+                                        : feasabilityScore >2 
                                         ? 'fs-2 text-success'
                                         : 'fs-2'
                                 }
@@ -138,11 +138,11 @@ const RatingModal = (props) => {
                             4. Scalability Score -{' '}
                             <span
                                 className={
-                                    scalabilityScore < 2
+                                    scalabilityScore < 1
                                         ? 'fs-2 text-danger'
-                                        : scalabilityScore < 4
+                                        : scalabilityScore < 3
                                         ? 'fs-2 text-primary'
-                                        : scalabilityScore >3 
+                                        : scalabilityScore >2 
                                         ? 'fs-2 text-success'
                                         : 'fs-2'
                                 }
@@ -174,11 +174,11 @@ const RatingModal = (props) => {
                             5. Affordability Score -{' '}
                             <span
                                 className={
-                                    affordabilityScore < 2
+                                    affordabilityScore < 1
                                         ? 'fs-2 text-danger'
-                                        : affordabilityScore < 4
+                                        : affordabilityScore < 3
                                         ? 'fs-2 text-primary'
-                                        : affordabilityScore >3 
+                                        : affordabilityScore >2 
                                         ? 'fs-2 text-success'
                                         : 'fs-2'
                                 }
