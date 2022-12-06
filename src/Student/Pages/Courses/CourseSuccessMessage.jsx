@@ -19,7 +19,9 @@ const CourseSuccessMessage = () => {
 
     const handleClick =(type)=>{
         dispatch(getStudentDashboardStatus(currentUser.data[0].user_id, language));
-        type ? history.push("/challenges") : history.push("/student/my-certificate");
+        setTimeout(() => {
+            type ? history.push("/challenges") : history.push("/student/my-certificate");
+        }, 300);
     };
     return (
         <div className="container new-result">
