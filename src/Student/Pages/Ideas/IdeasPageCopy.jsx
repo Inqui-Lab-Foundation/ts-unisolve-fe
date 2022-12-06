@@ -20,7 +20,8 @@ import Layout from '../../Layout';
 import { useSelector } from 'react-redux';
 import {
     getStudentChallengeQuestions,
-    getStudentChallengeSubmittedResponse
+    getStudentChallengeSubmittedResponse,
+    updateStudentBadges
 } from '../../../redux/studentRegistration/actions';
 import { useDispatch } from 'react-redux';
 import { getCurrentUser } from '../../../helpers/Utils';
@@ -314,6 +315,16 @@ const IdeasPageNew = () => {
                             type ? 'as draft' : 'successfully'
                         } `
                     );
+                    const badge="the_change_maker";
+                    if(!type){
+                        dispatch(
+                            updateStudentBadges(
+                                { badge_slugs: [badge] },
+                                currentUser.data[0].user_id,
+                                language,t
+                            )
+                        );
+                    }
                     setTimeout(() => {
                         dispatch(
                             getStudentChallengeSubmittedResponse(
