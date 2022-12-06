@@ -20,7 +20,8 @@ const IdeaSubmissionCard = ({handleClose,show,response}) => {
             const answerFormat = data.map((item) => {
                 return {
                     question: item[1].question,
-                    answer: item[1]?.selected_option
+                    answer: item[1]?.selected_option,
+                    type:item[1]?.question_type
                 };
             });
             setAnswers(answerFormat);
@@ -48,7 +49,7 @@ const IdeaSubmissionCard = ({handleClose,show,response}) => {
                 {answers.length>0 && answers.map((item,i)=>    
                     <Card key={i} className="p-2 mb-3">
                         <CardTitle className='fw-bold'>{item.question}</CardTitle>
-                        <CardBody>{item.question.toLowerCase().search("upload") !== -1 ? <LinkComponent item={item.answer} /> : item.answer}</CardBody>
+                        <CardBody>{item.type === "DRAW" ? <LinkComponent item={item.answer} /> : item.answer}</CardBody>
                     </Card>
                 )
                 }
