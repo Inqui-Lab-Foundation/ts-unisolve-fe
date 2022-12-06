@@ -10,18 +10,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     getStudentDashboardStatus,
     studentPostSurveyCertificate,
+    updateStudentBadges,
     updateStudentCertificate
 } from '../../../redux/studentRegistration/actions';
 import CommonPage from '../../../components/CommonPage';
 import moment from 'moment';
 
-const Certificate = ({ type, currentUser,postSurveyStatus,certDate }) => {
+const Certificate = ({ type, currentUser,postSurveyStatus,certDate,language }) => {
     const { t } = useTranslation();
     const pdfRef = useRef(null);
     const partRef = useRef(null);
     const dispatch = useDispatch();
     const handleCertificateDownload = () => {
         const content = type ? partRef.current : pdfRef.current;
+        const badge="the_finisher";
+        dispatch(
+            updateStudentBadges(
+                { badge_slugs: [badge] },
+                currentUser.data[0].user_id,
+                language,t
+            )
+        );
         const doc = new jsPDF('l', 'px', [210, 297]);
         doc.html(content, {
             callback: function (doc) {
@@ -119,8 +128,9 @@ const MyCertificate = () => {
                                     currentUser={currentUser}
                                     postSurveyStatus={all_topics_count === topics_completed_count}
                                     certDate={dashboardStatus}
+                                    language={language}
                                 />
-                                <Certificate currentUser={currentUser} certDate={dashboardStatus} postSurveyStatus={enablePostSurvey}/>
+                                <Certificate language={language} currentUser={currentUser} certDate={dashboardStatus} postSurveyStatus={enablePostSurvey}/>
                             </Col>
                         </Row>
                     ) : (
