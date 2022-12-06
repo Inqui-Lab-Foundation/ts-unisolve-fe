@@ -95,8 +95,8 @@ import Terms from './home/termsandconditions';
 import AdminChallengesComp from './Admin/Challenges/Badges';
 import Preservey from './Admin/PreSurvey';
 import StudentPostservey from './Student/PostSurvey/PostSurvey';
-// import TeacherPostservey from './Teachers/PostSurvey/PostSurvey';
-import TeacherPostservey from './Teachers/PostSurvey/PostSurveyStatic';
+import TeacherPostservey from './Teachers/PostSurvey/PostSurvey';
+// import TeacherPostservey from './Teachers/PostSurvey/PostSurveyStatic';
 // const hashHistory = createHashHistory();.
 
 // TEACHER ROUTES
