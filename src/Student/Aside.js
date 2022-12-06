@@ -25,7 +25,7 @@ import Logo from '../assets/media/tn-brands/UPSHIFT_BLACK.png';
 
 import TicketIcon from '../assets/media/ticket.png';
 import FaqIcon from '../assets/media/faq.png';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RiLogoutBoxRFill } from 'react-icons/ri';
 import { logout } from '../helpers/Utils';
 import { useHistory } from 'react-router-dom';
@@ -34,6 +34,7 @@ import { useTranslation } from 'react-i18next';
 const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
     const { t } = useTranslation();
     const history = useHistory();
+    const dispatch =useDispatch();
     const presuveyStatusGl = useSelector(
         (state) =>
             state?.studentRegistration.presuveyStatusGl
@@ -62,7 +63,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
         if (presuveyStatusGl !== 'COMPLETED') e.preventDefault();
     };
     const handleLogout = (e) => {
-        logout(history, t, 'student');
+        logout(history, t, 'student',dispatch);
         e.preventDefault();
     };
     return (
