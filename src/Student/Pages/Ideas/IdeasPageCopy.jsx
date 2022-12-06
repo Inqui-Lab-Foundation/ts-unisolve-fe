@@ -197,7 +197,7 @@ const IdeasPageNew = () => {
         }
         setAnswerResponses(newItems);
     };
-    let lengthCheck = challengeQuestions.length + (sdg === 'OTHERS' ? 1 : 0);
+    let lengthCheck = challengeQuestions.filter(item=>item.type !== "DRAW").length + (sdg === 'OTHERS' ? 1 : 0);
     const responseData = answerResponses.map((eachValues) => {
         return {
             challenge_question_id: eachValues.challenge_question_id,
@@ -206,12 +206,9 @@ const IdeasPageNew = () => {
     });
     const swalWrapper = (e, type) => {
         let responses = [...responseData];
-        console.log(files);
         let responseLength =
             responses.length +
-            (sdg === 'OTHERS' && others ? 1 : 0) +
-            (files && files.length > 0 ? 1 : 0);
-
+            (sdg === 'OTHERS' && others ? 1 : 0);
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
                 confirmButton: 'btn btn-success',
@@ -274,8 +271,6 @@ const IdeasPageNew = () => {
         const checkPat = choosenFiles.filter((item) => {
             let pat = item.name.split('.');
             pat.pop();
-            console.log(pat.join());
-            console.log(pat.join().match(pattern));
             return pat.join().search(pattern);
         });
         if (

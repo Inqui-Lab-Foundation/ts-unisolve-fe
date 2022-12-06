@@ -48,8 +48,8 @@ const Certificate = ({ type, currentUser,postSurveyStatus,certDate }) => {
                         : t('teacher_certificate.certificate_desc')}
                 </p>
 
-                <div ref={type ? partRef : pdfRef} className="common-flex">
-                    <div className='position-relative' style={{width:"fit-content"}}>
+                <div className="common-flex">
+                    <div ref={type ? partRef : pdfRef} className='position-relative' style={{width:"fit-content"}}>
                         <span
                             className="text-capitalize"
                             style={{
