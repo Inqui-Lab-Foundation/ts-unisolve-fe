@@ -108,7 +108,7 @@ const Header = (props) => {
                                     <div className="d-flex align-items-center profile">
                                         <img src={AvatarImg} />
                                         <span className='header-name-size'>
-                                            {currentUser.data[0].full_name}
+                                            {currentUser?.data[0].full_name}
                                         </span> 
                                         {/* <CommonDropDownComp {...profileOpt} /> */}
                                         <span className="common-language-selc">

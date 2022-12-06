@@ -12,8 +12,8 @@ const IdeaSubmission = () => {
     const language = useSelector(
         (state) => state?.studentRegistration?.studentLanguage
     );
-    const { challengesSubmittedResponse } = useSelector(
-        (state) => state?.studentRegistration
+    const challengesSubmittedResponse  = useSelector(
+        (state) => state?.studentRegistration.challengesSubmittedResponse
     );
     const currentUser = getCurrentUser('current_user');
     const [showChallenges, setShowChallenges] = useState(false);

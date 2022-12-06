@@ -44,5 +44,11 @@ const reducers = combineReducers({
     reports,
     evaluator
 });
-
-export default reducers;
+const rootReducer = (state, action) => {
+    if (action.type === 'USER_LOGOUT') {
+        return reducers(undefined, action);
+    }
+  
+    return reducers(state, action);
+};
+export default rootReducer;

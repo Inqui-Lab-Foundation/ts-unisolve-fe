@@ -16,12 +16,12 @@ import { Button } from '../../../stories/Button';
 import { TextArea } from '../../../stories/TextArea/TextArea';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
-
 import Layout from '../../Layout';
 import { useSelector } from 'react-redux';
 import {
     getStudentChallengeQuestions,
     getStudentChallengeSubmittedResponse,
+    updateStudentBadges
 } from '../../../redux/studentRegistration/actions';
 import { useDispatch } from 'react-redux';
 import { getCurrentUser } from '../../../helpers/Utils';
@@ -47,7 +47,7 @@ const IdeasPageNew = () => {
     const showPage = false;
     const [answerResponses, setAnswerResponses] = useState([]);
     const [isDisabled, setIsDisabled] = useState(false);
-    const initialLoadingStatus = {draft:false,submit:false};
+    const initialLoadingStatus = { draft: false, submit: false };
     const [loading, setLoading] = useState(initialLoadingStatus);
     const [wordCount, setWordCount] = useState([]);
     const { challengesSubmittedResponse } = useSelector(
@@ -70,13 +70,13 @@ const IdeasPageNew = () => {
     );
     const currentUser = getCurrentUser('current_user');
     const dispatch = useDispatch();
-    const prePopulatingCount = (answers)=>{
+    const prePopulatingCount = (answers) => {
         if (answers && answers !== {}) {
             const data = Object.entries(answers);
             const answerFormat = data.map((item) => {
                 return {
                     i: item[0],
-                    count: (5000-item[1]?.selected_option?.length)
+                    count: 5000 - item[1]?.selected_option?.length
                 };
             });
             return answerFormat;
@@ -139,31 +139,27 @@ const IdeasPageNew = () => {
         currentUser?.data[0]?.team_id,
         challengesSubmittedResponse
     ]);
-    const handleWordCount = (e,i)=>{
-        let obj = {i,count:5000 - e.target.value.length};
+    const handleWordCount = (e, i,max) => {
+        let obj = { i, count: (max ? max : 5000) - e.target.value.length };
         let newItems = [...wordCount];
-        const findExistanceIndex = newItems.findIndex((item) =>item?.i ==i);
+        const findExistanceIndex = newItems.findIndex((item) => item?.i == i);
         if (findExistanceIndex === -1) {
             newItems.push(obj);
-        }else {
+        } else {
             let temp = newItems[findExistanceIndex];
             newItems[findExistanceIndex] = {
                 ...temp,
-                count: 5000 - e.target.value.length
+                count: (max ? max : 5000) - e.target.value.length
             };
         }
         setWordCount(newItems);
     };
-    const filterCount=(id)=>{
+    const filterCount = (id,max) => {
         const data =
             wordCount &&
             wordCount.length > 0 &&
-            wordCount.filter(
-                (item) => item.i == id
-            );
-        return data && data.length > 0 && data[0].count
-            ? data[0].count
-            : 5000;
+            wordCount.filter((item) => item.i == id);
+        return data && data.length > 0 && data[0].count ? data[0].count : (max ? max :5000);
     };
     const handleChange = (e) => {
         let newItems = [...answerResponses];
@@ -202,7 +198,7 @@ const IdeasPageNew = () => {
         }
         setAnswerResponses(newItems);
     };
-    let lengthCheck = challengeQuestions.length + (sdg === 'OTHERS' ? 1 :0);
+    let lengthCheck = challengeQuestions.filter(item=>item.type !== "DRAW").length + (sdg === 'OTHERS' ? 1 : 0);
     const responseData = answerResponses.map((eachValues) => {
         return {
             challenge_question_id: eachValues.challenge_question_id,
@@ -211,8 +207,9 @@ const IdeasPageNew = () => {
     });
     const swalWrapper = (e, type) => {
         let responses = [...responseData];
-        let responseLength = responses.length + (sdg === 'OTHERS' && others ? 1 :0);
-        
+        let responseLength =
+            responses.length +
+            (sdg === 'OTHERS' && others ? 1 : 0);
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
                 confirmButton: 'btn btn-success',
@@ -221,13 +218,12 @@ const IdeasPageNew = () => {
             buttonsStyling: false,
             allowOutsideClick: false
         });
-        if(!type && responseLength < lengthCheck ){
-            swalWithBootstrapButtons
-            .fire({
-                title: "Not Allowed",
-                text: "Please complete all the fields before submitting",
+        if (!type && responseLength < lengthCheck) {
+            swalWithBootstrapButtons.fire({
+                title: 'Not Allowed',
+                text: 'Please complete all the fields before submitting',
                 imageUrl: `${logout}`,
-                showCloseButton: true,
+                showCloseButton: true
             });
             return;
         }
@@ -255,26 +251,49 @@ const IdeasPageNew = () => {
                 }
             });
     };
-    const handleUploadFiles = (addedFiles) =>{
+    const handleUploadFiles = (addedFiles) => {
         const upload = [...files];
-        addedFiles.some(item=>{
-            if(upload.findIndex(i=>i.name ===item.name) ===-1)
+        addedFiles.some((item) => {
+            if (upload.findIndex((i) => i.name === item.name) === -1)
                 upload.push(item);
         });
         setFiles(upload);
     };
-    const removeFileHandler = (i)=>{
+    const removeFileHandler = (i) => {
         const fileAdded = [...files];
         fileAdded.splice(i, 1);
         setFiles(fileAdded);
     };
+    let maxFileSize = 20000000;
     const fileHandler = (e, id) => {
         let choosenFiles = Array.prototype.slice.call(e.target.files);
+        e.target.files = null;
+        let pattern = /^[a-zA-Z0-9_\s]{0,}$/;
+        const checkPat = choosenFiles.filter((item) => {
+            let pat = item.name.split('.');
+            pat.pop();
+            return pat.join().search(pattern);
+        });
+        if (
+            checkPat.length > 0
+        ) {
+            openNotificationWithIcon(
+                'error',
+                "Only alphanumeric and '_' are allowed "
+            );
+            return;
+        }
+        if (choosenFiles.filter((item) => item.size > maxFileSize).length > 0) {
+            openNotificationWithIcon(
+                'error',
+                'Please upload file less than 20MB'
+            );
+            return;
+        }
         handleUploadFiles(choosenFiles);
         setuploadQId(id);
-        e.target.files=null;
     };
-    const submittingCall = async (type,responses) => {
+    const submittingCall = async (type, responses) => {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         let submitData = {
             responses,
@@ -284,7 +303,7 @@ const IdeasPageNew = () => {
         };
         await axios
             .post(
-                `${URL.submitChallengeResponse}?team_id=${currentUser?.data[0]?.team_id}`,
+                `${URL.submitChallengeResponse}team_id=${currentUser?.data[0]?.team_id}`,
                 submitData,
                 axiosConfig
             )
@@ -296,6 +315,16 @@ const IdeasPageNew = () => {
                             type ? 'as draft' : 'successfully'
                         } `
                     );
+                    const badge="the_change_maker";
+                    if(!type){
+                        dispatch(
+                            updateStudentBadges(
+                                { badge_slugs: [badge] },
+                                currentUser.data[0].user_id,
+                                language,t
+                            )
+                        );
+                    }
                     setTimeout(() => {
                         dispatch(
                             getStudentChallengeSubmittedResponse(
@@ -312,18 +341,18 @@ const IdeasPageNew = () => {
             });
     };
     const handleSubmit = async (e, type) => {
-        const responses=[...responseData];
+        const responses = [...responseData];
         e.preventDefault();
-        if(type){
-            setLoading({...loading,draft:true});
-        }else{
-            setLoading({...loading,submit:true});
+        if (type) {
+            setLoading({ ...loading, draft: true });
+        } else {
+            setLoading({ ...loading, submit: true });
         }
         if (files && uploadQId) {
             const formData = new FormData();
             for (let i = 0; i < files.length; i++) {
-                let fieldName = "file" + i ? i :"";
-                formData.append(fieldName, files[i]);                
+                let fieldName = 'file' + i ? i : '';
+                formData.append(fieldName, files[i]);
             }
             const axiosConfig = getNormalHeaders(KEY.User_API_Key);
             const result = await axios
@@ -337,16 +366,15 @@ const IdeasPageNew = () => {
                     challenge_question_id: uploadQId,
                     selected_option: result.data?.data[0]?.attachments
                 });
-                submittingCall(type,responses);
+                submittingCall(type, responses);
                 setLoading(initialLoadingStatus);
             } else {
                 openNotificationWithIcon('error', `${result?.data?.message}`);
                 setLoading(initialLoadingStatus);
                 return;
             }
-            
-        }else{
-            submittingCall(type,responses);
+        } else {
+            submittingCall(type, responses);
             setLoading(initialLoadingStatus);
         }
     };
@@ -412,10 +440,7 @@ const IdeasPageNew = () => {
                                                             fontSize: '1.6rem'
                                                         }}
                                                     >
-                                                        {1}. Which Sustainable
-                                                        development Goal (SDG)
-                                                        are you targeting with
-                                                        your solution ?
+                                                        {1}. {t("student_course.sdg")}
                                                     </b>
                                                 </div>
                                                 <div>
@@ -425,10 +450,7 @@ const IdeasPageNew = () => {
                                                             fontSize: '1.4rem'
                                                         }}
                                                     >
-                                                        (You can refer to the
-                                                        SDGs sheet from FIND
-                                                        Module and pick the
-                                                        right option )
+                                                        {t("student_course.sdg_desc")}
                                                     </p>
                                                 </div>
                                                 <div className=" answers row flex-column p-4">
@@ -472,13 +494,7 @@ const IdeasPageNew = () => {
                                                                     '1.6rem'
                                                             }}
                                                         >
-                                                            {2}. If you picked
-                                                            the option ‘others’
-                                                            in the above
-                                                            question, write down
-                                                            which SDG or theme
-                                                            is your solution
-                                                            targeting.
+                                                            {2}. {t("student_course.others")}
                                                         </b>
                                                     </div>
                                                     <FormGroup
@@ -506,7 +522,13 @@ const IdeasPageNew = () => {
                                                             />
                                                         </Label>
                                                     </FormGroup>
-                                                    <div className='text-end'>Characters Remaining : {5000-(others ? others.length:0)}</div>
+                                                    <div className="text-end">
+                                                        {t("student_course.chars")} :
+                                                        {5000 -
+                                                            (others
+                                                                ? others.length
+                                                                : 0)}
+                                                    </div>
                                                 </Row>
                                             )}
                                             {challengeQuestions.map(
@@ -560,46 +582,53 @@ const IdeasPageNew = () => {
                                                                         {eachQuestion.type ===
                                                                             'TEXT' && (
                                                                             <>
-                                                                            <FormGroup
-                                                                                check
-                                                                                className=" answers"
-                                                                            >
-                                                                                <Label
+                                                                                <FormGroup
                                                                                     check
-                                                                                    style={{
-                                                                                        width: '100%'
-                                                                                    }}
+                                                                                    className=" answers"
                                                                                 >
-                                                                                    <TextArea
-                                                                                        name={`${eachQuestion.challenge_question_id}`}
-                                                                                        disabled={
-                                                                                            isDisabled
-                                                                                        }
-                                                                                        placeholder={`Maximum length of characters is ${
-                                                                                            eachQuestion?.word_limit ||
-                                                                                            100
-                                                                                        } only...`}
-                                                                                        maxLength={
-                                                                                            eachQuestion?.word_limit ||
-                                                                                            100
-                                                                                        }
-                                                                                        value={filterAnswer(
-                                                                                            eachQuestion.challenge_question_id
-                                                                                        )}
-                                                                                        onChange={(
-                                                                                            e
-                                                                                        ) =>
-                                                                                        {
-                                                                                            handleChange(
+                                                                                    <Label
+                                                                                        check
+                                                                                        style={{
+                                                                                            width: '100%'
+                                                                                        }}
+                                                                                    >
+                                                                                        <TextArea
+                                                                                            name={`${eachQuestion.challenge_question_id}`}
+                                                                                            disabled={
+                                                                                                isDisabled
+                                                                                            }
+                                                                                            placeholder={`Maximum length of characters is ${
+                                                                                                eachQuestion?.word_limit ||
+                                                                                                100
+                                                                                            } only...`}
+                                                                                            maxLength={
+                                                                                                eachQuestion?.word_limit ||
+                                                                                                100
+                                                                                            }
+                                                                                            value={filterAnswer(
+                                                                                                eachQuestion.challenge_question_id
+                                                                                            )}
+                                                                                            onChange={(
                                                                                                 e
-                                                                                            );
-                                                                                            handleWordCount(e,eachQuestion.challenge_question_id);
-                                                                                        }
-                                                                                        }
-                                                                                    />
-                                                                                </Label>
-                                                                            </FormGroup>
-                                                                            <div className='float-end'>Characters Remaining : {filterCount(eachQuestion.challenge_question_id)}</div>
+                                                                                            ) => {
+                                                                                                handleChange(
+                                                                                                    e
+                                                                                                );
+                                                                                                handleWordCount(
+                                                                                                    e,
+                                                                                                    eachQuestion.challenge_question_id,eachQuestion?.word_limit
+                                                                                                );
+                                                                                            }}
+                                                                                        />
+                                                                                    </Label>
+                                                                                </FormGroup>
+                                                                                <div className="float-end">
+                                                                                    {t("student_course.chars")}
+                                                                                    :{' '}
+                                                                                    {filterCount(
+                                                                                        eachQuestion.challenge_question_id,eachQuestion?.word_limit
+                                                                                    )}
+                                                                                </div>
                                                                             </>
                                                                         )}
                                                                         {eachQuestion.type ===
@@ -612,14 +641,20 @@ const IdeasPageNew = () => {
                                                                                     <div className="wrapper my-3 common-flex">
                                                                                         <Button
                                                                                             type="button"
-                                                                                            btnClass={`${ isDisabled ?"secondary" :"primary"} me-3 pointer `}
+                                                                                            btnClass={`${
+                                                                                                isDisabled
+                                                                                                    ? 'secondary'
+                                                                                                    : 'primary'
+                                                                                            } me-3 pointer `}
                                                                                             size="small"
                                                                                             label="Upload File"
                                                                                         />
                                                                                         <input
                                                                                             type="file"
                                                                                             name="file"
-                                                                                            disabled={isDisabled}
+                                                                                            disabled={
+                                                                                                isDisabled
+                                                                                            }
                                                                                             multiple
                                                                                             onChange={(
                                                                                                 e
@@ -632,26 +667,84 @@ const IdeasPageNew = () => {
                                                                                         />
                                                                                     </div>
                                                                                 </FormGroup>
-                                                                                <div className='mx-4'>
-                                                                                    {files.length > 0 && files.map((item,i)=>
-                                                                                        <div key={i} className="badge mb-2 bg-info ms-3">
-                                                                                            <span className='p-2'>{item.name}</span> 
-                                                                                            <span className='pointer' onClick={()=>removeFileHandler(i)}>
-                                                                                                <AiOutlineCloseCircle size={20}/>
-                                                                                            </span>
-                                                                                        </div>)
-                                                                                    }   
-                                                                                    {files.length === 0 && filterAnswer(
+                                                                                <div className="mx-4">
+                                                                                    {files.length >
+                                                                                        0 &&
+                                                                                        files.map(
+                                                                                            (
+                                                                                                item,
+                                                                                                i
+                                                                                            ) => (
+                                                                                                <div
+                                                                                                    key={
+                                                                                                        i
+                                                                                                    }
+                                                                                                    className="badge mb-2 bg-info ms-3"
+                                                                                                >
+                                                                                                    <span className="p-2">
+                                                                                                        {
+                                                                                                            item.name
+                                                                                                        }
+                                                                                                    </span>
+                                                                                                    <span
+                                                                                                        className="pointer"
+                                                                                                        onClick={() =>
+                                                                                                            removeFileHandler(
+                                                                                                                i
+                                                                                                            )
+                                                                                                        }
+                                                                                                    >
+                                                                                                        <AiOutlineCloseCircle
+                                                                                                            size={
+                                                                                                                20
+                                                                                                            }
+                                                                                                        />
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                            )
+                                                                                        )}
+                                                                                    {files.length ===
+                                                                                        0 &&
+                                                                                        filterAnswer(
                                                                                             eachQuestion.challenge_question_id
-                                                                                        ).length > 0 && filterAnswer(
+                                                                                        )
+                                                                                            .length >
+                                                                                            0 &&
+                                                                                        filterAnswer(
                                                                                             eachQuestion.challenge_question_id
-                                                                                        ).map((item,i)=>
-                                                                                        {
-                                                                                            let a_link = item.split("/");
-                                                                                            let count = a_link.length-1;
-                                                                                            return <a key={i} className="badge mb-2 bg-info p-3 ms-3" href={item} target="_blank" rel="noreferrer" >{a_link[count]}</a>;
-                                                                                        }
-                                                                                    )}   
+                                                                                        ).map(
+                                                                                            (
+                                                                                                item,
+                                                                                                i
+                                                                                            ) => {
+                                                                                                let a_link =
+                                                                                                    item.split(
+                                                                                                        '/'
+                                                                                                    );
+                                                                                                let count =
+                                                                                                    a_link.length -
+                                                                                                    1;
+                                                                                                return (
+                                                                                                    <a
+                                                                                                        key={
+                                                                                                            i
+                                                                                                        }
+                                                                                                        className="badge mb-2 bg-info p-3 ms-3"
+                                                                                                        href={
+                                                                                                            item
+                                                                                                        }
+                                                                                                        target="_blank"
+                                                                                                        rel="noreferrer"
+                                                                                                    >
+                                                                                                        {
+                                                                                                            a_link[
+                                                                                                                count
+                                                                                                            ]
+                                                                                                        }
+                                                                                                    </a>
+                                                                                                );
+                                                                                            }
+                                                                                        )}
                                                                                 </div>
                                                                             </>
                                                                         )}
@@ -1030,7 +1123,7 @@ const IdeasPageNew = () => {
                                                                         handleEdit
                                                                     }
                                                                     size="small"
-                                                                    label="Edit Idea Submission"
+                                                                    label={t("teacher_teams.edit_idea")}
                                                                 />
                                                                 <Button
                                                                     type="button"
@@ -1044,7 +1137,7 @@ const IdeasPageNew = () => {
                                                                         swalWrapper
                                                                     }
                                                                     size="small"
-                                                                    label="Submit"
+                                                                    label={t("teacher_teams.submit")}
                                                                 />
                                                             </>
                                                         ) : (
@@ -1061,7 +1154,7 @@ const IdeasPageNew = () => {
                                                                         );
                                                                     }}
                                                                     size="small"
-                                                                    label="Discard"
+                                                                    label={t("teacher_teams.discard")}
                                                                 />
                                                                 <div>
                                                                     <Button
@@ -1078,8 +1171,8 @@ const IdeasPageNew = () => {
                                                                         size="small"
                                                                         label={`${
                                                                             loading.draft
-                                                                                ? 'loading'
-                                                                                : 'Save as Draft'
+                                                                                ? t("teacher_teams.loading")
+                                                                                : t("teacher_teams.draft")
                                                                         }`}
                                                                     />
                                                                     <Button
@@ -1096,8 +1189,8 @@ const IdeasPageNew = () => {
                                                                         size="small"
                                                                         label={`${
                                                                             loading.submit
-                                                                                ? 'loading'
-                                                                                : 'Submit'
+                                                                                ? t("teacher_teams.loading")
+                                                                                : t("teacher_teams.submit")
                                                                         }`}
                                                                     />
                                                                 </div>

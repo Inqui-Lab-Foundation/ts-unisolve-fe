@@ -556,3 +556,9 @@ export const getPresurveyData = (language) => async (dispatch) => {
         dispatch(setPresurveyStatus(null));
     }
 };
+export const userLogout =
+    () => async (dispatch) => {
+        dispatch({
+            type: 'USER_LOGOUT',
+        });
+    };

@@ -28,7 +28,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UncontrolledAlert } from 'reactstrap';
 import CommonPage from '../../components/CommonPage';
 import { useTranslation } from 'react-i18next';
-import { getStudentChallengeSubmittedResponse, getStudentDashboardStatus } from '../../redux/studentRegistration/actions';
+import { getStudentChallengeSubmittedResponse, getStudentDashboardStatus, studentPostSurveyCertificate, updateStudentBadges } from '../../redux/studentRegistration/actions';
 
 const PostSurvey = () => {
     const { t } = useTranslation();
@@ -75,14 +75,25 @@ const PostSurvey = () => {
                     )
                     .then((preSurveyRes) => {
                         if (preSurveyRes?.status == 200) {
-                            dispatch(getStudentDashboardStatus(currentUser.data[0].user_id, language));
-                            openNotificationWithIcon(
-                                'success',
-                                'PostSurvey is been submitted successfully..!!',
-                                ''
-                            );
-                            setCount(count + 1);
-                            formik.resetForm();
+                            setTimeout(() => {
+                                const badge="survey_master";
+                                dispatch(
+                                    updateStudentBadges(
+                                        { badge_slugs: [badge] },
+                                        currentUser.data[0].user_id,
+                                        language,t
+                                    )
+                                );
+                                dispatch(getStudentDashboardStatus(currentUser.data[0].user_id, language));
+                                dispatch(studentPostSurveyCertificate(language));
+                                openNotificationWithIcon(
+                                    'success',
+                                    'PostSurvey is been submitted successfully..!!',
+                                    ''
+                                );
+                                setCount(count + 1);
+                                formik.resetForm();
+                            }, 300);
                         }
                     })
                     .catch((err) => {
@@ -107,7 +118,7 @@ const PostSurvey = () => {
         const final = lang.split('=');
         axiosConfig['params'] = {
             role: "STUDENT",
-            local: final[1]
+            locale: final[1]
         };
         axios
             .get(`${URL.getStudentPostSurveyList}`, axiosConfig)
