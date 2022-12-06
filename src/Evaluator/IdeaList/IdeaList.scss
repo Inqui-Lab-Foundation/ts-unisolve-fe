@@ -17,6 +17,17 @@
     .rdt_TableRow:hover {
       background-color: rgba(255, 203, 52, 0.2);
   }
+  .level-status-card{
+    min-height: 16rem;
+  }
 }
-  
-  
+.comment-card::before{
+  content: '';
+  height: 100%;
+  width: 5px;
+  background: #067DE1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border: 27px;
+} 

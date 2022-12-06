@@ -4,162 +4,119 @@ import './IdeaList.scss';
 import Layout from '../Layout';
 import DataTable, { Alignment } from 'react-data-table-component';
 import DataTableExtensions from 'react-data-table-component-extensions';
-import Select from '../Helper/Select';
-// import { Button } from '../../stories/Button';
-import RatingModal from './RatingModal';
+// import Select from '../Helper/Select';
+import IdeaDetail from './IdeaDetail';
+import { getSubmittedIdeaList } from '../store/evaluator/action';
+import { useDispatch, useSelector } from 'react-redux';
 
 const IdeaList = () => {
-    const [ideaDetail, setIdeaDetail] = React.useState({});
-    const ideaTypeData=['Total Idea', 'Processed Idea', 'Yet to Processd'];
+    const topRef=React.useRef();
+    const dispatch = useDispatch();
+    const [ideaDetails, setIdeaDetails] = React.useState({});
+    // const ideaTypeData = ['Total Idea', 'Processed Idea', 'Yet to Processd'];
     // eslint-disable-next-line no-unused-vars
-    const [ideaType, setIdeaType] = React.useState('');
+    // const [ideaType, setIdeaType] = React.useState('');
+    const [isIdeaDetail, setIsIdeaDetail] = React.useState(false);
+    const [currentRow, setCurrentRow]=React.useState(1);
+    const [skipButtonText, setSkipButtonText]=React.useState('Skip');
 
-    //---for rading modal---
-    const [ratingModalShow, setRatingModalShow] = React.useState(false);
-    const ideaArray = [
-        {
-            id: 1,
-            teamName: 'Prince Team',
-            ideaName: 'My idea 1',
-            creationDate:'27-12-2022',
-            idea: [
-                {
-                    id: 1,
-                    question: 'Question one',
-                    answer: 'answer one'
-                },
-                {
-                    id: 2,
-                    question: 'Question two',
-                    answer: 'answer two'
-                },
-                {
-                    id: 3,
-                    question: 'Question three',
-                    answer: 'answer three'
-                },
-                {
-                    id: 4,
-                    question: 'Question four',
-                    answer: 'answer four'
-                }
-            ]
-        },
-        {
-            id: 2,
-            teamName: 'Aditya Team',
-            ideaName: 'My idea 2',
-            creationDate:'28-12-2022',
-            idea: [
-                {
-                    id: 1,
-                    question: 'Question one',
-                    answer: 'answer one'
-                },
-                {
-                    id: 2,
-                    question: 'Question two',
-                    answer: 'answer two'
-                },
-                {
-                    id: 3,
-                    question: 'Question three',
-                    answer: 'answer three'
-                },
-                {
-                    id: 4,
-                    question: 'Question four',
-                    answer: 'answer four'
-                }
-            ]
-        },
-        {
-            id: 3,
-            teamName: 'Vishnu Team',
-            ideaName: 'My idea 3',
-            creationDate:'29-12-2022',
-            idea: [
-                {
-                    id: 1,
-                    question: 'Question one',
-                    answer: 'answer one'
-                },
-                {
-                    id: 2,
-                    question: 'Question two',
-                    answer: 'answer two'
-                },
-                {
-                    id: 3,
-                    question: 'Question three',
-                    answer: 'answer three'
-                },
-                {
-                    id: 4,
-                    question: 'Question four',
-                    answer: 'answer four'
-                }
-            ]
+    const idea_list = useSelector(
+        (state) => state?.evaluator.submittedIdeaList
+    );
+
+    React.useEffect(() => {
+        if (!idea_list) {
+            dispatch(getSubmittedIdeaList());
         }
-    ];
+    }, [idea_list]);
+    React.useEffect(()=>{
+        if (idea_list) {
+            setIdeaDetails(idea_list[0]);
+            setIsIdeaDetail(true);
+        }
+    },[]);
+    React.useEffect(()=>{
+        topRef.current.scrollIntoView(
+            {
+                top:0,
+                behavior: "smooth",
+            }
+        );
+       console.warn(topRef.current.offsetTop);
+    },[isIdeaDetail]);
+
+    const handleSkip=(currentColumnNo)=>{
+        if(idea_list && currentColumnNo<idea_list?.length){
+            setIdeaDetails(idea_list[currentColumnNo]);
+            setIsIdeaDetail(true);
+            setCurrentRow(currentColumnNo+1);
+            if(idea_list?.length-currentColumnNo==1){
+                setSkipButtonText('Back To List');
+            }
+        }else{
+            setSkipButtonText('Skip');
+            setIdeaDetails({});
+            setIsIdeaDetail(false);
+            setCurrentRow(1);
+        }
+
+    };
+
     const submittedList = {
-        data: ideaArray,
+        data: idea_list || [],
         columns: [
             {
+                name: 'SL.NO',
+                cell: (params, index) => {
+                    return [
+                        <div className="ms-3" key={params}>
+                            {index+1}
+                        </div>
+                    ];
+                },
+                sortable: true,
+                width: '10%'
+            },
+            {
                 name: 'Team Name',
-                selector: 'teamName',
+                selector: 'team_name',
                 sortable: true,
                 width: '20%'
             },
             {
                 name: 'Idea Name',
-                selector: 'ideaName',
-                width: '20%'
-            },
-            {
-                name: 'Creation Date',
-                selector: 'creationDate',
-                width: '20%'
+                selector: 'sdg',
+                width: '40%'
             },
             {
                 name: 'Actions',
-                cell: (params) => {
+                cell: (params, index) => {
                     return [
-                        <div
-                            className="btn btn-primary btn-lg mr-5 mx-2"
-                            data-bs-toggle="modal"
-                            data-bs-target="#staticBackdrop"
-                            key={params}
-                            onClick={() => viewIdeaDetail(params)}
-                        >
-                            View Idea Details
-                        </div>,
-                        <div
-                        className="btn btn-warning btn-lg mr-5 mx-2"
-                        key={params}
-                        onClick={() => setRatingModalShow(true)}
-                    >
-                        Add Score
-                    </div>
+                        <div className="d-flex" key={params}>
+                            <div
+                                className="btn btn-primary btn-lg mr-5 mx-2"
+                                onClick={() => {
+                                    setIsIdeaDetail(true);
+                                    setIdeaDetails(params);
+                                    setCurrentRow(index+1);
+                                }}
+                            >
+                                View Idea Details
+                            </div>
+                        </div>
                     ];
                 },
-                width: '40%',
+                width: '30%',
                 left: true
             }
         ]
     };
-    const viewIdeaDetail = (data) => {
-        setIdeaDetail(data);
-    };
-    // const handleSubmit = () => {
-    //     // setIsAcceptBtn(false);
-    // };
+console.warn('idea', idea_list);
     return (
-        <>
-            <Layout>
-                <div className="container idea_list_wrapper mt-5 mb-50">
-                    {/* <h2 className="mb-4">Submitted Ideas</h2> */}
-                    <div className="row mb-md-4 mb-3">
+        <Layout>
+            <div className="container idea_list_wrapper mt-5 mb-50" ref={topRef}>
+                {/* <h2 className="mb-4">Submitted Ideas</h2> */}
+                {/* <div className="row mb-md-4 mb-3">
                         <div className="tiles_card p-2">
                             <div className="p-4 w-100 h-100 card text-center border justify-content-center">
                                 <h3 className="m-0">
@@ -188,26 +145,28 @@ const IdeaList = () => {
                                 </h3>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
+                {!isIdeaDetail && idea_list && idea_list?.length > 0 ? (
                     <div className="row">
                         <div className="col-12 p-0">
-                            <div className="submitted_lists bg-white border card pt-3">
-                                <div className="d-flex ms-auto me-md-5 me-3 p-2 align-items-center">
-                                        <p className="text-muted fs-3 m-0 me-2">Select Idea Type</p>
-                                        <Select
-                                            placeHolder={'Select Idea Type'}
-                                            list={ideaTypeData}
-                                            setValue={setIdeaType}
-                                        />
-                                    
-                                </div>
+                            <div className="submitted_lists bg-white border card pt-3" >
+                                {/* <div className="d-flex ms-auto me-md-5 me-3 p-2 align-items-center">
+                                    <p className="text-muted fs-3 m-0 me-2">
+                                        Select Idea Type
+                                    </p>
+                                    <Select
+                                        placeHolder={'Select Idea Type'}
+                                        list={ideaTypeData}
+                                        setValue={setIdeaType}
+                                    />
+                                </div> */}
                                 <DataTableExtensions
                                     print={false}
                                     export={false}
                                     {...submittedList}
                                 >
                                     <DataTable
-                                        data={ideaArray}
+                                        data={idea_list || []}
                                         defaultSortField="id"
                                         defaultSortAsc={false}
                                         pagination
@@ -223,92 +182,20 @@ const IdeaList = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-                
-            </Layout>
-            {/* <!-- Modal --> */}
-            <div
-                className="modal fade"
-                id="staticBackdrop"
-                data-bs-backdrop="static"
-                data-bs-keyboard="false"
-                tabIndex="-1"
-                aria-labelledby="staticBackdropLabel"
-                aria-hidden="true"
-            >
-                <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <div className="w-100">
-                                <h5
-                                    className="modal-title text-center text-capitalize"
-                                    id="staticBackdropLabel"
-                                >
-                                    {ideaDetail?.ideaName}
-                                </h5>
-                            </div>
-                            <button
-                                type="button"
-                                className="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            ></button>
-                        </div>
-                        <div className="modal-body">
-                            <div className="container-fluid">
-                                <div className="row">
-                                    <div className="col-12 p-0">
-                                        {ideaDetail?.idea?.map(
-                                            (item, index) => {
-                                                return (
-                                                    <div
-                                                        key={index}
-                                                        className="card p-4 my-4 border"
-                                                    >
-                                                        <h2>
-                                                            {item?.question}
-                                                        </h2>
-                                                        <p>{item?.answer}</p>
-                                                    </div>
-                                                );
-                                            }
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="modal-footer justify-content-center">
-                            <div>
-                                <button
-                                    className="btn btn-lg px-4 py-2 btn-success me-3"
-                                    data-bs-dismiss="modal"
-                                    // onClick={() => {}}
-                                >
-                                    <span className="fs-4">Accept</span>
-                                </button>
-                                <button
-                                    className="btn btn-lg px-4 py-2 btn-danger me-3"
-                                    data-bs-dismiss="modal"
-                                    // onClick={() => {}}
-                                >
-                                    <span className="fs-4">Reject</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                ) : isIdeaDetail && idea_list && idea_list?.length > 0 ? (
+                    <IdeaDetail
+                        ideaDetails={ideaDetails}
+                        setIsIdeaDetail={setIsIdeaDetail}
+                        handleSkip={handleSkip}
+                        currentRow={currentRow}
+                        skipButtonText={skipButtonText}
+                    />
+                ) : (
+                    <h2 className="my-auto text-center">No Data Available.</h2>
+                )}
             </div>
-            {ratingModalShow && (
-                <RatingModal
-                    show={ratingModalShow}
-                    setShow={setRatingModalShow}
-                    onHide={() => setRatingModalShow(false)}
-                />
-            )}
-        </>
+        </Layout>
     );
 };
 
 export default IdeaList;
-
-
