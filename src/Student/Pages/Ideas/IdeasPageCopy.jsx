@@ -356,7 +356,7 @@ const IdeasPageNew = () => {
             }
             const axiosConfig = getNormalHeaders(KEY.User_API_Key);
             const result = await axios
-                .post(`${URL.uploadFile}`, formData, axiosConfig)
+                .post(`${URL.uploadFile}${currentUser?.data[0]?.team_id}`, formData, axiosConfig)
                 .then((res) => res)
                 .catch((err) => {
                     return err.response;
