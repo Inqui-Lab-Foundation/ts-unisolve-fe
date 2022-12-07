@@ -63,7 +63,7 @@ const ChangePSWModal = () => {
                 });
                 var config = {
                     method: 'put',
-                    url: process.env.REACT_APP_API_BASE_URL + '/evaluaters/changePassword',
+                    url: process.env.REACT_APP_API_BASE_URL + '/evaluators/changePassword',
                     headers: {
                         'Content-Type': 'application/json',
                         // Accept: "application/json",
