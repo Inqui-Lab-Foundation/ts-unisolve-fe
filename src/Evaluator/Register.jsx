@@ -73,7 +73,7 @@ const Register = (props) => {
             full_name: '',
             password: '',
             confirm_password: '',
-            role: 'EVALUATER',
+            role: 'EVALUATOR',
             date_of_birth: '',
             qualification: '',
             city: ''

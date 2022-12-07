@@ -8,8 +8,8 @@ export const URL = {
     // Post //
     login: process.env.REACT_APP_API_BASE_URL + '/students/login',
     adminLogin: process.env.REACT_APP_API_BASE_URL + '/admins/login',
-    evaluatorLogin: process.env.REACT_APP_API_BASE_URL + '/evaluaters/login',
-    evaluatorRegister: `${process.env.REACT_APP_API_BASE_URL}/evaluaters/register`,
+    evaluatorLogin: process.env.REACT_APP_API_BASE_URL + '/evaluators/login',
+    evaluatorRegister: `${process.env.REACT_APP_API_BASE_URL}/evaluators/register`,
     teacherLogin: process.env.REACT_APP_API_BASE_URL + '/mentors/login',
     addMentor: process.env.REACT_APP_API_BASE_URL + '/mentors/create',
     addAdminCourses: process.env.REACT_APP_API_BASE_URL + '/course',

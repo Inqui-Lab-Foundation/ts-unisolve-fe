@@ -60,7 +60,7 @@ const LoginEvaluator = (props) => {
             const body = {
                 username: values.email,
                 password: encrypted,
-                role: "EVALUATER"
+                role: "EVALUATOR"
             };
             props.evaluatorLoginUserAction(body, history,"EVALUATOR");
             console.log('======', body);

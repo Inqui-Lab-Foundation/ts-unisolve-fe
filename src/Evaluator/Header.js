@@ -10,12 +10,14 @@ import { getAdminNotificationsList } from "../redux/actions";
 import { connect } from "react-redux";
 import { getCurrentUser, logout } from "../helpers/Utils";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+
 
 const Header = (props) => {
 
     const currentUser = getCurrentUser("current_user");
     const idea_list = useSelector((state) => state?.evaluator.submittedIdeaList);
-
+    const location= useLocation();
 
     return (
         <header>
@@ -34,7 +36,8 @@ const Header = (props) => {
                                     lg={9}
                                     className="d-flex justify-content-between align-items-center mt-lg-0 mt-3 order-lg-0 order-1"
                                 >
-                                    <div className="row w-100">
+                                    {location.pathname?.split('/')?.pop()=='submitted-ideas' &&
+                                        <div className="row w-100">
                                         <div className="col-sm-4 col-6">
                                             <p className="m-0 fs-3">
                                                 Total Idea:&nbsp;
@@ -61,7 +64,8 @@ const Header = (props) => {
                                                 </span>
                                             </p>
                                         </div>
-                                    </div>
+                                        </div>
+                                    }
                                 </Col>
 
                                 <Col

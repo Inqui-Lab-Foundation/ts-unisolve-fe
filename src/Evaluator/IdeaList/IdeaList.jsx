@@ -18,7 +18,7 @@ const IdeaList = () => {
     // const [ideaType, setIdeaType] = React.useState('');
     const [isIdeaDetail, setIsIdeaDetail] = React.useState(false);
     const [currentRow, setCurrentRow]=React.useState(1);
-    const [skipButtonText, setSkipButtonText]=React.useState('Skip');
+    const [skipButtonText, setSkipButtonText]=React.useState('Next Idea');
 
     const idea_list = useSelector(
         (state) => state?.evaluator.submittedIdeaList
@@ -28,13 +28,17 @@ const IdeaList = () => {
         if (!idea_list) {
             dispatch(getSubmittedIdeaList());
         }
-    }, [idea_list]);
-    React.useEffect(()=>{
         if (idea_list) {
             setIdeaDetails(idea_list[0]);
             setIsIdeaDetail(true);
         }
-    },[]);
+    }, [idea_list]);
+    // React.useEffect(()=>{
+    //     if (idea_list) {
+    //         setIdeaDetails(idea_list[0]);
+    //         setIsIdeaDetail(true);
+    //     }
+    // },[]);
     React.useEffect(()=>{
         topRef.current.scrollIntoView(
             {
@@ -42,7 +46,6 @@ const IdeaList = () => {
                 behavior: "smooth",
             }
         );
-       console.warn(topRef.current.offsetTop);
     },[isIdeaDetail]);
 
     const handleSkip=(currentColumnNo)=>{
@@ -54,7 +57,7 @@ const IdeaList = () => {
                 setSkipButtonText('Back To List');
             }
         }else{
-            setSkipButtonText('Skip');
+            setSkipButtonText('Next Idea');
             setIdeaDetails({});
             setIsIdeaDetail(false);
             setCurrentRow(1);
@@ -111,7 +114,7 @@ const IdeaList = () => {
             }
         ]
     };
-console.warn('idea', idea_list);
+
     return (
         <Layout>
             <div className="container idea_list_wrapper mt-5 mb-50" ref={topRef}>
