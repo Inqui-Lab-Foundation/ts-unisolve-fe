@@ -49,6 +49,7 @@ const Certificate = ({ type, currentUser,postSurveyStatus,certDate,language }) =
         const check = type ? certDate?.course_completed_date && moment(certDate?.course_completed_date).format("DD-MM-YYYY") : certDate?.post_survey_completed_date && moment(certDate?.post_survey_completed_date).format("DD-MM-YYYY");
         return check ? " on "+ check : "";
     };
+    console.log(type);
     return (
         <Card className="course-sec-basic p-5 m-4 w-100" style={{backgroundColor:`${postSurveyStatus ? "":"lightgrey"}`}}>
             <CardBody>
@@ -127,11 +128,11 @@ const MyCertificate = () => {
                                 <Certificate
                                     type={'participate'}
                                     currentUser={currentUser}
-                                    postSurveyStatus={all_topics_count === topics_completed_count}
+                                    postSurveyStatus={enablePostSurvey}
                                     certDate={dashboardStatus}
                                     language={language}
                                 />
-                                <Certificate language={language} currentUser={currentUser} certDate={dashboardStatus} postSurveyStatus={enablePostSurvey}/>
+                                <Certificate language={language} currentUser={currentUser} certDate={dashboardStatus} postSurveyStatus={all_topics_count === topics_completed_count}/>
                             </Col>
                         </Row>
                     ) : (

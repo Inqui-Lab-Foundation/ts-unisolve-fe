@@ -76,7 +76,7 @@ const IdeasPageNew = () => {
             const answerFormat = data.map((item) => {
                 return {
                     i: item[0],
-                    count: 5000 - item[1]?.selected_option?.length
+                    count: (item[1]?.word_limit ? item[1]?.word_limit :5000) - item[1]?.selected_option?.length
                 };
             });
             return answerFormat;
