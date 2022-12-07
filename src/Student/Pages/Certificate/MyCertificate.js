@@ -4,7 +4,8 @@ import { Button } from '../../../stories/Button';
 import Layout from '../../Layout';
 import jsPDF from 'jspdf';
 import { getCurrentUser } from '../../../helpers/Utils';
-import TeacherCertificate from '../../../assets/media/img/teacher_certificate_V2.png';
+import courseCompletionCertificate from '../../../assets/media/img/certificates/TN_Course+Completion+Certficate.png';
+import ideaSubmissionCertificate from '../../../assets/media/img/certificates/TN+Idea+Submission.png';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -24,20 +25,24 @@ const Certificate = ({ type, currentUser,postSurveyStatus,certDate,language }) =
     const handleCertificateDownload = () => {
         const content = type ? partRef.current : pdfRef.current;
         const badge="the_finisher";
-        dispatch(
-            updateStudentBadges(
-                { badge_slugs: [badge] },
-                currentUser.data[0].user_id,
-                language,t
-            )
-        );
-        const doc = new jsPDF('l', 'px', [210, 297]);
+        const size = type ? [210, 297] : [298,200];
+        const orientation = type ? 'l' : 'p';
+        const doc = new jsPDF(orientation, 'px', size);
         doc.html(content, {
             callback: function (doc) {
                 doc.save('certificate.pdf');
             }
         });
-        dispatch(updateStudentCertificate(currentUser?.data[0]?.student_id));
+        if(!type)
+            dispatch(
+                updateStudentBadges(
+                    { badge_slugs: [badge] },
+                    currentUser.data[0].user_id,
+                    language,t
+                )
+            );
+        if(!type)
+            dispatch(updateStudentCertificate(currentUser?.data[0]?.student_id));
     };
     const certDateCheck =()=>{
         const check = type ? certDate?.course_completed_date && moment(certDate?.course_completed_date).format("DD-MM-YYYY") : certDate?.post_survey_completed_date && moment(certDate?.post_survey_completed_date).format("DD-MM-YYYY");
@@ -51,32 +56,27 @@ const Certificate = ({ type, currentUser,postSurveyStatus,certDate,language }) =
                         ? t('teacher_certificate.participate_certificate')
                         : t('teacher_certificate.certificate')}
                 </CardTitle>
-                <p>
-                    {type
-                        ? t('teacher_certificate.part_certificate_desc')
-                        : t('teacher_certificate.certificate_desc')}
-                </p>
-
                 <div className="common-flex">
                     <div ref={type ? partRef : pdfRef} className='position-relative' style={{width:"fit-content"}}>
                         <span
                             className="text-capitalize"
                             style={{
                                 position: 'absolute',
-                                top: '8rem',
-                                left: '2.3rem',
+                                top: `${type ?'9rem':'12.8rem'}`,
+                                left: `${type ?'10.3rem':'6.5rem'}`,
                                 fontSize: '0.8rem'
                             }}
                         >
                             {currentUser?.data[0]?.full_name + certDateCheck()}  
                         </span>
                         <img
-                            src={type ? TeacherCertificate : TeacherCertificate}
+                            src={type ? ideaSubmissionCertificate : courseCompletionCertificate}
                             alt="certificate"
                             className='img-fluid mx-auto'
                             style={{
-                                width: '297px',
-                                height: '209px'
+                                width: `${type ?'297px':'200px'}`,
+                                height: `${type ?'209px':'297px'}`,
+                                border:'1px solid #cccccc'
                             }}
                         />
                     </div>
