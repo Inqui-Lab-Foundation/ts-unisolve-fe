@@ -28,9 +28,10 @@ const Certificate = ({ type, currentUser,postSurveyStatus,certDate,language }) =
         const size = type ? [210, 297] : [298,200];
         const orientation = type ? 'l' : 'p';
         const doc = new jsPDF(orientation, 'px', size);
+        const certName = `${currentUser.data[0].full_name}_${type ?'idea_certificate':'course_certificate'}`;
         doc.html(content, {
             callback: function (doc) {
-                doc.save('certificate.pdf');
+                doc.save(certName);
             }
         });
         if(!type)
