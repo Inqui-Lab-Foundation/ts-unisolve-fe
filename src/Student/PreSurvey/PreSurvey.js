@@ -144,6 +144,9 @@ const PreSurvey = () => {
             //setGreetChildrensDay(true);
         }
     }, []);
+    useEffect(() => {
+        dispatch(getPresurveyData(language));
+    }, [language]);
 
     return (
         <Layout>
