@@ -357,9 +357,9 @@
     },
     "teacher_certificate": {
         "download": "Download Certificate",
-        "participate_certificate": "Participation Certificate",
-        "download_participate": "Download Participation Certificate",
-        "certificate": "Certificate",
+        "participate_certificate": "Idea Submission Certificate",
+        "download_participate": "Download Idea Certificate",
+        "certificate": "Course Completion Certificate",
         "certificate_desc": "Please Download Certificate...",
         "part_certificate_desc": "Please Download Participate Certificate...",
         "complete_postsurvey": "Please complete post survey to get course completion certificate"
