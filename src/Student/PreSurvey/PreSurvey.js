@@ -88,7 +88,7 @@ const PreSurvey = () => {
             if (preSurveyList.length != submitData.responses.length) {
                 openNotificationWithIcon(
                     'warning',
-                    'Please Attempt All Questions..!!',
+                    t('student.attempt_all_questions'),
                     ''
                 );
             } else {
@@ -103,7 +103,7 @@ const PreSurvey = () => {
                         if (preSurveyRes?.status == 200) {
                             openNotificationWithIcon(
                                 'success',
-                                'Presurvey has been submitted successfully',
+                                t('student.presurver_scc_sub'),
                                 ''
                             );
                             dispatch(getPresurveyData(language));
