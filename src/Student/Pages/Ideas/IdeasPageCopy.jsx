@@ -211,7 +211,7 @@ const IdeasPageNew = () => {
                 parseInt(e.target.name)
         );
         if (findExistanceIndex === -1) {
-            newItems.push(obj);
+                newItems.push(obj);
         } else {
             let temp = newItems[findExistanceIndex];
             if (e.target.type === 'checkbox') {
@@ -227,10 +227,14 @@ const IdeasPageNew = () => {
                     selected_option: options
                 };
             } else {
-                newItems[findExistanceIndex] = {
-                    ...temp,
-                    selected_option: e.target.value
-                };
+                if(e.target.value === ''){
+                    newItems.splice(findExistanceIndex, 1);
+                }else{
+                    newItems[findExistanceIndex] = {
+                        ...temp,
+                        selected_option: e.target.value
+                    };
+                }
             }
         }
         setAnswerResponses(newItems);
