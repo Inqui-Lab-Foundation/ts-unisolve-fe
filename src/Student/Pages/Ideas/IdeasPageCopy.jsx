@@ -39,6 +39,35 @@ import logout from '../../../assets/media/logout.svg';
 import { cardData } from './SDGData';
 import moment from 'moment';
 
+const LinkComponent = ({ original, item,url, removeFileHandler, i }) => {
+    let a_link;
+    let count;
+    if(url){
+        a_link = item.split( '/' ); 
+        count = a_link.length - 1;
+    }
+    return (
+        <>
+            {original ? <div className="badge mb-2 bg-info ms-3">
+                <span className="p-2">{item.name}</span>
+                {original && (
+                    <span className="pointer" onClick={() => removeFileHandler(i)}>
+                        <AiOutlineCloseCircle size={20} />
+                    </span>
+                )}            
+            </div> :
+                <a
+                    className="badge mb-2 bg-info p-3 ms-3"
+                    href={item}
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    {a_link[count]}
+                </a>
+            }
+        </>
+    );
+};
 const IdeasPageNew = () => {
     const { t } = useTranslation();
     const challengeQuestions = useSelector(
@@ -57,6 +86,7 @@ const IdeasPageNew = () => {
     const [sdg, setSdg] = useState(challengesSubmittedResponse[0]?.sdg);
     const [files, setFiles] = useState([]);
     const [uploadQId, setuploadQId] = useState(null);
+    const [immediateLink, setImmediateLink] = useState(null);
     const [others, setOthers] = useState(
         challengesSubmittedResponse[0]?.others
     );
@@ -76,7 +106,9 @@ const IdeasPageNew = () => {
             const answerFormat = data.map((item) => {
                 return {
                     i: item[0],
-                    count: (item[1]?.word_limit ? item[1]?.word_limit :5000) - item[1]?.selected_option?.length
+                    count:
+                        (item[1]?.word_limit ? item[1]?.word_limit : 5000) -
+                        item[1]?.selected_option[0]?.length
                 };
             });
             return answerFormat;
@@ -139,7 +171,7 @@ const IdeasPageNew = () => {
         currentUser?.data[0]?.team_id,
         challengesSubmittedResponse
     ]);
-    const handleWordCount = (e, i,max) => {
+    const handleWordCount = (e, i, max) => {
         let obj = { i, count: (max ? max : 5000) - e.target.value.length };
         let newItems = [...wordCount];
         const findExistanceIndex = newItems.findIndex((item) => item?.i == i);
@@ -154,12 +186,16 @@ const IdeasPageNew = () => {
         }
         setWordCount(newItems);
     };
-    const filterCount = (id,max) => {
+    const filterCount = (id, max) => {
         const data =
             wordCount &&
             wordCount.length > 0 &&
             wordCount.filter((item) => item.i == id);
-        return data && data.length > 0 && data[0].count ? data[0].count : (max ? max :5000);
+        return data && data.length > 0 && data[0].count
+            ? data[0].count
+            : max
+            ? max
+            : 5000;
     };
     const handleChange = (e) => {
         let newItems = [...answerResponses];
@@ -198,7 +234,9 @@ const IdeasPageNew = () => {
         }
         setAnswerResponses(newItems);
     };
-    let lengthCheck = challengeQuestions.filter(item=>item.type !== "DRAW").length + (sdg === 'OTHERS' ? 1 : 0);
+    let lengthCheck =
+        challengeQuestions.filter((item) => item.type !== 'DRAW').length +
+        (sdg === 'OTHERS' ? 1 : 0);
     const responseData = answerResponses.map((eachValues) => {
         return {
             challenge_question_id: eachValues.challenge_question_id,
@@ -208,8 +246,7 @@ const IdeasPageNew = () => {
     const swalWrapper = (e, type) => {
         let responses = [...responseData];
         let responseLength =
-            responses.length +
-            (sdg === 'OTHERS' && others ? 1 : 0);
+            responses.length + (sdg === 'OTHERS' && others ? 1 : 0);
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
                 confirmButton: 'btn btn-success',
@@ -258,6 +295,7 @@ const IdeasPageNew = () => {
                 upload.push(item);
         });
         setFiles(upload);
+        setImmediateLink(null);
     };
     const removeFileHandler = (i) => {
         const fileAdded = [...files];
@@ -274,9 +312,7 @@ const IdeasPageNew = () => {
             pat.pop();
             return pat.join().search(pattern);
         });
-        if (
-            checkPat.length > 0
-        ) {
+        if (checkPat.length > 0) {
             openNotificationWithIcon(
                 'error',
                 "Only alphanumeric and '_' are allowed "
@@ -311,17 +347,18 @@ const IdeasPageNew = () => {
                 if (challengeStatus?.status == 200) {
                     openNotificationWithIcon(
                         'success',
-                        `Idea has been submitted ${
-                            type ? 'as draft' : 'successfully'
+                        `${
+                            type ? t("student.idea_draft") : t("student.idea_submitted")
                         } `
                     );
-                    const badge="the_change_maker";
-                    if(!type){
+                    const badge = 'the_change_maker';
+                    if (!type) {
                         dispatch(
                             updateStudentBadges(
                                 { badge_slugs: [badge] },
                                 currentUser.data[0].user_id,
-                                language,t
+                                language,
+                                t
                             )
                         );
                     }
@@ -356,18 +393,32 @@ const IdeasPageNew = () => {
             }
             const axiosConfig = getNormalHeaders(KEY.User_API_Key);
             const result = await axios
-                .post(`${URL.uploadFile}${currentUser?.data[0]?.team_id}`, formData, axiosConfig)
+                .post(
+                    `${URL.uploadFile}${currentUser?.data[0]?.team_id}`,
+                    formData,
+                    axiosConfig
+                )
                 .then((res) => res)
                 .catch((err) => {
                     return err.response;
                 });
             if (result && result.status === 200) {
+                setImmediateLink(result.data?.data[0]?.attachments);
                 responses.push({
                     challenge_question_id: uploadQId,
                     selected_option: result.data?.data[0]?.attachments
                 });
                 submittingCall(type, responses);
-                setLoading(initialLoadingStatus);
+                setTimeout(() => {
+                    dispatch(
+                        getStudentChallengeSubmittedResponse(
+                            currentUser?.data[0]?.team_id,
+                            language
+                        )
+                    );
+                    setLoading(initialLoadingStatus);
+                    setFiles([]);
+                }, 500);
             } else {
                 openNotificationWithIcon('error', `${result?.data?.message}`);
                 setLoading(initialLoadingStatus);
@@ -440,7 +491,10 @@ const IdeasPageNew = () => {
                                                             fontSize: '1.6rem'
                                                         }}
                                                     >
-                                                        {1}. {t("student_course.sdg")}
+                                                        {1}.{' '}
+                                                        {t(
+                                                            'student_course.sdg'
+                                                        )}
                                                     </b>
                                                 </div>
                                                 <div>
@@ -450,7 +504,9 @@ const IdeasPageNew = () => {
                                                             fontSize: '1.4rem'
                                                         }}
                                                     >
-                                                        {t("student_course.sdg_desc")}
+                                                        {t(
+                                                            'student_course.sdg_desc'
+                                                        )}
                                                     </p>
                                                 </div>
                                                 <div className=" answers row flex-column p-4">
@@ -494,7 +550,10 @@ const IdeasPageNew = () => {
                                                                     '1.6rem'
                                                             }}
                                                         >
-                                                            {2}. {t("student_course.others")}
+                                                            {2}.{' '}
+                                                            {t(
+                                                                'student_course.others'
+                                                            )}
                                                         </b>
                                                     </div>
                                                     <FormGroup
@@ -523,7 +582,10 @@ const IdeasPageNew = () => {
                                                         </Label>
                                                     </FormGroup>
                                                     <div className="text-end">
-                                                        {t("student_course.chars")} :
+                                                        {t(
+                                                            'student_course.chars'
+                                                        )}{' '}
+                                                        :
                                                         {5000 -
                                                             (others
                                                                 ? others.length
@@ -616,17 +678,22 @@ const IdeasPageNew = () => {
                                                                                                 );
                                                                                                 handleWordCount(
                                                                                                     e,
-                                                                                                    eachQuestion.challenge_question_id,eachQuestion?.word_limit
+                                                                                                    eachQuestion.challenge_question_id,
+                                                                                                    eachQuestion?.word_limit
                                                                                                 );
                                                                                             }}
                                                                                         />
                                                                                     </Label>
                                                                                 </FormGroup>
                                                                                 <div className="float-end">
-                                                                                    {t("student_course.chars")}
+                                                                                    {t(
+                                                                                        'student_course.chars'
+                                                                                    )}
+
                                                                                     :{' '}
                                                                                     {filterCount(
-                                                                                        eachQuestion.challenge_question_id,eachQuestion?.word_limit
+                                                                                        eachQuestion.challenge_question_id,
+                                                                                        eachQuestion?.word_limit
                                                                                     )}
                                                                                 </div>
                                                                             </>
@@ -668,43 +735,55 @@ const IdeasPageNew = () => {
                                                                                     </div>
                                                                                 </FormGroup>
                                                                                 <div className="mx-4">
-                                                                                    {files.length >
-                                                                                        0 &&
+                                                                                    {immediateLink &&
+                                                                                        immediateLink.length >
+                                                                                            0 &&
+                                                                                        immediateLink.map(
+                                                                                            (
+                                                                                                item
+                                                                                            ) => (
+                                                                                                <LinkComponent
+                                                                                                    item={
+                                                                                                        item
+                                                                                                    }
+                                                                                                    url={true}
+                                                                                                    key={
+                                                                                                        i
+                                                                                                    }
+                                                                                                />
+                                                                                            )
+                                                                                        )}
+                                                                                    {!immediateLink &&
+                                                                                        files.length >
+                                                                                            0 &&
                                                                                         files.map(
                                                                                             (
                                                                                                 item,
                                                                                                 i
                                                                                             ) => (
-                                                                                                <div
+                                                                                                <LinkComponent
+                                                                                                    original={
+                                                                                                        true
+                                                                                                    }
+                                                                                                    item={
+                                                                                                        item
+                                                                                                    }
+                                                                                                    i={
+                                                                                                        i
+                                                                                                    }
                                                                                                     key={
                                                                                                         i
                                                                                                     }
-                                                                                                    className="badge mb-2 bg-info ms-3"
-                                                                                                >
-                                                                                                    <span className="p-2">
-                                                                                                        {
-                                                                                                            item.name
-                                                                                                        }
-                                                                                                    </span>
-                                                                                                    <span
-                                                                                                        className="pointer"
-                                                                                                        onClick={() =>
-                                                                                                            removeFileHandler(
-                                                                                                                i
-                                                                                                            )
-                                                                                                        }
-                                                                                                    >
-                                                                                                        <AiOutlineCloseCircle
-                                                                                                            size={
-                                                                                                                20
-                                                                                                            }
-                                                                                                        />
-                                                                                                    </span>
-                                                                                                </div>
+                                                                                                    removeFileHandler={
+                                                                                                        removeFileHandler
+                                                                                                    }
+                                                                                                />
                                                                                             )
                                                                                         )}
-                                                                                    {files.length ===
-                                                                                        0 &&
+
+                                                                                    {!immediateLink &&
+                                                                                        files.length ===
+                                                                                            0 &&
                                                                                         filterAnswer(
                                                                                             eachQuestion.challenge_question_id
                                                                                         )
@@ -716,34 +795,15 @@ const IdeasPageNew = () => {
                                                                                             (
                                                                                                 item,
                                                                                                 i
-                                                                                            ) => {
-                                                                                                let a_link =
-                                                                                                    item.split(
-                                                                                                        '/'
-                                                                                                    );
-                                                                                                let count =
-                                                                                                    a_link.length -
-                                                                                                    1;
-                                                                                                return (
-                                                                                                    <a
-                                                                                                        key={
-                                                                                                            i
-                                                                                                        }
-                                                                                                        className="badge mb-2 bg-info p-3 ms-3"
-                                                                                                        href={
-                                                                                                            item
-                                                                                                        }
-                                                                                                        target="_blank"
-                                                                                                        rel="noreferrer"
-                                                                                                    >
-                                                                                                        {
-                                                                                                            a_link[
-                                                                                                                count
-                                                                                                            ]
-                                                                                                        }
-                                                                                                    </a>
-                                                                                                );
-                                                                                            }
+                                                                                            ) => <LinkComponent
+                                                                                                    item={
+                                                                                                        item
+                                                                                                    }
+                                                                                                    url={true}
+                                                                                                    key={
+                                                                                                        i
+                                                                                                    }
+                                                                                                />
                                                                                         )}
                                                                                 </div>
                                                                             </>
@@ -1123,7 +1183,9 @@ const IdeasPageNew = () => {
                                                                         handleEdit
                                                                     }
                                                                     size="small"
-                                                                    label={t("teacher_teams.edit_idea")}
+                                                                    label={t(
+                                                                        'teacher_teams.edit_idea'
+                                                                    )}
                                                                 />
                                                                 <Button
                                                                     type="button"
@@ -1137,7 +1199,9 @@ const IdeasPageNew = () => {
                                                                         swalWrapper
                                                                     }
                                                                     size="small"
-                                                                    label={t("teacher_teams.submit")}
+                                                                    label={t(
+                                                                        'teacher_teams.submit'
+                                                                    )}
                                                                 />
                                                             </>
                                                         ) : (
@@ -1154,7 +1218,9 @@ const IdeasPageNew = () => {
                                                                         );
                                                                     }}
                                                                     size="small"
-                                                                    label={t("teacher_teams.discard")}
+                                                                    label={t(
+                                                                        'teacher_teams.discard'
+                                                                    )}
                                                                 />
                                                                 <div>
                                                                     <Button
@@ -1171,8 +1237,12 @@ const IdeasPageNew = () => {
                                                                         size="small"
                                                                         label={`${
                                                                             loading.draft
-                                                                                ? t("teacher_teams.loading")
-                                                                                : t("teacher_teams.draft")
+                                                                                ? t(
+                                                                                      'teacher_teams.loading'
+                                                                                  )
+                                                                                : t(
+                                                                                      'teacher_teams.draft'
+                                                                                  )
                                                                         }`}
                                                                     />
                                                                     <Button
@@ -1189,8 +1259,12 @@ const IdeasPageNew = () => {
                                                                         size="small"
                                                                         label={`${
                                                                             loading.submit
-                                                                                ? t("teacher_teams.loading")
-                                                                                : t("teacher_teams.submit")
+                                                                                ? t(
+                                                                                      'teacher_teams.loading'
+                                                                                  )
+                                                                                : t(
+                                                                                      'teacher_teams.submit'
+                                                                                  )
                                                                         }`}
                                                                     />
                                                                 </div>
