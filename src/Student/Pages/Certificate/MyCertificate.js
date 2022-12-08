@@ -17,41 +17,61 @@ import {
 import CommonPage from '../../../components/CommonPage';
 import moment from 'moment';
 
-const Certificate = ({ type, currentUser,postSurveyStatus,certDate,language }) => {
+const Certificate = ({
+    type,
+    currentUser,
+    postSurveyStatus,
+    certDate,
+    language
+}) => {
     const { t } = useTranslation();
     const pdfRef = useRef(null);
     const partRef = useRef(null);
     const dispatch = useDispatch();
     const handleCertificateDownload = () => {
         const content = type ? partRef.current : pdfRef.current;
-        const badge="the_finisher";
-        const size = type ? [210, 297] : [298,200];
+        const badge = 'the_finisher';
+        const size = type ? [210, 297] : [298, 200];
         const orientation = type ? 'l' : 'p';
         const doc = new jsPDF(orientation, 'px', size);
-        const certName = `${currentUser.data[0].full_name}_${type ?'idea_certificate':'course_certificate'}`;
+        const certName = `${currentUser.data[0].full_name}_${
+            type ? 'idea_certificate' : 'course_certificate'
+        }`;
         doc.html(content, {
             callback: function (doc) {
                 doc.save(certName);
             }
         });
-        if(!type)
+        if (!type)
             dispatch(
                 updateStudentBadges(
                     { badge_slugs: [badge] },
                     currentUser.data[0].user_id,
-                    language,t
+                    language,
+                    t
                 )
             );
-        if(!type)
-            dispatch(updateStudentCertificate(currentUser?.data[0]?.student_id));
+        if (!type)
+            dispatch(
+                updateStudentCertificate(currentUser?.data[0]?.student_id)
+            );
     };
-    const certDateCheck =()=>{
-        const check = type ? certDate?.course_completed_date && moment(certDate?.course_completed_date).format("DD-MM-YYYY") : certDate?.post_survey_completed_date && moment(certDate?.post_survey_completed_date).format("DD-MM-YYYY");
-        return check ? " on "+ check : "";
+    const certDateCheck = () => {
+        const check = type
+            ? certDate?.course_completed_date &&
+              moment(certDate?.course_completed_date).format('DD-MM-YYYY')
+            : certDate?.post_survey_completed_date &&
+              moment(certDate?.post_survey_completed_date).format('DD-MM-YYYY');
+        return check ? ' on ' + check : '';
     };
     console.log(type);
     return (
-        <Card className="course-sec-basic p-5 m-4 w-100" style={{backgroundColor:`${postSurveyStatus ? "":"lightgrey"}`}}>
+        <Card
+            className="course-sec-basic p-5 m-4 w-100"
+            style={{
+                backgroundColor: `${postSurveyStatus ? '' : 'lightgrey'}`
+            }}
+        >
             <CardBody>
                 <CardTitle className=" text-left pt-4 pb-4" tag="h2">
                     {type
@@ -59,26 +79,34 @@ const Certificate = ({ type, currentUser,postSurveyStatus,certDate,language }) =
                         : t('teacher_certificate.certificate')}
                 </CardTitle>
                 <div className="common-flex">
-                    <div ref={type ? partRef : pdfRef} className='position-relative' style={{width:"fit-content"}}>
+                    <div
+                        ref={type ? partRef : pdfRef}
+                        className="position-relative"
+                        style={{ width: 'fit-content' }}
+                    >
                         <span
                             className="text-capitalize"
                             style={{
                                 position: 'absolute',
-                                top: `${type ?'9rem':'12.8rem'}`,
-                                left: `${type ?'10.3rem':'6.5rem'}`,
+                                top: `${type ? '9rem' : '12.8rem'}`,
+                                left: `${type ? '10.3rem' : '6.5rem'}`,
                                 fontSize: '0.8rem'
                             }}
                         >
-                            {currentUser?.data[0]?.full_name + certDateCheck()}  
+                            {currentUser?.data[0]?.full_name + certDateCheck()}
                         </span>
                         <img
-                            src={type ? ideaSubmissionCertificate : courseCompletionCertificate}
+                            src={
+                                type
+                                    ? ideaSubmissionCertificate
+                                    : courseCompletionCertificate
+                            }
                             alt="certificate"
-                            className='img-fluid mx-auto'
+                            className="img-fluid mx-auto"
                             style={{
-                                width: `${type ?'297px':'200px'}`,
-                                height: `${type ?'209px':'297px'}`,
-                                border:'1px solid #cccccc'
+                                width: `${type ? '297px' : '200px'}`,
+                                height: `${type ? '209px' : '297px'}`,
+                                border: '1px solid #cccccc'
                             }}
                         />
                     </div>
@@ -92,7 +120,9 @@ const Certificate = ({ type, currentUser,postSurveyStatus,certDate,language }) =
                                 ? t('teacher_certificate.download_participate')
                                 : t('teacher_certificate.download')
                         }
-                        btnClass={`${postSurveyStatus ? "primary":"default" } mt-4`}
+                        btnClass={`${
+                            postSurveyStatus ? 'primary' : 'default'
+                        } mt-4`}
                         size="small"
                         style={{ marginRight: '2rem' }}
                         onClick={handleCertificateDownload}
@@ -104,27 +134,40 @@ const Certificate = ({ type, currentUser,postSurveyStatus,certDate,language }) =
 };
 
 const MyCertificate = () => {
+    const showDummypage = false;
     const { t } = useTranslation();
-    const language = useSelector((state) => state?.studentRegistration?.studentLanguage);
-    const  postSurveyStatusGl  = useSelector((state) => state?.studentRegistration?.postSurveyStatusGl);
-    const dashboardStatus = useSelector((state) => state?.studentRegistration?.dashboardStatus);
-    let {all_topics_count,topics_completed_count} = dashboardStatus ? dashboardStatus : {all_topics_count:null,topics_completed_count:null};
+    const language = useSelector(
+        (state) => state?.studentRegistration?.studentLanguage
+    );
+    const postSurveyStatusGl = useSelector(
+        (state) => state?.studentRegistration?.postSurveyStatusGl
+    );
+    const dashboardStatus = useSelector(
+        (state) => state?.studentRegistration?.dashboardStatus
+    );
+    let { all_topics_count, topics_completed_count } = dashboardStatus
+        ? dashboardStatus
+        : { all_topics_count: null, topics_completed_count: null };
     const currentUser = getCurrentUser('current_user');
     const dispatch = useDispatch();
     useLayoutEffect(() => {
-        if(!dashboardStatus)
-            dispatch(getStudentDashboardStatus(currentUser.data[0].user_id, language));
-        if(!postSurveyStatusGl)
+        if (!dashboardStatus)
+            dispatch(
+                getStudentDashboardStatus(currentUser.data[0].user_id, language)
+            );
+        if (!postSurveyStatusGl)
             dispatch(studentPostSurveyCertificate(language));
     }, [language]);
-    const enablePostSurvey = postSurveyStatusGl && postSurveyStatusGl === "COMPLETED";
+    const enablePostSurvey =
+        postSurveyStatusGl && postSurveyStatusGl === 'COMPLETED';
     return (
         <Layout>
             <Container className="presuervey mb-50 mt-5 ">
                 <Fragment>
-                    {all_topics_count === topics_completed_count || enablePostSurvey  ? (
+                    {showDummypage ? (
+                        // all_topics_count === topics_completed_count || enablePostSurvey
                         <Row>
-                            <Col className='d-lg-flex justify-content-center'> 
+                            <Col className="d-lg-flex justify-content-center">
                                 <Certificate
                                     type={'participate'}
                                     currentUser={currentUser}
@@ -132,13 +175,20 @@ const MyCertificate = () => {
                                     certDate={dashboardStatus}
                                     language={language}
                                 />
-                                <Certificate language={language} currentUser={currentUser} certDate={dashboardStatus} postSurveyStatus={all_topics_count === topics_completed_count}/>
+                                <Certificate
+                                    language={language}
+                                    currentUser={currentUser}
+                                    certDate={dashboardStatus}
+                                    postSurveyStatus={
+                                        all_topics_count ===
+                                        topics_completed_count
+                                    }
+                                />
                             </Col>
                         </Row>
                     ) : (
                         <CommonPage text={t('dummytext.student_my_cer')} />
-                    )
-                    }
+                    )}
                 </Fragment>
             </Container>
         </Layout>
