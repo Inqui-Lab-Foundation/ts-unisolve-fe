@@ -38,6 +38,7 @@ import 'sweetalert2/src/sweetalert2.scss';
 import logout from '../../../assets/media/logout.svg';
 import { cardData } from './SDGData';
 import moment from 'moment';
+import { getLanguage } from '../../../constants/languageOptions';
 
 const LinkComponent = ({ original, item,url, removeFileHandler, i }) => {
     let a_link;
@@ -151,7 +152,7 @@ const IdeasPageNew = () => {
                 ? prePopulatingCount(submittedResponse)
                 : []
         );
-    }, []);
+    }, [submittedResponse]);
     useEffect(() => {
         setSdg(challengesSubmittedResponse[0]?.sdg);
         setOthers(challengesSubmittedResponse[0]?.others);
@@ -339,7 +340,7 @@ const IdeasPageNew = () => {
         };
         await axios
             .post(
-                `${URL.submitChallengeResponse}team_id=${currentUser?.data[0]?.team_id}`,
+                `${URL.submitChallengeResponse}team_id=${currentUser?.data[0]?.team_id}&${getLanguage(language)}`,
                 submitData,
                 axiosConfig
             )
