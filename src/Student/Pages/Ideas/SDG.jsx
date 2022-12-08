@@ -41,7 +41,7 @@ const SDG = ({setShowChallenges}) => {
         const initialSizeData = {
             sdg:data
         };
-        dispatch(initiateIdea(currentUser?.data[0]?.team_id,language,history,initialSizeData,setShowChallenges));
+        dispatch(initiateIdea(currentUser?.data[0]?.team_id,language,history,initialSizeData,setShowChallenges,t));
     };
     return (
         <Layout>

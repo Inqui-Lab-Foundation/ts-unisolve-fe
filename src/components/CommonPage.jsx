@@ -3,8 +3,10 @@ import { Card, Container } from 'reactstrap';
 import Congo from '../assets/media/survey-success.jpg';
 import IdeaSuccessImg from '../assets/media/idea-success.jpg';
 import { Button } from '../stories/Button';
+import { useTranslation } from 'react-i18next';
 
 const CommonPage = ({text, showButton, showChallenges}) => {
+    const { t } = useTranslation();
     return (
         <Container className="presuervey mb-50 mt-5 ">
             <Fragment>
@@ -25,7 +27,7 @@ const CommonPage = ({text, showButton, showChallenges}) => {
                             btnClass="primary w-25 mx-auto mt-3"
                             onClick={()=>showChallenges()}
                             size="small"
-                            label="View Idea"
+                            label={t('student.view_idea')}
                         />
                     }
                 </Card>
