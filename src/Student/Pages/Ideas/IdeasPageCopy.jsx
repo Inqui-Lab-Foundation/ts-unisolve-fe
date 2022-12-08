@@ -700,14 +700,20 @@ const IdeasPageNew = () => {
                                                                             </>
                                                                         )}
                                                                         {eachQuestion.type ===
-                                                                            'DRAW' && (
+                                                                            'DRAW' &&  (
                                                                             <>
+                                                                                {initiatedBy &&
+                                                                            initiatedBy ===
+                                                                                currentUser?.data[0]
+                                                                                    ?.user_id &&
+                                                                            challengesSubmittedResponse[0]
+                                                                                ?.status === 'DRAFT' &&
                                                                                 <FormGroup
                                                                                     check
                                                                                     className="answers"
                                                                                 >
                                                                                     <div className="wrapper my-3 common-flex">
-                                                                                        <Button
+                                                                                        {!isDisabled && <Button
                                                                                             type="button"
                                                                                             btnClass={`${
                                                                                                 isDisabled
@@ -716,7 +722,7 @@ const IdeasPageNew = () => {
                                                                                             } me-3 pointer `}
                                                                                             size="small"
                                                                                             label={t('student.upload_file')}
-                                                                                        />
+                                                                                        />}
                                                                                         <input
                                                                                             type="file"
                                                                                             name="file"
@@ -734,7 +740,7 @@ const IdeasPageNew = () => {
                                                                                             }
                                                                                         />
                                                                                     </div>
-                                                                                </FormGroup>
+                                                                                </FormGroup>}
                                                                                 <div className="mx-4">
                                                                                     {immediateLink &&
                                                                                         immediateLink.length >
