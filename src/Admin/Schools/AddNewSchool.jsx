@@ -68,33 +68,16 @@ const AddNewSchool = (props) => {
         },
 
         validationSchema: Yup.object({
-            principal_name: Yup.string()
-                .matches(/^[aA-zZ\s]+$/, 'Invalid name ')
-                .min(2, 'Enter a valid name')
-                .required('Principal Name is Required'),
-            principal_mobile: Yup.string()
-                .matches(phoneRegExp, 'Mobile number is not valid')
-                .min(10, 'Enter a valid mobile number')
-                .max(10, 'Enter a valid mobile number')
-                .required('Mobile Number is Required'),
-            principal_email: Yup.string()
-                .email('Invalid email address format')
-                .required('Email is required'),
             organization_name: Yup.string().required(
                 'Organization  Name is Required'
             ),
             organization_code: Yup.string()
                 .matches(phoneRegExp, 'organization code is not valid')
                 .required('UDISE  Code is Required'),
-            city: Yup.string()
-                .matches(/^[aA-zZ\s]+$/, 'Invalid City')
-                .required('City is Required'),
+
             district: Yup.string()
                 .matches(/^[aA-zZ\s]+$/, 'Invalid district')
-                .required('District is Required'),
-            state: Yup.string()
-                .matches(/^[aA-zZ\s]+$/, 'Invalid State')
-                .required('State is Required')
+                .required('District is Required')
         }),
 
         onSubmit: async (values) => {
@@ -134,69 +117,28 @@ const AddNewSchool = (props) => {
                                     <FormGroup className="form-group" md={12}>
                                         <Label
                                             className="mb-2"
-                                            htmlFor="principal_name"
+                                            htmlFor="organization_code"
                                         >
-                                            Principal Name
+                                            UDISE Code
                                         </Label>
                                         <InputBox
                                             {...inputDICE}
-                                            id="principal_name"
-                                            name="principal_name"
-                                            placeholder="Please enter principal name"
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
-                                            value={formik.values.principal_name}
-                                        />
-                                        {formik.touched.principal_name &&
-                                        formik.errors.principal_name ? (
-                                            <small className="error-cls">
-                                                {formik.errors.principal_name}
-                                            </small>
-                                        ) : null}
-                                        <Label
-                                            className="mb-2"
-                                            htmlFor="principal_mobile"
-                                        >
-                                            Principal Mobile
-                                        </Label>
-                                        <InputBox
-                                            {...inputDICE}
-                                            id="principal_mobile"
-                                            name="principal_mobile"
-                                            placeholder="Please enter principal mobile number"
+                                            id="organization_code"
+                                            name="organization_code"
+                                            placeholder="Please enter UDISE code"
                                             onChange={formik.handleChange}
                                             onBlur={formik.handleBlur}
                                             value={
-                                                formik.values.principal_mobile
+                                                formik.values.organization_code
                                             }
                                         />
-                                        {formik.touched.principal_mobile &&
-                                        formik.errors.principal_mobile ? (
+                                        {formik.touched.organization_code &&
+                                        formik.errors.organization_code ? (
                                             <small className="error-cls">
-                                                {formik.errors.principal_mobile}
-                                            </small>
-                                        ) : null}
-                                        <Label
-                                            className="mb-2"
-                                            htmlFor="principal_email"
-                                        >
-                                            Principal Email
-                                        </Label>
-                                        <InputBox
-                                            {...inputDICE}
-                                            id="principal_email"
-                                            name="principal_email"
-                                            placeholder="Please enter principal email"
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
-                                            value={
-                                                formik.values.principal_email
-                                            }
-                                        />
-                                        {formik.touched.principal_email &&
-                                        formik.errors.principal_email ? (
-                                            <small className="error-cls">
-                                                {formik.errors.principal_email}
+                                                {
+                                                    formik.errors
+                                                        .organization_code
+                                                }
                                             </small>
                                         ) : null}
                                         <Label
@@ -225,32 +167,6 @@ const AddNewSchool = (props) => {
                                                 }
                                             </small>
                                         ) : null}
-                                        <Label
-                                            className="mb-2"
-                                            htmlFor="organization_code"
-                                        >
-                                            UDISE Code
-                                        </Label>
-                                        <InputBox
-                                            {...inputDICE}
-                                            id="organization_code"
-                                            name="organization_code"
-                                            placeholder="Please enter UDISE code"
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
-                                            value={
-                                                formik.values.organization_code
-                                            }
-                                        />
-                                        {formik.touched.organization_code &&
-                                        formik.errors.organization_code ? (
-                                            <small className="error-cls">
-                                                {
-                                                    formik.errors
-                                                        .organization_code
-                                                }
-                                            </small>
-                                        ) : null}
                                         <Label className="mb-2" htmlFor="city">
                                             City
                                         </Label>
@@ -263,12 +179,7 @@ const AddNewSchool = (props) => {
                                             onBlur={formik.handleBlur}
                                             value={formik.values.city}
                                         />
-                                        {formik.touched.city &&
-                                        formik.errors.city ? (
-                                            <small className="error-cls">
-                                                {formik.errors.city}
-                                            </small>
-                                        ) : null}
+
                                         <Label
                                             className="mb-2"
                                             htmlFor="district"
@@ -302,12 +213,58 @@ const AddNewSchool = (props) => {
                                             onBlur={formik.handleBlur}
                                             value={formik.values.state}
                                         />
-                                        {formik.touched.state &&
-                                        formik.errors.state ? (
-                                            <small className="error-cls">
-                                                {formik.errors.state}
-                                            </small>
-                                        ) : null}
+
+                                        <Label
+                                            className="mb-2"
+                                            htmlFor="principal_name"
+                                        >
+                                            Principal Name
+                                        </Label>
+                                        <InputBox
+                                            {...inputDICE}
+                                            id="principal_name"
+                                            name="principal_name"
+                                            placeholder="Please enter principal name"
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={formik.values.principal_name}
+                                        />
+
+                                        <Label
+                                            className="mb-2"
+                                            htmlFor="principal_mobile"
+                                        >
+                                            Principal Mobile
+                                        </Label>
+                                        <InputBox
+                                            {...inputDICE}
+                                            id="principal_mobile"
+                                            name="principal_mobile"
+                                            placeholder="Please enter principal mobile number"
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={
+                                                formik.values.principal_mobile
+                                            }
+                                        />
+
+                                        <Label
+                                            className="mb-2"
+                                            htmlFor="principal_email"
+                                        >
+                                            Principal Email
+                                        </Label>
+                                        <InputBox
+                                            {...inputDICE}
+                                            id="principal_email"
+                                            name="principal_email"
+                                            placeholder="Please enter principal email"
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={
+                                                formik.values.principal_email
+                                            }
+                                        />
                                     </FormGroup>
                                 </div>
 
