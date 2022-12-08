@@ -350,7 +350,9 @@
         "videos":"Videos",
         "backto_quiz":"Back to Quiz",
         "quiz_completed":"Quiz Successfully Completed",
-        "ref_quiz_heading":"Let's think about a few things you learnt in the video"
+        "ref_quiz_heading":"Let's think about a few things you learnt in the video",
+        "idea_submitted":"Your idea has been submitted successfully",
+        "idea_draft":"Your idea has been submitted as draft"
     },
     "teacher_presurvey": {
         "completed_text": "Your survey has been successfully submitted!"
