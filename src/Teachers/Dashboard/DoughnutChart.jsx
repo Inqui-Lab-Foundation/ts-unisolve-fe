@@ -13,6 +13,7 @@ import { FaCheckCircle,FaTimesCircle } from 'react-icons/fa';
 import { Button } from '../../stories/Button';
 import IdeaSubmissionCard from '../../components/IdeaSubmissionCard';
 import { getStudentChallengeSubmittedResponse } from '../../redux/studentRegistration/actions';
+import { useTranslation } from 'react-i18next';
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -59,6 +60,7 @@ export const options = {
 };
 
 export default function DoughnutChart({ user }) {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const { teamsList, teamsMembersStatus, teamsMembersStatusErr } =
         useSelector((state) => state.teams);
@@ -203,7 +205,7 @@ export default function DoughnutChart({ user }) {
                         </Card>
                         <Button
                             button="button"
-                            label="View Idea"
+                            label={t('student.view_idea')}
                             disabled={teamsMembersStatus.length > 0 && challengesSubmittedResponse[0]?.status ? false : true}
                             btnClass={`${teamsMembersStatus.length > 0 && challengesSubmittedResponse[0]?.status ? "primary" : "default"}`}
                             size="small"

@@ -28,6 +28,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
 import logout from '../../assets/media/badge.png';
 
+
 export const getStudentListSuccess = (user) => async (dispatch) => {
     dispatch({
         type: GET_STUDENTS_LIST_SUCCESS,
@@ -208,12 +209,13 @@ export const getStudentChallengeSubmittedResponse =
         }
     };
 
-export const initiateIdea = async (
+export const initiateIdea = async (  
     id,
     language,
     history,
     data,
-    setShowChallenges
+    setShowChallenges,
+    t
 ) => {
     try {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
@@ -228,7 +230,7 @@ export const initiateIdea = async (
                 return err.response;
             });
         if (result && result.status === 200) {
-            openNotificationWithIcon('success', 'Idea initiated successfully');
+            openNotificationWithIcon('success', t('student.idea_init_succ'));
             setShowChallenges(true);
             history.push('/challenges');
         } else {

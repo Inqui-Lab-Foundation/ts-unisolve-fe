@@ -257,8 +257,8 @@ const IdeasPageNew = () => {
         });
         if (!type && responseLength < lengthCheck) {
             swalWithBootstrapButtons.fire({
-                title: 'Not Allowed',
-                text: 'Please complete all the fields before submitting',
+                title: t('student.not_allowed'),
+                text: t('student.please_com_all'),
                 imageUrl: `${logout}`,
                 showCloseButton: true
             });
@@ -322,7 +322,7 @@ const IdeasPageNew = () => {
         if (choosenFiles.filter((item) => item.size > maxFileSize).length > 0) {
             openNotificationWithIcon(
                 'error',
-                'Please upload file less than 20MB'
+                t('student.less_20MB')
             );
             return;
         }
@@ -714,7 +714,7 @@ const IdeasPageNew = () => {
                                                                                                     : 'primary'
                                                                                             } me-3 pointer `}
                                                                                             size="small"
-                                                                                            label="Upload File"
+                                                                                            label={t('student.upload_file')}
                                                                                         />
                                                                                         <input
                                                                                             type="file"

@@ -352,7 +352,20 @@
         "quiz_completed":"Quiz Successfully Completed",
         "ref_quiz_heading":"Let's think about a few things you learnt in the video",
         "idea_submitted":"Your idea has been submitted successfully",
-        "idea_draft":"Your idea has been submitted as draft"
+        "idea_draft":"Your idea has been submitted as draft",
+        "attempt_all_questions":"Please Attempt All Questions..!!",
+        "idea_init_succ":"Idea initiated successfully",
+        "please_com_postsurvey_for_certificate":"Please complete the following post survey to get course completion certificate.",
+        "view_idea":"View Idea",
+        "presurver_scc_sub":"Presurvey has been submitted successfully",
+        "postsurver_scc_sub":"PostSurvey has been submitted successfully..!!",
+        "save_draft":"Save as Draft",
+        "discard": "Discard",
+        "upload_file":"Upload File",
+        "less_20MB":"Please upload file less than 20MB",
+        "please_com_all":"Please complete all the fields before submitting",
+        "not_allowed":"Not Allowed",
+        "post_survey":"Post Survey"
     },
     "teacher_presurvey": {
         "completed_text": "Your survey has been successfully submitted!"
