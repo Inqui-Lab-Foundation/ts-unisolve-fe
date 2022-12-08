@@ -121,7 +121,8 @@ const IdeasPageNew = () => {
             const answerFormat = data.map((item) => {
                 return {
                     challenge_question_id: item[0],
-                    selected_option: item[1]?.selected_option
+                    selected_option: item[1]?.selected_option,
+                    type: item[1]?.question_type
                 };
             });
             return answerFormat;
@@ -243,6 +244,7 @@ const IdeasPageNew = () => {
         challengeQuestions.filter((item) => item.type !== 'DRAW').length +
         (sdg === 'OTHERS' ? 1 : 0);
     const responseData = answerResponses.map((eachValues) => {
+        lengthCheck += eachValues.type ==="DRAW" ? 1 : 0;
         return {
             challenge_question_id: eachValues.challenge_question_id,
             selected_option: eachValues.selected_option
@@ -458,6 +460,7 @@ const IdeasPageNew = () => {
                 <CommonPage text={comingSoonText} />
             ) : (
                 <Container className="presuervey mb-50 mt-5 " id="start">
+                    <h2>Idea Submission</h2>
                     <Col>
                         {initiatedBy &&
                             initiatedBy !== currentUser?.data[0]?.user_id && (
@@ -1189,7 +1192,8 @@ const IdeasPageNew = () => {
                                                             <>
                                                                 <Button
                                                                     type="button"
-                                                                    btnClass="secondary me-3"
+                                                                    btnClass="me-3 text-white"
+                                                                    backgroundColor="#067DE1"
                                                                     onClick={
                                                                         handleEdit
                                                                     }
@@ -1219,7 +1223,7 @@ const IdeasPageNew = () => {
                                                             <div className="d-flex justify-content-between">
                                                                 <Button
                                                                     type="button"
-                                                                    btnClass="warning me-3"
+                                                                    btnClass="secondary me-3"
                                                                     onClick={() => {
                                                                         setIsDisabled(
                                                                             true
@@ -1236,7 +1240,8 @@ const IdeasPageNew = () => {
                                                                 <div>
                                                                     <Button
                                                                         type="button"
-                                                                        btnClass="secondary me-3"
+                                                                        btnClass="me-3 text-white"
+                                                                        backgroundColor="#067DE1"
                                                                         onClick={(
                                                                             e
                                                                         ) =>

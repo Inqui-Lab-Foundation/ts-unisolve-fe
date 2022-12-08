@@ -25,16 +25,19 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { FaComments } from 'react-icons/fa';
+import { getCurrentUser } from '../../helpers/Utils';
 
 const TicketsPage = (props) => {
     const [rows, setRows] = React.useState([]);
     const dispatch = useDispatch();
+    const currentUser = getCurrentUser('current_user');
     const { supportTickets } = useSelector((state) => state.mentors);
     const language = useSelector((state) => state?.mentors.mentorLanguage);
 
+
     const history = useHistory();
     useEffect(() => {
-        dispatch(getSupportTickets(language));
+        dispatch(getSupportTickets(language,currentUser.data[0]));
     }, [language]);
 
     const SchoolsData = {
