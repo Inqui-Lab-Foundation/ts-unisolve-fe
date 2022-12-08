@@ -28,6 +28,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UncontrolledAlert } from 'reactstrap';
 import CommonPage from '../../components/CommonPage';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { getStudentChallengeSubmittedResponse, getStudentDashboardStatus, studentPostSurveyCertificate, updateStudentBadges } from '../../redux/studentRegistration/actions';
 
 const PostSurvey = () => {
@@ -36,7 +37,7 @@ const PostSurvey = () => {
         (state) => state?.studentRegistration.ideaSubmissionStatus
     );
     // const  postSurveyStatusGl  = useSelector((state) => state?.studentRegistration?.postSurveyStatusGl);
-
+    const history = useHistory();
     const currentUser = getCurrentUser('current_user');
     const dispatch = useDispatch();
     const [postSurveyList, setPostSurveyList] = useState([]);
@@ -45,6 +46,10 @@ const PostSurvey = () => {
     const [postSurveyStatus, setPostSurveyStatus] = useState('COMPLETED');
     const language = useSelector(state => state?.studentRegistration?.studentLanguage);
     const showPage = ideaSubmissionStatus && ideaSubmissionStatus !== "DRAFT";
+    const handleClick =()=>{
+        history.push("/student/my-certificate");
+    };
+
     const formik = useFormik({
         initialValues: {},
         onSubmit: async (values) => {
@@ -152,7 +157,7 @@ const PostSurvey = () => {
                                     <UncontrolledAlert color="danger" className='mb-5'>
                                         {t('student.please_com_postsurvey_for_certificate')}
                                     </UncontrolledAlert>}
-                                <h2>Post Survey</h2>
+                                <h2>{t('student.post_survey')}</h2>
                                 <CardBody>
                                     {postSurveyStatus != 'COMPLETED' && (
                                         <Form
@@ -293,17 +298,27 @@ const PostSurvey = () => {
                                     )}
 
                                     {postSurveyStatus == 'COMPLETED' && (
-                                        <div style={{ textAlign: 'center' }}>
-                                            <div>
-                                                <img className="img-fluid w-25" src={Congo}></img>
+                                        <Card>
+                                            <div style={{ textAlign: 'center' }}>
+                                                <div>
+                                                    <img className="img-fluid w-25" src={Congo}></img>
+                                                </div>
+                                                <div>
+                                                    <h2>
+                                                        {t('student.post_survey_desc')}
+                                                    </h2>
+                                                    <p>
+                                                        {t('student.click_button_post_survey')}
+                                                    </p>
+                                                    <Button
+                                                        label={t('student_course.go_certificate')}
+                                                        btnClass="primary mt-4 mx-4 mb-5"
+                                                        size="small"
+                                                        onClick={() => handleClick()}
+                                                    />
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h2>
-                                                    Post Survey has been
-                                                    submitted
-                                                </h2>
-                                            </div>
-                                        </div>
+                                        </Card>
                                     )}
                                 </CardBody>
                             </div>

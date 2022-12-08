@@ -42,7 +42,7 @@ const IdeaSubmission = () => {
             setShowChallenges(false);
         }
     }, [challengesSubmittedResponse,view]);
-    const commonPageText = t("student.idea_submitted");
+    const commonPageText = t("student.idea_submitted_desc");
     const handleView = ()=>{
         setShowChallenges(true);
         setShowCompleted(false);
