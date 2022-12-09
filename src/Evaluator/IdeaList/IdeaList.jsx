@@ -117,7 +117,7 @@ const IdeaList = () => {
 
     return (
         <Layout>
-            <div className="container idea_list_wrapper mt-5 mb-50" ref={topRef}>
+            <div className="container idea_list_wrapper pt-5 mb-50" ref={topRef}>
                 {/* <h2 className="mb-4">Submitted Ideas</h2> */}
                 {/* <div className="row mb-md-4 mb-3">
                         <div className="tiles_card p-2">
