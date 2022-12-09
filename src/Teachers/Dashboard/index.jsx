@@ -23,13 +23,12 @@ const Dashboard = () => {
     const currentUser = getCurrentUser('current_user');
     const { dashboardStates } = useSelector((state) => state.teacherDashBoard);
     const presurveyStatus = useSelector(state=>state?.mentors.teacherPresurveyStatus);
-
-
     const history = useHistory();
     useLayoutEffect(() => {
         if(presurveyStatus !== 'COMPLETED')
             history.push('/teacher/pre-survey');
     }, []);
+    
     useEffect(() => {
         dispatch(getDashboardStates(currentUser.data[0].user_id));
     }, [dispatch, currentUser.data[0].user_id]);

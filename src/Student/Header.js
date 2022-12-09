@@ -16,9 +16,9 @@ import { getPresurveyData, getStudentGlobalLanguage } from '../redux/studentRegi
 const Header = (props) => {
     const dispatch= useDispatch();
     const currentUser = getCurrentUser("current_user");
-    const {presuveyStatusGl} = useSelector(
+    const presuveyStatusGl = useSelector(
         (state) =>
-            state?.studentRegistration
+            state?.studentRegistration?.presuveyStatusGl
     );
     const language = useSelector(
         (state) => state?.studentRegistration?.studentLanguage
@@ -27,6 +27,7 @@ const Header = (props) => {
         if(!presuveyStatusGl)
             dispatch(getPresurveyData(language));
     }, [presuveyStatusGl,language,dispatch]);
+    
     const localLang = JSON.parse(localStorage.getItem("s_language"));
     useEffect(() => {
         if(localLang){
@@ -76,7 +77,7 @@ const Header = (props) => {
                                     <div className="d-flex align-items-center profile">
                                         <img src={AvatarImg} />
                                         <span className='header-name-size'>
-                                            {currentUser.data[0].full_name}
+                                            {currentUser?.data[0].full_name}
                                         </span> 
                                         {/* <CommonDropDownComp {...profileOpt} /> */}
                                         {window.location.pathname === '/student/pre-survey' && presuveyStatusGl && presuveyStatusGl !=="COMPLETED" && <span className="common-language-selc">

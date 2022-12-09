@@ -154,7 +154,7 @@ const Home = () => {
 
     useLayoutEffect(() => {
         dispatch(getDistrictData());
-        dispatch(getDistrictLiveData());
+        // dispatch(getDistrictLiveData());
     }, []);
 
     const toggle = (id) => {

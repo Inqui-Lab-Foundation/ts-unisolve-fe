@@ -28,6 +28,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
 import logout from '../../assets/media/badge.png';
 
+
 export const getStudentListSuccess = (user) => async (dispatch) => {
     dispatch({
         type: GET_STUDENTS_LIST_SUCCESS,
@@ -208,12 +209,13 @@ export const getStudentChallengeSubmittedResponse =
         }
     };
 
-export const initiateIdea = async (
+export const initiateIdea = async (  
     id,
     language,
     history,
     data,
-    setShowChallenges
+    setShowChallenges,
+    t
 ) => {
     try {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
@@ -228,7 +230,7 @@ export const initiateIdea = async (
                 return err.response;
             });
         if (result && result.status === 200) {
-            openNotificationWithIcon('success', 'Idea initiated successfully');
+            openNotificationWithIcon('success', t('student.idea_init_succ'));
             setShowChallenges(true);
             history.push('/challenges');
         } else {
@@ -251,11 +253,11 @@ export const setFilesSuccess = (badges) => async (dispatch) => {
         payload: badges
     });
 };
-export const uploadFiles = (id, data) => async (dispatch) => {
+export const uploadFiles = (data) => async (dispatch) => {
     try {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         const result = await axios
-            .post(`${URL.uploadFile}${id}`, data, axiosConfig)
+            .post(`${URL.uploadFile}`, data, axiosConfig)
             .then((res) => res)
             .catch((err) => {
                 return err.response;
@@ -556,3 +558,9 @@ export const getPresurveyData = (language) => async (dispatch) => {
         dispatch(setPresurveyStatus(null));
     }
 };
+export const userLogout =
+    () => async (dispatch) => {
+        dispatch({
+            type: 'USER_LOGOUT',
+        });
+    };

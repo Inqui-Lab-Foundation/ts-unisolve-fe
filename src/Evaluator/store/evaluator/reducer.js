@@ -3,6 +3,7 @@ import {
     EVALUATOR_LOGIN_USER,
     EVALUATOR_LOGIN_USER_SUCCESS,
     EVALUATOR_LOGIN_USER_ERROR,
+    GET_SUBMITTED_IDEA_LIST,
 } from '../../../redux/actions.js';
 
 
@@ -10,6 +11,7 @@ const INIT_STATE = {
     currentUser: {},
     loading: false,
     error: '',
+    submittedIdeaList:null,
 };
 
 export default (state = INIT_STATE, action) => {
@@ -30,6 +32,12 @@ export default (state = INIT_STATE, action) => {
             loading: false,
             currentUser: null,
             error: action.payload.message,
+        };
+    case GET_SUBMITTED_IDEA_LIST:
+        return {
+            ...state,
+            submittedIdeaList:action.payload
+
         };
     default:
         return newState;

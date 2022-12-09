@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 
 import { FaBars } from 'react-icons/fa';
 import { Row, Col, Navbar } from 'reactstrap';
@@ -12,7 +12,7 @@ import AvatarImg from '../assets/media/img/teacher.png';
 // import { InputWithSearch } from "../stories/InputWithSearch/InputWithSearch.stories";
 // import { Badge } from "antd";
 import { getAdminNotificationsList, getTeacherPresurveyStatus } from "../redux/actions";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "../helpers/Utils";
 // import LanguageSelectorComp from "../components/LanguageSelectorComp";
@@ -21,9 +21,9 @@ import { getCurrentUser } from "../helpers/Utils";
 
 const Header = (props) => {
     // const { t } = useTranslation();
-    const history = useHistory();
+    // const history = useHistory();
     const currentUser = getCurrentUser('current_user');
-    const MINUTE_MS = 30000;
+    // const MINUTE_MS = 30000;
     const dispatch = useDispatch();
     const presurveyStatus = useSelector(state=>state?.mentors.teacherPresurveyStatus);
 
@@ -61,17 +61,18 @@ const Header = (props) => {
         localStorage.setItem('headerOption', JSON.stringify('Home'));
     };
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            // console.log("Logs every minute");
-            props.getAdminNotificationsListActions(history);
-        }, MINUTE_MS);
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         // console.log("Logs every minute");
+    //         props.getAdminNotificationsListActions(history);
+    //     }, MINUTE_MS);
 
-        return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-    }, []);
+    //     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+    // }, []);
     useLayoutEffect(() => {
-        if(!presurveyStatus)
+        if(!presurveyStatus){
             dispatch(getTeacherPresurveyStatus());
+        }
     }, [dispatch]);
     // console.log(
     //   props.notificationsList,
@@ -107,7 +108,7 @@ const Header = (props) => {
                                     <div className="d-flex align-items-center profile">
                                         <img src={AvatarImg} />
                                         <span className='header-name-size'>
-                                            {currentUser.data[0].full_name}
+                                            {currentUser?.data[0].full_name}
                                         </span> 
                                         {/* <CommonDropDownComp {...profileOpt} /> */}
                                         <span className="common-language-selc">

@@ -71,7 +71,6 @@ const Dashboard = () => {
         dispatch(getStudentByIdData(currentUser.data[0].student_id));
     }, [dispatch, currentUser.data[0].student_id]);
 
-    
     useLayoutEffect(() => {
         if(presuveyStatusGl !=='COMPLETED')
             history.push('/student/pre-survey');

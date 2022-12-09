@@ -28,7 +28,7 @@ import { getLanguage } from '../../constants/languageOptions';
 import { useDispatch, useSelector } from 'react-redux';
 import getStart from '../../assets/media/getStart.png';
 import { useTranslation } from 'react-i18next';
-import { getPresurveyData, updateStudentBadges } from '../../redux/studentRegistration/actions';
+import { getPresurveyData, getStudentDashboardStatus, updateStudentBadges } from '../../redux/studentRegistration/actions';
 //import { Modal } from 'react-bootstrap';
 //import ChildrensDaysGif from '../../assets/media/childrensdays.gif';
 
@@ -88,7 +88,7 @@ const PreSurvey = () => {
             if (preSurveyList.length != submitData.responses.length) {
                 openNotificationWithIcon(
                     'warning',
-                    'Please Attempt All Questions..!!',
+                    t('student.attempt_all_questions'),
                     ''
                 );
             } else {
@@ -103,9 +103,11 @@ const PreSurvey = () => {
                         if (preSurveyRes?.status == 200) {
                             openNotificationWithIcon(
                                 'success',
-                                'Presurvey has been submitted successfully',
+                                t('student.presurver_scc_sub'),
                                 ''
                             );
+                            dispatch(getPresurveyData(language));
+                            dispatch(getStudentDashboardStatus(currentUser.data[0].user_id, language));
                             dispatch(
                                 updateStudentBadges(
                                     { badge_slugs: ['survey_champ'] },
@@ -127,10 +129,6 @@ const PreSurvey = () => {
         }
     });
 
-    useEffect(() => {
-        if(!preSurveyStatus && !quizSurveyId && !preSurveyList)
-            dispatch(getPresurveyData(language));
-    }, [language,preSurveyStatus,quizSurveyId,preSurveyList]);
 
     const handleStart = () => {
         setShow(true);
@@ -146,6 +144,9 @@ const PreSurvey = () => {
             //setGreetChildrensDay(true);
         }
     }, []);
+    useEffect(() => {
+        dispatch(getPresurveyData(language));
+    }, [language]);
 
     return (
         <Layout>

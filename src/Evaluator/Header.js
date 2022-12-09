@@ -1,66 +1,23 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable indent */
 import React, { useEffect } from "react";
 import "./Header.scss";
 import { FaBars } from "react-icons/fa";
 import { Row, Col, Navbar } from "reactstrap";
-
-import { CommonDropDownComp } from "../stories/CommonDropdown/CommonDropdownComp";
-
-import { VscBell } from "react-icons/vsc";
 import AvatarImg from "../assets/media/img/Avatar.png";
 
-import { InputWithSearch } from "../stories/InputWithSearch/InputWithSearch.stories";
-import { Badge } from "antd";
 import { getAdminNotificationsList } from "../redux/actions";
-import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { getCurrentUser, logout } from "../helpers/Utils";
-import { useTranslation } from 'react-i18next';
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+
 
 const Header = (props) => {
-    // const { t } = useTranslation();
-    // const history = useHistory();
-    // const currentUser = getCurrentUser("current_user");
-    // const MINUTE_MS = 30000;
-    // const profileOpt = {
-    //     options: [
-    //         { name: "My Profile", path: "/admin/my-profile" },
-    //         { name: "Logout", path: "", onClick: () => logout(history, t) },
-    //     ],
-    //     name: currentUser.data[0].full_name,
-    //     img: AvatarImg,
-    // };
-    // const notifyOpt = {
-    //     options: [
-    //         {
-    //             name: "You have a new Notification",
-    //             path: "/admin/notifications",
-    //             data: props.notificationsList.length > 0 ? props.notificationsList : [],
-    //         },
-    //     ],
-    //     Icon: VscBell,
-    // };
 
-    // const headerProps = {
-    //     size: "large",
-    //     placeholder: "Search",
-    //     isLogin: false,
-    // };
-    // const [anchorEl, setAnchorEl] = React.useState(null);
-    // const open = Boolean(anchorEl);
-
-    // window.onunload = function () {
-    //     localStorage.setItem("headerOption", JSON.stringify("Home"));
-    // };
-
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         // console.log("Logs every minute");
-    //         props.getAdminNotificationsListActions(history);
-    //     }, MINUTE_MS);
-
-    //     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-    // }, []);
+    const currentUser = getCurrentUser("current_user");
+    const idea_list = useSelector((state) => state?.evaluator.submittedIdeaList);
+    const location= useLocation();
 
     return (
         <header>
@@ -75,20 +32,57 @@ const Header = (props) => {
                         </div>
                         <Navbar>
                             <Row className="justify-content-between w-100">
-                            
-                                <Col md={12} className="d-flex profile-section text-right">
-                                
-
-                                    <div className="d-flex align-items-center profile">
-
-                                        <div className="d-flex align-items-center profile">
-                                            <img src={AvatarImg} className="img-fluid"  />
-                                            <span className='header-name-size'>
-                                                {/* {currentUser.data[0].full_name} */}
-                                                Evaluator Name
-                                            </span> 
+                                <Col
+                                    lg={9}
+                                    className="d-flex justify-content-between align-items-center mt-lg-0 mt-3 order-lg-0 order-1"
+                                >
+                                    {location.pathname?.split('/')?.pop()=='submitted-ideas' &&
+                                        <div className="row w-100">
+                                        <div className="col-sm-4 col-6">
+                                            <p className="m-0 fs-3">
+                                                Total Idea:&nbsp;
+                                                <span className="fs-4 text-primary">
+                                                    {(idea_list &&
+                                                        idea_list?.length) ||
+                                                        0}
+                                                </span>
+                                            </p>
                                         </div>
+                                        <div className="col-sm-4 col-6">
+                                            <p className="m-0 fs-3">
+                                                Processed:&nbsp;
+                                                <span className="fs-4 text-success">
+                                                    10
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div className="col-sm-4 col-6">
+                                            <p className="m-0 fs-3">
+                                                Yet to Process:&nbsp;
+                                                <span className="fs-4 text-danger">
+                                                    20
+                                                </span>
+                                            </p>
+                                        </div>
+                                        </div>
+                                    }
+                                </Col>
 
+                                <Col
+                                    lg={3}
+                                    className="d-flex profile-section text-right order-lg-1 order-0"
+                                >
+                                    <div className="d-flex align-items-center profile">
+                                        <div className="d-flex align-items-center profile">
+                                            <img
+                                                src={AvatarImg}
+                                                className="img-fluid"
+                                            />
+                                            <span className="header-name-size text-capitalize">
+                                                {currentUser?.data[0]
+                                                    ?.full_name || ''}
+                                            </span>
+                                        </div>
                                     </div>
                                 </Col>
                             </Row>
