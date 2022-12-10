@@ -602,6 +602,7 @@ const IdeasPageNew = () => {
                                                                 }
                                                                 placeholder="Enter others description"
                                                                 value={others}
+                                                                maxLength={100}
                                                                 onChange={(e) =>
                                                                     setOthers(
                                                                         e.target
