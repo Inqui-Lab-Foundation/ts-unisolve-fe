@@ -20,8 +20,8 @@ import Layout from '../../Layout';
 import { useSelector } from 'react-redux';
 import {
     getStudentChallengeQuestions,
-    getStudentChallengeSubmittedResponse,
-    updateStudentBadges
+    getStudentChallengeSubmittedResponse
+    // updateStudentBadges
 } from '../../../redux/studentRegistration/actions';
 import { useDispatch } from 'react-redux';
 import { getCurrentUser } from '../../../helpers/Utils';
@@ -108,7 +108,7 @@ const IdeasPageNew = () => {
                 return {
                     i: item[0],
                     count:
-                        (item[1]?.word_limit ? item[1]?.word_limit : 5000) -
+                        (item[1]?.word_limit ? item[1]?.word_limit : 100) -
                         item[1]?.selected_option[0]?.length
                 };
             });
@@ -174,7 +174,7 @@ const IdeasPageNew = () => {
         challengesSubmittedResponse
     ]);
     const handleWordCount = (e, i, max) => {
-        let obj = { i, count: (max ? max : 5000) - e.target.value.length };
+        let obj = { i, count: (max ? max : 100) - e.target.value.length };
         let newItems = [...wordCount];
         const findExistanceIndex = newItems.findIndex((item) => item?.i == i);
         if (findExistanceIndex === -1) {
@@ -183,7 +183,7 @@ const IdeasPageNew = () => {
             let temp = newItems[findExistanceIndex];
             newItems[findExistanceIndex] = {
                 ...temp,
-                count: (max ? max : 5000) - e.target.value.length
+                count: (max ? max : 100) - e.target.value.length
             };
         }
         setWordCount(newItems);
@@ -197,7 +197,7 @@ const IdeasPageNew = () => {
             ? data[0].count
             : max
             ? max
-            : 5000;
+            : 100;
     };
     const handleChange = (e) => {
         let newItems = [...answerResponses];
@@ -358,17 +358,17 @@ const IdeasPageNew = () => {
                             type ? t("student.idea_draft") : t("student.idea_submitted")
                         } `
                     );
-                    const badge = 'the_change_maker';
-                    if (!type) {
-                        dispatch(
-                            updateStudentBadges(
-                                { badge_slugs: [badge] },
-                                currentUser.data[0].user_id,
-                                language,
-                                t
-                            )
-                        );
-                    }
+                    // const badge = 'the_change_maker';
+                    // if (!type) {
+                    //     dispatch(
+                    //         updateStudentBadges(
+                    //             { badge_slugs: [badge] },
+                    //             currentUser.data[0].user_id,
+                    //             language,
+                    //             t
+                    //         )
+                    //     );
+                    // }
                     setTimeout(() => {
                         dispatch(
                             getStudentChallengeSubmittedResponse(
@@ -594,7 +594,7 @@ const IdeasPageNew = () => {
                                                             'student_course.chars'
                                                         )}{' '}
                                                         :
-                                                        {5000 -
+                                                        {100 -
                                                             (others
                                                                 ? others.length
                                                                 : 0)}
@@ -696,8 +696,7 @@ const IdeasPageNew = () => {
                                                                                 <div className="float-end">
                                                                                     {t(
                                                                                         'student_course.chars'
-                                                                                    )}
-
+                                                                                    )}{' '}
                                                                                     :{' '}
                                                                                     {filterCount(
                                                                                         eachQuestion.challenge_question_id,
