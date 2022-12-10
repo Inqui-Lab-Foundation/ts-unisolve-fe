@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import {
     ProSidebar,
@@ -25,31 +25,22 @@ import Logo from '../assets/media/tn-brands/UPSHIFT_BLACK.png';
 
 import TicketIcon from '../assets/media/ticket.png';
 import FaqIcon from '../assets/media/faq.png';
-import { KEY, URL } from '../constants/defaultValues';
-import { getCurrentUser, getNormalHeaders } from '../helpers/Utils';
-import axios from 'axios';
-import { getLanguage } from '../constants/languageOptions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RiLogoutBoxRFill } from 'react-icons/ri';
 import { logout } from '../helpers/Utils';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { getStudentChallengeSubmittedResponse, setPresurveyStatus } from '../redux/studentRegistration/actions';
 
 const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
     const { t } = useTranslation();
     const history = useHistory();
-    const dispatch = useDispatch();
-    const language = useSelector(
-        (state) => state?.studentRegistration?.studentLanguage
-    );
-    const submittedResponse = useSelector(
+    const dispatch =useDispatch();
+    const presuveyStatusGl = useSelector(
         (state) =>
-            state?.studentRegistration?.challengesSubmittedResponse[0]?.response
+            state?.studentRegistration.presuveyStatusGl
     );
+    
     const location = useLocation();
-    const currentUser = getCurrentUser('current_user');
-
 
     //create initial menuCollapse state using useState hook
     const [menuCollapse, setMenuCollapse] = useState(false);
@@ -60,59 +51,19 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
         setMenuCollapse(val);
         // menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
     };
-    const [presurveyStatus, setpresurveyStatus] = useState('');
-    const checkPresurvey = () => {
-        const axiosConfig = getNormalHeaders(KEY.User_API_Key);
-        axios
-            .get(
-                `${URL.getStudentPreSurveyList}?role=STUDENT&${getLanguage(
-                    language
-                )}`,
-                axiosConfig
-            )
-            .then((preSurveyRes) => {
-                if (preSurveyRes?.status == 200) {
-                    setpresurveyStatus(preSurveyRes.data.data[0].progress);
-                    dispatch(setPresurveyStatus(preSurveyRes.data.data[0].progress));
-                }
-            })
-            .catch((err) => {
-                return err.response;
-            });
-    };
-    useLayoutEffect(() => {
-        checkPresurvey();
-    }, []);
     useEffect(() => {
         if (
             location.pathname === '/playCourse' ||
             location.pathname === '/admin/add-course'
         ) {
-            // document.querySelector(".pro-sidebar").classList.add("collapsed");
             setMenuCollapse(true);
         }
-    });
+    },[]);
     const handleClick = (e) => {
-        if (presurveyStatus !== 'COMPLETED') e.preventDefault();
-    };
-    const handleClickIdea = (e) => {
-        if (presurveyStatus !== 'COMPLETED') e.preventDefault();
-        dispatch(
-            getStudentChallengeSubmittedResponse(
-                currentUser?.data[0]?.team_id,
-                language
-            )
-        );
-        if(submittedResponse){
-            history.push('/challenges');
-        }
-        else{
-            history.push('/challenge-initiation');
-        }
-        console.log(submittedResponse,"resp");
+        if (presuveyStatusGl !== 'COMPLETED') e.preventDefault();
     };
     const handleLogout = (e) => {
-        logout(history, t, 'student');
+        logout(history, t, 'student',dispatch);
         e.preventDefault();
     };
     return (
@@ -241,18 +192,9 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                             'sidebar-active'
                         }
                     >
-                        <div
-                            style={{
-                                color: `${
-                                    location.pathname === '/challenges' || location.pathname === '/challenge-initiation'
-                                        ? '#231f20'
-                                        : '#676667'
-                                }`
-                            }}
-                            onClick={handleClickIdea}
-                        >
+                        <NavLink exact={true} onClick={handleClick} to={'/challenges'}>
                             {t('home.idea_submission')}
-                        </div>
+                        </NavLink>
                     </MenuItem>
                     <MenuItem
                         icon={
