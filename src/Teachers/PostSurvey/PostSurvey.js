@@ -43,8 +43,8 @@ const PostSurvey = () => {
     const dashboardStates  = useSelector((state) => state.teacherDashBoard.dashboardStates);
 
     useEffect(() => {
-        if(!dashboardStates)
-            dispatch(getDashboardStates(currentUser.data[0].user_id));
+        //if(!dashboardStates)
+        dispatch(getDashboardStates(currentUser.data[0].user_id));
     }, [dispatch, currentUser.data[0].user_id]);
     const formik = useFormik({
         initialValues: {},
@@ -124,6 +124,8 @@ const PostSurvey = () => {
                 return err.response;
             });
     }, [language, count]);
+    console.log(dashboardStates,"dashboard");
+    console.log(postSurveyStatus,"postSurveyStatus");
     return (
         <Layout>
             <Container className="presuervey mb-50 mt-5 ">
