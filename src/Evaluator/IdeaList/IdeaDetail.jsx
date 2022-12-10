@@ -210,6 +210,15 @@ const IdeaDetail = (props) => {
                     />
                 </div>
             </div>
+            <div className="row">
+                <div className="col-md-6 mb-5 ps-4">
+                    <label htmlFor="floatingTextarea">Comments</label>
+                    <div className="form-floating">
+                        <textarea className="form-control fs-4 lh-sm" maxLength={500} placeholder="Leave a comment here" id="ComentTextarea" style={{height: '10rem'}}></textarea>
+                        
+                    </div>
+                </div>
+            </div>
             <div className="col-12 d-flex justify-content-end">
                <div className='me-3'>
                 <Button

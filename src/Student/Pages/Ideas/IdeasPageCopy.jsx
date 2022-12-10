@@ -313,7 +313,7 @@ const IdeasPageNew = () => {
     const fileHandler = (e, id) => {
         let choosenFiles = Array.prototype.slice.call(e.target.files);
         e.target.files = null;
-        let pattern = /^[a-zA-Z0-9_\s]{0,}$/;
+        let pattern = /^[a-zA-Z0-9_-\s]{0,}$/;
         const checkPat = choosenFiles.filter((item) => {
             let pat = item.name.split('.');
             pat.pop();
