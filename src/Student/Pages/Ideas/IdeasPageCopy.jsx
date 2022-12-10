@@ -15,7 +15,7 @@ import {
 import { Button } from '../../../stories/Button';
 import { TextArea } from '../../../stories/TextArea/TextArea';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-
+import { useHistory } from 'react-router-dom';
 import Layout from '../../Layout';
 import { useSelector } from 'react-redux';
 import {
@@ -71,6 +71,7 @@ const LinkComponent = ({ original, item,url, removeFileHandler, i }) => {
 };
 const IdeasPageNew = () => {
     const { t } = useTranslation();
+     const history = useHistory();
     const challengeQuestions = useSelector(
         (state) => state?.studentRegistration.challengeQuestions
     );
@@ -138,6 +139,9 @@ const IdeasPageNew = () => {
         return data && data.length > 0 && data[0].selected_option
             ? data[0].selected_option
             : '';
+    };
+    const redirect = () => {
+        window.location.reload(false);
     };
     useEffect(() => {
         dispatch(getStudentChallengeQuestions(language));
@@ -358,6 +362,24 @@ const IdeasPageNew = () => {
                             type ? t("student.idea_draft") : t("student.idea_submitted")
                         } `
                     );
+                    const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: 'btn btn-success'
+                        },
+                        buttonsStyling: false
+                    });
+
+                    swalWithBootstrapButtons.fire({
+                        title: t('badges.congratulations'),
+                        text: t('badges.earn'),
+                        // text:`You have Earned a New Badge ${data.badge_slugs[0].replace("_"," ").toUpperCase()}`,
+                        imageUrl: `${logout}`,
+                        showCloseButton: true,
+                        confirmButtonText: t('badges.ok'),
+                        showCancelButton: false,
+                        reverseButtons: false
+                    });
+                    
                     // const badge = 'the_change_maker';
                     // if (!type) {
                     //     dispatch(
@@ -1223,14 +1245,7 @@ const IdeasPageNew = () => {
                                                                 <Button
                                                                     type="button"
                                                                     btnClass="secondary me-3"
-                                                                    onClick={() => {
-                                                                        setIsDisabled(
-                                                                            true
-                                                                        );
-                                                                        setSdg(
-                                                                            initialSDG
-                                                                        );
-                                                                    }}
+                                                                    onClick={redirect}
                                                                     size="small"
                                                                     label={t(
                                                                         'teacher_teams.discard'
