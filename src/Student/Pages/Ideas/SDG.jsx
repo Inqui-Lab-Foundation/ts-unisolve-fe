@@ -45,7 +45,7 @@ const SDG = ({setShowChallenges}) => {
     };
     return (
         <Layout>
-            {!showPage ? (
+            {showPage ? (
                 <CommonPage text={comingSoonText} />
             ) : (
                 <Container className="mb-50 mt-5 ">

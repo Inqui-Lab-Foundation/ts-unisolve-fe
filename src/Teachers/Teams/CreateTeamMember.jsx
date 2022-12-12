@@ -322,7 +322,7 @@ const CreateMultipleMembers = ({ id }) => {
                             disabled={true}
                         />
                     )}
-                    {studentData.length < 5 && (
+                    {studentData.length < 4 && (
                         <div className="mx-5">
                             <Button
                                 label={'Add More'}
@@ -492,7 +492,7 @@ const CreateTeamMember = (props) => {
                     <Col className="col-xl-10 offset-xl-1 offset-md-0">
                         <BreadcrumbTwo {...headingDetails} />
                         {studentCount &&
-                        (studentCount === 'new' || studentCount < 2) ? (
+                        (studentCount === 'new' || studentCount < 1) ? (
                             <CreateMultipleMembers id={id} />
                         ) : (
                             <div>
