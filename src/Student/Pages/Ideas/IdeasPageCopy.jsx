@@ -362,6 +362,7 @@ const IdeasPageNew = () => {
                             type ? t("student.idea_draft") : t("student.idea_submitted")
                         } `
                     );
+                if(type!=='DRAFT'){
                     const swalWithBootstrapButtons = Swal.mixin({
                         customClass: {
                             confirmButton: 'btn btn-success'
@@ -379,7 +380,7 @@ const IdeasPageNew = () => {
                         showCancelButton: false,
                         reverseButtons: false
                     });
-                    
+                }
                     // const badge = 'the_change_maker';
                     // if (!type) {
                     //     dispatch(
