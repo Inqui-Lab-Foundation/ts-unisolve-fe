@@ -58,7 +58,7 @@ const IdeaSubmissionCard = ({handleClose,show,response}) => {
                 }
                 <div className='common-flex'>
                     <p className='fw-bold me-3'>Initiated By: {response[0]?.initiated_name}</p>  
-                    <p className='fw-bold'>Submitted By: {response[0]?.submitted_at ? moment(response[0]?.submitted_at).format('DD-MM-YYYY'):'-'}</p>  
+                    <p className='fw-bold'>Submitted at: {response[0]?.submitted_at ? moment(response[0]?.submitted_at).format('DD-MM-YYYY'):'-'}</p>  
                 </div>
             </Modal.Body>
             <Modal.Footer>
