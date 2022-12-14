@@ -88,9 +88,10 @@ const IdeaDetail = (props) => {
         };
         axios(config)
             .then(function (response) {
-                openNotificationWithIcon('success', response?.data?.message);
+                openNotificationWithIcon('success', response?.data?.message=='OK'?'Idea processed successfully!':response?.data?.message);
                 setTimeout(() => {
-                    dispatch(getSubmittedIdeaList('SUBMITTED'));
+                    dispatch(getSubmittedIdeaList());
+                    props?.setIsNextDiv(true);
                 }, 100);
             })
             .catch(function (error) {
@@ -108,7 +109,7 @@ const IdeaDetail = (props) => {
                     <div className="row idea_detail_card">
                         <div className="col-12 p-0">
                             <div className="row">
-                                <div className="col-sm-8 p-0">
+                                <div className="col-sm-8">
                                     <h2 className="mb-md-4 mb-3">
                                         Idea Name:{' '}
                                         <span className="text-capitalize fs-3">
@@ -122,11 +123,9 @@ const IdeaDetail = (props) => {
                                         <Button
                                             btnClass="primary"
                                             size="small"
-                                            label={props?.skipButtonText}
+                                            label="Skip"
                                             onClick={() =>
-                                                props?.handleSkip(
-                                                    Number(props?.currentRow)
-                                                )
+                                                props?.handleSkip()
                                             }
                                         />
                                     </div>
@@ -195,14 +194,7 @@ const IdeaDetail = (props) => {
                                 );
                             })}
                             <div className="d-md-flex">
-                                <Button
-                                    btnClass="primary m-md-0 mb-3"
-                                    size="small"
-                                    label="Back to List"
-                                    onClick={() => {
-                                        props?.setIsIdeaDetail(false);
-                                    }}
-                                />
+                                
                                 {props?.ideaDetails?.status === 'SUBMITTED' && (
                                     <div className="d-flex ms-auto">
                                         <button
@@ -312,18 +304,18 @@ const IdeaDetail = (props) => {
                                             btnClass="secondary"
                                             size="small"
                                             label="Back to List"
-                                            onClick={() => {
-                                                props?.setIsIdeaDetail(false);
-                                            }}
+                                            // onClick={() => {
+                                            //     props?.setIsIdeaDetail(false);
+                                            // }}
                                         />
                                     </div>
                                     <Button
                                         btnClass="primary"
                                         size="small"
                                         label="Update Score"
-                                        onClick={() => {
-                                            props?.setIsIdeaDetail(false);
-                                        }}
+                                        // onClick={() => {
+                                        //     props?.setIsIdeaDetail(false);
+                                        // }}
                                     />
                                 </div>
                             </div>
@@ -338,11 +330,11 @@ const IdeaDetail = (props) => {
                     </h2>
                     <div className="text-center mt-5">
                         <Button
-                            btnClass="secondary"
+                            btnClass="primary"
                             size="small"
-                            label="Back to List"
+                            label="Next Idea"
                             onClick={() => {
-                                props?.setIsIdeaDetail(false);
+                                props?.handleSkip();
                             }}
                         />
                     </div>

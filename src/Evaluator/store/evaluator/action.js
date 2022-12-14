@@ -12,6 +12,8 @@ import {
     getNormalHeaders,
     openNotificationWithIcon
 } from '../../../helpers/Utils.js';
+import { getCurrentUser } from '../../../helpers/Utils.js';
+
 
 //------login---
 export const evaluatorLoginUserSuccess = (user) => async (dispatch) => {
@@ -66,12 +68,13 @@ export const getSubmittedIdeaListSuccess = (data) => async (dispatch) => {
         payload: data
     });
 };
-export const getSubmittedIdeaList = (status) => async (dispatch) => {
+export const getSubmittedIdeaList = () => async (dispatch) => {
+    const currentUser = getCurrentUser('current_user');
     try {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         const result = await axios
             .get(
-                `${process.env.REACT_APP_API_BASE_URL + '/challenge_response?status='+status}`,
+                `${process.env.REACT_APP_API_BASE_URL + '/challenge_response/fetchRandomChallenge?status=SUBMITTED&evaluator_user_id='+currentUser?.data[0]?.user_id}`,
                 axiosConfig
             )
             .then((data) => data)
@@ -79,7 +82,7 @@ export const getSubmittedIdeaList = (status) => async (dispatch) => {
                 return err.response;
             });
         if (result && result.status === 200) {
-            const data =result?.data?.data[0]?.dataValues;
+            const data =result?.data?.data[0];
             dispatch(getSubmittedIdeaListSuccess(data));
         } else {
             dispatch(getSubmittedIdeaListSuccess(null));
