@@ -28,6 +28,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UncontrolledAlert } from 'reactstrap';
 import CommonPage from '../../components/CommonPage';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { getStudentChallengeSubmittedResponse, getStudentDashboardStatus, studentPostSurveyCertificate, updateStudentBadges } from '../../redux/studentRegistration/actions';
 
 const PostSurvey = () => {
@@ -35,8 +36,14 @@ const PostSurvey = () => {
     const ideaSubmissionStatus = useSelector(
         (state) => state?.studentRegistration.ideaSubmissionStatus
     );
+    const topicTotalCount = useSelector(
+        (state) => state?.studentRegistration.dashboardStatus.all_topics_count
+    );
+    const topicCompletedCount = useSelector(
+        (state) => state?.studentRegistration.dashboardStatus.topics_completed_count
+    );
     // const  postSurveyStatusGl  = useSelector((state) => state?.studentRegistration?.postSurveyStatusGl);
-
+    const history = useHistory();
     const currentUser = getCurrentUser('current_user');
     const dispatch = useDispatch();
     const [postSurveyList, setPostSurveyList] = useState([]);
@@ -44,7 +51,11 @@ const PostSurvey = () => {
     const [count, setCount] = useState(0);
     const [postSurveyStatus, setPostSurveyStatus] = useState('COMPLETED');
     const language = useSelector(state => state?.studentRegistration?.studentLanguage);
-    const showPage = ideaSubmissionStatus && ideaSubmissionStatus !== "DRAFT";
+    const showPage = ideaSubmissionStatus && ideaSubmissionStatus !== "DRAFT" && (topicTotalCount === topicCompletedCount);
+    const handleClick =()=>{
+        history.push("/student/my-certificate");
+    };
+    console.log(showPage);
     const formik = useFormik({
         initialValues: {},
         onSubmit: async (values) => {
@@ -63,7 +74,7 @@ const PostSurvey = () => {
             if (postSurveyList.length != submitData.responses.length) {
                 openNotificationWithIcon(
                     'warning',
-                    'Please Attempt All Questions..!!',
+                    t('student.attempt_all_questions'),
                     ''
                 );
             } else {
@@ -88,7 +99,7 @@ const PostSurvey = () => {
                                 dispatch(studentPostSurveyCertificate(language));
                                 openNotificationWithIcon(
                                     'success',
-                                    'PostSurvey is been submitted successfully..!!',
+                                    t('student.postsurver_scc_sub'),
                                     ''
                                 );
                                 setCount(count + 1);
@@ -150,9 +161,9 @@ const PostSurvey = () => {
                             <div className="aside  p-4 bg-transparent">
                                 {postSurveyStatus != 'COMPLETED' &&
                                     <UncontrolledAlert color="danger" className='mb-5'>
-                                        Please complete the following post survey to get course completion certificate.
+                                        {t('student.please_com_postsurvey_for_certificate')}
                                     </UncontrolledAlert>}
-                                <h2>Post Survey</h2>
+                                <h2>{t('student.post_survey')}</h2>
                                 <CardBody>
                                     {postSurveyStatus != 'COMPLETED' && (
                                         <Form
@@ -285,7 +296,7 @@ const PostSurvey = () => {
                                                         )
                                                     }
                                                     size="small"
-                                                    label="Submit"
+                                                    label={t('student_presurvey.submit')}
 
                                                 />
                                             </div>
@@ -293,17 +304,27 @@ const PostSurvey = () => {
                                     )}
 
                                     {postSurveyStatus == 'COMPLETED' && (
-                                        <div style={{ textAlign: 'center' }}>
-                                            <div>
-                                                <img className="img-fluid w-25" src={Congo}></img>
+                                        <Card>
+                                            <div style={{ textAlign: 'center' }}>
+                                                <div>
+                                                    <img className="img-fluid w-25" src={Congo}></img>
+                                                </div>
+                                                <div>
+                                                    <h2>
+                                                        {t('student.post_survey_desc')}
+                                                    </h2>
+                                                    <p>
+                                                        {t('student.click_button_post_survey')}
+                                                    </p>
+                                                    <Button
+                                                        label={t('student_course.go_certificate')}
+                                                        btnClass="primary mt-4 mx-4 mb-5"
+                                                        size="small"
+                                                        onClick={() => handleClick()}
+                                                    />
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h2>
-                                                    Post Survey has been
-                                                    submitted
-                                                </h2>
-                                            </div>
-                                        </div>
+                                        </Card>
                                     )}
                                 </CardBody>
                             </div>

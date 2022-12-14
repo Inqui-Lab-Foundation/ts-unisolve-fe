@@ -15,13 +15,13 @@ import {
 import { Button } from '../../../stories/Button';
 import { TextArea } from '../../../stories/TextArea/TextArea';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-
+import { useHistory } from 'react-router-dom';
 import Layout from '../../Layout';
 import { useSelector } from 'react-redux';
 import {
     getStudentChallengeQuestions,
-    getStudentChallengeSubmittedResponse,
-    updateStudentBadges
+    getStudentChallengeSubmittedResponse
+    // updateStudentBadges
 } from '../../../redux/studentRegistration/actions';
 import { useDispatch } from 'react-redux';
 import { getCurrentUser } from '../../../helpers/Utils';
@@ -71,6 +71,7 @@ const LinkComponent = ({ original, item,url, removeFileHandler, i }) => {
 };
 const IdeasPageNew = () => {
     const { t } = useTranslation();
+     const history = useHistory();
     const challengeQuestions = useSelector(
         (state) => state?.studentRegistration.challengeQuestions
     );
@@ -108,7 +109,7 @@ const IdeasPageNew = () => {
                 return {
                     i: item[0],
                     count:
-                        (item[1]?.word_limit ? item[1]?.word_limit : 5000) -
+                        (item[1]?.word_limit ? item[1]?.word_limit : 100) -
                         item[1]?.selected_option[0]?.length
                 };
             });
@@ -121,7 +122,8 @@ const IdeasPageNew = () => {
             const answerFormat = data.map((item) => {
                 return {
                     challenge_question_id: item[0],
-                    selected_option: item[1]?.selected_option
+                    selected_option: item[1]?.selected_option,
+                    type: item[1]?.question_type
                 };
             });
             return answerFormat;
@@ -137,6 +139,9 @@ const IdeasPageNew = () => {
         return data && data.length > 0 && data[0].selected_option
             ? data[0].selected_option
             : '';
+    };
+    const redirect = () => {
+        window.location.reload(false);
     };
     useEffect(() => {
         dispatch(getStudentChallengeQuestions(language));
@@ -173,7 +178,7 @@ const IdeasPageNew = () => {
         challengesSubmittedResponse
     ]);
     const handleWordCount = (e, i, max) => {
-        let obj = { i, count: (max ? max : 5000) - e.target.value.length };
+        let obj = { i, count: (max ? max : 100) - e.target.value.length };
         let newItems = [...wordCount];
         const findExistanceIndex = newItems.findIndex((item) => item?.i == i);
         if (findExistanceIndex === -1) {
@@ -182,7 +187,7 @@ const IdeasPageNew = () => {
             let temp = newItems[findExistanceIndex];
             newItems[findExistanceIndex] = {
                 ...temp,
-                count: (max ? max : 5000) - e.target.value.length
+                count: (max ? max : 100) - e.target.value.length
             };
         }
         setWordCount(newItems);
@@ -192,11 +197,11 @@ const IdeasPageNew = () => {
             wordCount &&
             wordCount.length > 0 &&
             wordCount.filter((item) => item.i == id);
-        return data && data.length > 0 && data[0].count
+        return data && data.length > 0 && (data[0]?.count || "0") 
             ? data[0].count
             : max
             ? max
-            : 5000;
+            : 100;
     };
     const handleChange = (e) => {
         let newItems = [...answerResponses];
@@ -211,7 +216,7 @@ const IdeasPageNew = () => {
                 parseInt(e.target.name)
         );
         if (findExistanceIndex === -1) {
-            newItems.push(obj);
+                newItems.push(obj);
         } else {
             let temp = newItems[findExistanceIndex];
             if (e.target.type === 'checkbox') {
@@ -227,10 +232,14 @@ const IdeasPageNew = () => {
                     selected_option: options
                 };
             } else {
-                newItems[findExistanceIndex] = {
-                    ...temp,
-                    selected_option: e.target.value
-                };
+                if(e.target.value === ''){
+                    newItems.splice(findExistanceIndex, 1);
+                }else{
+                    newItems[findExistanceIndex] = {
+                        ...temp,
+                        selected_option: e.target.value
+                    };
+                }
             }
         }
         setAnswerResponses(newItems);
@@ -239,6 +248,7 @@ const IdeasPageNew = () => {
         challengeQuestions.filter((item) => item.type !== 'DRAW').length +
         (sdg === 'OTHERS' ? 1 : 0);
     const responseData = answerResponses.map((eachValues) => {
+        lengthCheck += eachValues.type ==="DRAW" ? 1 : 0;
         return {
             challenge_question_id: eachValues.challenge_question_id,
             selected_option: eachValues.selected_option
@@ -258,8 +268,8 @@ const IdeasPageNew = () => {
         });
         if (!type && responseLength < lengthCheck) {
             swalWithBootstrapButtons.fire({
-                title: 'Not Allowed',
-                text: 'Please complete all the fields before submitting',
+                title: t('student.not_allowed'),
+                text: t('student.please_com_all'),
                 imageUrl: `${logout}`,
                 showCloseButton: true
             });
@@ -307,7 +317,7 @@ const IdeasPageNew = () => {
     const fileHandler = (e, id) => {
         let choosenFiles = Array.prototype.slice.call(e.target.files);
         e.target.files = null;
-        let pattern = /^[a-zA-Z0-9_\s]{0,}$/;
+        let pattern = /^[a-zA-Z0-9_-\s]{0,}$/;
         const checkPat = choosenFiles.filter((item) => {
             let pat = item.name.split('.');
             pat.pop();
@@ -323,7 +333,7 @@ const IdeasPageNew = () => {
         if (choosenFiles.filter((item) => item.size > maxFileSize).length > 0) {
             openNotificationWithIcon(
                 'error',
-                'Please upload file less than 20MB'
+                t('student.less_20MB')
             );
             return;
         }
@@ -352,17 +362,35 @@ const IdeasPageNew = () => {
                             type ? t("student.idea_draft") : t("student.idea_submitted")
                         } `
                     );
-                    const badge = 'the_change_maker';
-                    if (!type) {
-                        dispatch(
-                            updateStudentBadges(
-                                { badge_slugs: [badge] },
-                                currentUser.data[0].user_id,
-                                language,
-                                t
-                            )
-                        );
-                    }
+                    const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: 'btn btn-success'
+                        },
+                        buttonsStyling: false
+                    });
+
+                    swalWithBootstrapButtons.fire({
+                        title: t('badges.congratulations'),
+                        text: t('badges.earn'),
+                        // text:`You have Earned a New Badge ${data.badge_slugs[0].replace("_"," ").toUpperCase()}`,
+                        imageUrl: `${logout}`,
+                        showCloseButton: true,
+                        confirmButtonText: t('badges.ok'),
+                        showCancelButton: false,
+                        reverseButtons: false
+                    });
+                    
+                    // const badge = 'the_change_maker';
+                    // if (!type) {
+                    //     dispatch(
+                    //         updateStudentBadges(
+                    //             { badge_slugs: [badge] },
+                    //             currentUser.data[0].user_id,
+                    //             language,
+                    //             t
+                    //         )
+                    //     );
+                    // }
                     setTimeout(() => {
                         dispatch(
                             getStudentChallengeSubmittedResponse(
@@ -454,6 +482,7 @@ const IdeasPageNew = () => {
                 <CommonPage text={comingSoonText} />
             ) : (
                 <Container className="presuervey mb-50 mt-5 " id="start">
+                    <h2>Idea Submission</h2>
                     <Col>
                         {initiatedBy &&
                             initiatedBy !== currentUser?.data[0]?.user_id && (
@@ -470,9 +499,11 @@ const IdeasPageNew = () => {
                                                 ?.initiated_name
                                         }{' '}
                                         on{' '}
-                                        {moment(
+                                        {moment(challengesSubmittedResponse[0]
+                                            ?.status === 'DRAFT' ? 
                                             challengesSubmittedResponse[0]
-                                                ?.created_at
+                                                ?.created_at : challengesSubmittedResponse[0]
+                                                ?.submitted_by
                                         ).format('DD-MM-YYYY')}
                                     </Card>
                                 </div>
@@ -485,6 +516,106 @@ const IdeasPageNew = () => {
                                             className="form-row row mb-5"
                                             isSubmitting
                                         >
+                                            {initiatedBy &&
+                                                initiatedBy ===
+                                                    currentUser?.data[0]
+                                                        ?.user_id &&
+                                                challengesSubmittedResponse[0]
+                                                    ?.status === 'DRAFT' && (
+                                                    <div className="text-right">
+                                                        {isDisabled ? (
+                                                            <>
+                                                                <Button
+                                                                    type="button"
+                                                                    btnClass="me-3 text-white"
+                                                                    backgroundColor="#067DE1"
+                                                                    onClick={
+                                                                        handleEdit
+                                                                    }
+                                                                    size="small"
+                                                                    label={t(
+                                                                        'teacher_teams.edit_idea'
+                                                                    )}
+                                                                />
+                                                                <Button
+                                                                    type="button"
+                                                                    btnClass="primary"
+                                                                    disabled={
+                                                                        answerResponses &&
+                                                                        answerResponses.length ===
+                                                                            0
+                                                                    }
+                                                                    onClick={
+                                                                        swalWrapper
+                                                                    }
+                                                                    size="small"
+                                                                    label={t(
+                                                                        'teacher_teams.submit'
+                                                                    )}
+                                                                />
+                                                            </>
+                                                        ) : (
+                                                            <div className="d-flex justify-content-between">
+                                                                <Button
+                                                                    type="button"
+                                                                    btnClass="secondary me-3"
+                                                                    onClick={redirect}
+                                                                    size="small"
+                                                                    label={t(
+                                                                        'teacher_teams.discard'
+                                                                    )}
+                                                                />
+                                                                <div>
+                                                                    <Button
+                                                                        type="button"
+                                                                        btnClass="me-3 text-white"
+                                                                        backgroundColor="#067DE1"
+                                                                        onClick={(
+                                                                            e
+                                                                        ) =>
+                                                                            handleSubmit(
+                                                                                e,
+                                                                                'DRAFT'
+                                                                            )
+                                                                        }
+                                                                        size="small"
+                                                                        label={`${
+                                                                            loading.draft
+                                                                                ? t(
+                                                                                      'teacher_teams.loading'
+                                                                                  )
+                                                                                : t(
+                                                                                      'teacher_teams.draft'
+                                                                                  )
+                                                                        }`}
+                                                                    />
+                                                                    <Button
+                                                                        type="button"
+                                                                        btnClass="primary"
+                                                                        disabled={
+                                                                            answerResponses &&
+                                                                            answerResponses.length ===
+                                                                                0
+                                                                        }
+                                                                        onClick={
+                                                                            swalWrapper
+                                                                        }
+                                                                        size="small"
+                                                                        label={`${
+                                                                            loading.submit
+                                                                                ? t(
+                                                                                      'teacher_teams.loading'
+                                                                                  )
+                                                                                : t(
+                                                                                      'teacher_teams.submit'
+                                                                                  )
+                                                                        }`}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                )}
                                             <Row className="card mb-4 my-3 comment-card px-0 px-5 py-3 card">
                                                 <div className="question quiz mb-0">
                                                     <b
@@ -573,6 +704,7 @@ const IdeasPageNew = () => {
                                                                 }
                                                                 placeholder="Enter others description"
                                                                 value={others}
+                                                                maxLength={100}
                                                                 onChange={(e) =>
                                                                     setOthers(
                                                                         e.target
@@ -587,7 +719,7 @@ const IdeasPageNew = () => {
                                                             'student_course.chars'
                                                         )}{' '}
                                                         :
-                                                        {5000 -
+                                                        {100 -
                                                             (others
                                                                 ? others.length
                                                                 : 0)}
@@ -689,8 +821,7 @@ const IdeasPageNew = () => {
                                                                                 <div className="float-end">
                                                                                     {t(
                                                                                         'student_course.chars'
-                                                                                    )}
-
+                                                                                    )}{' '}
                                                                                     :{' '}
                                                                                     {filterCount(
                                                                                         eachQuestion.challenge_question_id,
@@ -700,14 +831,20 @@ const IdeasPageNew = () => {
                                                                             </>
                                                                         )}
                                                                         {eachQuestion.type ===
-                                                                            'DRAW' && (
+                                                                            'DRAW' &&  (
                                                                             <>
+                                                                                {initiatedBy &&
+                                                                            initiatedBy ===
+                                                                                currentUser?.data[0]
+                                                                                    ?.user_id &&
+                                                                            challengesSubmittedResponse[0]
+                                                                                ?.status === 'DRAFT' &&
                                                                                 <FormGroup
                                                                                     check
                                                                                     className="answers"
                                                                                 >
                                                                                     <div className="wrapper my-3 common-flex">
-                                                                                        <Button
+                                                                                        {!isDisabled && <Button
                                                                                             type="button"
                                                                                             btnClass={`${
                                                                                                 isDisabled
@@ -715,8 +852,8 @@ const IdeasPageNew = () => {
                                                                                                     : 'primary'
                                                                                             } me-3 pointer `}
                                                                                             size="small"
-                                                                                            label="Upload File"
-                                                                                        />
+                                                                                            label={t('student.upload_file')}
+                                                                                        />}
                                                                                         <input
                                                                                             type="file"
                                                                                             name="file"
@@ -734,7 +871,7 @@ const IdeasPageNew = () => {
                                                                                             }
                                                                                         />
                                                                                     </div>
-                                                                                </FormGroup>
+                                                                                </FormGroup>}
                                                                                 <div className="mx-4">
                                                                                     {immediateLink &&
                                                                                         immediateLink.length >
@@ -1168,111 +1305,6 @@ const IdeasPageNew = () => {
                                                     </>
                                                 )
                                             )}
-                                            {initiatedBy &&
-                                                initiatedBy ===
-                                                    currentUser?.data[0]
-                                                        ?.user_id &&
-                                                challengesSubmittedResponse[0]
-                                                    ?.status === 'DRAFT' && (
-                                                    <div className="text-right">
-                                                        {isDisabled ? (
-                                                            <>
-                                                                <Button
-                                                                    type="button"
-                                                                    btnClass="secondary me-3"
-                                                                    onClick={
-                                                                        handleEdit
-                                                                    }
-                                                                    size="small"
-                                                                    label={t(
-                                                                        'teacher_teams.edit_idea'
-                                                                    )}
-                                                                />
-                                                                <Button
-                                                                    type="button"
-                                                                    btnClass="primary"
-                                                                    disabled={
-                                                                        answerResponses &&
-                                                                        answerResponses.length ===
-                                                                            0
-                                                                    }
-                                                                    onClick={
-                                                                        swalWrapper
-                                                                    }
-                                                                    size="small"
-                                                                    label={t(
-                                                                        'teacher_teams.submit'
-                                                                    )}
-                                                                />
-                                                            </>
-                                                        ) : (
-                                                            <div className="d-flex justify-content-between">
-                                                                <Button
-                                                                    type="button"
-                                                                    btnClass="warning me-3"
-                                                                    onClick={() => {
-                                                                        setIsDisabled(
-                                                                            true
-                                                                        );
-                                                                        setSdg(
-                                                                            initialSDG
-                                                                        );
-                                                                    }}
-                                                                    size="small"
-                                                                    label={t(
-                                                                        'teacher_teams.discard'
-                                                                    )}
-                                                                />
-                                                                <div>
-                                                                    <Button
-                                                                        type="button"
-                                                                        btnClass="secondary me-3"
-                                                                        onClick={(
-                                                                            e
-                                                                        ) =>
-                                                                            handleSubmit(
-                                                                                e,
-                                                                                'DRAFT'
-                                                                            )
-                                                                        }
-                                                                        size="small"
-                                                                        label={`${
-                                                                            loading.draft
-                                                                                ? t(
-                                                                                      'teacher_teams.loading'
-                                                                                  )
-                                                                                : t(
-                                                                                      'teacher_teams.draft'
-                                                                                  )
-                                                                        }`}
-                                                                    />
-                                                                    <Button
-                                                                        type="button"
-                                                                        btnClass="primary"
-                                                                        disabled={
-                                                                            answerResponses &&
-                                                                            answerResponses.length ===
-                                                                                0
-                                                                        }
-                                                                        onClick={
-                                                                            swalWrapper
-                                                                        }
-                                                                        size="small"
-                                                                        label={`${
-                                                                            loading.submit
-                                                                                ? t(
-                                                                                      'teacher_teams.loading'
-                                                                                  )
-                                                                                : t(
-                                                                                      'teacher_teams.submit'
-                                                                                  )
-                                                                        }`}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                )}
                                         </Form>
                                     )}
                                 </CardBody>

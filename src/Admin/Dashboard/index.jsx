@@ -6,7 +6,10 @@ import React, { useState, useEffect } from 'react';
 import { Col, Row } from 'reactstrap';
 import { Button } from '../../stories/Button';
 import Layout from '../Layout';
-import { deleteTempMentorById } from '../store/admin/actions';
+import {
+    deleteTempMentorById,
+    teacherResetPassword
+} from '../store/admin/actions';
 import './dashboard.scss';
 import { useHistory } from 'react-router-dom';
 import jsPDF from 'jspdf';
@@ -14,6 +17,10 @@ import DataTable, { Alignment } from 'react-data-table-component';
 import DataTableExtensions from 'react-data-table-component-extensions';
 import { URL, KEY } from '../../constants/defaultValues';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2/dist/sweetalert2';
+import 'sweetalert2/src/sweetalert2.scss';
+import logout from '../../assets/media/logout.svg';
+import { useDispatch } from 'react-redux';
 
 import {
     getCurrentUser,
@@ -21,6 +28,7 @@ import {
     openNotificationWithIcon
 } from '../../helpers/Utils';
 const Dashboard = () => {
+    const dispatch = useDispatch();
     const pdfRef = React.useRef(null);
     const inputField = {
         type: 'text',
@@ -121,6 +129,45 @@ const Dashboard = () => {
                 where: 'Dashbord'
             }
         });
+    };
+
+    const handleresetpassword = (data) => {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        });
+
+        swalWithBootstrapButtons
+            .fire({
+                title: 'You are attempting to reset the password',
+                text: 'Are you sure?',
+                imageUrl: `${logout}`,
+                showCloseButton: true,
+                confirmButtonText: 'Reset Password',
+                showCancelButton: true,
+                cancelButtonText: 'cancel',
+                reverseButtons: false
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(
+                        teacherResetPassword({
+                            mobile: data.toString(),
+                            otp: 'false'
+                        })
+                    );
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Reset password is cancelled',
+                        'error'
+                    );
+                }
+            })
+            .catch((err) => console.log(err.response));
     };
     const downloadPDF = () => {
         const content = pdfRef.current;
@@ -320,7 +367,7 @@ const Dashboard = () => {
                                                             </p>
                                                         </li>
                                                         <li className="d-flex justify-content-between">
-                                                            Faculty Name:{' '}
+                                                            Mentor Name:{' '}
                                                             <p>
                                                                 {
                                                                     orgData
@@ -330,7 +377,7 @@ const Dashboard = () => {
                                                             </p>
                                                         </li>
                                                         <li className="d-flex justify-content-between">
-                                                            Faculty Mobile:{' '}
+                                                            Mentor Mobile:{' '}
                                                             <p>
                                                                 {
                                                                     orgData
@@ -340,7 +387,7 @@ const Dashboard = () => {
                                                             </p>
                                                         </li>
                                                         <li className="d-flex justify-content-between">
-                                                            Faculty email:{' '}
+                                                            Mentor email:{' '}
                                                             <p>
                                                                 {
                                                                     orgData
@@ -361,6 +408,16 @@ const Dashboard = () => {
                                             className="btn btn-warning btn-lg"
                                         >
                                             Edit
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                handleresetpassword(
+                                                    orgData.mentor?.mobile
+                                                )
+                                            }
+                                            className="btn btn-info rounded-pill px-4 btn-lg text-white"
+                                        >
+                                            Reset
                                         </button>
                                         <button
                                             onClick={() => {

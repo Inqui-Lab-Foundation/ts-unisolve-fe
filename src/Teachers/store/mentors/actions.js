@@ -206,11 +206,11 @@ export const getSupportTicketsSuccess = (tickets) => async (dispatch) => {
         payload: tickets
     });
 };
-export const getSupportTickets = (lang) => async (dispatch) => {
+export const getSupportTickets = (lang,user) => async (dispatch) => {
     try {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         const result = await axios
-            .get(`${URL.getMentorSupportTickets}?${getLanguage(lang)}`, axiosConfig)
+            .get(`${URL.getMentorSupportTickets}?user_id=${user.user_id}&${getLanguage(lang)}`, axiosConfig)
             .then((user) => user)
             .catch((err) => {
                 return err.response;
