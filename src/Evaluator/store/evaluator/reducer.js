@@ -12,6 +12,8 @@ const INIT_STATE = {
     loading: false,
     error: '',
     submittedIdeaList:null,
+    processedRound1List:null,
+    yetToProcessRound1List:null,
 };
 
 export default (state = INIT_STATE, action) => {
@@ -36,8 +38,7 @@ export default (state = INIT_STATE, action) => {
     case GET_SUBMITTED_IDEA_LIST:
         return {
             ...state,
-            submittedIdeaList:action.payload
-
+            submittedIdeaList:action.payload,
         };
     default:
         return newState;
