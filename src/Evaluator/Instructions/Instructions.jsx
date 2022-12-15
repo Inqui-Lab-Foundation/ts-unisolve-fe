@@ -3,19 +3,35 @@ import { Card } from 'reactstrap';
 import Layout from '../Layout';
 import { Button } from '../../stories/Button';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getInstructions } from '../store/evaluator/action';
 
 const Instructions = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
+    const instructiondata = useSelector(
+        (state) => state?.evaluator.instructionsData
+    );
+
+    React.useEffect(() => {
+        dispatch(getInstructions());
+    }, []);
+
     return (
         <Layout>
             <Card className="m-5 p-5">
                 <h1>Instructions</h1>
-                <div className='text-right'>
+                <div
+                    dangerouslySetInnerHTML={{
+                        __html: instructiondata && instructiondata?.instructions
+                    }}
+                ></div>
+
+                <div className="text-right">
                     <Button
                         label={"let's start"}
                         btnClass="primary mx-3"
                         size="small"
-                        shape="btn-square"
                         onClick={() =>
                             history.push('/evaluator/submitted-ideas')
                         }
