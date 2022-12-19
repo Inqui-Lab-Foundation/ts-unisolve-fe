@@ -647,7 +647,7 @@ const TicketsPage = (props) => {
                                 key="4"
                                 className="bg-white p-3 mt-2 sub-tab"
                                 tabId="4"
-                            >
+                            > 
                                 <div className="my-5">
                                     <DataTableExtensions
                                         {...adminData}
