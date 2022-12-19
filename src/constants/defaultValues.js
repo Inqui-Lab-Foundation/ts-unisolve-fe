@@ -61,7 +61,7 @@ export const URL = {
     getModules: process.env.REACT_APP_API_BASE_URL + '/modules/list',
     getAdminCouses: process.env.REACT_APP_API_BASE_URL + '/courses',
     getAdminCousesDetails: process.env.REACT_APP_API_BASE_URL + '/courses/',
-    getAdminEvaluator: process.env.REACT_APP_API_BASE_URL + '/evaluator/list',
+    getAdminEvaluator: process.env.REACT_APP_API_BASE_URL + '/evaluators',
     getNotificationsList:
         process.env.REACT_APP_API_BASE_URL + '/notifications/tome',
     getAdminQstList: process.env.REACT_APP_API_BASE_URL + '/quiz/',
@@ -86,6 +86,7 @@ export const URL = {
     getStudents: process.env.REACT_APP_API_BASE_URL + '/students',
     getStudentBadges: process.env.REACT_APP_API_BASE_URL + '/students/',
     getStudentById: process.env.REACT_APP_API_BASE_URL + '/students/',
+    getAdmin: process.env.REACT_APP_API_BASE_URL + '/admins/',
     getStudentDashboardStatusCommonById:
         process.env.REACT_APP_API_BASE_URL + '/dashboard/studentStats/',
     getTeacherById: process.env.REACT_APP_API_BASE_URL + '/mentors/',
