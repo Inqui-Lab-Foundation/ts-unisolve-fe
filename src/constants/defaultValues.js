@@ -84,6 +84,7 @@ export const URL = {
     getTeacherCousesDetails:
         process.env.REACT_APP_API_BASE_URL + '/mentorCourses/',
     getStudents: process.env.REACT_APP_API_BASE_URL + '/students',
+    getDistrictsOnly: process.env.REACT_APP_API_BASE_URL + '/organizations/districts',
     getStudentBadges: process.env.REACT_APP_API_BASE_URL + '/students/',
     getStudentById: process.env.REACT_APP_API_BASE_URL + '/students/',
     getAdmin: process.env.REACT_APP_API_BASE_URL + '/admins/',
@@ -104,7 +105,7 @@ export const URL = {
         process.env.REACT_APP_API_BASE_URL + '/supportTicketsReply',
     getMentorAttachments:
         process.env.REACT_APP_API_BASE_URL + '/mentorAttachments',
-    getDistricts: process.env.REACT_APP_API_BASE_URL + '/dashboard/mapStats',
+    Only: process.env.REACT_APP_API_BASE_URL + '/dashboard/mapStats',
     // getDistrictsLive:
     //     process.env.REACT_APP_API_BASE_URL + '/dashboard/refreshMapStatsLive',
     getScheduleDates: process.env.REACT_APP_API_BASE_URL + '/auth/roadMap',
