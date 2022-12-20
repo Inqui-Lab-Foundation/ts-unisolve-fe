@@ -138,7 +138,7 @@ import EvaluatorDashboard from './Evaluator/Dashboard/index';
 import EvaluatorChangePassword from './Evaluator/ChangePSWModal';
 import EvaluatorForgotPassword from './Evaluator/ForgotPassword';
 import EvaluatorIdeaList from './Evaluator/IdeaList/IdeaList';
-
+import ViewMore from './Admin/Dashboard/ViewMore';
 
 const Routers = () => {
     // const history = useHistory();
@@ -484,6 +484,11 @@ const Routers = () => {
                     />
                     <ProtectedRoute
                         exact={true}
+                        path="/admin/View-More-details"
+                        component={ViewMore}
+                    />
+                    <ProtectedRoute
+                        exact={true}
                         path="/admin/register-new-schools"
                         component={AddNewSchool}
                     />
@@ -722,7 +727,7 @@ const Routers = () => {
                         path="/evaluator/submitted-ideas"
                         component={EvaluatorIdeaList}
                     />
-                    
+
                     <Route component={PageNotFound} path="*" />
                 </Switch>
             </Router>

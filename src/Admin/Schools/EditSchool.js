@@ -135,6 +135,7 @@ const EditSchool = (props) => {
                                         <Label
                                             className="mb-2"
                                             htmlFor="organization_code"
+                                            style={{ fontSize: 15 }}
                                         >
                                             UDISE Code
                                         </Label>
@@ -161,6 +162,7 @@ const EditSchool = (props) => {
                                         <Label
                                             className="mb-2"
                                             htmlFor="organization_name"
+                                            style={{ fontSize: 15 }}
                                         >
                                             Institute/School Name
                                         </Label>
@@ -184,7 +186,11 @@ const EditSchool = (props) => {
                                                 }
                                             </small>
                                         ) : null}
-                                        <Label className="mb-2" htmlFor="city">
+                                        <Label
+                                            className="mb-2"
+                                            htmlFor="city"
+                                            style={{ fontSize: 15 }}
+                                        >
                                             City
                                         </Label>
                                         <InputBox
@@ -205,6 +211,7 @@ const EditSchool = (props) => {
                                         <Label
                                             className="mb-2"
                                             htmlFor="district"
+                                            style={{ fontSize: 15 }}
                                         >
                                             District
                                         </Label>
@@ -223,7 +230,11 @@ const EditSchool = (props) => {
                                                 {formik.errors.district}
                                             </small>
                                         ) : null}
-                                        <Label className="mb-2" htmlFor="state">
+                                        <Label
+                                            className="mb-2"
+                                            htmlFor="state"
+                                            style={{ fontSize: 15 }}
+                                        >
                                             State
                                         </Label>
                                         <InputBox
@@ -244,6 +255,7 @@ const EditSchool = (props) => {
                                         <Label
                                             className="mb-2"
                                             htmlFor="principal_name"
+                                            style={{ fontSize: 15 }}
                                         >
                                             Principal Name
                                         </Label>
@@ -265,6 +277,7 @@ const EditSchool = (props) => {
                                         <Label
                                             className="mb-2"
                                             htmlFor="principal_mobile"
+                                            style={{ fontSize: 15 }}
                                         >
                                             Principal Mobile
                                         </Label>
@@ -288,6 +301,7 @@ const EditSchool = (props) => {
                                         <Label
                                             className="mb-2"
                                             htmlFor="principal_email"
+                                            style={{ fontSize: 15 }}
                                         >
                                             Principal Email
                                         </Label>
