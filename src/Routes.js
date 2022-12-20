@@ -139,6 +139,8 @@ import EvaluatorChangePassword from './Evaluator/ChangePSWModal';
 import EvaluatorForgotPassword from './Evaluator/ForgotPassword';
 import EvaluatorIdeaList from './Evaluator/IdeaList/IdeaList';
 import ViewMore from './Admin/Dashboard/ViewMore';
+import EvaluatorInstructions from './Evaluator/Instructions/Instructions';
+
 
 const Routers = () => {
     // const history = useHistory();
@@ -728,6 +730,12 @@ const Routers = () => {
                         component={EvaluatorIdeaList}
                     />
 
+                    <ProtectedRoute
+                        exact={true}
+                        path="/evaluator/instructions"
+                        component={EvaluatorInstructions}
+                    />
+                    
                     <Route component={PageNotFound} path="*" />
                 </Switch>
             </Router>

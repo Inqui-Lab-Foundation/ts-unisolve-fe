@@ -362,6 +362,7 @@ const IdeasPageNew = () => {
                             type ? t("student.idea_draft") : t("student.idea_submitted")
                         } `
                     );
+                if(type!=='DRAFT'){
                     const swalWithBootstrapButtons = Swal.mixin({
                         customClass: {
                             confirmButton: 'btn btn-success'
@@ -379,7 +380,7 @@ const IdeasPageNew = () => {
                         showCancelButton: false,
                         reverseButtons: false
                     });
-                    
+                }
                     // const badge = 'the_change_maker';
                     // if (!type) {
                     //     dispatch(
@@ -792,10 +793,7 @@ const IdeasPageNew = () => {
                                                                                             disabled={
                                                                                                 isDisabled
                                                                                             }
-                                                                                            placeholder={`Maximum length of characters is ${
-                                                                                                eachQuestion?.word_limit ||
-                                                                                                100
-                                                                                            } only...`}
+                                                                                            placeholder= {`${t('student.max_length_msg1')}${eachQuestion?.word_limit ||100}${t('student.max_length_msg2')}`}
                                                                                             maxLength={
                                                                                                 eachQuestion?.word_limit ||
                                                                                                 100

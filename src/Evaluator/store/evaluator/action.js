@@ -4,7 +4,8 @@ import {
     EVALUATOR_LOGIN_USER,
     EVALUATOR_LOGIN_USER_SUCCESS,
     EVALUATOR_LOGIN_USER_ERROR,
-    GET_SUBMITTED_IDEA_LIST
+    GET_SUBMITTED_IDEA_LIST,
+    GET_INSTRUCTIONS
 } from '../../../redux/actions.js';
 import { URL, KEY } from '../../../constants/defaultValues.js';
 import {
@@ -51,7 +52,7 @@ export const evaluatorLoginUser = (data, history,module) => async (dispatch) => 
             localStorage.setItem("module",module);
             dispatch(evaluatorLoginUserSuccess(result));
 
-            history.push('/evaluator/submitted-ideas');
+            history.push('/evaluator/instructions');
         } else {
             openNotificationWithIcon('error', 'Enter the correct credentials');
             dispatch(evaluatorLoginUserError(result.statusText));
@@ -89,5 +90,35 @@ export const getSubmittedIdeaList = () => async (dispatch) => {
         }
     } catch (error) {
         dispatch(getSubmittedIdeaListSuccess(null));
+    }
+};
+
+//---get instructions list--
+export const getInstructionsSuccess = (data) => async (dispatch) => {
+    dispatch({
+        type: GET_INSTRUCTIONS,
+        payload: data
+    });
+};
+export const getInstructions = () => async (dispatch) => {
+    try {
+        const axiosConfig = getNormalHeaders(KEY.User_API_Key);
+        const result = await axios
+            .get(
+                `${process.env.REACT_APP_API_BASE_URL + '/instructions/1'}`,
+                axiosConfig
+            )
+            .then((data) => data)
+            .catch((err) => {
+                return err.response;
+            });
+        if (result && result.status === 200) {
+            const data =result?.data?.data[0];
+            dispatch(getInstructionsSuccess(data));
+        } else {
+            dispatch(getInstructionsSuccess(null));
+        }
+    } catch (error) {
+        dispatch(getInstructionsSuccess(null));
     }
 };
