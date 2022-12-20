@@ -59,14 +59,49 @@ const TicketsPage = (props) => {
 
     const handleEdit = (item) => {
         history.push({
-            pathname: '/admin/register-edit-schools',
-            item: item
+            pathname: '/admin/register-edit-schools'
         });
         localStorage.setItem('listId', JSON.stringify(item));
     };
+    const handleActiveStatusUpdate = (item, itemA) => {
+        const body = {
+            status: itemA,
+            organization_code: item.organization_code,
+            organization_name: item.organization_name
+        };
+        var config = {
+            method: 'put',
+            url:
+                process.env.REACT_APP_API_BASE_URL +
+                '/organizations/' +
+                item.organization_id,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${currentUser.data[0].token}`
+            },
+            data: body
+        };
+        axios(config)
+            .then(function (response) {
+                if (response.status === 200) {
+                    setReqList(false);
+                    openNotificationWithIcon(
+                        'success',
+                        'Status update successfully'
+                    );
+                    props.getSchoolRegistationBulkUploadActions('i');
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+                openNotificationWithIcon('error', 'Something went wrong');
+            });
+    };
     const handleStatusUpdate = (item, itemS) => {
         const body = {
-            status: itemS
+            status: itemS,
+            organization_code: item.organization_code,
+            organization_name: item.organization_name
         };
         var config = {
             method: 'put',
@@ -103,7 +138,7 @@ const TicketsPage = (props) => {
             method: 'get',
             url:
                 process.env.REACT_APP_API_BASE_URL +
-                '/organizations?status=NEW',
+                '/organizations?status=INACTIVE',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${currentUser.data[0].token}`
@@ -131,6 +166,7 @@ const TicketsPage = (props) => {
 
     const handleBack = (e) => {
         setReqList(false);
+        props.getSchoolRegistationBulkUploadActions('i');
     };
 
     const reqSchoolsData = {
@@ -175,7 +211,7 @@ const TicketsPage = (props) => {
                                 ACTIVE
                             </div>
                         </Link>
-                        <Link
+                        {/* <Link
                             exact="true"
                             key={record}
                             onClick={() =>
@@ -186,7 +222,7 @@ const TicketsPage = (props) => {
                             <div className="btn btn-danger btn-lg">
                                 INACTIVE
                             </div>
-                        </Link>
+                        </Link> */}
                     </>
                 ]
             }
@@ -258,10 +294,22 @@ const TicketsPage = (props) => {
                             exact="true"
                             key={record}
                             onClick={() => handleEdit(record)}
-                            style={{ marginRight: '10px' }}
+                            style={{ marginRight: '5px' }}
                         >
                             <div className="btn btn-primary btn-lg mx-2">
                                 Edit
+                            </div>
+                        </Link>
+                        <Link
+                            exact="true"
+                            key={record}
+                            onClick={() =>
+                                handleActiveStatusUpdate(record, 'INACTIVE')
+                            }
+                            style={{ marginRight: '10px' }}
+                        >
+                            <div className="btn btn-danger btn-lg">
+                                INACTIVE
                             </div>
                         </Link>
                     </>
@@ -317,7 +365,7 @@ const TicketsPage = (props) => {
                                     />
 
                                     <Button
-                                        label="Req Schools"
+                                        label="InActive Schools"
                                         btnClass="primary"
                                         size="small"
                                         shape="btn-square"

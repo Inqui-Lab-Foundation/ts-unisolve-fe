@@ -138,6 +138,7 @@ import EvaluatorDashboard from './Evaluator/Dashboard/index';
 import EvaluatorChangePassword from './Evaluator/ChangePSWModal';
 import EvaluatorForgotPassword from './Evaluator/ForgotPassword';
 import EvaluatorIdeaList from './Evaluator/IdeaList/IdeaList';
+import ViewMore from './Admin/Dashboard/ViewMore';
 import EvaluatorInstructions from './Evaluator/Instructions/Instructions';
 
 
@@ -485,6 +486,11 @@ const Routers = () => {
                     />
                     <ProtectedRoute
                         exact={true}
+                        path="/admin/View-More-details"
+                        component={ViewMore}
+                    />
+                    <ProtectedRoute
+                        exact={true}
                         path="/admin/register-new-schools"
                         component={AddNewSchool}
                     />
@@ -723,6 +729,7 @@ const Routers = () => {
                         path="/evaluator/submitted-ideas"
                         component={EvaluatorIdeaList}
                     />
+
                     <ProtectedRoute
                         exact={true}
                         path="/evaluator/instructions"

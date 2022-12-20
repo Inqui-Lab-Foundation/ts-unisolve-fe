@@ -81,7 +81,11 @@ const AddNewSchool = (props) => {
                 'Organization  Name is Required'
             ),
             organization_code: Yup.string()
-                .matches(phoneRegExp, 'organization code is not valid')
+                // .matches(
+                //     phoneRegExp,
+                //     /^[aA-zZ\s]+$/,
+                //     'organization code is not valid'
+                // )
                 .required('UDISE  Code is Required'),
             city: Yup.string().matches(/^[aA-zZ\s]+$/, 'Invalid City'),
             district: Yup.string()
@@ -128,6 +132,7 @@ const AddNewSchool = (props) => {
                                         <Label
                                             className="mb-2"
                                             htmlFor="organization_code"
+                                            style={{ fontSize: 15 }}
                                         >
                                             UDISE Code
                                         </Label>
@@ -154,6 +159,7 @@ const AddNewSchool = (props) => {
                                         <Label
                                             className="mb-2"
                                             htmlFor="organization_name"
+                                            style={{ fontSize: 15 }}
                                         >
                                             Institute/School Name
                                         </Label>
@@ -177,7 +183,11 @@ const AddNewSchool = (props) => {
                                                 }
                                             </small>
                                         ) : null}
-                                        <Label className="mb-2" htmlFor="city">
+                                        <Label
+                                            className="mb-2"
+                                            htmlFor="city"
+                                            style={{ fontSize: 15 }}
+                                        >
                                             City
                                         </Label>
                                         <InputBox
@@ -198,6 +208,7 @@ const AddNewSchool = (props) => {
                                         <Label
                                             className="mb-2"
                                             htmlFor="district"
+                                            style={{ fontSize: 15 }}
                                         >
                                             District
                                         </Label>
@@ -216,7 +227,11 @@ const AddNewSchool = (props) => {
                                                 {formik.errors.district}
                                             </small>
                                         ) : null}
-                                        <Label className="mb-2" htmlFor="state">
+                                        <Label
+                                            className="mb-2"
+                                            htmlFor="state"
+                                            style={{ fontSize: 15 }}
+                                        >
                                             State
                                         </Label>
                                         <InputBox
@@ -237,6 +252,7 @@ const AddNewSchool = (props) => {
                                         <Label
                                             className="mb-2"
                                             htmlFor="principal_name"
+                                            style={{ fontSize: 15 }}
                                         >
                                             Principal Name
                                         </Label>
@@ -258,6 +274,7 @@ const AddNewSchool = (props) => {
                                         <Label
                                             className="mb-2"
                                             htmlFor="principal_mobile"
+                                            style={{ fontSize: 15 }}
                                         >
                                             Principal Mobile
                                         </Label>
@@ -281,6 +298,7 @@ const AddNewSchool = (props) => {
                                         <Label
                                             className="mb-2"
                                             htmlFor="principal_email"
+                                            style={{ fontSize: 15 }}
                                         >
                                             Principal Email
                                         </Label>
