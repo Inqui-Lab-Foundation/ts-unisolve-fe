@@ -64,7 +64,6 @@ const TicketsPage = (props) => {
         localStorage.setItem('listId', JSON.stringify(item));
     };
     const handleActiveStatusUpdate = (item, itemA) => {
-        // console.log(item);
         const body = {
             status: itemA,
             organization_code: item.organization_code,
@@ -86,11 +85,11 @@ const TicketsPage = (props) => {
             .then(function (response) {
                 if (response.status === 200) {
                     setReqList(false);
-                    listApi();
                     openNotificationWithIcon(
                         'success',
                         'Status update successfully'
                     );
+                    props.getSchoolRegistationBulkUploadActions('i');
                 }
             })
             .catch(function (error) {
@@ -99,9 +98,10 @@ const TicketsPage = (props) => {
             });
     };
     const handleStatusUpdate = (item, itemS) => {
-        console.log(item);
         const body = {
-            status: itemS
+            status: itemS,
+            organization_code: item.organization_code,
+            organization_name: item.organization_name
         };
         var config = {
             method: 'put',
@@ -166,6 +166,7 @@ const TicketsPage = (props) => {
 
     const handleBack = (e) => {
         setReqList(false);
+        props.getSchoolRegistationBulkUploadActions('i');
     };
 
     const reqSchoolsData = {
