@@ -26,6 +26,7 @@ import DataTable, { Alignment } from 'react-data-table-component';
 import DataTableExtensions from 'react-data-table-component-extensions';
 import 'react-data-table-component-extensions/dist/index.css';
 import {
+    getDistrictData,
     getStudentRegistationData,
     updateStudentStatus
 } from '../../redux/studentRegistration/actions';
@@ -33,58 +34,18 @@ import { Badge } from 'react-bootstrap';
 
 const { TabPane } = Tabs;
 
-const SelectDists = () => {
-    const dists= [
-        'ARIYALUR',
-        'CHENGALPATTU',
-        'CHENNAI',
-        'COIMBATORE',
-        'CUDDALORE',
-        'ddydgshg',
-        'DHARMAPURI',
-        'DINDIGUL',
-        'ERODE',
-        'Hyderabad',
-        'KALLAKURICHI',
-        'KANCHEEPURAM',
-        'KANNIYAKUMARI',
-        'KARUR',
-        'KRISHNAGIRI',
-        'MADURAI',
-        'MAYILADUTHURAI',
-        'NAGAPATTINAM',
-        'NAMAKKAL',
-        'nellore',
-        'PERAMBALUR',
-        'Prakasam',
-        'prakasam ',
-        'PUDUKKOTTAI',
-        'RAMANATHAPURAM',
-        'RANIPET',
-        'RR',
-        'SALEM',
-        'seferf',
-        'SIVAGANGAI',
-        'TENKASI',
-        'THANJAVUR',
-        'THE NILGIRIS',
-        'THENI',
-        'THOOTHUKKUDI',
-        'TIRUCHIRAPPALLI',
-        'TIRUNELVELI',
-        'TIRUPATHUR',
-        'TIRUPPUR',
-        'TIRUVALLUR',
-        'TIRUVANNAMALAI',
-        'TIRUVARUR',
-        'VELLORE',
-        'Vijayawada',
-        'VILLUPURAM',
-        'VIRUDHUNAGAR'
-    ];
+const SelectDists = ({ getDistrictsListAction, dists,tab,setDist }) => {
+
+    useEffect(() => {
+        if(tab && (tab ==1 || tab ==2))
+            getDistrictsListAction();
+    }, [tab]);
+    const handleDists = (e)=>{
+        setDist(e.target.value);
+    };
     return (
         <select
-            // onChange={(e) => setTeamId(e.target.value)}
+            onChange={handleDists}
             name="districts"
             id="districts"
         >
@@ -108,19 +69,30 @@ const TicketsPage = (props) => {
     // const [admin, activeAdmin] = useState(false);
     const [evaluater, activeEvaluater] = useState(false);
     const [tab, setTab] = useState('1');
+    const [studentDist, setstudentDist] = useState('');
+    const [mentorDist, setmentorDist] = useState('');
 
     useEffect(() => {
-        if (Number(tab) === 1) {
-            props.getStudentListAction('i');
-        } else if (tab === 2) {
-            props.getAdminMentorsListAction('ACTIVE');
-        } else if(tab ===3){
+        if (tab === 3) {
             props.getEvaluatorListAction();
-        }else if(tab ===4){
+        } else if (tab === 4) {
             props.getAdminListAction();
         }
     }, [tab]);
 
+    useEffect(() => {
+        if (Number(tab) === 1) {
+            props.getStudentListAction(studentDist);
+        } 
+    }, [tab,studentDist]);
+    useEffect(() => {
+        if (Number(tab) === 2) {
+            props.getAdminMentorsListAction('ACTIVE',mentorDist);
+        } 
+    }, [tab,mentorDist]);
+
+    console.log(mentorDist,"mentor");
+    console.log(studentDist,"student");
     const [rows, setRows] = React.useState([]);
     const [mentorRows, setMentorRows] = React.useState([]);
 
@@ -138,27 +110,28 @@ const TicketsPage = (props) => {
     }, []);
 
     const changeTab = (e) => {
+        setmentorDist('');
+        setstudentDist('');
         localStorage.setItem('tab', e);
-        if(e === '4'){
+        if (e === '4') {
             activeMenter(false);
             activeEvaluater(false);
             props.getAdminListAction();
             // activeAdmin(true);
-        }else if (e === '3') {
+        } else if (e === '3') {
             activeEvaluater(!evaluater);
             props.getEvaluatorListAction();
             activeMenter(false);
             // activeAdmin(false);
             activeEvaluater(true);
         } else if (e === '2') {
-            props.getAdminMentorsListAction('ACTIVE');
+            props.getAdminMentorsListAction('ACTIVE',mentorDist);
             activeMenter(!menter);
             // activeAdmin(false);
             activeEvaluater(false);
         } else {
             activeEvaluater(false);
             activeMenter(false);
-
         }
     };
     useEffect(() => {
@@ -250,7 +223,7 @@ const TicketsPage = (props) => {
                     } else {
                         props.mentorStatusUpdate({ status }, id);
                         setTimeout(() => {
-                            props.getAdminMentorsListAction(status);
+                            props.getAdminMentorsListAction("ACTIVE",mentorDist);
                         }, 500);
                     }
                     swalWithBootstrapButtons.fire(
@@ -518,8 +491,33 @@ const TicketsPage = (props) => {
                         >
                             <Row className="mt-0">
                                 <Col className="ticket-btn col ml-auto  ">
-                                    <div className="d-flex justify-content-between">
-                                        <SelectDists/>
+                                    <div
+                                        className={`d-flex ${
+                                            tab == 1 || tab == 2
+                                                ? 'justify-content-between'
+                                                : 'justify-content-end'
+                                        }`}
+                                    >
+                                        {tab && tab == 1 && (
+                                            <SelectDists
+                                                getDistrictsListAction={
+                                                    props.getDistrictsListAction
+                                                }
+                                                setDist = { setstudentDist}
+                                                dists={props.dists}
+                                                tab={tab}
+                                            />
+                                        )}
+                                        {tab && tab == 2 && (
+                                            <SelectDists
+                                                getDistrictsListAction={
+                                                    props.getDistrictsListAction
+                                                }
+                                                setDist = {setmentorDist}
+                                                dists={props.dists}
+                                                tab={tab}
+                                            />
+                                        )}
                                         <div>
                                             <Button
                                                 label="Import"
@@ -647,7 +645,7 @@ const TicketsPage = (props) => {
                                 key="4"
                                 className="bg-white p-3 mt-2 sub-tab"
                                 tabId="4"
-                            > 
+                            >
                                 <div className="my-5">
                                     <DataTableExtensions
                                         {...adminData}
@@ -687,12 +685,20 @@ const mapStateToProps = ({
     const { evalutorsList } = adminEvalutors;
     const { adminData } = admin;
     const { mentorsList, totalItems } = adminMentors;
-    const { studentList } = studentRegistration;
-    return { evalutorsList,adminData, mentorsList, totalItems, studentList };
+    const { studentList, dists } = studentRegistration;
+    return {
+        evalutorsList,
+        adminData,
+        mentorsList,
+        totalItems,
+        studentList,
+        dists
+    };
 };
 export default connect(mapStateToProps, {
     getAdminMentorsListAction: getAdminMentorsList,
     getStudentListAction: getStudentRegistationData,
+    getDistrictsListAction: getDistrictData,
     getEvaluatorListAction: getAdminEvalutorsList,
     getAdminListAction: getAdmin,
     mentorStatusUpdate: updateMentorStatus,
