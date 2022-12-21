@@ -91,8 +91,6 @@ const TicketsPage = (props) => {
         } 
     }, [tab,mentorDist]);
 
-    console.log(mentorDist,"mentor");
-    console.log(studentDist,"student");
     const [rows, setRows] = React.useState([]);
     const [mentorRows, setMentorRows] = React.useState([]);
 
@@ -189,7 +187,7 @@ const TicketsPage = (props) => {
     //             }
     //         });
     // };
-    const handleStatus = (status, id, type = undefined) => {
+    const handleStatus = (status, id, type = undefined,all=undefined) => {
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
                 confirmButton: 'btn btn-success',
@@ -221,7 +219,8 @@ const TicketsPage = (props) => {
                             props.getStudentListAction();
                         }, 500);
                     } else {
-                        props.mentorStatusUpdate({ status }, id);
+                        const obj={full_name:all.full_name,username:all.username,mobile:all.mobile,status};
+                        props.mentorStatusUpdate(obj, id);
                         setTimeout(() => {
                             props.getAdminMentorsListAction("ACTIVE",mentorDist);
                         }, 500);
@@ -317,7 +316,7 @@ const TicketsPage = (props) => {
                                 record?.status === 'ACTIVE'
                                     ? 'INACTIVE'
                                     : 'ACTIVE';
-                            handleStatus(status, record?.mentor_id);
+                            handleStatus(status, record?.mentor_id,undefined,record);
                         }}
                     >
                         {record?.status === 'ACTIVE' ? (
