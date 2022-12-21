@@ -138,7 +138,7 @@ const TicketsPage = (props) => {
             method: 'get',
             url:
                 process.env.REACT_APP_API_BASE_URL +
-                '/organizations?status=INACTIVE',
+                '/organizations?status=INACTIVE&status=NEW',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${currentUser.data[0].token}`
@@ -148,6 +148,7 @@ const TicketsPage = (props) => {
             .then(function (response) {
                 if (response.status === 200) {
                     console.log(response.data);
+
                     setReqSchoolsResponse(
                         response.data.data[0] &&
                             response.data.data[0].dataValues
@@ -173,17 +174,34 @@ const TicketsPage = (props) => {
         data: reqSchoolsResponse,
         columns: [
             {
+                name: 'No',
+                selector: (row, key) => key + 1,
+                sortable: true,
+                width: '6%'
+                // center: true,
+            },
+            {
                 name: 'UDISE Code',
                 selector: (row) => row.organization_code,
                 sortable: true,
-                width: '25%'
+                width: '15%'
                 // center: true,
             },
             {
                 name: 'Institution Name',
                 selector: (row) => row.organization_name,
-                width: '30%'
+                width: '25%'
                 // center: true,
+            },
+            {
+                name: 'Principal Name',
+                selector: 'principal_name',
+                width: '15%'
+            },
+            {
+                name: 'Principal Mobile',
+                selector: 'principal_mobile',
+                width: '15%'
             },
             {
                 name: 'Status',
@@ -192,13 +210,13 @@ const TicketsPage = (props) => {
                         {row.status}
                     </Badge>
                 ],
-                width: '15%'
+                width: '8%'
                 // center: right,
             },
             {
                 name: 'ACTIONS',
                 selector: 'action',
-                width: '40%',
+                width: '16%',
                 cell: (record) => [
                     <>
                         <Link
@@ -232,37 +250,37 @@ const TicketsPage = (props) => {
         data: props.schoolsRegistrationList,
         columns: [
             {
-                name: 'S.No',
-                selector: 'organization_id',
+                name: 'No',
+                selector: (row, key) => key + 1,
                 width: '6%'
             },
             {
                 name: 'UDISE Code',
                 selector: 'organization_code',
                 sortable: true,
-                width: '13%'
+                width: '15%'
             },
             {
                 name: 'Institution Name',
                 selector: 'organization_name',
-                width: '15%'
+                width: '20%'
             },
             {
-                name: 'Principle Name',
+                name: 'Principal Name',
                 selector: 'principal_name',
                 width: '15%'
             },
             {
-                name: 'Principle Mobile',
+                name: 'Principal Mobile',
                 selector: 'principal_mobile',
                 width: '15%'
             },
 
-            {
-                name: 'State',
-                selector: 'state',
-                width: '15%'
-            },
+            // {
+            //     name: 'State',
+            //     selector: 'state',
+            //     width: '15%'
+            // },
             {
                 name: 'Status',
                 cell: (row) => [
@@ -275,12 +293,12 @@ const TicketsPage = (props) => {
                         {row.status}
                     </Badge>
                 ],
-                width: '7%'
+                width: '11%'
             },
             {
                 name: 'Actions',
                 selector: 'action',
-                width: '14%',
+                width: '18%',
                 cell: (record) => [
                     <>
                         {/* <a onClick={() => handleEdit(record)}>
@@ -294,7 +312,7 @@ const TicketsPage = (props) => {
                             exact="true"
                             key={record}
                             onClick={() => handleEdit(record)}
-                            style={{ marginRight: '5px' }}
+                            style={{ marginRight: '7px' }}
                         >
                             <div className="btn btn-primary btn-lg mx-2">
                                 Edit
