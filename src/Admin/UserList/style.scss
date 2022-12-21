@@ -2,6 +2,9 @@
   .ant-tabs-content {
     display: block !important;
   }
+  .card{
+    box-shadow: none !important;
+  }
   .ant-tabs-tab + .ant-tabs-tab,
   .sub-tab .ant-tabs-tab {
     margin-right: 32px !important;

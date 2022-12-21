@@ -31,6 +31,7 @@ import {
     updateStudentStatus
 } from '../../redux/studentRegistration/actions';
 import { Badge } from 'react-bootstrap';
+import CommonPage from '../../components/CommonPage';
 
 const { TabPane } = Tabs;
 
@@ -48,8 +49,9 @@ const SelectDists = ({ getDistrictsListAction, dists,tab,setDist }) => {
             onChange={handleDists}
             name="districts"
             id="districts"
+            className="text-capitalize"
         >
-            <option value="">All Districts</option>
+            <option value="">Select District</option>
             {dists && dists.length > 0 ? (
                 dists.map((item, i) => (
                     <option key={i} value={item}>
@@ -81,12 +83,12 @@ const TicketsPage = (props) => {
     }, [tab]);
 
     useEffect(() => {
-        if (Number(tab) === 1) {
+        if (Number(tab) === 1 && studentDist !=='') {
             props.getStudentListAction(studentDist);
         } 
     }, [tab,studentDist]);
     useEffect(() => {
-        if (Number(tab) === 2) {
+        if (Number(tab) === 2 && mentorDist !=='') {
             props.getAdminMentorsListAction('ACTIVE',mentorDist);
         } 
     }, [tab,mentorDist]);
@@ -251,7 +253,7 @@ const TicketsPage = (props) => {
                 width: '8%'
             },
             {
-                name: 'UDISE  Code',
+                name: 'UDISE',
                 selector: 'organization_code',
                 width: '10%'
             },
@@ -259,7 +261,7 @@ const TicketsPage = (props) => {
             {
                 name: 'Teacher Name',
                 selector: 'full_name',
-                width: '12%'
+                width: '17%'
             },
 
             {
@@ -270,7 +272,7 @@ const TicketsPage = (props) => {
             {
                 name: 'Phone',
                 selector: 'mobile',
-                width: '20%'
+                width: '15%'
             },
             {
                 name: 'Status',
@@ -343,8 +345,8 @@ const TicketsPage = (props) => {
                 // center: true,
             },
             {
-                name: 'Team Code',
-                selector: 'team_id',
+                name: 'Team Name',
+                selector: 'team_name',
                 // sortable: true,
                 width: '20%'
                 // center: true,
@@ -352,13 +354,25 @@ const TicketsPage = (props) => {
             {
                 name: 'Student Name',
                 selector: 'full_name',
-                width: '21%'
+                width: '16%'
                 // center: true,
             },
             {
-                name: 'Institute',
-                selector: 'institute_name',
-                width: '30%'
+                name: 'Grade',
+                selector: 'Grade',
+                width: '10%'
+                // center: right,
+            },
+            {
+                name: 'Age',
+                selector: 'Age',
+                width: '10%'
+                // center: right,
+            },
+            {
+                name: 'Gender',
+                selector: 'Gender',
+                width: '15%'
                 // center: right,
             },
             {
@@ -406,28 +420,38 @@ const TicketsPage = (props) => {
             {
                 name: 'S.No.',
                 selector: 'id',
-                width: '10%'
+                // width: '10%'
             },
             {
                 name: 'Evaluator Name',
                 selector: 'full_name',
-                width: '21%'
+                // width: '16%'
+            },
+            {
+                name: 'Email',
+                selector: 'email',
+                // width: '20%'
+            },
+            {
+                name: 'Mobile',
+                selector: 'mobile',
+                // width: '15%'
             },
             {
                 name: 'City',
                 selector: 'city',
-                width: '20%'
+                // width: '10%'
             },
             {
                 name: 'Institute',
                 selector: 'organization_name',
-                width: '30%'
+                // width: '30%'
             },
             {
                 name: 'Action',
                 sortable: false,
                 selector: 'null',
-                width: '19%',
+                // width: '19%',
                 cell: (record) => [
                     <Link
                         key={record.id}
@@ -447,23 +471,27 @@ const TicketsPage = (props) => {
             {
                 name: 'S.No.',
                 selector: 'id',
-                width: '10%'
             },
             {
                 name: 'Admin Name',
                 selector: 'full_name',
-                width: '21%'
             },
             {
                 name: 'City',
                 selector: 'city',
-                width: '20%'
+            },
+            {
+                name: 'Email',
+                selector: 'email',
+            },
+            {
+                name: 'District',
+                selector: 'district',
             },
             {
                 name: 'Action',
                 sortable: false,
                 selector: 'null',
-                width: '19%',
                 cell: (record) => [
                     <Link
                         key={record.id}
@@ -576,22 +604,26 @@ const TicketsPage = (props) => {
                                 className="bg-white p-3 mt-2 sub-tab"
                                 tabId="1"
                             >
-                                <div className="my-5">
-                                    <DataTableExtensions
-                                        {...StudentsData}
-                                        exportHeaders
-                                    >
-                                        <DataTable
-                                            data={rows}
-                                            defaultSortField="id"
-                                            defaultSortAsc={false}
-                                            pagination
-                                            highlightOnHover
-                                            fixedHeader
-                                            subHeaderAlign={Alignment.Center}
-                                        />
-                                    </DataTableExtensions>
-                                </div>
+                                {  studentDist ==="" ? 
+                                    <CommonPage text="Please select a district" />
+                                    :
+                                    <div className="my-5">
+                                        <DataTableExtensions
+                                            {...StudentsData}
+                                            exportHeaders
+                                        >
+                                            <DataTable
+                                                data={rows}
+                                                defaultSortField="id"
+                                                defaultSortAsc={false}
+                                                pagination
+                                                highlightOnHover
+                                                fixedHeader
+                                                subHeaderAlign={Alignment.Center}
+                                            />
+                                        </DataTableExtensions>
+                                    </div>
+                                }
                             </TabPane>
                             <TabPane
                                 tab="Teachers"
@@ -599,22 +631,26 @@ const TicketsPage = (props) => {
                                 className="bg-white p-3 mt-2 sub-tab"
                                 tabId="2"
                             >
-                                <div className="my-5">
-                                    <DataTableExtensions
-                                        {...TableMentorsProps}
-                                        exportHeaders
-                                    >
-                                        <DataTable
-                                            data={mentorRows}
-                                            defaultSortField="id"
-                                            defaultSortAsc={false}
-                                            pagination
-                                            highlightOnHover
-                                            fixedHeader
-                                            subHeaderAlign={Alignment.Center}
-                                        />
-                                    </DataTableExtensions>
-                                </div>
+                                {  mentorDist ==="" ? 
+                                    <CommonPage text="Please select a district" />
+                                    :
+                                    <div className="my-5">
+                                        <DataTableExtensions
+                                            {...TableMentorsProps}
+                                            exportHeaders
+                                        >
+                                            <DataTable
+                                                data={mentorRows}
+                                                defaultSortField="id"
+                                                defaultSortAsc={false}
+                                                pagination
+                                                highlightOnHover
+                                                fixedHeader
+                                                subHeaderAlign={Alignment.Center}
+                                            />
+                                        </DataTableExtensions>
+                                    </div>
+                                }
                             </TabPane>
                             <TabPane
                                 tab="Evaluators"
@@ -628,6 +664,7 @@ const TicketsPage = (props) => {
                                         exportHeaders
                                     >
                                         <DataTable
+                                            responsive={true}
                                             data={props.studentList}
                                             defaultSortField="id"
                                             defaultSortAsc={false}
