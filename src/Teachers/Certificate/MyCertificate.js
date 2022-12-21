@@ -19,7 +19,7 @@ const MyCertificate = () => {
     const language = useSelector((state) => state?.mentors.mentorLanguage);
     const [postSurveyStatus, setPostSurveyStatus] = useState('');
     let tempVar = postSurveyStatus;
-    tempVar = 0;
+    // tempVar = 0;
     const handleCertificateDownload = () => {
         const content = pdfRef.current;
         const doc = new jsPDF('p', 'px', [298, 209]);
@@ -117,7 +117,7 @@ const MyCertificate = () => {
                                 </div>
                                 <div>
                                     <h2>
-                                        {t('teacher_certificate.complete_postsurvey')}
+                                        {postSurveyStatus =="COMPLETED" ? t('teacher_certificate.complete_post_survey_default') :t('teacher_certificate.complete_postsurvey')}
                                     </h2>
                                 </div>
                             </div>
