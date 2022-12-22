@@ -5,7 +5,8 @@ import {
     EVALUATOR_LOGIN_USER_SUCCESS,
     EVALUATOR_LOGIN_USER_ERROR,
     GET_SUBMITTED_IDEA_LIST,
-    GET_INSTRUCTIONS
+    GET_INSTRUCTIONS,
+    UPDATAE_EVALUATOR
 } from '../../../redux/actions.js';
 import { URL, KEY } from '../../../constants/defaultValues.js';
 import {
@@ -120,5 +121,33 @@ export const getInstructions = () => async (dispatch) => {
         }
     } catch (error) {
         dispatch(getInstructionsSuccess(null));
+    }
+};
+//---update evaluator list--
+export const updateEvaluatorSuccess = (data) => async (dispatch) => {
+    dispatch({
+        type: UPDATAE_EVALUATOR,
+        payload: data
+    });
+};
+export const updateEvaluator = (params,id) => async (dispatch) => {
+    try {
+        const axiosConfig = getNormalHeaders(KEY.User_API_Key);
+        const result = await axios
+            .put(
+                `${process.env.REACT_APP_API_BASE_URL + '/crud/evaluators/'+id}`,params,axiosConfig
+            )
+            .then((data) => data)
+            .catch((err) => {
+                return err.response;
+            });
+        if (result && result.status === 200) {
+            const data =result?.data?.data[0];
+            dispatch(updateEvaluatorSuccess(data));
+        } else {
+            dispatch(updateEvaluatorSuccess(null));
+        }
+    } catch (error) {
+        dispatch(updateEvaluatorSuccess(null));
     }
 };
