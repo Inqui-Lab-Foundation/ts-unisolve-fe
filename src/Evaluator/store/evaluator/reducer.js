@@ -4,7 +4,8 @@ import {
     EVALUATOR_LOGIN_USER_SUCCESS,
     EVALUATOR_LOGIN_USER_ERROR,
     GET_SUBMITTED_IDEA_LIST,
-    GET_INSTRUCTIONS
+    GET_INSTRUCTIONS,
+    UPDATAE_EVALUATOR
 } from '../../../redux/actions.js';
 
 
@@ -15,7 +16,8 @@ const INIT_STATE = {
     submittedIdeaList:null,
     processedRound1List:null,
     yetToProcessRound1List:null,
-    instructionsData:null
+    instructionsData:null,
+    evaluatorUpdateData:null,
 };
 
 export default (state = INIT_STATE, action) => {
@@ -46,6 +48,11 @@ export default (state = INIT_STATE, action) => {
         return {
             ...state,
             instructionsData:action.payload,
+        };
+    case UPDATAE_EVALUATOR:
+        return {
+            ...state,
+            evaluatorUpdateData:action.payload,
         };
     default:
         return newState;

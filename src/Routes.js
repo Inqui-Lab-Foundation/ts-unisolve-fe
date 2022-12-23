@@ -144,7 +144,6 @@ import EvalutorAdminLogins from './Evaluator/Admin/EvaluatorAdminLogin';
 import Eadmindashboard from './Evaluator/Admin/Dashboard/EAdminDashboard';
 import EadminChangePassword from './Evaluator/Admin/Pages/ChangePSWModal';
 
-
 const Routers = () => {
     // const history = useHistory();
     // const currentUser = getCurrentUser('current_user');
@@ -535,7 +534,7 @@ const Routers = () => {
 
                     <ProtectedRoute
                         exact={true}
-                        path="/admin/challenges "
+                        path="/admin/challenges"
                         component={AdminBadgesComp}
                     />
 
@@ -754,6 +753,7 @@ const Routers = () => {
                         component={EadminChangePassword}
                     />
                     
+
                     <Route component={PageNotFound} path="*" />
                 </Switch>
             </Router>

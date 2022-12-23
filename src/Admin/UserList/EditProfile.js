@@ -27,28 +27,34 @@ const EditProfile = (props) => {
                 path: '/admin/userlist'
             },
             {
-                title: 'User Edit Profile',
-                
+                title: 'User Edit Profile'
             }
         ]
     };
 
-    const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-
+    const phoneRegExp =
+        /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+    console.log(mentorData);
     const formik = useFormik({
         initialValues: {
-            name: mentorData.full_name,
-            email: mentorData.username,
+            name: mentorData.full_name || mentorData.user.full_name,
+            email: mentorData.username || mentorData.user.username,
             phone: mentorData.mobile
         },
 
         validationSchema: Yup.object({
-            name: Yup.string().matches(/^[aA-zZ\s]+$/, "Invalid name ").min(2, "Enter a valid name").required('Name is Required'),
-            email: Yup.string().email("Invalid email address format")
-                .required("Email is required"),
-            phone: Yup.string().matches(phoneRegExp, 'Mobile number is not valid')
-                .min(10, "Enter a valid mobile number")
-                .max(10, "Enter a valid mobile number").required('Mobile Number is Required'),
+            name: Yup.string()
+                .matches(/^[aA-zZ\s]+$/, 'Invalid name ')
+                .min(2, 'Enter a valid name')
+                .required('Name is Required'),
+            email: Yup.string()
+                .email('Invalid email address format')
+                .required('Email is required'),
+            phone: Yup.string()
+                .matches(phoneRegExp, 'Mobile number is not valid')
+                .min(10, 'Enter a valid mobile number')
+                .max(10, 'Enter a valid mobile number')
+                .required('Mobile Number is Required')
         }),
 
         onSubmit: (values) => {
@@ -58,13 +64,20 @@ const EditProfile = (props) => {
             const body = JSON.stringify({
                 full_name: full_name,
                 mobile: mobile,
-                username: email,
+                username: email
             });
+            const url = mentorData?.evaluator_id
+                ? process.env.REACT_APP_API_BASE_URL +
+                  '/crud/evaluater/' +
+                  mentorData.evaluator_id
+                : mentorData?.admin_id ? process.env.REACT_APP_API_BASE_URL +
+                '/admins/' +
+                mentorData.admin_id :process.env.REACT_APP_API_BASE_URL +
+                  '/mentors/' +
+                  mentorData.mentor_id;
             var config = {
                 method: 'put',
-                url:
-                    process.env.REACT_APP_API_BASE_URL +
-                    '/mentors/'+ mentorData.mentor_id,
+                url: url,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${currentUser.data[0].token}`
@@ -74,14 +87,17 @@ const EditProfile = (props) => {
             axios(config)
                 .then(function (response) {
                     if (response.status === 200) {
-                        props.history.push(mentorData.where === 'Dashbord' ? '/admin/dashboard' : '/admin/userlist');
+                        props.history.push(
+                            mentorData.where === 'Dashbord'
+                                ? '/admin/dashboard'
+                                : '/admin/userlist'
+                        );
                     }
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
-        },
-        
+        }
     });
 
     return (
@@ -94,7 +110,7 @@ const EditProfile = (props) => {
                         <div>
                             <Form onSubmit={formik.handleSubmit} isSubmitting>
                                 <div className="create-ticket register-block">
-                                    <Row className='justify-content-center'>
+                                    <Row className="justify-content-center">
                                         <Col md={6} className="mb-5 mb-xl-0">
                                             <Label
                                                 className="name-req"
@@ -109,24 +125,17 @@ const EditProfile = (props) => {
                                                 name="name"
                                                 onChange={formik.handleChange}
                                                 onBlur={formik.handleBlur}
-                                                value={
-                                                    formik.values
-                                                        .name
-                                                }
+                                                value={formik.values.name}
                                             />
 
                                             {formik.touched.name &&
-                                            formik.errors.name ? 
-                                                (
+                                                formik.errors.name ? (
                                                     <small className="error-cls">
-                                                        {
-                                                            formik.errors
-                                                                .name
-                                                        }
+                                                        {formik.errors.name}
                                                     </small>
                                                 ) : null}
                                         </Col>
-                                        <div className='w-100'/>
+                                        <div className="w-100" />
                                         <Col md={6}>
                                             <Label
                                                 className="name-req mt-5"
@@ -140,23 +149,16 @@ const EditProfile = (props) => {
                                                 name="email"
                                                 onChange={formik.handleChange}
                                                 onBlur={formik.handleBlur}
-                                                value={
-                                                    formik.values
-                                                        .email
-                                                }
+                                                value={formik.values.email}
                                             />
                                             {formik.touched.email &&
-                                            formik.errors.email ? 
-                                                (
+                                                formik.errors.email ? (
                                                     <small className="error-cls">
-                                                        {
-                                                            formik.errors
-                                                                .email
-                                                        }
+                                                        {formik.errors.email}
                                                     </small>
                                                 ) : null}
                                         </Col>
-                                        <div className='w-100'/>
+                                        <div className="w-100" />
                                         <Col md={6}>
                                             <Label
                                                 className="name-req mt-5"
@@ -170,25 +172,16 @@ const EditProfile = (props) => {
                                                 name="phone"
                                                 onChange={formik.handleChange}
                                                 onBlur={formik.handleBlur}
-                                                value={
-                                                    formik.values
-                                                        .phone
-                                                }
+                                                value={formik.values.phone}
                                             />
 
-                                            
                                             {formik.touched.phone &&
-                                            formik.errors.phone ? 
-                                                (
+                                                formik.errors.phone ? (
                                                     <small className="error-cls">
-                                                        {
-                                                            formik.errors
-                                                                .phone
-                                                        }
+                                                        {formik.errors.phone}
                                                     </small>
                                                 ) : null}
                                         </Col>
-                                       
                                     </Row>
                                 </div>
 
@@ -201,7 +194,10 @@ const EditProfile = (props) => {
                                             size="small"
                                             onClick={() =>
                                                 props.history.push(
-                                                    mentorData.where === 'Dashbord' ? '/admin/dashboard' : '/admin/userlist'
+                                                    mentorData.where ===
+                                                        'Dashbord'
+                                                        ? '/admin/dashboard'
+                                                        : '/admin/userlist'
                                                 )
                                             }
                                         />
