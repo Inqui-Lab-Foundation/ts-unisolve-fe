@@ -68,7 +68,7 @@ const EditProfile = (props) => {
             });
             const url = mentorData?.evaluator_id
                 ? process.env.REACT_APP_API_BASE_URL +
-                  '/crud/evaluater/' +
+                  '/evaluators/' +
                   mentorData.evaluator_id
                 : mentorData?.admin_id ? process.env.REACT_APP_API_BASE_URL +
                 '/admins/' +
