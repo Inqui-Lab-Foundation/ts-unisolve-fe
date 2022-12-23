@@ -30,7 +30,7 @@ const SDG = ({setShowChallenges}) => {
     let {all_topics_count,topics_completed_count} = dashboardStatus ? dashboardStatus : {all_topics_count:null,topics_completed_count:null};
     useLayoutEffect(() => {
         if(!dashboardStatus)
-            dispatch(getStudentDashboardStatus(currentUser.data[0].user_id, language));
+            dispatch(getStudentDashboardStatus(currentUser?.data[0]?.user_id, language));
     }, [language]);
     useEffect(() => {
         if(all_topics_count && (all_topics_count !== topics_completed_count))
