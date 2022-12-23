@@ -77,7 +77,7 @@ const TicketsPage = (props) => {
                 item.organization_id,
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${currentUser.data[0].token}`
+                Authorization: `Bearer ${currentUser?.data[0]?.token}`
             },
             data: body
         };
@@ -111,7 +111,7 @@ const TicketsPage = (props) => {
                 item.organization_id,
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${currentUser.data[0].token}`
+                Authorization: `Bearer ${currentUser?.data[0]?.token}`
             },
             data: body
         };
@@ -141,7 +141,7 @@ const TicketsPage = (props) => {
                 '/organizations?status=NOTACTIVE',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${currentUser.data[0].token}`
+                Authorization: `Bearer ${currentUser?.data[0]?.token}`
             }
         };
         await axios(config)

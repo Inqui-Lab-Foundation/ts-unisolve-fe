@@ -386,7 +386,7 @@ const IdeasPageNew = () => {
                     //     dispatch(
                     //         updateStudentBadges(
                     //             { badge_slugs: [badge] },
-                    //             currentUser.data[0].user_id,
+                    //             currentUser?.data[0]?.user_id,
                     //             language,
                     //             t
                     //         )

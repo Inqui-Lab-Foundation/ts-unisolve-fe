@@ -147,11 +147,11 @@ import EadminChangePassword from './Evaluator/Admin/Pages/ChangePSWModal';
 const Routers = () => {
     // const history = useHistory();
     // const currentUser = getCurrentUser('current_user');
-    // if (currentUser && currentUser.data[0].role === 'ADMIN') {
+    // if (currentUser && currentUser?.data[0]?.role === 'ADMIN') {
     //     history.push('/admin/dashboard');
-    // } else if (currentUser && currentUser.data[0].role === 'STUDENT') {
+    // } else if (currentUser && currentUser?.data[0]?.role === 'STUDENT') {
     //     history.push('/dashboard');
-    // } else if (currentUser && currentUser.data[0].role === 'TEACHER') {
+    // } else if (currentUser && currentUser?.data[0]?.role === 'TEACHER') {
     //     history.push('/teacher/dashboard');
     // }
     // if (currentUser) {
