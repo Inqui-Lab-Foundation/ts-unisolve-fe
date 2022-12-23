@@ -78,7 +78,7 @@ const ChangePSWModal = () => {
                             SetResponce(response.data.message);
                             openNotificationWithIcon('success',response?.data?.message);
                             setTimeout(() => {
-                                history.push('/evaluator_admin/dashboard');
+                                history.push('/eadmin/dashboard');
                             }, 1000);
                         }
                     })
@@ -114,7 +114,7 @@ const ChangePSWModal = () => {
         className: 'defaultInput',
     };
     const handleOnCancel = () => {
-        history.push('/evaluator_admin/dashboard');
+        history.push('/eadmin/dashboard');
     };
     const handleShowPassword=(name)=>{
         switch(name){

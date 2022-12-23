@@ -62,7 +62,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                         className="d-flex logo-section"
                         style={{ height: '5rem' }}
                     >
-                        <Link to={'/evaluator_admin/dashboard'} exact className="d-flex">
+                        <Link to={'/eadmin/dashboard'} exact className="d-flex">
                             {menuCollapse ? (
                                 <img
                                     src={Logo}
@@ -108,25 +108,25 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     <MenuItem
                         icon={ <FaLightbulb />}
                         className={
-                            location.pathname === '/evaluator_admin/dashboard' &&
+                            location.pathname === '/eadmin/dashboard' &&
                             'sidebar-active'
                         }
                     >
-                        <NavLink exact={true} to={'/evaluator_admin/dashboard'}>
+                        <NavLink exact={true} to={'/eadmin/dashboard'}>
                             Dashboard
                         </NavLink>
                     </MenuItem>
                     <MenuItem
                         icon={<RiLockPasswordFill />}
                         className={
-                            location.pathname === '/evaluator_admin/change-password' &&
+                            location.pathname === '/eadmin/change-password' &&
                             'sidebar-active'
                         }
                     >
                         <NavLink
                             exact={true}
                             //onClick={(e) => handleClick(e, '')}
-                            to={'/evaluator_admin/change-password'}
+                            to={'/eadmin/change-password'}
                         >
                             Change Password
                         </NavLink>

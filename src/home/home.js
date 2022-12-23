@@ -92,7 +92,7 @@ const Home = () => {
                 : moduleName === 'EVALUATOR'
                 ? history.push('/evaluator/submitted-ideas')
                 : moduleName === 'EADMIN'
-                ? history.push('/evaluator_admin/dashboard')
+                ? history.push('/eadmin/dashboard')
                 : history.push('/dashboard');
         }
     }, []);
