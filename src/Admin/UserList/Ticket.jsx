@@ -437,12 +437,12 @@ const TicketsPage = (props) => {
             {
                 name: 'Evaluator Name',
                 selector: 'user.full_name',
-                width: '14%'
+                width: '20%'
             },
             {
                 name: 'Email',
                 selector: 'user.username',
-                width: '15%'
+                width: '25%'
             },
             {
                 name: 'Mobile',
@@ -450,29 +450,29 @@ const TicketsPage = (props) => {
                 width: '11%'
             },
             {
-                name: 'City',
-                selector: 'city',
-                width: '10%'
+                name: 'District',
+                selector: 'district',
+                width: '11%'
             },
             {
-                name: 'Institute',
-                selector: 'organization_name',
-                width: '20%'
+                name: 'Status',
+                selector: 'status',
+                width: '10%'
             },
             {
                 name: 'Action',
                 sortable: false,
                 selector: 'null',
-                width: '22%',
+                width: '15%',
                 cell: (record) => [
-                    <Link
-                        key={record.id}
-                        exact="true"
-                        onClick={() => handleSelect(record)}
-                        style={{ marginRight: '10px' }}
-                    >
-                        <div className="btn btn-primary btn-lg mr-5">View</div>
-                    </Link>,
+                    // <Link
+                    //     key={record.id}
+                    //     exact="true"
+                    //     onClick={() => handleSelect(record)}
+                    //     style={{ marginRight: '10px' }}
+                    // >
+                    //     <div className="btn btn-primary btn-lg mr-5">View</div>
+                    // </Link>,
                     <Link
                         exact="true"
                         key={record.id}

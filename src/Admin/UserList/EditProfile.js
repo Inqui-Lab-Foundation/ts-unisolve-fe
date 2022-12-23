@@ -43,6 +43,10 @@ const EditProfile = (props) => {
             .matches(/^[aA-zZ\s]+$/, 'Invalid name ')
             .min(2, 'Enter a valid name')
             .required('Name is Required'),
+        district: Yup.string()
+            .matches(/^[aA-zZ\s]+$/, 'Invalid District Name ')
+            .min(2, 'Enter a valid district')
+            .required('District is Required'),
         email: Yup.string()
             .email('Invalid email address format')
             .required('Email is required'),
@@ -66,8 +70,10 @@ const EditProfile = (props) => {
             name: mentorData.full_name || mentorData.user.full_name,
             email: mentorData.username || mentorData.user.username,
         };
-        if(!data?.admin_id)
+        if(!data?.admin_id){
             commonInitialValues['phone']= mentorData.mobile;
+            commonInitialValues['district']= mentorData.district;
+        }
         return commonInitialValues;
     };
     const formik = useFormik({
@@ -77,10 +83,12 @@ const EditProfile = (props) => {
             const full_name = values.name;
             const email = values.email;
             const mobile = values.phone;
+            const district = values.district;
             const body = JSON.stringify({
                 full_name: full_name,
                 mobile: mobile,
-                username: email
+                username: email,
+                district:district
             });
             const url = mentorData?.evaluator_id
                 ? process.env.REACT_APP_API_BASE_URL +
@@ -178,29 +186,57 @@ const EditProfile = (props) => {
                                                 ) : null}
                                         </Col>
                                         <div className="w-100" />
-                                        {!mentorData?.admin_id && <Col md={6}>
-                                            <Label
-                                                className="name-req mt-5"
-                                                htmlFor="phone"
-                                            >
-                                                Phone
-                                            </Label>
-                                            <InputBox
-                                                className={'defaultInput'}
-                                                id="phone"
-                                                name="phone"
-                                                onChange={formik.handleChange}
-                                                onBlur={formik.handleBlur}
-                                                value={formik.values.phone}
-                                            />
+                                        {!mentorData?.admin_id && 
+                                        <>
+                                            <Col md={6}>
+                                                <Label
+                                                    className="name-req mt-5"
+                                                    htmlFor="phone"
+                                                >
+                                                    Phone
+                                                </Label>
+                                                <InputBox
+                                                    className={'defaultInput'}
+                                                    id="phone"
+                                                    name="phone"
+                                                    onChange={formik.handleChange}
+                                                    onBlur={formik.handleBlur}
+                                                    value={formik.values.phone}
+                                                />
 
-                                            {formik.touched.phone &&
-                                                formik.errors.phone ? (
-                                                    <small className="error-cls">
-                                                        {formik.errors.phone}
-                                                    </small>
-                                                ) : null}
-                                        </Col>}
+                                                {formik.touched.phone &&
+                                                    formik.errors.phone ? (
+                                                        <small className="error-cls">
+                                                            {formik.errors.phone}
+                                                        </small>
+                                                    ) : null}
+                                            </Col>
+                                            <div className="w-100" />
+                                            <Col md={6}>
+                                                <Label
+                                                    className="name-req mt-5"
+                                                    htmlFor="district"
+                                                >
+                                                    District
+                                                </Label>
+                                                <InputBox
+                                                    className={'defaultInput'}
+                                                    id="district"
+                                                    name="district"
+                                                    onChange={formik.handleChange}
+                                                    onBlur={formik.handleBlur}
+                                                    value={formik.values.district}
+                                                />
+
+                                                {formik.touched.district &&
+                                                    formik.errors.district ? (
+                                                        <small className="error-cls">
+                                                            {formik.errors.district}
+                                                        </small>
+                                                    ) : null}
+                                            </Col>
+                                        </>
+                                        }
                                     </Row>
                                 </div>
 
