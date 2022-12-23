@@ -140,6 +140,8 @@ import EvaluatorForgotPassword from './Evaluator/ForgotPassword';
 import EvaluatorIdeaList from './Evaluator/IdeaList/IdeaList';
 import ViewMore from './Admin/Dashboard/ViewMore';
 import EvaluatorInstructions from './Evaluator/Instructions/Instructions';
+import EvaluatedIdea from './Evaluator/EvaluatedIdea/EvaluatedIdea';
+
 import EvalutorAdminLogins from './Evaluator/Admin/EvaluatorAdminLogin';
 import Eadmindashboard from './Evaluator/Admin/Dashboard/EAdminDashboard';
 import EadminChangePassword from './Evaluator/Admin/Pages/ChangePSWModal';
@@ -736,6 +738,12 @@ const Routers = () => {
                         exact={true}
                         path="/evaluator/instructions"
                         component={EvaluatorInstructions}
+                    />
+
+                    <ProtectedRoute
+                        exact={true}
+                        path="/evaluator/evaluated-ideas"
+                        component={EvaluatedIdea}
                     />
                     <Route
                         exact={true}

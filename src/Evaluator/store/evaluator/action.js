@@ -6,6 +6,7 @@ import {
     EVALUATOR_LOGIN_USER_ERROR,
     GET_SUBMITTED_IDEA_LIST,
     GET_INSTRUCTIONS,
+    GET_L1_EVALUATED_IDEA,
     EVALUATOR_ADMIN_LOGIN_USER,
     EVALUATOR_ADMIN_LOGIN_USER_SUCCESS,
     EVALUATOR_ADMIN_LOGIN_USER_ERROR,
@@ -171,6 +172,39 @@ export const getInstructions = () => async (dispatch) => {
         dispatch(getInstructionsSuccess(null));
     }
 };
+
+
+//---get evaluated idea of L1 round--
+export const getL1EvaluatedIdeaSuccess = (data) => async (dispatch) => {
+    dispatch({
+        type: GET_L1_EVALUATED_IDEA,
+        payload: data
+    });
+};
+export const getL1EvaluatedIdea = () => async (dispatch) => {
+    const currentUser = getCurrentUser('current_user');
+    try {
+        const axiosConfig = getNormalHeaders(KEY.User_API_Key);
+        const result = await axios
+            .get(
+                `${process.env.REACT_APP_API_BASE_URL + '/challenge_response/evaluated/'+currentUser?.data[0]?.user_id}`,
+                axiosConfig
+            )
+            .then((data) => data)
+            .catch((err) => {
+                return err.response;
+            });
+        if (result && result.status === 200) {
+            const data =result?.data?.data;
+            dispatch(getL1EvaluatedIdeaSuccess(data));
+        } else {
+            dispatch(getL1EvaluatedIdeaSuccess(null));
+        }
+    } catch (error) {
+        dispatch(getL1EvaluatedIdeaSuccess(null));
+    }
+};      
+
 //---update evaluator list--
 export const updateEvaluatorSuccess = (data) => async (dispatch) => {
     dispatch({
@@ -184,6 +218,7 @@ export const updateEvaluator = (params,id) => async (dispatch) => {
         const result = await axios
             .put(
                 `${process.env.REACT_APP_API_BASE_URL + '/evaluators/'+id}`,params,axiosConfig
+
             )
             .then((data) => data)
             .catch((err) => {
@@ -197,5 +232,6 @@ export const updateEvaluator = (params,id) => async (dispatch) => {
         }
     } catch (error) {
         dispatch(updateEvaluatorSuccess(null));
+
     }
 };
