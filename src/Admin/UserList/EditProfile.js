@@ -12,10 +12,14 @@ import { useFormik } from 'formik';
 import { BreadcrumbTwo } from '../../stories/BreadcrumbTwo/BreadcrumbTwo';
 import { getCurrentUser } from '../../helpers/Utils';
 import { useHistory } from 'react-router-dom';
+import { getAdminEvalutorsList } from '../store/adminEvalutors/actions';
+import { getAdmin } from '../store/admin/actions';
+import { useDispatch } from 'react-redux';
 
 const EditProfile = (props) => {
     const history = useHistory();
     const currentUser = getCurrentUser('current_user');
+    const dispatch =useDispatch();
     const mentorData =
         (history && history.location && history.location.data) || {};
     const headingDetails = {
@@ -99,11 +103,14 @@ const EditProfile = (props) => {
             axios(config)
                 .then(function (response) {
                     if (response.status === 200) {
-                        props.history.push(
-                            mentorData.where === 'Dashbord'
-                                ? '/admin/dashboard'
-                                : '/admin/userlist'
-                        );
+                        mentorData?.evaluator_id  ? dispatch(getAdminEvalutorsList())  : mentorData?.admin_id && dispatch(getAdmin());
+                        setTimeout(() => {     
+                            props.history.push(
+                                mentorData.where === 'Dashbord'
+                                    ? '/admin/dashboard'
+                                    : '/admin/userlist'
+                            );
+                        }, 200);
                     }
                 })
                 .catch(function (error) {
