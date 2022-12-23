@@ -1,27 +1,24 @@
 /* eslint-disable indent */
 import  React, { useState }  from 'react';
-import '../Student/Pages/SignUp.scss';
+import '../../Student/Pages/SignUp.scss';
 import { Row, Col, Form, FormGroup, Label, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { InputBox } from '../stories/InputBox/InputBox';
-import { Button } from '../stories/Button';
+import { InputBox } from '../../stories/InputBox/InputBox';
+import { Button } from '../../stories/Button';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import signuplogo from '../assets/media/tn-brands/UPSHIFT_BLACK.png';
-import ellipse_1 from '../assets/media/ellipse.svg';
-import { evaluatorLoginUser } from '../redux/actions';
+import signuplogo from '../../assets/media/tn-brands/UPSHIFT_BLACK.png';
+import ellipse_1 from '../../assets/media/ellipse.svg';
+import { evaluatorAdminLoginUser } from '../../redux/actions';
 
 import CryptoJS from 'crypto-js';
-import { openNotificationWithIcon } from '../helpers/Utils';
-import Register from './Register';
+import { openNotificationWithIcon } from '../../helpers/Utils';
 
-const LoginEvaluator = (props) => {
+const LoginAdminEvaluator = (props) => {
     const history = useHistory();
     const [password, handlePassword] = useState("password");
-    //-for evaluator registration modal
-    const [registerModalShow, setRegisterModalShow] = useState(false);
 
     React.useLayoutEffect(() => {
         const moduleName = localStorage.getItem("module");
@@ -68,17 +65,16 @@ const LoginEvaluator = (props) => {
             const body = {
                 username: values.email,
                 password: encrypted,
-                role: "EVALUATOR"
+                role: "EADMIN"
             };
-            props.evaluatorLoginUserAction(body, history,"EVALUATOR");
+            props.evaluatorAdminLoginUserAction(body, history,"EADMIN");
             console.log('======', body);
-            // history.push('/evaluator/submitted-ideas');
         }
     });
 
     const inputUserId = {
         type: 'text',
-        placeholder: 'Enter evaluator email '
+        placeholder: 'Enter admin evaluator email '
     };
 
     const inputPassword = {
@@ -138,7 +134,7 @@ const LoginEvaluator = (props) => {
                 <Col xs={12} sm={12} md={8} xl={8} className="article">
                     <Row className=" article-header mb-4">
                         <h4 className='mb-4'>
-                            <span className="color-green">Evaluator</span> Login
+                            <span className="color-green">Evaluator Admin</span> Login
                         </h4>
                     </Row>
 
@@ -233,13 +229,13 @@ const LoginEvaluator = (props) => {
                                                 </FormGroup>
                                             </Col>
                                             <Col className="col-sm-8 text-right">
-                                                <Link
+                                                {/* <Link
                                                     exact="true"
                                                     to="/evaluator/forgotpassword"
                                                     className="text-link pt-1"
                                                 >
                                                     Forgot your password
-                                                </Link>
+                                                </Link> */}
                                             </Col>
                                         </Row>
                                     </Col>
@@ -265,29 +261,14 @@ const LoginEvaluator = (props) => {
                                             }
                                             disabled={!(formik.dirty && formik.isValid)}
                                         />
-                                        <div
-                                        className="text-primary text-center fs-4 pointer pt-1 mt-4"
-                                        onClick={() => setRegisterModalShow(true)}
-                                    >
-                                        Sign Up
-                                    </div>
                                     </Col>
-                                    
                                 </div>
-                                
                             </Form>
                         </Col>
                     </Row>
                 </Col>
             </Row>
         </div>
-        {registerModalShow && (
-                <Register
-                    show={registerModalShow}
-                    setShow={setRegisterModalShow}
-                    onHide={() => setRegisterModalShow(false)}
-                />
-            )}
     </React.Fragment>
   );
 };
@@ -298,7 +279,7 @@ const mapStateToProps = ({ authUser }) => {
 };
 
 export default connect(mapStateToProps, {
-    evaluatorLoginUserAction: evaluatorLoginUser
-})(LoginEvaluator);
+    evaluatorAdminLoginUserAction: evaluatorAdminLoginUser
+})(LoginAdminEvaluator);
 
 // export default LoginEvaluator;

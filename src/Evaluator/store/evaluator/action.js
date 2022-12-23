@@ -6,6 +6,9 @@ import {
     EVALUATOR_LOGIN_USER_ERROR,
     GET_SUBMITTED_IDEA_LIST,
     GET_INSTRUCTIONS,
+    EVALUATOR_ADMIN_LOGIN_USER,
+    EVALUATOR_ADMIN_LOGIN_USER_SUCCESS,
+    EVALUATOR_ADMIN_LOGIN_USER_ERROR,
     UPDATAE_EVALUATOR
 } from '../../../redux/actions.js';
 import { URL, KEY } from '../../../constants/defaultValues.js';
@@ -60,6 +63,51 @@ export const evaluatorLoginUser = (data, history,module) => async (dispatch) => 
         }
     } catch (error) {
         dispatch(evaluatorLoginUserError({}));
+    } 
+};
+
+//Evaluator Admin login
+export const evaluatorAdminLoginUserSuccess = (user) => async (dispatch) => {
+    dispatch({
+        type: EVALUATOR_ADMIN_LOGIN_USER_SUCCESS,
+        payload: user
+    });
+};
+
+
+export const evaluatorAdminLoginUserError = (message) => async (dispatch) => {
+    dispatch({
+        type: EVALUATOR_ADMIN_LOGIN_USER_ERROR,
+        payload: { message }
+    });
+};
+export const evaluatorAdminLoginUser = (data, history,module) => async (dispatch) => {
+    try {
+        const loginData = {
+            ...data,
+            passwordConfirmation: data.password
+        };
+        dispatch({ type: EVALUATOR_ADMIN_LOGIN_USER });
+        const axiosConfig = getNormalHeaders(KEY.User_API_Key);
+        const result = await axios
+            .post(`${URL.eadminLogin}`, loginData, axiosConfig)
+            .then((user) => user)
+            .catch((err) => {
+                return err.response;
+            });
+        if (result && result.status === 200) {
+            const item = result.data;
+            setCurrentUser(item);
+            localStorage.setItem("module",module);
+            dispatch(evaluatorAdminLoginUserSuccess(result));
+
+            history.push('/evaluator_admin/dashboard');
+        } else {
+            openNotificationWithIcon('error', 'Enter the correct credentials');
+            dispatch(evaluatorAdminLoginUserError(result.statusText));
+        }
+    } catch (error) {
+        dispatch(evaluatorAdminLoginUserError({}));
     } 
 };
 
