@@ -265,12 +265,12 @@ const LoginEvaluator = (props) => {
                                             }
                                             disabled={!(formik.dirty && formik.isValid)}
                                         />
-                                        <div
+                                        {/* <div
                                         className="text-primary text-center fs-4 pointer pt-1 mt-4"
                                         onClick={() => setRegisterModalShow(true)}
                                     >
                                         Sign Up
-                                    </div>
+                                    </div> */}
                                     </Col>
                                     
                                 </div>
