@@ -5,7 +5,7 @@ import { InputBox } from '../stories/InputBox/InputBox';
 import {
     // EyeOutlined,
     // EyeInvisibleOutlined,
-    CalendarOutlined
+    // CalendarOutlined
 } from '@ant-design/icons';
 import { Label } from 'reactstrap';
 import { Button } from '../stories/Button';
@@ -49,19 +49,19 @@ const Register = (props) => {
     //     placeholder: 'Enter Minimum 8 Characters',
     //     className: 'defaultInput'
     // };
-    const inputDOB = {
-        type: 'date',
-        placeholder: 'Date Of Birth',
-        className: 'defaultInput'
-    };
-    const inputQualification = {
-        type: 'text',
-        placeholder: 'Evaluator Qualification',
-        className: 'defaultInput'
-    };
+    // const inputDOB = {
+    //     type: 'date',
+    //     placeholder: 'Date Of Birth',
+    //     className: 'defaultInput'
+    // };
+    // const inputQualification = {
+    //     type: 'text',
+    //     placeholder: 'Evaluator Qualification',
+    //     className: 'defaultInput'
+    // };
     const inputCity = {
         type: 'text',
-        placeholder: 'City Name',
+        placeholder: 'District Name',
         className: 'defaultInput'
     };
 
@@ -86,9 +86,9 @@ const Register = (props) => {
         //     .required('Password is required')
         //     .min(8, 'Minimum 8 characters required')
         //     .matches(/[a-zA-Z0-9]/, 'Required only alphanumeric'),
-        date_of_birth: Yup.date().required('Required'),
-        qualification: Yup.string().trim().required('Required'),
-        city: Yup.string().trim().required('Required')
+        // date_of_birth: Yup.date().required('Required'),
+        // qualification: Yup.string().trim().required('Required'),
+        district: Yup.string().trim().required('Required')
     });
     const validationForAdmin=Yup.object({
         full_name: Yup.string()
@@ -109,9 +109,9 @@ const Register = (props) => {
             full_name: '',
             password: '',
             role: props.roleToBeAdded ==="EVALUATOR" ? 'EVALUATOR':'ADMIN',
-            date_of_birth: '',
-            qualification: '',
-            city: ''
+            // date_of_birth: '',
+            // qualification: '',
+            district: ''
         },
 
         validationSchema: props.roleToBeAdded ==="EVALUATOR"?validationForEvaluator : validationForAdmin,
@@ -332,7 +332,31 @@ const Register = (props) => {
                                 </div>
 
                                 <div className="col-md-6 p-0">
-                                    <FormGroup
+                                <FormGroup
+                                        className="form-group mt-5"
+                                        md={12}
+                                    >
+                                        <Label className="mb-2" htmlFor="district">
+                                            District Name
+                                        </Label>
+                                        <InputBox
+                                            {...inputCity}
+                                            id="district"
+                                            name="district"
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={formik.values.district}
+                                            maxLength={50}
+                                        />
+
+                                        {formik.touched.district &&
+                                        formik.errors.district ? (
+                                            <small className="error-cls">
+                                                {formik.errors.district}
+                                            </small>
+                                        ) : null}
+                                    </FormGroup>
+                                    {/* <FormGroup
                                         className="form-group mt-5"
                                         md={12}
                                     >
@@ -369,13 +393,13 @@ const Register = (props) => {
                                                 {formik.errors.date_of_birth}
                                             </small>
                                         ) : null}
-                                    </FormGroup>
+                                    </FormGroup> */}
                                 </div>
                             </div>
                         )}
                         {props.roleToBeAdded === 'EVALUATOR' && (
                             <div className="row justify-content-center pe-md-0">
-                                <div className="col-md-6 p-0">
+                                {/* <div className="col-md-6 p-0">
                                     <FormGroup
                                         className="form-group mt-5 me-md-3"
                                         md={12}
@@ -403,34 +427,34 @@ const Register = (props) => {
                                             </small>
                                         ) : null}
                                     </FormGroup>
-                                </div>
+                                </div> */}
 
-                                <div className="col-md-6 p-0">
+                                {/* <div className="col-md-6 p-0">
                                     <FormGroup
                                         className="form-group mt-5"
                                         md={12}
                                     >
-                                        <Label className="mb-2" htmlFor="city">
-                                            City Name
+                                        <Label className="mb-2" htmlFor="district">
+                                            District Name
                                         </Label>
                                         <InputBox
                                             {...inputCity}
-                                            id="city"
-                                            name="city"
+                                            id="district"
+                                            name="district"
                                             onChange={formik.handleChange}
                                             onBlur={formik.handleBlur}
-                                            value={formik.values.city}
+                                            value={formik.values.district}
                                             maxLength={50}
                                         />
 
-                                        {formik.touched.city &&
-                                        formik.errors.city ? (
+                                        {formik.touched.district &&
+                                        formik.errors.district ? (
                                             <small className="error-cls">
-                                                {formik.errors.city}
+                                                {formik.errors.district}
                                             </small>
                                         ) : null}
                                     </FormGroup>
-                                </div>
+                                </div> */}
                             </div>
                         )}
 
