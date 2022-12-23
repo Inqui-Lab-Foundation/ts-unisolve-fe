@@ -117,7 +117,11 @@ export const URL = {
     getAdminMentorReports:
         process.env.REACT_APP_API_BASE_URL + '/reports/allMentorReports',
     getTeamMemberStatusEndpoint:
-        process.env.REACT_APP_API_BASE_URL + '/dashboard/teamStats/'
+        process.env.REACT_APP_API_BASE_URL + '/dashboard/teamStats/',
+    getidealist:
+    process.env.REACT_APP_API_BASE_URL + '/challenge_response?',
+    gettotalcount:
+    process.env.REACT_APP_API_BASE_URL + '/dashboard/evaluatorStats'
 };
 const API = 'O10ZPA0jZS38wP7cO9EhI3jaDf24WmKX62nWw870';
 

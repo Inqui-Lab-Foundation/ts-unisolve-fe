@@ -102,7 +102,7 @@ export const evaluatorAdminLoginUser = (data, history,module) => async (dispatch
             localStorage.setItem("module",module);
             dispatch(evaluatorAdminLoginUserSuccess(result));
 
-            history.push('/evaluator_admin/dashboard');
+            history.push('/eadmin/dashboard');
         } else {
             openNotificationWithIcon('error', 'Enter the correct credentials');
             dispatch(evaluatorAdminLoginUserError(result.statusText));

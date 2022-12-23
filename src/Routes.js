@@ -145,7 +145,8 @@ import EvaluatedIdea from './Evaluator/EvaluatedIdea/EvaluatedIdea';
 import EvalutorAdminLogins from './Evaluator/Admin/EvaluatorAdminLogin';
 import Eadmindashboard from './Evaluator/Admin/Dashboard/EAdminDashboard';
 import EadminChangePassword from './Evaluator/Admin/Pages/ChangePSWModal';
-
+import ListOfIdeas from './Evaluator/Admin/ViewTable/ViewSelectedIdea';
+ 
 const Routers = () => {
     // const history = useHistory();
     // const currentUser = getCurrentUser('current_user');
@@ -747,21 +748,24 @@ const Routers = () => {
                     />
                     <Route
                         exact={true}
-                        path="/evaluator_admin"
+                        path="/eadmin"
                         render={() => <EvalutorAdminLogins />}
                     />
                     <ProtectedRoute
                         exact={true}
-                        path="/evaluator_admin/dashboard"
+                        path="/eadmin/dashboard"
                         component={Eadmindashboard}
                     />
                     <ProtectedRoute
                         exact={true}
-                        path="/evaluator_admin/change-password"
+                        path="/eadmin/change-password"
                         component={EadminChangePassword}
                     />
-                    
-
+                    <ProtectedRoute
+                        exact={true}
+                        path="/eadmin/listofideas"
+                        component={ListOfIdeas}
+                    />
                     <Route component={PageNotFound} path="*" />
                 </Switch>
             </Router>
