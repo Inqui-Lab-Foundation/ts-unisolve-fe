@@ -34,29 +34,41 @@ const EditProfile = (props) => {
 
     const phoneRegExp =
         /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-    console.log(mentorData);
-    const formik = useFormik({
-        initialValues: {
+    const commonValidation = Yup.object({
+        name: Yup.string()
+            .matches(/^[aA-zZ\s]+$/, 'Invalid name ')
+            .min(2, 'Enter a valid name')
+            .required('Name is Required'),
+        email: Yup.string()
+            .email('Invalid email address format')
+            .required('Email is required'),
+        phone: Yup.string()
+            .matches(phoneRegExp, 'Mobile number is not valid')
+            .min(10, 'Enter a valid mobile number')
+            .max(10, 'Enter a valid mobile number')
+            .required('Mobile Number is Required')
+    });
+    const adminValidation = Yup.object({
+        name: Yup.string()
+            .matches(/^[aA-zZ\s]+$/, 'Invalid name ')
+            .min(2, 'Enter a valid name')
+            .required('Name is Required'),
+        email: Yup.string()
+            .email('Invalid email address format')
+            .required('Email is required'),
+    });
+    const getInitialValues = (data)=>{
+        const commonInitialValues ={
             name: mentorData.full_name || mentorData.user.full_name,
             email: mentorData.username || mentorData.user.username,
-            phone: mentorData.mobile
-        },
-
-        validationSchema: Yup.object({
-            name: Yup.string()
-                .matches(/^[aA-zZ\s]+$/, 'Invalid name ')
-                .min(2, 'Enter a valid name')
-                .required('Name is Required'),
-            email: Yup.string()
-                .email('Invalid email address format')
-                .required('Email is required'),
-            phone: Yup.string()
-                .matches(phoneRegExp, 'Mobile number is not valid')
-                .min(10, 'Enter a valid mobile number')
-                .max(10, 'Enter a valid mobile number')
-                .required('Mobile Number is Required')
-        }),
-
+        };
+        if(!data?.admin_id)
+            commonInitialValues['phone']= mentorData.mobile;
+        return commonInitialValues;
+    };
+    const formik = useFormik({
+        initialValues: getInitialValues(mentorData),
+        validationSchema: mentorData?.admin_id ? adminValidation : commonValidation,
         onSubmit: (values) => {
             const full_name = values.name;
             const email = values.email;
@@ -159,7 +171,7 @@ const EditProfile = (props) => {
                                                 ) : null}
                                         </Col>
                                         <div className="w-100" />
-                                        <Col md={6}>
+                                        {!mentorData?.admin_id && <Col md={6}>
                                             <Label
                                                 className="name-req mt-5"
                                                 htmlFor="phone"
@@ -181,7 +193,7 @@ const EditProfile = (props) => {
                                                         {formik.errors.phone}
                                                     </small>
                                                 ) : null}
-                                        </Col>
+                                        </Col>}
                                     </Row>
                                 </div>
 
