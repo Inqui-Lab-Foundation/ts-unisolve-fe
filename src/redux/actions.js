@@ -196,6 +196,7 @@ export const EVALUATOR_LOGIN_USER_SUCCESS = 'EVALUATOR_LOGIN_USER_SUCCESS';
 export const EVALUATOR_LOGIN_USER_ERROR = 'EVALUATOR_LOGIN_USER_ERROR';
 export const GET_SUBMITTED_IDEA_LIST ='GET_SUBMITTED_IDEA_LIST';
 export const GET_INSTRUCTIONS ='GET_INSTRUCTIONS';
+export const UPDATAE_EVALUATOR = 'UPDATE_EVALUATOR';
 
 export * from './auth/actions';
 export * from '../Admin/store/admin/actions';
