@@ -135,7 +135,7 @@ export const updateEvaluator = (params,id) => async (dispatch) => {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         const result = await axios
             .put(
-                `${process.env.REACT_APP_API_BASE_URL + '/crud/evaluators/'+id}`,params,axiosConfig
+                `${process.env.REACT_APP_API_BASE_URL + '/evaluators/'+id}`,params,axiosConfig
             )
             .then((data) => data)
             .catch((err) => {
