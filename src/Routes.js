@@ -140,6 +140,7 @@ import EvaluatorForgotPassword from './Evaluator/ForgotPassword';
 import EvaluatorIdeaList from './Evaluator/IdeaList/IdeaList';
 import ViewMore from './Admin/Dashboard/ViewMore';
 import EvaluatorInstructions from './Evaluator/Instructions/Instructions';
+import EvaluatedIdea from './Evaluator/EvaluatedIdea/EvaluatedIdea';
 
 
 const Routers = () => {
@@ -734,6 +735,12 @@ const Routers = () => {
                         exact={true}
                         path="/evaluator/instructions"
                         component={EvaluatorInstructions}
+                    />
+
+                    <ProtectedRoute
+                        exact={true}
+                        path="/evaluator/evaluated-ideas"
+                        component={EvaluatedIdea}
                     />
                     
                     <Route component={PageNotFound} path="*" />
