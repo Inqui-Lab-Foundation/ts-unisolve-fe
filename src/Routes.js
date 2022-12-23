@@ -141,7 +141,6 @@ import EvaluatorIdeaList from './Evaluator/IdeaList/IdeaList';
 import ViewMore from './Admin/Dashboard/ViewMore';
 import EvaluatorInstructions from './Evaluator/Instructions/Instructions';
 
-
 const Routers = () => {
     // const history = useHistory();
     // const currentUser = getCurrentUser('current_user');
@@ -532,7 +531,7 @@ const Routers = () => {
 
                     <ProtectedRoute
                         exact={true}
-                        path="/admin/challenges "
+                        path="/admin/challenges"
                         component={AdminBadgesComp}
                     />
 
@@ -735,7 +734,7 @@ const Routers = () => {
                         path="/evaluator/instructions"
                         component={EvaluatorInstructions}
                     />
-                    
+
                     <Route component={PageNotFound} path="*" />
                 </Switch>
             </Router>

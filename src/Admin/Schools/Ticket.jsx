@@ -138,7 +138,7 @@ const TicketsPage = (props) => {
             method: 'get',
             url:
                 process.env.REACT_APP_API_BASE_URL +
-                '/organizations?status=INACTIVE&status=NEW',
+                '/organizations?status=NOTACTIVE',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${currentUser.data[0].token}`
@@ -214,7 +214,7 @@ const TicketsPage = (props) => {
                 // center: right,
             },
             {
-                name: 'ACTIONS',
+                name: 'Actions',
                 selector: 'action',
                 width: '16%',
                 cell: (record) => [
@@ -225,9 +225,7 @@ const TicketsPage = (props) => {
                             onClick={() => handleStatusUpdate(record, 'ACTIVE')}
                             style={{ marginRight: '10px' }}
                         >
-                            <div className="btn btn-secondary btn-lg">
-                                ACTIVE
-                            </div>
+                            <div className="btn btn-primary btn-lg">ACTIVE</div>
                         </Link>
                         {/* <Link
                             exact="true"
@@ -315,7 +313,7 @@ const TicketsPage = (props) => {
                             style={{ marginRight: '7px' }}
                         >
                             <div className="btn btn-primary btn-lg mx-2">
-                                Edit
+                                EDIT
                             </div>
                         </Link>
                         <Link
@@ -344,7 +342,11 @@ const TicketsPage = (props) => {
                 <Row className="pt-3">
                     <Row className="mb-2 mb-sm-5 mb-md-5 mb-lg-0">
                         <Col className="col-auto">
-                            <h2>List of Institutions</h2>
+                            {reqList ? (
+                                <h2>List of inactive institutions</h2>
+                            ) : (
+                                <h2>List of active institutions</h2>
+                            )}
                         </Col>
 
                         <Col className="ticket-btn col ml-auto ">
