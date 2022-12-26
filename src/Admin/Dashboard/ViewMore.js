@@ -1,13 +1,14 @@
 /* eslint-disable indent */
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-// import { useHistory } from 'react-router-dom';
+import { useHistory, withRouter } from 'react-router-dom';
 import Layout from '../Layout';
 import { Container, Row, Card, CardBody, CardText, Col } from 'reactstrap';
 import { BreadcrumbTwo } from '../../stories/BreadcrumbTwo/BreadcrumbTwo';
 import DoughnutChart from '../../Teachers/Dashboard/DoughnutChart';
+import { Button } from '../../stories/Button';
 
 const ViewMore = () => {
+    const history = useHistory();
     const orgDaTa = JSON.parse(localStorage.getItem('orgData'));
     const headingDetails = {
         title: 'View More Details',
@@ -15,15 +16,22 @@ const ViewMore = () => {
     };
     var teamId = [];
     teamId.push({ mentor_id: orgDaTa.mentor.mentor_id });
-    console.log(teamId);
     return (
         <Layout>
             <Container className="mt-5 pt-5 dynamic-form">
-                <Row>
-                    <div className="col-6">
-                        <BreadcrumbTwo {...headingDetails} />
-                    </div>
-                </Row>
+                <div className='d-flex justify-content-between align-items-center mb-3'>
+                    <BreadcrumbTwo {...headingDetails} />
+                    <Button
+                        label="Back"
+                        btnClass="primary"
+                        size="small"
+                        onClick={() =>
+                            history.push(
+                                '/admin/dashboard'
+                            )
+                        }
+                    />
+                </div>
                 <Row>
                     <Card className="py-5">
                         <CardBody>
