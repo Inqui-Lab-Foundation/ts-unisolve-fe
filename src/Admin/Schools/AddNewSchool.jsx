@@ -69,11 +69,14 @@ const AddNewSchool = (props) => {
 
         validationSchema: Yup.object({
             principal_mobile: Yup.string()
+                .optional()
                 .matches(phoneRegExp, 'Mobile number is not valid')
                 .min(10, 'Enter a valid mobile number')
                 .max(10, 'Enter a valid mobile number'),
-            principal_email: Yup.string().email('Invalid email address format'),
-            principal_name: Yup.string().matches(
+            principal_email: Yup.string()
+                .optional()
+                .email('Invalid email address format'),
+            principal_name: Yup.string().optional().matches(
                 /^[aA-zZ\s]+$/,
                 'Invalid Name'
             ),
@@ -91,11 +94,10 @@ const AddNewSchool = (props) => {
             district: Yup.string()
                 .matches(/^[aA-zZ\s]+$/, 'Invalid district')
                 .required('District is Required'),
-            state: Yup.string().matches(/^[aA-zZ\s]+$/, 'Invalid State')
+            state: Yup.string().optional().matches(/^[aA-zZ\s]+$/, 'Invalid State')
         }),
 
         onSubmit: async (values) => {
-            console.log(JSON.stringify(values));
             const axiosConfig = getNormalHeaders(KEY.User_API_Key);
             await axios
                 .post(
