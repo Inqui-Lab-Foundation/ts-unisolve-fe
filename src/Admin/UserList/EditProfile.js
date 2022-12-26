@@ -10,7 +10,7 @@ import { InputBox } from '../../stories/InputBox/InputBox';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { BreadcrumbTwo } from '../../stories/BreadcrumbTwo/BreadcrumbTwo';
-import { getCurrentUser } from '../../helpers/Utils';
+import { getCurrentUser, openNotificationWithIcon } from '../../helpers/Utils';
 import { useHistory } from 'react-router-dom';
 import { getAdminEvalutorsList } from '../store/adminEvalutors/actions';
 import { getAdmin } from '../store/admin/actions';
@@ -110,6 +110,7 @@ const EditProfile = (props) => {
                 .then(function (response) {
                     if (response.status === 200) {
                         mentorData?.evaluator_id  ? dispatch(getAdminEvalutorsList())  : mentorData?.admin_id && dispatch(getAdmin());
+                        openNotificationWithIcon('success','Updated Successfully');
                         setTimeout(() => {     
                             props.history.push(
                                 mentorData.where === 'Dashbord'

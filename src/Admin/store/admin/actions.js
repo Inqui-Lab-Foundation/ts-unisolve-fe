@@ -136,11 +136,10 @@ export const deleteTempMentorById = async (id) => {
             .catch((err) => {
                 return err.response;
             });
-        console.log(result);
         if (result && result.status === 202) {
             openNotificationWithIcon(
                 'success',
-                result.data && result.data?.message
+                'Deleted Successfully'
             );
         } else {
             openNotificationWithIcon(
