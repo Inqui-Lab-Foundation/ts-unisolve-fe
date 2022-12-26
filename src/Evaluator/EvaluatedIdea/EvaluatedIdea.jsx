@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import React from 'react';
+import React, { useEffect } from 'react';
 import './EvaluatedIdea.scss';
 import Layout from '../Layout';
 import DataTable, { Alignment } from 'react-data-table-component';
@@ -9,16 +9,47 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { getL1EvaluatedIdea } from '../store/evaluator/action';
 import EvaluatedIdeaDetail from './EvaluatedIdeaDetail';
+import { Card, Container, Row, Col } from 'reactstrap';
+import Select from '../Helper/Select';
+import { getDistrictData } from '../../redux/studentRegistration/actions';
+import { ReasonsOptions } from '../Admin/Pages/ReasonForRejectionData';
+import { cardData } from '../../Student/Pages/Ideas/SDGData';
 
 const EvaluatedIdea = () => {
     const dispatch = useDispatch();
+    const [reason, setReason] = React.useState('');
+    const [district, setdistrict] = React.useState('');
+    const [sdg, setsdg] = React.useState('');
+    const [status, setstatus] = React.useState('');
     const evaluatedIdeaList = useSelector(
         (state) => state?.evaluator.evaluatedIdeaL1
     );
 
+    const SDGDate = cardData.map((i) => {
+        return i.goal_title;
+    });
+
+    const fullDistrictsNames = useSelector(
+        (state) => state?.studentRegistration?.dists
+    );
+    const statusdata = [
+        'Accepted',
+        'Rejected'
+    ];
+
     React.useEffect(() => {
-        dispatch(getL1EvaluatedIdea());
+        dispatch(getL1EvaluatedIdea(filterParams));
+    }, [reason,district,sdg,status]);
+
+    useEffect(() => {
+        dispatch(getDistrictData());
     }, []);
+
+    const filterParams =
+        (status && '&evaluation_status='+ (status==='Accepted'? 'SELECTEDROUND1':'REJECTEDROUND1'))+
+        (district && '&district=' + district) +
+        (sdg && '&sdg=' + sdg) +
+        (reason && '&rejected_reason=' + reason);
 
     const [isDetail, setIsDetail] = React.useState(false);
     const [ideaDetails, setIdeaDetails] = React.useState({});
@@ -74,14 +105,15 @@ const EvaluatedIdea = () => {
                 cell: (row) => {
                     return [
                         <div className="d-flex" key={row}>
-                            {
-                                row.evaluation_status && row.evaluation_status=='SELECTEDROUND1'&&
-                                <span className='text-success'>Accepted</span>
-                            }
-                            {
-                                row.evaluation_status=='REJECTEDROUND1'&&
-                                <span className='text-danger'>Rejected</span>
-                            }
+                            {row.evaluation_status &&
+                                row.evaluation_status == 'SELECTEDROUND1' && (
+                                    <span className="text-success">
+                                        Accepted
+                                    </span>
+                                )}
+                            {row.evaluation_status == 'REJECTEDROUND1' && (
+                                <span className="text-danger">Rejected</span>
+                            )}
                         </div>
                     ];
                 },
@@ -114,10 +146,90 @@ const EvaluatedIdea = () => {
             <div className="container evaluated_idea_wrapper pt-5 mb-50">
                 <div className="row">
                     <div className="col-12 p-0">
-                        {!isDetail && <h2 className="ps-2">Evaluated Ideas</h2>}
-                        
+                        {!isDetail && (
+                            <div>
+                                <h2 className="ps-2 pb-3">Evaluated Idea</h2>
+                                <Container>
+                                    <Row>
+                                        <Col>
+                                            <Card>
+                                                <div className="my-3 text-center">
+                                                    <h3 className="mb-sm-4 mb-3">
+                                                        Status
+                                                    </h3>
+                                                    <Select
+                                                        list={
+                                                            statusdata
+                                                        }
+                                                        setValue={setstatus}
+                                                        placeHolder={
+                                                            'Please Select'
+                                                        }
+                                                        value={status}
+                                                    />
+                                                </div>
+                                            </Card>
+                                        </Col>
+                                        <Col>
+                                            <Card>
+                                                <div className="my-3 text-center">
+                                                    <h3 className="mb-sm-4 mb-3">
+                                                        District
+                                                    </h3>
+                                                    <Select
+                                                        list={
+                                                            fullDistrictsNames
+                                                        }
+                                                        setValue={setdistrict}
+                                                        placeHolder={
+                                                            'Please Select'
+                                                        }
+                                                        value={district}
+                                                    />
+                                                </div>
+                                            </Card>
+                                        </Col>
+                                        <Col>
+                                            <Card>
+                                                <div className="my-3 text-center">
+                                                    <h3 className="mb-sm-4 mb-3">
+                                                        SDG
+                                                    </h3>
+                                                    <Select
+                                                        list={SDGDate}
+                                                        setValue={setsdg}
+                                                        placeHolder={
+                                                            'Please Select'
+                                                        }
+                                                        value={sdg}
+                                                    />
+                                                </div>
+                                            </Card>
+                                        </Col>
+                                        {status==='Rejected' && <Col>
+                                            <Card>
+                                                <div className="my-3 text-center">
+                                                    <h3 className="mb-sm-4 mb-3">
+                                                        Reason for rejection.
+                                                    </h3>
+                                                    <Select
+                                                        list={ReasonsOptions}
+                                                        setValue={setReason}
+                                                        placeHolder={
+                                                            'Please Select'
+                                                        }
+                                                        value={reason}
+                                                    />
+                                                </div>
+                                            </Card>
+                                        </Col>}
+                                    </Row>
+                                </Container>
+                            </div>
+                        )}
+
                         {!isDetail ? (
-                            <div className="bg-white border card pt-3">
+                            <div className="bg-white border card pt-3 mt-5">
                                 <DataTableExtensions
                                     print={false}
                                     export={false}
