@@ -1,178 +1,290 @@
-import React from 'react';
-// import {
-//   Container,
-//   Row,
-//   Col,
-//   Card,
-//   CardImg,
-//   CardBody,
-//   CardTitle,
-//   CardSubtitle,
-// } from "reactstrap";
-import './style.scss';
-// import { BsFilter } from 'react-icons/bs';
-// import shuttleBadge from '../../assets/img/Shuttle_Badge_Color.png';
-// import cupBadge from '../../assets/img/Cup_Badge_Color.png';
-// import medalBadge from '../../assets/img/Medal_Badge_Color.png';
-// import growthBadge from '../../assets/img/Growth_Badge_Color.png';
-
-// import { ProgressComp } from "../../stories/Progress/Progress";
-// import { BreadcrumbComp } from "../../stories/Breadcrumb/BreadcrumbComp";
-// import { InputWithSearchComp } from "../../stories/InputWithSearch/InputWithSearch";
-// import { CommonDropDownComp } from "../../stories/CommonDropdown/CommonDropdownComp";
-// import { Button } from "../../stories/Button";
-// import { BsPlusLg } from "react-icons/bs";
-// import { Figure } from "react-bootstrap";
+/* eslint-disable indent */
+import React, { useEffect, useState } from 'react';
+import { Container, Row, Col } from 'reactstrap';
+import { Button } from '../../stories/Button';
+import { getNormalHeaders } from '../../helpers/Utils';
 import Layout from '../../Admin/Layout';
-// import { useHistory } from 'react-router-dom';
+import { getDistrictData } from '../../redux/studentRegistration/actions';
+// import PageConstruction from '../../components/PageUnderConstrcution';
+import { connect } from 'react-redux';
+import { cardData } from '../../Student/Pages/Ideas/SDGData';
+import { URL, KEY } from '../../constants/defaultValues';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import DataTable, { Alignment } from 'react-data-table-component';
+import DataTableExtensions from 'react-data-table-component-extensions';
 
-import PageConstruction from '../../components/PageUnderConstrcution';
+const BadgesComp = (props) => {
+    const [district, setDistrict] = useState('');
+    const [sdg, setSdg] = useState('');
+    const [count, setCount] = useState(0);
+    const [chalRes, setChalRes] = useState([]);
+    useEffect(() => {
+        props.getDistrictsListAction();
+    }, []);
 
-// import { Card, CardBody, CardImg, CardSubtitle, CardTitle } from "reactstrap";
+    // const handleView = () => {};
 
-const BadgesComp = () => {
-    // const history = useHistory();
-    // const SearchProps = {
-    //   placeholder: "Search Course",
-    // };
-    // const filterDropProps = {
-    //   name: "Filter by",
-    //   Icon: BsFilter,
-    //   options: [
-    //     { name: "Course - 1", path: "/playCourse" },
-    //     { name: "Course - 2", path: "/playCourse" },
-    //   ],
-    // };
+    const handleGetDetails = () => {
+        // console.log(e);
+        let axiosConfig = getNormalHeaders(KEY.User_API_Key);
+        axiosConfig['params'] = {
+            district: district,
+            sdg: sdg
+        };
+        axios
+            .get(`${URL.getChallengeList}`, axiosConfig)
+            .then((response) => {
+                setCount(count + 1);
+                if (response?.status === 200) {
+                    setChalRes(response.data && response.data.data);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                return err.response;
+            });
 
-    // const progressProp = {
-    //   label: "Progress",
-    //   options: [{ id: 1, teams: "CSK", percent: 50, status: "active" }],
-    // };
-    // const ProgressCardList = [
-    //   {
-    //     icon: shuttleBadge,
-    //     name: "Challenger",
-    //     count: "300/600",
-    //     text: "Lorem 50 ipsum dolor sit amet",
-    //   },
-    //   {
-    //     icon: cupBadge,
-    //     name: "Ten to the Fourth",
-    //     count: "300/600",
-    //     text: "Lorem 50 ipsum dolor sit amet",
-    //   },
-    //   {
-    //     icon: medalBadge,
-    //     name: "Collaborator",
-    //     count: "300/600",
-    //     text: "Lorem 50 ipsum dolor sit amet",
-    //   },
-    //   {
-    //     icon: growthBadge,
-    //     name: "Mad Scientist",
-    //     count: "300/600",
-    //     text: "Lorem 50 ipsum dolor sit amet",
-    //   },
-    //   {
-    //     icon: shuttleBadge,
-    //     name: "Making progress",
-    //     count: "300/600",
-    //     text: "Lorem 50 ipsum dolor sit amet",
-    //   },
-    //   {
-    //     icon: medalBadge,
-    //     name: "Badge Name",
-    //     count: "300/600",
-    //     text: "Lorem 50 ipsum dolor sit amet",
-    //   },
-    //   ,
-    //   {
-    //     icon: cupBadge,
-    //     name: "Badge Name",
-    //     count: "300/600",
-    //     text: "Lorem 50 ipsum dolor sit amet",
-    //   },
-    //   ,
-    //   {
-    //     icon: medalBadge,
-    //     name: "Badge Name",
-    //     count: "300/600",
-    //     text: "Lorem 50 ipsum dolor sit amet",
-    //   },
-    //   ,
-    //   {
-    //     icon: medalBadge,
-    //     name: "Badge Name",
-    //     count: "300/600",
-    //     text: "Lorem 50 ipsum dolor sit amet",
-    //   },
-    // ];
+        // props.history.push({
+        //     pathname: '/challenges'
+        // });
+        // var data = [];
+        // data.push({ team_id: '6667' });
+        // localStorage.setItem('data', JSON.stringify(data));
+        // const language = {
+        //     code: 'en',
+        //     name: 'English',
+        //     country_code: 'in'
+        // };
+        // localStorage.setItem('language', JSON.stringify(language));
+    };
+
+    const challengesData = {
+        data: chalRes,
+        columns: [
+            {
+                name: 'Initiated Name',
+                selector: 'initiated_name',
+                sortable: true,
+                center: true,
+                width: '10%'
+            },
+            {
+                name: 'Team Id',
+                selector: (row) => row.team.team_id,
+                center: true,
+                width: '8%'
+            },
+            {
+                name: 'Team Name',
+                selector: (row) => row.team.team_name,
+                center: true,
+                width: '15%'
+            },
+            {
+                name: 'Mentor Name',
+                selector: 'full_name',
+                center: true,
+                width: '15%'
+            },
+            {
+                name: 'District',
+                selector: 'dist',
+                center: true,
+                width: '10%'
+            },
+            {
+                name: 'Sdg',
+                selector: 'sdg',
+                center: true,
+                width: '10%'
+            },
+            {
+                name: 'Status',
+                selector: 'status',
+                center: true,
+                width: '10%'
+            },
+            {
+                name: 'Actions',
+                selector: 'actions ',
+                center: true,
+                width: '15%',
+                cell: (row) => [
+                    <>
+                        <Link
+                            exact="true"
+                            key={row.team_id}
+                            // onClick={() => handleView()}
+                            style={{ marginRight: '7px' }}
+                        >
+                            <div className="btn btn-primary btn-lg mx-2">
+                                View
+                            </div>
+                        </Link>
+                    </>
+                ]
+            }
+        ]
+    };
+
+    const handleSelect = (e, item) => {
+        setCount(0);
+        if (item == '1') {
+            setDistrict(e);
+        } else {
+            setSdg(e);
+        }
+    };
+
     return (
         <Layout>
-            <PageConstruction />
-            {/* <div className='badges-page'>
-        <Container className=' mt-2 '>
-          <Row className='courses-head view-head w-100 mx-0 mt-5  mb-50'>
-            <Col md={12} lg={6}>
-              <h2 className='my-auto'>Badges</h2>
-            </Col>
-            <Col md={12} lg={6}>
-              <div className='d-flex filter-drop w-100 pr-0'>
-                <Row className='w-100'>
-                  <Col md={6} lg={6}>
-                    <InputWithSearchComp {...SearchProps} />
-                  </Col>
-                  <Col md={3} lg={3}>
-                    <CommonDropDownComp {...filterDropProps} />
-                  </Col>
-                  <Col md={3} lg={3} className='text-right my-auto'>
-                    <Button
-                      btnClass='primary'
-                      size='small'
-                      Icon={BsPlusLg}
-                      label='Add Badge'
-                      onClick={() => history.push("/admin/new-badges")}
-                    />
-                  </Col>
-                </Row>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-
-        <Container className='myBadges mb-50'>
-          <Col>
-            <Row className='progressCard justify-content-center'>
-              {ProgressCardList.map((progress, i) => {
-                return (
-                  <Col key={i} xs={12} sm={6} md={6} xl={4} className='mb-4'>
-                    <Card className='progress-card p-3  p-md-5'>
-                      <div className='d-flex'>
-                        <Figure className='my-auto' style={{ width: "7.4rem" }}>
-                          <CardImg src={progress.icon} />
-                        </Figure>
-                        <CardBody className='progress-section'>
-                          <CardTitle className='progress-name my-3'>
-                            {progress.name}
-                          </CardTitle>
-                          <CardSubtitle className='progress-text'>
-                            Points: <b>600</b>
-                            <div className='progress-text mt-1'>
-                              {progress.text}
+            <Container className="Challenge-page mt-5 mb-50 Challenges">
+                <Row className="pt-3">
+                    <Row className="mb-2 mb-sm-5 mb-md-5 mb-lg-0">
+                        <Col className="col-auto">
+                            <h2>CHALLENGES</h2>
+                        </Col>
+                        <Row className="mt-4 pt-3">
+                            <Col className=" col-auto mx-auto my-auto ">
+                                <div className="dropdown">
+                                    <div className="d-flex justify-content-end">
+                                        <div
+                                            className={`d-flex ${'justify-content-right'}`}
+                                        >
+                                            <hr className="mt-4 mb-4"></hr>
+                                            <label className="mb-2 ">
+                                                District :{' '}
+                                            </label>
+                                            <select
+                                                onChange={(e) =>
+                                                    handleSelect(
+                                                        e.target.value,
+                                                        '1'
+                                                    )
+                                                }
+                                                value={district}
+                                                name="districts"
+                                                id="districts"
+                                                className="text-capitalize"
+                                            >
+                                                <option value="">
+                                                    Select District
+                                                </option>
+                                                {props.dists &&
+                                                props.dists.length > 0 ? (
+                                                    props.dists.map(
+                                                        (item, i) => (
+                                                            <option
+                                                                key={i}
+                                                                value={item}
+                                                            >
+                                                                {item}
+                                                            </option>
+                                                        )
+                                                    )
+                                                ) : (
+                                                    <option value="">
+                                                        There are no Districts
+                                                    </option>
+                                                )}
+                                            </select>
+                                        </div>
+                                        {/* <br /> */}
+                                        <Col className=" mx-auto ">
+                                            <div className="d-flex justify-content-end">
+                                                <label className="mx-auto">
+                                                    Sdg :{' '}
+                                                </label>
+                                                <select
+                                                    onChange={(e) =>
+                                                        handleSelect(
+                                                            e.target.value,
+                                                            '2'
+                                                        )
+                                                    }
+                                                    name="sdg"
+                                                    id="sdg"
+                                                    className="text-capitalize"
+                                                >
+                                                    <option value="">
+                                                        Select Sdg
+                                                    </option>
+                                                    {cardData &&
+                                                    cardData.length > 0 ? (
+                                                        cardData.map(
+                                                            (item, i) => (
+                                                                <option
+                                                                    key={i}
+                                                                    value={
+                                                                        item.goal_title
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        item.goal_title
+                                                                    }
+                                                                </option>
+                                                            )
+                                                        )
+                                                    ) : (
+                                                        <option value="">
+                                                            There are no Sdg
+                                                        </option>
+                                                    )}
+                                                </select>
+                                            </div>
+                                        </Col>
+                                        {/* <hr className="mt-4 mb-4"></hr> */}
+                                        {district != '' && sdg != '' && (
+                                            <div className="d-flex justify-content-end">
+                                                <Button
+                                                    label="Get Challenges"
+                                                    btnClass="primary mx-3"
+                                                    size="small"
+                                                    shape="btn-square"
+                                                    onClick={handleGetDetails}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
+                        {count != 0 && (
+                            <div>
+                                <DataTableExtensions
+                                    print={false}
+                                    export={false}
+                                    // style={{ fontSize: '10' }}
+                                    {...challengesData}
+                                >
+                                    <DataTable
+                                        // data={SRows}
+                                        // style={{ fontSize: 8 }}
+                                        noHeader
+                                        defaultSortField="id"
+                                        defaultSortAsc={false}
+                                        pagination
+                                        highlightOnHover
+                                        fixedHeader
+                                        subHeaderAlign={Alignment.Center}
+                                    />
+                                </DataTableExtensions>
                             </div>
-                          </CardSubtitle>
-                        </CardBody>
-                      </div>
-                    </Card>
-                  </Col>
-                );
-              })}
-            </Row>
-          </Col>
-        </Container>
-      </div> */}
+                        )}
+                    </Row>
+                </Row>
+            </Container>
         </Layout>
     );
 };
 
-export default BadgesComp;
+const mapStateToProps = ({ studentRegistration }) => {
+    const { dists } = studentRegistration;
+    return {
+        dists
+    };
+};
+export default connect(mapStateToProps, {
+    getDistrictsListAction: getDistrictData
+})(BadgesComp);
