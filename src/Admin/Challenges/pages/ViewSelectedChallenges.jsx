@@ -1,31 +1,33 @@
 /* eslint-disable indent */
 import React, { useEffect } from 'react';
-import './ViewSelectedIdea.scss';
-import Layout from '../Pages/Layout';
+import './ViewSelectedChallenges.scss';
+import Layout from '../../../Admin/Layout';
 import DataTable, { Alignment } from 'react-data-table-component';
 import DataTableExtensions from 'react-data-table-component-extensions';
 import moment from 'moment';
 import ViewDetail from './ViewDetail';
 import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { URL, KEY } from '../../../constants/defaultValues';
-import { getNormalHeaders } from '../../../helpers/Utils';
+import { KEY, URL } from '../../../constants/defaultValues';
 import { Button } from '../../../stories/Button';
-import Select from '../../Helper/Select';
+import Select from './Select';
 import { Col, Container, Row } from 'reactstrap';
 import { cardData } from '../../../Student/Pages/Ideas/SDGData.js';
 import { useSelector } from 'react-redux';
 import { getDistrictData } from '../../../redux/studentRegistration/actions';
 import { useDispatch } from 'react-redux';
-import { ReasonsOptions } from '../Pages/ReasonForRejectionData';
+import { ReasonsOptions } from '../../../Evaluator/Admin/Pages/ReasonForRejectionData';
+import { getNormalHeaders } from '../../../helpers/Utils';
 
 const ViewSelectedIdea = () => {
     const { search } = useLocation();
     const history = useHistory();
     const dispatch = useDispatch();
-    const title = new URLSearchParams(search).get("title");
-    const status = new URLSearchParams(search).get("status");
-    const evaluation_status = new URLSearchParams(search).get("evaluation_status");
+    const title = new URLSearchParams(search).get('title');
+    const status = new URLSearchParams(search).get('status');
+    const evaluation_status = new URLSearchParams(search).get(
+        'evaluation_status'
+    );
     const [isDetail, setIsDetail] = React.useState(false);
     const [ideaDetails, setIdeaDetails] = React.useState({});
     const [tableDate, settableDate] = React.useState({});
@@ -41,7 +43,10 @@ const ViewSelectedIdea = () => {
         (state) => state?.studentRegistration?.dists
     );
 
-    const dataParam =  title === 'Submitted' ? 'status='+status : 'evaluation_status='+evaluation_status;
+    const dataParam =
+        title === 'Submitted'
+            ? 'status=' + status
+            : 'evaluation_status=' + evaluation_status;
     const filterParams =
         (district && district !== 'All Districts' ? '&district=' + district : '') +
         (sdg && sdg !== 'ALL' ? '&sdg=' + sdg : '') +
@@ -49,11 +54,15 @@ const ViewSelectedIdea = () => {
 
     useEffect(() => {
         dispatch(getDistrictData());
-    },[]);
-    
+    }, []);
+
     // useEffect(() => {
     //     handleideaList();
-    // }, [reason,district,sdg]);
+    // }, [reason, district, sdg]);
+
+    const handleclickcall = () => {
+        handleideaList();
+    };
 
     async function handleideaList() {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
@@ -72,9 +81,7 @@ const ViewSelectedIdea = () => {
                 console.log(error);
             });
     }
-    const handleclickcall = () => {
-        handleideaList();
-    };
+
     const evaluatedIdea = {
         data: tableDate && tableDate.length > 0 ? tableDate : [],
         columns: [
@@ -222,8 +229,7 @@ const ViewSelectedIdea = () => {
             }
         ]
     };
-    const sel =
-        title === 'Submitted' ? evaluatedIdeaforsub : evaluatedIdea;
+    const sel = title === 'Submitted' ? evaluatedIdeaforsub : evaluatedIdea;
     const showbutton = district && sdg;
     return (
         <Layout>
@@ -234,9 +240,9 @@ const ViewSelectedIdea = () => {
                             <div>
                                 <h2 className="ps-2 pb-3">{title} Ideas</h2>
 
-                                <Container fluid className='px-0'>
-                                    <Row className='align-items-center'>
-                                        <Col md={3} >
+                                <Container fluid className="px-0">
+                                    <Row className="align-items-center">
+                                        <Col md={3}>
                                             <div className="my-3 d-md-block d-flex justify-content-center">
                                                 <Select
                                                     list={fullDistrictsNames}
