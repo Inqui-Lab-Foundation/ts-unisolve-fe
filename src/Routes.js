@@ -51,7 +51,8 @@ import AdminDashboard from './Admin/Dashboard/index';
 import AdminMyProfile from './Admin/MyProfile';
 import AdminMySettings from './Admin/MySettings';
 
-import AdminBadgesComp from './Admin/Badges/Badges';
+import AdminChallenges from './Admin/Challenges/index';
+import ChallengesList from './Admin/Challenges/pages/ViewSelectedChallenges';
 import AdminNewBadge from './Admin/Badges/NewBadge';
 import AdminCourses from './Admin/Courses';
 import AdminCourseView from './Admin/Courses/coursesView';
@@ -538,7 +539,13 @@ const Routers = () => {
                     <ProtectedRoute
                         exact={true}
                         path="/admin/challenges"
-                        component={AdminBadgesComp}
+                        component={AdminChallenges}
+                    />
+
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/challenges/viewlistofchallenges"
+                        component={ChallengesList}
                     />
 
                     <ProtectedRoute

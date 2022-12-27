@@ -1,13 +1,13 @@
 /* eslint-disable indent */
 import React, { useEffect } from 'react';
-import './dashboard.scss';
-import Layout from '../Pages/Layout';
+import './index.scss';
+import Layout from '../../Admin/Layout';
 import { Card, Col, Container, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { KEY, URL } from '../../../constants/defaultValues';
-import { getNormalHeaders } from '../../../helpers/Utils';
+import { KEY, URL } from '../../constants/defaultValues';
 import axios from 'axios';
+import { getNormalHeaders } from '../../helpers/Utils';
 
 const eadmindashboard = () => {
     const [dateCount, setdateCount] = useState({});
@@ -42,9 +42,9 @@ const eadmindashboard = () => {
                 <h2 className="mb-5">Dashboard</h2>
                 <div className="dashboard">
                     <Container>
-                    <Row>
+                        <Row>
                             <Col lg={4} md={6}>
-                                <Link to="/eadmin/listofideas?status=SUBMITTED&title=Submitted">
+                                <Link to="/admin/challenges/viewlistofchallenges?status=SUBMITTED&title=Submitted">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-primary">
                                             SUBMITTED IDEAS
@@ -56,7 +56,7 @@ const eadmindashboard = () => {
                                 </Link>
                             </Col>
                             <Col lg={4} md={6}>
-                                <Link to="/eadmin/listofideas?evaluation_status=SELECTEDROUND1&title=Accepted">
+                                <Link to="/admin/challenges/viewlistofchallenges?evaluation_status=SELECTEDROUND1&title=Accepted">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-success">ACCEPTED</b>
                                         <h3 className="display-5 bold m-2">
@@ -66,7 +66,7 @@ const eadmindashboard = () => {
                                 </Link>
                             </Col>
                             <Col lg={4} md={6}>
-                                <Link to="/eadmin/listofideas?evaluation_status=REJECTEDROUND1&title=Rejected">
+                                <Link to="/admin/challenges/viewlistofchallenges?evaluation_status=REJECTEDROUND1&title=Rejected">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-danger">REJECTED</b>
                                         <h3 className="display-5 bold m-2">
