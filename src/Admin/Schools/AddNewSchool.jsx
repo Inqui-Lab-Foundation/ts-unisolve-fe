@@ -40,15 +40,15 @@ const AddNewSchool = (props) => {
     const phoneRegExp =
         /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
     const headingDetails = {
-        title: 'Add New Organization Details',
+        title: 'Add New Institution Details',
 
         options: [
             {
-                title: 'School Registration',
+                title: 'Institution',
                 path: '/admin/registered-schools'
             },
             {
-                title: 'Add New Organization',
+                title: 'Add New Institution',
                 path: '/admin/register-new-schools'
             }
         ]
@@ -76,10 +76,9 @@ const AddNewSchool = (props) => {
             principal_email: Yup.string()
                 .optional()
                 .email('Invalid email address format'),
-            principal_name: Yup.string().optional().matches(
-                /^[aA-zZ\s]+$/,
-                'Invalid Name'
-            ),
+            principal_name: Yup.string()
+                .optional()
+                .matches(/^[aA-zZ\s]+$/, 'Invalid Name'),
             organization_name: Yup.string().required(
                 'Organization  Name is Required'
             ),
@@ -94,7 +93,9 @@ const AddNewSchool = (props) => {
             district: Yup.string()
                 .matches(/^[aA-zZ\s]+$/, 'Invalid district')
                 .required('District is Required'),
-            state: Yup.string().optional().matches(/^[aA-zZ\s]+$/, 'Invalid State')
+            state: Yup.string()
+                .optional()
+                .matches(/^[aA-zZ\s]+$/, 'Invalid State')
         }),
 
         onSubmit: async (values) => {
@@ -137,6 +138,7 @@ const AddNewSchool = (props) => {
                                             // style={{ fontSize: 15 }}
                                         >
                                             UDISE Code
+                                            <span required>*</span>
                                         </Label>
                                         <InputBox
                                             {...inputDICE}
@@ -164,6 +166,7 @@ const AddNewSchool = (props) => {
                                             // style={{ fontSize: 15 }}
                                         >
                                             Institute/School Name
+                                            <span required>*</span>
                                         </Label>
                                         <InputBox
                                             {...inputDICE}
@@ -208,6 +211,7 @@ const AddNewSchool = (props) => {
                                             htmlFor="district"
                                         >
                                             District
+                                            <span required>*</span>
                                         </Label>
                                         <InputBox
                                             {...inputDICE}

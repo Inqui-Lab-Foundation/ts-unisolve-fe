@@ -83,15 +83,15 @@ const BadgesComp = (props) => {
             },
             {
                 name: 'Mentor Name',
-                selector: 'full_name',
+                selector: (row) => row.team.mentor.full_name,
                 center: true,
                 width: '15%'
             },
             {
                 name: 'District',
-                selector: 'dist',
+                selector: (row) => row.team.mentor.organization.district,
                 center: true,
-                width: '10%'
+                width: '13%'
             },
             {
                 name: 'Sdg',
@@ -109,7 +109,7 @@ const BadgesComp = (props) => {
                 name: 'Actions',
                 selector: 'actions ',
                 center: true,
-                width: '15%',
+                width: '12%',
                 cell: (row) => [
                     <>
                         <Link
