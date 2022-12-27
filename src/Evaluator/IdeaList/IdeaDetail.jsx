@@ -129,7 +129,7 @@ const IdeaDetail = (props) => {
                             <div className="row">
                                 <div className="col-sm-8">
                                     <h2 className="mb-md-4 mb-3">
-                                        Idea Name:{' '}
+                                        SGD:{' '}
                                         <span className="text-capitalize fs-3">
                                             {props?.ideaDetails?.sdg?.toLowerCase() ||
                                                 ''}
