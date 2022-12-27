@@ -141,7 +141,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     <MenuItem
                         icon={<img src={BadgesIcon} />}
                         className={
-                            location.pathname === '/admin/challenges' &&
+                            (location.pathname === '/admin/challenges' || location.pathname === '/admin/challenges/viewlistofchallenges') &&
                             'sidebar-active'
                         }
                     >

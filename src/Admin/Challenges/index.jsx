@@ -39,7 +39,7 @@ const eadmindashboard = () => {
     return (
         <Layout>
             <div className="container dashboard-wrapper mt-5 mb-50">
-                <h2 className="mb-5">Dashboard</h2>
+                <h2 className="mb-5">Challenges</h2>
                 <div className="dashboard">
                     <Container>
                         <Row>

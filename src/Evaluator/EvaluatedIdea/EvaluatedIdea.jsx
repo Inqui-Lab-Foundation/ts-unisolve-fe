@@ -102,7 +102,7 @@ const EvaluatedIdea = () => {
                 width: '15%'
             },
             {
-                name: 'Idea Name',
+                name: 'SDG',
                 selector: (row) => row.sdg,
                 width: '20%'
             },

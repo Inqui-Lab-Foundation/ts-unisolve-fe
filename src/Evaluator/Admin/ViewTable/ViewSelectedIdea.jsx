@@ -97,13 +97,20 @@ const ViewSelectedIdea = () => {
                 width: '15%'
             },
             {
-                name: 'Idea Name',
+                name: 'SDG',
                 selector: (row) => row.sdg,
                 width: '15%'
             },
             {
                 name: 'Submitted By',
                 selector: (row) => row.initiated_name,
+                width: '15%'
+            },
+            {
+                name: 'Evaluated By',
+                cell: (row) => {
+                    return [row.evaluated_name ? row.evaluated_name : ''];
+                },
                 width: '15%'
             },
             {
@@ -114,13 +121,7 @@ const ViewSelectedIdea = () => {
                         : row.evaluated_at,
                 width: '15%'
             },
-            {
-                name: 'Evaluated Name',
-                cell: (row) => {
-                    return [row.evaluated_name ? row.evaluated_name : ''];
-                },
-                width: '15%'
-            },
+            
             {
                 name: 'Status',
                 // selector: (row) => row.evaluation_status && row.evaluation_status=='SELECTEDROUND1'?'Accepted':row.evaluation_status=='REJECTEDROUND1'?'Rejected':'',
@@ -186,7 +187,7 @@ const ViewSelectedIdea = () => {
                 width: '21%'
             },
             {
-                name: 'Idea Name',
+                name: 'SDG',
                 selector: (row) => row.sdg,
                 width: '21%'
             },
