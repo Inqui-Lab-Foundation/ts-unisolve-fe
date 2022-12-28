@@ -34,17 +34,15 @@ const eadmindashboard = () => {
             });
     }
 
-    console.log(dateCount, 'countvaluie__', dateCount.submitted_count);
-
     return (
         <Layout>
             <div className="container dashboard-wrapper mt-5 mb-50">
-                <h2 className="mb-5">Challenges</h2>
+                <h2 className="mb-5">Evaluation</h2>
                 <div className="dashboard">
                     <Container>
                         <Row>
                             <Col lg={4} md={6}>
-                                <Link to="/admin/challenges/viewlistofchallenges?status=SUBMITTED&title=Submitted">
+                                <Link to="/admin/challenges">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-primary">
                                             SUBMITTED IDEAS
@@ -56,7 +54,7 @@ const eadmindashboard = () => {
                                 </Link>
                             </Col>
                             <Col lg={4} md={6}>
-                                <Link to="/admin/challenges/viewlistofchallenges?evaluation_status=SELECTEDROUND1&title=Accepted">
+                                <Link to="/admin/evaluation/viewlist?evaluation_status=SELECTEDROUND1&title=Accepted">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-success">ACCEPTED</b>
                                         <h3 className="display-5 bold m-2">
@@ -66,7 +64,7 @@ const eadmindashboard = () => {
                                 </Link>
                             </Col>
                             <Col lg={4} md={6}>
-                                <Link to="/admin/challenges/viewlistofchallenges?evaluation_status=REJECTEDROUND1&title=Rejected">
+                                <Link to="/admin/evaluation/viewlist?evaluation_status=REJECTEDROUND1&title=Rejected">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-danger">REJECTED</b>
                                         <h3 className="display-5 bold m-2">

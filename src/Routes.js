@@ -51,8 +51,9 @@ import AdminDashboard from './Admin/Dashboard/index';
 import AdminMyProfile from './Admin/MyProfile';
 import AdminMySettings from './Admin/MySettings';
 
-import AdminChallenges from './Admin/Challenges/index';
-import ChallengesList from './Admin/Challenges/pages/ViewSelectedChallenges';
+import AdminChallenges from './Admin/Challenges/ViewSelectedChallenges';
+import AdminEvaluation from './Admin/Evaluation/index';
+import Selectedlist from './Admin/Evaluation/ViewSelectedIdea/ViewSelectedideas';
 import AdminNewBadge from './Admin/Badges/NewBadge';
 import AdminCourses from './Admin/Courses';
 import AdminCourseView from './Admin/Courses/coursesView';
@@ -93,7 +94,7 @@ import IndividualReport from './Admin/Reports/ReportFilter';
 import StudentSignup from './Admin/StudentSignup';
 import Home from './home/home';
 import Terms from './home/termsandconditions';
-import AdminChallengesComp from './Admin/Challenges/Badges';
+import AdminChallengesComp from './Admin/Badges/Badges';
 import Preservey from './Admin/PreSurvey';
 import StudentPostservey from './Student/PostSurvey/PostSurvey';
 import TeacherPostservey from './Teachers/PostSurvey/PostSurvey';
@@ -543,10 +544,17 @@ const Routers = () => {
                         component={AdminChallenges}
                     />
 
+
                     <ProtectedRoute
                         exact={true}
-                        path="/admin/challenges/viewlistofchallenges"
-                        component={ChallengesList}
+                        path="/admin/evaluation"
+                        component={AdminEvaluation}
+                    />
+
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/evaluation/viewlist"
+                        component={Selectedlist}
                     />
 
                     <ProtectedRoute
