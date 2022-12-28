@@ -1,7 +1,6 @@
 /* eslint-disable indent */
 import React from 'react';
 import { Button } from '../../stories/Button';
-import RangeSlider from './RangeSlider';
 import LinkComponent from './LinkComponent';
 import { getCurrentUser, openNotificationWithIcon } from '../../helpers/Utils';
 import axios from 'axios';
@@ -10,6 +9,7 @@ import { getSubmittedIdeaList } from '../store/evaluator/action';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Modal } from 'react-bootstrap';
 import Select from '../Helper/Select';
+import NumberScale from './NumberScale';
 
 const IdeaDetail = (props) => {
     const dispatch = useDispatch();
@@ -273,13 +273,14 @@ const IdeaDetail = (props) => {
 
                     {/* //-----------Rating section---- */}
                     {isL2 && (
-                        <div className="rating_card mt-md-5 mt-4 card p-md-5 p-3">
-                            <h2 className="mb-3">Idea Scoring</h2>
-                            <div className="row">
+                        <div className="rating_card mt-md-5 mt-4 card p-md-4 p-5">
+                            <h2 className="mb-3">Evaluation Rating Scale:</h2>
+                            <div className="row mt-1 ps-4">
+                               
                                 {ratingParams?.map((item, index) => {
                                     return (
-                                        <div className="col-lg-4 col-md-6 mb-5" key={index}>
-                                            <div className="for-novelity px-3">
+                                        <div className="col-12 mb-lg-4 mb-5 p-0" key={index}>
+                                            <div className="">
                                                 <label
                                                     htmlFor="novelity"
                                                     className="form-label text-capitalize"
@@ -289,25 +290,28 @@ const IdeaDetail = (props) => {
                                                         className={
                                                             (item==='novelity'?novelityScore:item==='usefulness'?usefulnessScore:item==='feasability'?feasabilityScore:item==='scalability'?scalabilityScore:affordabilityScore )== 0
                                                                 ? 'text-muted fs-2'
-                                                                : 'fs-2'
+                                                                : 'fs-2 text-primary'
                                                         }
                                                     >
                                                         {item==='novelity'?novelityScore:item==='usefulness'?usefulnessScore:item==='feasability'?feasabilityScore:item==='scalability'?scalabilityScore:affordabilityScore}
                                                     </span>
                                                 </label>
-                                                <RangeSlider
+                                                <NumberScale
                                                     name={item}
                                                     setScore={item==='novelity'?setNovelityScore:item==='usefulness'?setUsefulnessScore:item==='feasability'?setFeasabilityScore:item==='scalability'?setScalabilityScore:setAffordabilityScore}
+                                                    text1={'Not at all Likely'}
+                                                    text2={'Maybe'}
+                                                    text3={'Extremely Likely'}
                                                 />
                                             </div>
                                         </div>
                                     );
                                 })}
                                 <div className="row">
-                                    <div className="col-md-6 mb-5 ps-4">
-                                        <label htmlFor="floatingTextarea">
-                                            Comments
-                                        </label>
+                                    <div className="col-md-7 mb-md-5 mb-4 p-0">
+                                        <p className='fs-4 mb-1'>
+                                            Could You please tell us what we can do to make you give us a rating of 10?
+                                        </p>
                                         <div className="form-floating">
                                             <textarea
                                                 className="form-control fs-4 lh-sm"
@@ -319,21 +323,11 @@ const IdeaDetail = (props) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-12 d-flex justify-content-end">
-                                    <div className="me-3">
-                                        <Button
-                                            btnClass="secondary"
-                                            size="small"
-                                            label="Back to List"
-                                            // onClick={() => {
-                                            //     props?.setIsIdeaDetail(false);
-                                            // }}
-                                        />
-                                    </div>
+                                <div className="col-12">
                                     <Button
                                         btnClass="primary"
                                         size="small"
-                                        label="Update Score"
+                                        label="Submit"
                                         // onClick={() => {
                                         //     props?.setIsIdeaDetail(false);
                                         // }}
