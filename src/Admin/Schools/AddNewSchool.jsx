@@ -83,11 +83,7 @@ const AddNewSchool = (props) => {
                 'Organization  Name is Required'
             ),
             organization_code: Yup.string()
-                // .matches(
-                //     phoneRegExp,
-                //     /^[aA-zZ\s]+$/,
-                //     'organization code is not valid'
-                // )
+                .matches(/^[A-Za-z0-9]*$/, 'Please enter only alphanumeric characters')
                 .required('UDISE  Code is Required'),
             city: Yup.string().matches(/^[aA-zZ\s]+$/, 'Invalid City'),
             district: Yup.string()

@@ -106,6 +106,7 @@ const ViewSelectedIdea = () => {
                 name: 'Actions',
                 cell: (params) => {
                     return [
+                        
                         <div className="d-flex" key={params}>
                             <div
                                 className="btn btn-primary btn-lg mr-5 mx-2"
@@ -117,6 +118,7 @@ const ViewSelectedIdea = () => {
                                 View
                             </div>
                         </div>
+                        
                     ];
                 },
                 width: '12%',
@@ -159,21 +161,19 @@ const ViewSelectedIdea = () => {
                                                 />
                                             </div>
                                         </Col>
-
-                                        {showbutton && (
                                             <Col md={2}>
                                                 <div className="text-center">
                                                     <Button
-                                                        btnClass="primary"
+                                                        btnClass={showbutton ? 'primary': 'default'}
                                                         size="small"
                                                         label="Search"
+                                                        disabled={!showbutton}
                                                         onClick={() =>
                                                             handleclickcall()
                                                         }
                                                     />
                                                 </div>
                                             </Col>
-                                        )}
                                     </Row>
                                 </Container>
                             </div>
@@ -205,6 +205,9 @@ const ViewSelectedIdea = () => {
                             <ViewDetail
                                 ideaDetails={ideaDetails}
                                 setIsDetail={setIsDetail}
+                                settableDate={settableDate}
+                                setdistrict={setdistrict}
+                                setsdg={setsdg}
                             />
                         )}
                     </div>

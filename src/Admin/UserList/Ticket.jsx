@@ -135,7 +135,7 @@ const TicketsPage = (props) => {
             // activeAdmin(false);
             activeEvaluater(true);
         } else if (e === '2') {
-            props.getAdminMentorsListAction('ALL',mentorDist);
+            //props.getAdminMentorsListAction('ALL',mentorDist);
             dispatch(getAdminMentorsListSuccess([],0));
             activeMenter(!menter);
             // activeAdmin(false);
@@ -613,9 +613,9 @@ const TicketsPage = (props) => {
                                                     dists={props.dists}
                                                     tab={tab}
                                                 />
-                                                <Card className='ms-3 p-3'>
-                                                    Total Students : {props.studentList.length || 0}
-                                                </Card>
+                                                {studentDist && <Card className='ms-3 p-3'>
+                                                    Total Students : {props.studentList.length}
+                                                </Card>}
                                             </>
 
                                         )}
@@ -629,9 +629,9 @@ const TicketsPage = (props) => {
                                                     dists={props.dists}
                                                     tab={tab}
                                                 />
-                                                <Card className='ms-3 p-3'>
-                                                    Total Teachers : {props.mentorsList.length || 0}
-                                                </Card>
+                                                {mentorDist && <Card className='ms-3 p-3'>
+                                                    Total Teachers : {props.mentorsList.length}
+                                                </Card>}
                                             </>
                                         )}
                                         {tab && (tab == 3 || tab==4 )&&<Button
