@@ -125,6 +125,7 @@ const EditProfile = (props) => {
                 });
         }
     });
+    
     return (
         <Layout>
             <div className="EditPersonalDetails new-member-page">
@@ -259,6 +260,7 @@ const EditProfile = (props) => {
                                         <Button
                                             label="Submit details"
                                             type="submit"
+                                            // onClick={handleBack}
                                             btnClass={
                                                 !(
                                                     formik.dirty &&
