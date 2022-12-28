@@ -16,19 +16,31 @@ const ViewMore = () => {
     };
     var teamId = [];
     teamId.push({ mentor_id: orgDaTa.mentor.mentor_id });
+    
+    const handleBack = () => {
+        history.push({
+            pathname: '/admin/dashboard'
+        });
+        localStorage.setItem(
+            'organization_code',
+            JSON.stringify(orgDaTa.organization_code)
+        );
+    };
+
     return (
         <Layout>
             <Container className="mt-5 pt-5 dynamic-form">
-                <div className='d-flex justify-content-between align-items-center mb-3'>
+                <div className="d-flex justify-content-between align-items-center mb-3">
                     <BreadcrumbTwo {...headingDetails} />
                     <Button
                         label="Back"
                         btnClass="primary"
                         size="small"
-                        onClick={() =>
-                            history.push(
-                                '/admin/dashboard'
-                            )
+                        onClick={
+                            handleBack
+                            // history.push(
+                            //     '/admin/dashboard'
+                            // )
                         }
                     />
                 </div>
