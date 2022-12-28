@@ -220,20 +220,19 @@ const EvaluatedIdea = () => {
                                                 </div>
                                             </Col>
                                         )}
-                                        {status && district && sdg && (
                                             <Col md={1}>
                                                 <div className="text-center">
                                                     <Button
-                                                        btnClass="primary"
+                                                        btnClass={status && district && sdg ? 'primary': 'default'}
                                                         size="small"
                                                         label="Search"
+                                                        disabled={!(status && district && sdg)}
                                                         onClick={() =>
                                                             handleclickcall()
                                                         }
                                                     />
                                                 </div>
                                             </Col>
-                                        )}
                                     </Row>
                                 </Container>
                             </div>

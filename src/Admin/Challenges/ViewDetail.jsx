@@ -9,12 +9,12 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Modal } from 'react-bootstrap';
 import axios from 'axios';
 import Select from './pages/Select';
-import { useHistory } from 'react-router-dom';
+//import { useHistory } from 'react-router-dom';
 //import { useDispatch } from 'react-redux';
 
 const ViewDetail = (props) => {
     //const dispatch = useDispatch();
-    const history = useHistory();
+    //const history = useHistory();
     const currentUser = getCurrentUser('current_user');
     const [teamResponse, setTeamResponse] = React.useState([]);
     const [isReject, setIsreject]=React.useState(false);
@@ -94,9 +94,10 @@ const handleL1Round = (handledText) => {
     axios(config)
         .then(function (response) {
             openNotificationWithIcon('success', response?.data?.message=='OK'?'Idea processed successfully!':response?.data?.message);
-            history.push({
-                pathname: '/eadmin/dashboard',
-            });
+            props?.setIsDetail(false);
+            props?.settableDate({});
+            props?.setdistrict('');
+            props?.setsdg('');
         })
         .catch(function (error) {
             openNotificationWithIcon(

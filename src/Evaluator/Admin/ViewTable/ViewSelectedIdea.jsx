@@ -275,21 +275,20 @@ const ViewSelectedIdea = () => {
                                         ) : (
                                             ''
                                         )}
-                                        {showbutton && (
                                         <Col md={2}>
                                             <div className="text-center">
                                                 <Button
-                                                    btnClass="primary"
+                                                    btnClass={showbutton ? 'primary': 'default'}
                                                     size="small"
                                                     label="Search"
+                                                    disabled={!showbutton}
                                                     onClick={() =>
                                                         handleclickcall()
                                                     }
                                                 />
                                             </div>
                                         </Col>
-                                    )}
-                                        <Col md={title === 'Rejected' ? (showbutton ? 1 : 3):(showbutton ? 4 : 6)}>
+                                        <Col md={title === 'Rejected' ? 1 : 4}>
                                             <div className="text-right">
                                                 <Button
                                                     btnClass="primary"
