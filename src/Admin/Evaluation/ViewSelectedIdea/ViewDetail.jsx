@@ -1,14 +1,14 @@
 /* eslint-disable indent */
 import React from 'react';
-import './ViewSelectedChallenges.scss';
+import './ViewSelectedideas.scss';
 import { Button } from '../../../stories/Button';
-import LinkComponent from './LinkComponent';
+import LinkComponent from '../Pages/LinkComponent';
 import { getCurrentUser, openNotificationWithIcon } from '../../../helpers/Utils';
 import moment from 'moment';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Modal } from 'react-bootstrap';
 import axios from 'axios';
-import Select from './Select';
+import Select from '../Pages/Select';
 import { useHistory } from 'react-router-dom';
 //import { useDispatch } from 'react-redux';
 
