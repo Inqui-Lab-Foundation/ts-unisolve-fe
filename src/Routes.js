@@ -148,7 +148,7 @@ import EvalutorAdminLogins from './Evaluator/Admin/EvaluatorAdminLogin';
 import Eadmindashboard from './Evaluator/Admin/Dashboard/EAdminDashboard';
 import EadminChangePassword from './Evaluator/Admin/Pages/ChangePSWModal';
 import ListOfIdeas from './Evaluator/Admin/ViewTable/ViewSelectedIdea';
-import TicketResView from './Teachers/SupportJourney/TicketResView';
+import TicketResView from './Admin/Tickets/TicketResView';
 
 const Routers = () => {
     // const history = useHistory();
@@ -543,7 +543,6 @@ const Routers = () => {
                         path="/admin/challenges"
                         component={AdminChallenges}
                     />
-
 
                     <ProtectedRoute
                         exact={true}
