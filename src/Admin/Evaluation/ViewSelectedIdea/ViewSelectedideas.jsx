@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import React, { useEffect } from 'react';
-import './ViewSelectedChallenges.scss';
+import './ViewSelectedideas.scss';
 import Layout from '../../../Admin/Layout';
 import DataTable, { Alignment } from 'react-data-table-component';
 import DataTableExtensions from 'react-data-table-component-extensions';
@@ -10,7 +10,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { KEY, URL } from '../../../constants/defaultValues';
 import { Button } from '../../../stories/Button';
-import Select from './Select';
+import Select from '../Pages/Select';
 import { Col, Container, Row } from 'reactstrap';
 import { cardData } from '../../../Student/Pages/Ideas/SDGData.js';
 import { useSelector } from 'react-redux';

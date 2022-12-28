@@ -34,8 +34,6 @@ const eadmindashboard = () => {
             });
     }
 
-    console.log(dateCount, 'countvaluie__', dateCount.submitted_count);
-
     return (
         <Layout>
             <div className="container dashboard-wrapper mt-5 mb-50">
