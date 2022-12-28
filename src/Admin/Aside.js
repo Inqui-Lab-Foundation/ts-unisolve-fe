@@ -19,7 +19,7 @@ import {
     SidebarHeader,
     SidebarContent
 } from 'react-pro-sidebar';
-import { FaBars, FaHouseUser } from 'react-icons/fa';
+import { FaBars, FaHouseUser, FaLightbulb, FaPen } from 'react-icons/fa';
 
 import 'react-pro-sidebar/dist/css/styles.css';
 import { useLocation } from 'react-router-dom';
@@ -139,14 +139,28 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                         </NavLink>
                     </MenuItem> */}
                     <MenuItem
-                        icon={<img src={BadgesIcon} />}
+                        icon={<FaLightbulb />}
                         className={
-                            location.pathname === '/admin/challenges ' &&
+                            (location.pathname === '/admin/challenges' ||
+                                location.pathname ===
+                                    '/admin/challenges/viewlistofchallenges') &&
                             'sidebar-active'
                         }
                     >
-                        <NavLink exact={true} to={'/admin/challenges '}>
+                        <NavLink exact={true} to={'/admin/challenges'}>
                             Challenges
+                        </NavLink>
+                    </MenuItem>
+
+                    <MenuItem
+                        icon={<FaPen />}
+                        className={
+                            (location.pathname === '/admin/evaluation' || location.pathname === '/admin/evaluation/viewlist') &&
+                            'sidebar-active'
+                        }
+                    >
+                        <NavLink exact={true} to={'/admin/evaluation'}>
+                            Evaluation
                         </NavLink>
                     </MenuItem>
                     <MenuItem
@@ -240,7 +254,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                         }
                     >
                         <NavLink exact={true} to={'/admin/tickets'}>
-                            Tickets
+                            support
                         </NavLink>
                     </MenuItem>
 
