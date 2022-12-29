@@ -107,103 +107,94 @@ const TicketResView = (props) => {
                         <BreadcrumbTwo {...headingDetails} />
                         <div>
                             <Form onSubmit={formik.handleSubmit} isSubmitting>
-                                <Card className="aside p-4 py-5">
-                                    <Card className="card mb-4 my-3 comment-card px-0 card-outline-warning">
-                                        <CardBody>
-                                            <p>
-                                                <b>
-                                                    {
-                                                        supportTicket.query_details
-                                                    }
-                                                </b>
-                                            </p>
-                                            <hr />
-                                            <Row>
-                                                <Col md={6}>
-                                                    <span>
-                                                        <FaUserCircle />{' '}
-                                                        {
-                                                            supportTicket.created_by
-                                                        }
-                                                    </span>{' '}
-                                                </Col>
-                                                <Col
-                                                    md={6}
-                                                    className="text-right"
-                                                >
-                                                    <span>
-                                                        <FaRegClock />{' '}
-                                                        {moment(
-                                                            supportTicket.created_at
-                                                        ).format(
-                                                            // 'Do MMM, YYYY HH:mm',
-                                                            'LLL'
-                                                        )}
-                                                    </span>
-                                                </Col>
-                                            </Row>
-                                            {/* <div className="d-flex justify-content-between">
+                                {/* <Card className="aside p-4 py-5"> */}
+                                <Card className="card mb-4 my-3 comment-card px-0 card-outline-warning">
+                                    <CardBody>
+                                        <p>
+                                            <b>{supportTicket.query_details}</b>
+                                        </p>
+                                        <hr />
+                                        <Row>
+                                            <Col md={6}>
+                                                <span>
+                                                    <FaUserCircle />{' '}
+                                                    {supportTicket.created_by}
+                                                </span>{' '}
+                                            </Col>
+                                            <Col md={6} className="text-right">
+                                                <span>
+                                                    <FaRegClock />{' '}
+                                                    {moment(
+                                                        supportTicket.created_at
+                                                    ).format(
+                                                        // 'Do MMM, YYYY HH:mm',
+                                                        'LLL'
+                                                    )}
+                                                </span>
+                                            </Col>
+                                        </Row>
+                                        {/* <div className="d-flex justify-content-between">
                                                  sdasdas   
                                             </div>
                                             <div className="d-flex justify-content-between">
                                                  sdasdas   
                                             </div> */}
-                                        </CardBody>
-                                    </Card>
-                                    {/* <h6>{supportTicket.query_details}</h6> */}
+                                    </CardBody>
+                                </Card>
+                                {/* <h6>{supportTicket.query_details}</h6> */}
 
-                                    {supportTicket?.support_ticket_replies
-                                        ?.length > 0 &&
-                                        supportTicket.support_ticket_replies.map(
-                                            (data, i) => {
-                                                return (
-                                                    <>
-                                                        <Card className="card mb-4 my-3 comment-card card-outline-success">
-                                                            <CardBody>
-                                                                <p>
-                                                                    {
-                                                                        data.reply_details
-                                                                    }
-                                                                </p>
-                                                                <hr />
-                                                                <Row>
-                                                                    <Col md={6}>
-                                                                        <span>
-                                                                            <FaUserCircle />{' '}
-                                                                            {
-                                                                                data.created_by
-                                                                            }
-                                                                        </span>{' '}
-                                                                    </Col>
-                                                                    <Col
-                                                                        md={6}
-                                                                        className="text-right"
-                                                                    >
-                                                                        <span>
-                                                                            <FaRegClock />{' '}
-                                                                            {moment(
-                                                                                data.created_at
-                                                                            ).format(
-                                                                                // 'Do MMM, YYYY HH:mm',
-                                                                                'LLL'
-                                                                            )}
-                                                                        </span>
-                                                                    </Col>
-                                                                </Row>
-                                                            </CardBody>
-                                                        </Card>
-                                                    </>
-                                                );
-                                            }
-                                        )}
+                                {supportTicket?.support_ticket_replies?.length >
+                                    0 &&
+                                    supportTicket.support_ticket_replies.map(
+                                        (data, i) => {
+                                            return (
+                                                <>
+                                                    <Card className="card mb-4 my-3 comment-card card-outline-success">
+                                                        <CardBody>
+                                                            <p>
+                                                                {
+                                                                    data.reply_details
+                                                                }
+                                                            </p>
+                                                            <hr />
+                                                            <Row>
+                                                                <Col md={6}>
+                                                                    <span>
+                                                                        <FaUserCircle />{' '}
+                                                                        {
+                                                                            data.created_by
+                                                                        }
+                                                                    </span>{' '}
+                                                                </Col>
+                                                                <Col
+                                                                    md={6}
+                                                                    className="text-right"
+                                                                >
+                                                                    <span>
+                                                                        <FaRegClock />{' '}
+                                                                        {moment(
+                                                                            data.created_at
+                                                                        ).format(
+                                                                            // 'Do MMM, YYYY HH:mm',
+                                                                            'LLL'
+                                                                        )}
+                                                                    </span>
+                                                                </Col>
+                                                            </Row>
+                                                        </CardBody>
+                                                    </Card>
+                                                </>
+                                            );
+                                        }
+                                    )}
 
-                                    {/* {supportTicket?.support_ticket_replies?.length > 0 && supportTicket.support_ticket_replies.map((data, i) => {
+                                {/* {supportTicket?.support_ticket_replies?.length > 0 && supportTicket.support_ticket_replies.map((data, i) => {
                                         return(
                                             <p>{data.reply_details}</p>
                                         );
                                     })} */}
 
-                                    {/* {supportTicketRespnses && supportTicketRespnses.dataValues ? supportTicketRespnses.dataValues.map((details) => {
+                                {/* {supportTicketRespnses && supportTicketRespnses.dataValues ? supportTicketRespnses.dataValues.map((details) => {
                                         return(
                                             <div>
                                                 <p>{details.reply_details}</p>
@@ -211,8 +202,9 @@ const TicketResView = (props) => {
                                         );
                                     }): null} */}
 
-                                    {/* <div className="create-ticket register-block"> */}
-                                    <Row>
+                                {/* <div className="create-ticket register-block"> */}
+                                <Row>
+                                    <Card className="aside p-4 py-4">
                                         <Col md={12}>
                                             <Label
                                                 className="name-req mt-5"
@@ -276,9 +268,10 @@ const TicketResView = (props) => {
                                                 md={12}
                                             ></Col>
                                         </Col>
-                                    </Row>
-                                    {/* </div> */}
-                                </Card>
+                                    </Card>
+                                </Row>
+                                {/* </div> */}
+                                {/* </Card> */}
 
                                 <hr className="mt-4 mb-4"></hr>
                                 <Row>

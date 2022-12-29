@@ -155,7 +155,9 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     <MenuItem
                         icon={<FaPen />}
                         className={
-                            (location.pathname === '/admin/evaluation' || location.pathname === '/admin/evaluation/viewlist') &&
+                            (location.pathname === '/admin/evaluation' ||
+                                location.pathname ===
+                                    '/admin/evaluation/viewlist') &&
                             'sidebar-active'
                         }
                     >
@@ -254,10 +256,27 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                         }
                     >
                         <NavLink exact={true} to={'/admin/tickets'}>
-                            support
+                            Support
                         </NavLink>
                     </MenuItem>
 
+                    <MenuItem
+                        icon={
+                            <img
+                                src={FaqIcon}
+                                className="img-fluid"
+                                alt="faq"
+                            />
+                        }
+                        className={
+                            location.pathname === '/admin/translation' &&
+                            'sidebar-active'
+                        }
+                    >
+                        <NavLink exact={true} to={'/admin/translation'}>
+                            Tranlsation
+                        </NavLink>
+                    </MenuItem>
                     <SubMenu
                         title="Settings"
                         icon={<img src={TicketIcon} />}
@@ -280,7 +299,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                                 Schedule Roadmap
                             </NavLink>
                         </MenuItem>
-                        <MenuItem
+                        {/* <MenuItem
                             icon={
                                 <img
                                     src={FaqIcon}
@@ -296,7 +315,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                             <NavLink exact={true} to={'/admin/translation'}>
                                 Tranlsation
                             </NavLink>
-                        </MenuItem>
+                        </MenuItem> */}
                     </SubMenu>
 
                     <MenuItem

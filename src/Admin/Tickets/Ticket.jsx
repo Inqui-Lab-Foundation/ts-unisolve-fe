@@ -139,14 +139,14 @@ const TicketsPage = () => {
                 name: 'No.',
                 selector: (row, key) => key + 1,
                 // selector: 'id',
-                width: '8%'
+                width: '7%'
                 // center: true,
             },
             {
                 name: 'Category',
                 selector: (row) => row.query_category,
                 sortable: true,
-                width: '25%'
+                width: '15%'
                 // center: true,
                 // cell: (support_ticket_id) => [
                 //     <Link
@@ -162,7 +162,7 @@ const TicketsPage = () => {
             {
                 name: ' Query Details',
                 selector: (row) => row.query_details,
-                width: '30%',
+                width: '55%',
                 // center: true,
                 cell: (params) => [
                     <Link
@@ -183,7 +183,24 @@ const TicketsPage = () => {
             {
                 name: 'Status',
                 selector: (row) => row.status,
-                width: '15%'
+                width: '23%',
+                cell: (params) => [
+                    params.status === 'OPEN' ? (
+                        <span className="py-2 px-4 rounded-pill bg-danger bg-opacity-25 text-danger fw-bold">
+                            Open
+                        </span>
+                    ) : params.status === 'INPROGRESS' ? (
+                        <span className="py-2 px-4 rounded-pill bg-info bg-opacity-25 text-info fw-bold">
+                            Inprogress
+                        </span>
+                    ) : params.status === 'RESOLVED' ? (
+                        <span className="bg-success bg-opacity-25 px-4 py-2 rounded-pill text-success fw-bold">
+                            Resolved
+                        </span>
+                    ) : (
+                        ''
+                    )
+                ]
             }
         ]
     };
