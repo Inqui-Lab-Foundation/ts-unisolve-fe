@@ -31,6 +31,7 @@ const IdeaDetail = (props) => {
         'Inaccurate Data (Form is not filled properly)'
     ];
 
+     // eslint-disable-next-line no-unused-vars
      const [levelName, setLevelName]=React.useState('');
      const [evalSchema, setEvalSchema]=React.useState('');
      React.useEffect(()=>{
@@ -217,7 +218,7 @@ const IdeaDetail = (props) => {
                                     </div>
                                 );
                             })}
-                            {levelName?.toLowerCase()=='l1' && evalSchema?.toLowerCase()=='accept_reject' && 
+                            {evalSchema?.toLowerCase()=='accept_reject' && 
                                 <div className="d-md-flex">
                                 
                                 {props?.ideaDetails?.status === 'SUBMITTED' && (
@@ -249,7 +250,7 @@ const IdeaDetail = (props) => {
                     </div>
 
                     {/* //-----------Rating section---- */}
-                    {levelName?.toLowerCase()!=='l1' && evalSchema?.toLowerCase()=='rating_scale'? (
+                    {evalSchema?.toLowerCase()=='rating_scale'? (
                         <div className="rating_card mt-md-5 mt-4 card p-md-4 p-5">
                             <h2 className="mb-3">Evaluation Rating Scale:</h2>
                             <div className="row mt-1 ps-4">
