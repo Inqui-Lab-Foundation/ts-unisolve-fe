@@ -76,7 +76,7 @@ const MyProfile = () => {
     // }
     useLayoutEffect(() => {
         dispatch(getTeacherByID(currentUser?.data[0]?.mentor_id));
-    }, [currentUser.data[0].mentor_id]);
+    }, [currentUser?.data[0]?.mentor_id]);
     // useEffect(() => {
     //     const search = window.location.search;
     //     // if (search === '?id=teams') {
@@ -268,7 +268,7 @@ const MyProfile = () => {
                                                                 </Col>
                                                             </Row>
 
-                                                            <Row className="pt-3 pb-3">
+                                                            {/* <Row className="pt-3 pb-3">
                                                                 <Col
                                                                     md={5}
                                                                     className="my-auto profile-detail"
@@ -293,8 +293,8 @@ const MyProfile = () => {
                                                                             : '-'}
                                                                     </b>
                                                                 </Col>
-                                                            </Row>
-                                                            <Row className="pt-3 pb-3">
+                                                            </Row> */}
+                                                            {/* <Row className="pt-3 pb-3">
                                                                 <Col
                                                                     md={5}
                                                                     className="my-auto profile-detail"
@@ -319,9 +319,9 @@ const MyProfile = () => {
                                                                             : '-'}
                                                                     </b>
                                                                 </Col>
-                                                            </Row>
+                                                            </Row> */}
 
-                                                            <Row className="pt-3 pb-3">
+                                                            {/* <Row className="pt-3 pb-3">
                                                                 <Col
                                                                     md={5}
                                                                     className="my-auto profile-detail"
@@ -346,7 +346,7 @@ const MyProfile = () => {
                                                                             : '-'}
                                                                     </b>
                                                                 </Col>
-                                                            </Row>
+                                                            </Row> */}
 
                                                             <Row className="pt-3 pb-3">
                                                                 <Col
