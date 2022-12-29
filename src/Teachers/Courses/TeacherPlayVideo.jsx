@@ -720,7 +720,7 @@ const TeacherPlayVideo = (props) => {
                                             >
                                                 {t('teacehr_red.hand_book')}
                                             </CardTitle>
-                                            <CardBody>
+                                            {/* <CardBody>
                                                 <p className="text-primary">
                                                     <b>
                                                         Guidelines for Handbook
@@ -810,7 +810,7 @@ const TeacherPlayVideo = (props) => {
                                                         applicable)
                                                     </p>
                                                 </div>
-                                            </CardBody>
+                                            </CardBody> */}
                                             <div className="text-left mb-2">
                                                 <div>
                                                     {worksheetResponce &&
