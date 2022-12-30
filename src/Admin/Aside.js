@@ -155,12 +155,23 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     <MenuItem
                         icon={<FaPen />}
                         className={
-                            (location.pathname === '/admin/evaluation' || location.pathname === '/admin/evaluation/viewlist') &&
+                            (location.pathname === '/admin/evaluationStatus' || location.pathname === '/admin/evaluationStatus/viewlist') &&
                             'sidebar-active'
                         }
                     >
-                        <NavLink exact={true} to={'/admin/evaluation'}>
-                            Evaluation
+                        <NavLink exact={true} to={'/admin/evaluationStatus'}>
+                            Evaluation Status
+                        </NavLink>
+                    </MenuItem>
+                    <MenuItem
+                        icon={<FaPen />}
+                        className={
+                            location.pathname === '/admin/evaluationProcess' &&
+                            'sidebar-active'
+                        }
+                    >
+                        <NavLink exact={true} to={'/admin/evaluationProcess'}>
+                            Evaluation Process
                         </NavLink>
                     </MenuItem>
                     <MenuItem

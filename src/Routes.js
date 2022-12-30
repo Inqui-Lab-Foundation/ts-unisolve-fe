@@ -53,6 +53,7 @@ import AdminMySettings from './Admin/MySettings';
 
 import AdminChallenges from './Admin/Challenges/ViewSelectedChallenges';
 import AdminEvaluation from './Admin/Evaluation/index';
+import AdminEvaluationProcess from './Admin/EvalProcess/index';
 import Selectedlist from './Admin/Evaluation/ViewSelectedIdea/ViewSelectedideas';
 import AdminNewBadge from './Admin/Badges/NewBadge';
 import AdminCourses from './Admin/Courses';
@@ -546,14 +547,20 @@ const Routers = () => {
 
                     <ProtectedRoute
                         exact={true}
-                        path="/admin/evaluation"
+                        path="/admin/evaluationStatus"
                         component={AdminEvaluation}
                     />
 
                     <ProtectedRoute
                         exact={true}
-                        path="/admin/evaluation/viewlist"
+                        path="/admin/evaluationStatus/viewlist"
                         component={Selectedlist}
+                    />
+
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/evaluationProcess"
+                        component={AdminEvaluationProcess}
                     />
 
                     <ProtectedRoute
