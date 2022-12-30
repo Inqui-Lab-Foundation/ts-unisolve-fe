@@ -95,7 +95,7 @@ const handleL1Round = (handledText) => {
         .then(function (response) {
             openNotificationWithIcon('success', response?.data?.message=='OK'?'Idea processed successfully!':response?.data?.message);
             history.push({
-                pathname: '/admin/evaluation',
+                pathname: '/admin/evaluationStatus',
             });
         })
         .catch(function (error) {
