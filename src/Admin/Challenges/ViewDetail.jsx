@@ -33,7 +33,7 @@ const ViewDetail = (props) => {
             );
         }
     },[props]);
-console.warn(props);
+
 
 const handleAlert = (handledText) => {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -95,7 +95,7 @@ const handleL1Round = (handledText) => {
         .then(function (response) {
             openNotificationWithIcon('success', response?.data?.message=='OK'?'Idea processed successfully!':response?.data?.message);
             props?.setIsDetail(false);
-            props?.settableDate({});
+            props?.settableData([]);
             props?.setdistrict('');
             props?.setsdg('');
         })
@@ -135,9 +135,12 @@ const handleReject=()=>{
                                         <Button
                                             btnClass="primary"
                                             size="small"
-                                            label="Back"
+                                            label={props?.nextButtonText || 'Next'}
+                                            // onClick={() =>
+                                            //     props?.setIsDetail(false)
+                                            // }
                                             onClick={() =>
-                                                props?.setIsDetail(false)
+                                                props?.handleNext()
                                             }
                                         />
                                     </div>

@@ -72,7 +72,10 @@ const EvaluatedIdea = () => {
             : '?rejected_reason=' + reason));
 
     const [isDetail, setIsDetail] = React.useState(false);
-    const [ideaDetails, setIdeaDetails] = React.useState({});
+    const [ideaDetails, setIdeaDetails] = React.useState([]);
+    const [currentRow, setCurrentRow]=React.useState(1);
+    const [nextButtonText, setNextButtonText]=React.useState('Next');
+    const [tablePage, setTablePage]=React.useState(1);
     // const evaluatedIdeaList = [
     //     {
     //         team_name: 'Test Team 1',
@@ -149,6 +152,18 @@ const EvaluatedIdea = () => {
                                 onClick={() => {
                                     setIdeaDetails(params);
                                     setIsDetail(true);
+                                    let index=0;
+                                    evaluatedIdeaList?.forEach((item, i)=>{
+                                        if(item?.challenge_response_id==params?.challenge_response_id){
+                                            index=i;
+                                        }
+                                    });
+                                    setCurrentRow(index+1);
+                                    if (evaluatedIdeaList?.length - index == 1) {
+                                        setNextButtonText('Back');
+                                    }else{
+                                        setNextButtonText('Next');
+                                    }
                                 }}
                             >
                                 View Idea Details
@@ -160,6 +175,23 @@ const EvaluatedIdea = () => {
                 left: true
             }
         ]
+    };
+
+    const handleNext=()=>{
+        if(evaluatedIdeaList && currentRow < evaluatedIdeaList?.length){
+            setIdeaDetails(evaluatedIdeaList[currentRow]);
+            setIsDetail(true);
+            setCurrentRow(currentRow+1);
+            if (evaluatedIdeaList?.length - currentRow == 1) {
+                setNextButtonText('Back');
+            }else{
+                setNextButtonText('Next');
+            }
+        }else{
+            setIdeaDetails([]);
+            setIsDetail(false);
+            setCurrentRow(1);
+        }
     };
 
     return (
@@ -257,6 +289,8 @@ const EvaluatedIdea = () => {
                                             10, 20, 30
                                         ]}
                                         paginationPerPage={10}
+                                        onChangePage={(page)=>setTablePage(page)}
+                                        paginationDefaultPage={tablePage}
                                     />
                                 </DataTableExtensions>
                             </div>
@@ -264,6 +298,8 @@ const EvaluatedIdea = () => {
                             <EvaluatedIdeaDetail
                                 ideaDetails={ideaDetails}
                                 setIsDetail={setIsDetail}
+                                handleNext={handleNext}
+                                nextButtonText={nextButtonText}
                             />
                         )}
                     </div>
