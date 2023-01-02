@@ -54,7 +54,7 @@ const eadmindashboard = () => {
                                 </Link>
                             </Col>
                             <Col lg={4} md={6}>
-                                <Link to="/admin/evaluation/viewlist?evaluation_status=SELECTEDROUND1&title=Accepted">
+                                <Link to="/admin/evaluationStatus/viewlist?evaluation_status=SELECTEDROUND1&title=Accepted">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-success">ACCEPTED</b>
                                         <h3 className="display-5 bold m-2">
@@ -64,7 +64,7 @@ const eadmindashboard = () => {
                                 </Link>
                             </Col>
                             <Col lg={4} md={6}>
-                                <Link to="/admin/evaluation/viewlist?evaluation_status=REJECTEDROUND1&title=Rejected">
+                                <Link to="/admin/evaluationStatus/viewlist?evaluation_status=REJECTEDROUND1&title=Rejected">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-danger">REJECTED</b>
                                         <h3 className="display-5 bold m-2">

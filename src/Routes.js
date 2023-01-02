@@ -53,6 +53,7 @@ import AdminMySettings from './Admin/MySettings';
 
 import AdminChallenges from './Admin/Challenges/ViewSelectedChallenges';
 import AdminEvaluation from './Admin/Evaluation/index';
+import AdminEvaluationProcess from './Admin/EvalProcess/index';
 import Selectedlist from './Admin/Evaluation/ViewSelectedIdea/ViewSelectedideas';
 import AdminNewBadge from './Admin/Badges/NewBadge';
 import AdminCourses from './Admin/Courses';
@@ -149,6 +150,8 @@ import Eadmindashboard from './Evaluator/Admin/Dashboard/EAdminDashboard';
 import EadminChangePassword from './Evaluator/Admin/Pages/ChangePSWModal';
 import ListOfIdeas from './Evaluator/Admin/ViewTable/ViewSelectedIdea';
 import TicketResView from './Admin/Tickets/TicketResView';
+import EditEvalProcess from './Admin/EvalProcess/EditEvalProcess';
+import CreateEvalProcess from './Admin/EvalProcess/CreateEvalProcess';
 
 const Routers = () => {
     // const history = useHistory();
@@ -546,14 +549,20 @@ const Routers = () => {
 
                     <ProtectedRoute
                         exact={true}
-                        path="/admin/evaluation"
+                        path="/admin/evaluationStatus"
                         component={AdminEvaluation}
                     />
 
                     <ProtectedRoute
                         exact={true}
-                        path="/admin/evaluation/viewlist"
+                        path="/admin/evaluationStatus/viewlist"
                         component={Selectedlist}
+                    />
+
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/evaluationProcess"
+                        component={AdminEvaluationProcess}
                     />
 
                     <ProtectedRoute
@@ -716,6 +725,16 @@ const Routers = () => {
                         exact={true}
                         path="/admin/translation"
                         component={Translation}
+                    />
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/create-evaluationProcess"
+                        component={CreateEvalProcess}
+                    />
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/edit-evaluationProcess"
+                        component={EditEvalProcess}
                     />
                     <ProtectedRoute
                         exact={true}

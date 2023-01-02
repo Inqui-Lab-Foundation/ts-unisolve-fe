@@ -30,7 +30,12 @@ export const URL = {
         process.env.REACT_APP_API_BASE_URL + '/supportTicketsReply',
     createOrganization:
         process.env.REACT_APP_API_BASE_URL + '/organizations/createOrg',
+    createEvalProcess:
+        process.env.REACT_APP_API_BASE_URL + '/evaluationProcess',
     updateOrganization: process.env.REACT_APP_API_BASE_URL + '/organizations/',
+    updateEvalProcess:
+        process.env.REACT_APP_API_BASE_URL + '/evaluationProcess/',
+
     createMultiStudent:
         process.env.REACT_APP_API_BASE_URL + '/students/bulkCreateStudent',
     uploadFile:
