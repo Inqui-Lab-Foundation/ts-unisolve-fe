@@ -74,7 +74,6 @@ const EvaluatedIdea = () => {
     const [isDetail, setIsDetail] = React.useState(false);
     const [ideaDetails, setIdeaDetails] = React.useState([]);
     const [currentRow, setCurrentRow]=React.useState(1);
-    const [nextButtonText, setNextButtonText]=React.useState('Next');
     const [tablePage, setTablePage]=React.useState(1);
     // const evaluatedIdeaList = [
     //     {
@@ -159,11 +158,7 @@ const EvaluatedIdea = () => {
                                         }
                                     });
                                     setCurrentRow(index+1);
-                                    if (evaluatedIdeaList?.length - index == 1) {
-                                        setNextButtonText('Back');
-                                    }else{
-                                        setNextButtonText('Next');
-                                    }
+                                  
                                 }}
                             >
                                 View Idea Details
@@ -182,15 +177,13 @@ const EvaluatedIdea = () => {
             setIdeaDetails(evaluatedIdeaList[currentRow]);
             setIsDetail(true);
             setCurrentRow(currentRow+1);
-            if (evaluatedIdeaList?.length - currentRow == 1) {
-                setNextButtonText('Back');
-            }else{
-                setNextButtonText('Next');
-            }
-        }else{
-            setIdeaDetails([]);
-            setIsDetail(false);
-            setCurrentRow(1);
+        }
+    };
+    const handlePrev=()=>{
+        if(evaluatedIdeaList && currentRow > 1){
+            setIdeaDetails(evaluatedIdeaList[currentRow]);
+            setIsDetail(true);
+            setCurrentRow(currentRow-1);
         }
     };
 
@@ -286,7 +279,7 @@ const EvaluatedIdea = () => {
                                         fixedHeader
                                         subHeaderAlign={Alignment.Center}
                                         paginationRowsPerPageOptions={[
-                                            10, 20, 30
+                                            10, 25, 50, 100
                                         ]}
                                         paginationPerPage={10}
                                         onChangePage={(page)=>setTablePage(page)}
@@ -299,7 +292,9 @@ const EvaluatedIdea = () => {
                                 ideaDetails={ideaDetails}
                                 setIsDetail={setIsDetail}
                                 handleNext={handleNext}
-                                nextButtonText={nextButtonText}
+                                handlePrev={handlePrev}
+                                currentRow={currentRow}
+                                dataLength={evaluatedIdeaList && evaluatedIdeaList?.length}
                             />
                         )}
                     </div>
