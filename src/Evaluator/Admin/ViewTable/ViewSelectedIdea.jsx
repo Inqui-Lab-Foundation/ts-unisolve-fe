@@ -37,7 +37,6 @@ const ViewSelectedIdea = () => {
     const [evalname,setevalname] = React.useState('');
      //---for handle next idea---
      const [currentRow, setCurrentRow]= React.useState(1);
-     const [nextButtonText, setNextButtonText]=React.useState('Next');
      const [tablePage, setTablePage]=React.useState(1);
 
     const SDGDate = cardData.map((i) => {
@@ -243,11 +242,6 @@ const ViewSelectedIdea = () => {
                                         }
                                     });
                                     setCurrentRow(index+1);
-                                    if (tableData?.length - index == 1) {
-                                        setNextButtonText('Back');
-                                    }else{
-                                        setNextButtonText('Next');
-                                    }
                                 }}
                             >
                                 View
@@ -269,15 +263,14 @@ const ViewSelectedIdea = () => {
             setIdeaDetails(tableData[currentRow]);
             setIsDetail(true);
             setCurrentRow(currentRow+1);
-            if (tableData?.length - currentRow == 1) {
-                setNextButtonText('Back');
-            }else{
-                setNextButtonText('Next');
-            }
-        }else{
-            setIdeaDetails([]);
-            setIsDetail(false);
-            setCurrentRow(1);
+           
+        }
+    };
+    const handlePrev=()=>{
+        if(tableData && currentRow > 1){
+            setIdeaDetails(tableData[currentRow]);
+            setIsDetail(true);
+            setCurrentRow(currentRow-1);
         }
     };
     return (
@@ -386,7 +379,7 @@ const ViewSelectedIdea = () => {
                                         fixedHeader
                                         subHeaderAlign={Alignment.Center}
                                         paginationRowsPerPageOptions={[
-                                            10, 20, 30
+                                            10, 25, 50, 100
                                         ]}
                                         paginationPerPage={10}
                                         onChangePage={(page)=>setTablePage(page)}
@@ -399,7 +392,9 @@ const ViewSelectedIdea = () => {
                                 ideaDetails={ideaDetails}
                                 setIsDetail={setIsDetail}
                                 handleNext={handleNext}
-                                nextButtonText={nextButtonText}
+                                handlePrev={handlePrev}
+                                currentRow={currentRow}
+                                dataLength={tableData && tableData?.length}
                             />
                         )}
                     </div>
