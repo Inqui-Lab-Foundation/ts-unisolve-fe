@@ -18,6 +18,8 @@ import { useSelector } from 'react-redux';
 import { getDistrictData } from '../../../redux/studentRegistration/actions';
 import { useDispatch } from 'react-redux';
 import { ReasonsOptions } from '../Pages/ReasonForRejectionData';
+import { getAdmin, getAdminEvalutorsList } from '../../../redux/actions';
+
 
 const ViewSelectedIdea = () => {
     const { search } = useLocation();
@@ -32,6 +34,7 @@ const ViewSelectedIdea = () => {
     const [reason, setReason] = React.useState('');
     const [district, setdistrict] = React.useState('');
     const [sdg, setsdg] = React.useState('');
+    const [evalname,setevalname] = React.useState('');
 
     const SDGDate = cardData.map((i) => {
         return i.goal_title;
@@ -40,15 +43,33 @@ const ViewSelectedIdea = () => {
     const fullDistrictsNames = useSelector(
         (state) => state?.studentRegistration?.dists
     );
+    
+    const evallist = useSelector(
+        (state) => state?.adminEvalutors?.evalutorsList
+    );
+    const adminlist = useSelector(
+        (state) => state?.admin?.adminData
+    );    
+    const Allevalobj={};
+    const Allevalnamelist = evallist.map((i) => {
+        Allevalobj[i.user.full_name] = i.user.user_id;
+        return i.user.full_name;
+    });
+    adminlist.map((i) =>{
+        Allevalobj[i.user.full_name] = i.user.user_id; 
+        Allevalnamelist.push(i.user.full_name);
+    });
 
     const dataParam =  title === 'Submitted' ? 'status='+status : 'evaluation_status='+evaluation_status;
     const filterParams =
         (district && district !== 'All Districts' ? '&district=' + district : '') +
         (sdg && sdg !== 'ALL' ? '&sdg=' + sdg : '') +
-        (reason && '&rejected_reason=' + reason);
+        (reason && '&rejected_reason=' + reason) + (evalname && '&evaluator_id=' + Allevalobj[evalname]);
 
     useEffect(() => {
         dispatch(getDistrictData());
+        dispatch(getAdminEvalutorsList());
+        dispatch(getAdmin());
     },[]);
     
     // useEffect(() => {
@@ -237,7 +258,7 @@ const ViewSelectedIdea = () => {
 
                                 <Container fluid className='px-0'>
                                     <Row className='align-items-center'>
-                                        <Col md={3} >
+                                        <Col md={2} >
                                             <div className="my-3 d-md-block d-flex justify-content-center">
                                                 <Select
                                                     list={fullDistrictsNames}
@@ -249,7 +270,7 @@ const ViewSelectedIdea = () => {
                                                 />
                                             </div>
                                         </Col>
-                                        <Col md={3}>
+                                        <Col md={2}>
                                             <div className="my-3 d-md-block d-flex justify-content-center">
                                                 <Select
                                                     list={SDGDate}
@@ -259,6 +280,17 @@ const ViewSelectedIdea = () => {
                                                 />
                                             </div>
                                         </Col>
+                                        {title !== 'Submitted' ? (<Col md={2}>
+                                            <div className="my-3 d-md-block d-flex justify-content-center">
+                                                <Select
+                                                    list={Allevalnamelist}
+                                                    setValue={setevalname}
+                                                    placeHolder={'Select evaluator name'}
+                                                    value={evalname}
+                                                />
+                                            </div>
+                                        </Col>) : ''}
+                                        
                                         {title === 'Rejected' ? (
                                             <Col md={3}>
                                                 <div className="my-3 d-md-block d-flex justify-content-center">
@@ -288,7 +320,7 @@ const ViewSelectedIdea = () => {
                                                 />
                                             </div>
                                         </Col>
-                                        <Col md={title === 'Rejected' ? 1 : 4}>
+                                        <Col md={title === 'Rejected' ? 1 : title==='Submitted' ? 6 : 4}>
                                             <div className="text-right">
                                                 <Button
                                                     btnClass="primary"
