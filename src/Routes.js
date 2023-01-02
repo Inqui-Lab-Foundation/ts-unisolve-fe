@@ -150,6 +150,8 @@ import Eadmindashboard from './Evaluator/Admin/Dashboard/EAdminDashboard';
 import EadminChangePassword from './Evaluator/Admin/Pages/ChangePSWModal';
 import ListOfIdeas from './Evaluator/Admin/ViewTable/ViewSelectedIdea';
 import TicketResView from './Admin/Tickets/TicketResView';
+import EditEvalProcess from './Admin/EvalProcess/EditEvalProcess';
+import CreateEvalProcess from './Admin/EvalProcess/CreateEvalProcess';
 
 const Routers = () => {
     // const history = useHistory();
@@ -723,6 +725,16 @@ const Routers = () => {
                         exact={true}
                         path="/admin/translation"
                         component={Translation}
+                    />
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/create-evaluationProcess"
+                        component={CreateEvalProcess}
+                    />
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/edit-evaluationProcess"
+                        component={EditEvalProcess}
                     />
                     <ProtectedRoute
                         exact={true}
