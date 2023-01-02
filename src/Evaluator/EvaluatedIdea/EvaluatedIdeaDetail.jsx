@@ -14,7 +14,7 @@ const EvaluatedIdeaDetail = (props) => {
             );
         }
     },[props]);
-console.warn(props);
+
   return (
     <div>
         {teamResponse && teamResponse?.length > 0 ? (
@@ -36,9 +36,12 @@ console.warn(props);
                                         <Button
                                             btnClass="primary"
                                             size="small"
-                                            label="Back"
+                                            label={props?.nextButtonText || 'Next'}
+                                            // onClick={() =>
+                                            //     props?.setIsDetail(false)
+                                            // }
                                             onClick={() =>
-                                                props?.setIsDetail(false)
+                                                props?.handleNext()
                                             }
                                         />
                                     </div>

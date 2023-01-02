@@ -134,9 +134,12 @@ const handleReject=()=>{
                                         <Button
                                             btnClass="primary"
                                             size="small"
-                                            label="Back"
+                                            label={props?.nextButtonText || 'Next'}
+                                            // onClick={() =>
+                                            //     props?.setIsDetail(false)
+                                            // }
                                             onClick={() =>
-                                                props?.setIsDetail(false)
+                                                props?.handleNext()
                                             }
                                         />
                                     </div>

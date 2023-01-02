@@ -30,11 +30,15 @@ const ViewSelectedIdea = () => {
     const evaluation_status = new URLSearchParams(search).get("evaluation_status");
     const [isDetail, setIsDetail] = React.useState(false);
     const [ideaDetails, setIdeaDetails] = React.useState({});
-    const [tableDate, settableDate] = React.useState({});
+    const [tableData, settableData] = React.useState([]);
     const [reason, setReason] = React.useState('');
     const [district, setdistrict] = React.useState('');
     const [sdg, setsdg] = React.useState('');
     const [evalname,setevalname] = React.useState('');
+     //---for handle next idea---
+     const [currentRow, setCurrentRow]= React.useState(1);
+     const [nextButtonText, setNextButtonText]=React.useState('Next');
+     const [tablePage, setTablePage]=React.useState(1);
 
     const SDGDate = cardData.map((i) => {
         return i.goal_title;
@@ -82,7 +86,7 @@ const ViewSelectedIdea = () => {
             .get(`${URL.getidealist}${dataParam}${filterParams}`, axiosConfig)
             .then(function (response) {
                 if (response.status === 200) {
-                    settableDate(
+                    settableData(
                         response.data &&
                             response.data.data[0] &&
                             response.data.data[0].dataValues
@@ -97,7 +101,7 @@ const ViewSelectedIdea = () => {
         handleideaList();
     };
     const evaluatedIdea = {
-        data: tableDate && tableDate.length > 0 ? tableDate : [],
+        data: tableData && tableData.length > 0 ? tableData : [],
         columns: [
             {
                 name: 'No',
@@ -187,7 +191,7 @@ const ViewSelectedIdea = () => {
     };
 
     const evaluatedIdeaforsub = {
-        data: tableDate && tableDate.length > 0 ? tableDate : [],
+        data: tableData && tableData.length > 0 ? tableData : [],
         columns: [
             {
                 name: 'No',
@@ -232,6 +236,18 @@ const ViewSelectedIdea = () => {
                                 onClick={() => {
                                     setIdeaDetails(params);
                                     setIsDetail(true);
+                                    let index=0;
+                                    tableData?.forEach((item, i)=>{
+                                        if(item?.challenge_response_id==params?.challenge_response_id){
+                                            index=i;
+                                        }
+                                    });
+                                    setCurrentRow(index+1);
+                                    if (tableData?.length - index == 1) {
+                                        setNextButtonText('Back');
+                                    }else{
+                                        setNextButtonText('Next');
+                                    }
                                 }}
                             >
                                 View
@@ -247,6 +263,23 @@ const ViewSelectedIdea = () => {
     const sel =
         title === 'Submitted' ? evaluatedIdeaforsub : evaluatedIdea;
     const showbutton = district && sdg;
+
+    const handleNext=()=>{
+        if(tableData && currentRow < tableData?.length){
+            setIdeaDetails(tableData[currentRow]);
+            setIsDetail(true);
+            setCurrentRow(currentRow+1);
+            if (tableData?.length - currentRow == 1) {
+                setNextButtonText('Back');
+            }else{
+                setNextButtonText('Next');
+            }
+        }else{
+            setIdeaDetails([]);
+            setIsDetail(false);
+            setCurrentRow(1);
+        }
+    };
     return (
         <Layout>
             <div className="container evaluated_idea_wrapper pt-5 mb-50">
@@ -345,7 +378,7 @@ const ViewSelectedIdea = () => {
                                     {...sel}
                                 >
                                     <DataTable
-                                        data={tableDate || []}
+                                        data={tableData || []}
                                         defaultSortField="id"
                                         defaultSortAsc={false}
                                         pagination
@@ -356,6 +389,8 @@ const ViewSelectedIdea = () => {
                                             10, 20, 30
                                         ]}
                                         paginationPerPage={10}
+                                        onChangePage={(page)=>setTablePage(page)}
+                                        paginationDefaultPage={tablePage}
                                     />
                                 </DataTableExtensions>
                             </div>
@@ -363,6 +398,8 @@ const ViewSelectedIdea = () => {
                             <ViewDetail
                                 ideaDetails={ideaDetails}
                                 setIsDetail={setIsDetail}
+                                handleNext={handleNext}
+                                nextButtonText={nextButtonText}
                             />
                         )}
                     </div>
