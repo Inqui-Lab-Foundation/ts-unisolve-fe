@@ -50,6 +50,14 @@ const evalprocess = () => {
         });
         localStorage.setItem('eavlId', JSON.stringify(item));
     };
+
+    const handleDic = (item) => {
+        history.push({
+            pathname: '/admin/selectingDistricts-evaluationProcess'
+        });
+        localStorage.setItem('eavlId', JSON.stringify(item));
+    };
+
     const handleActiveStatusUpdate = (item, itemA) => {
         const body = {
             status: itemA,
@@ -116,7 +124,7 @@ const evalprocess = () => {
                 width: '15%'
             },
             {
-                name: 'No of Evaluation',
+                name: 'No of Evaluations',
                 selector: 'no_of_evaluation',
                 width: '15%'
             },
@@ -164,6 +172,16 @@ const evalprocess = () => {
                         >
                             <div className="btn btn-danger btn-lg">
                                 INACTIVE
+                            </div>
+                        </Link>
+                        <Link
+                            exact="true"
+                            key={record}
+                            onClick={() => handleDic(record)}
+                            style={{ marginRight: '7px' }}
+                        >
+                            <div className="btn btn-success btn-lg mx-2">
+                            Districts
                             </div>
                         </Link>
                     </>
