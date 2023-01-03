@@ -15,20 +15,45 @@ import { getDistrictData } from '../../redux/studentRegistration/actions';
 
 const EditEvalProcess = (props) => {
     const evalID = JSON.parse(localStorage.getItem('eavlId'));
+    const dispatch = useDispatch();
+    const [clickedValue, setclickedValue] = useState({});
+    const [selectedDistricts, setselectedDistricts] = useState([]);
 
     useEffect(() => {
         dispatch(getDistrictData());
     }, []);
 
-    const [selectedDistricts, setselectedDistricts] = useState([]);
-
-    const dispatch = useDispatch();
     const fullDistrictsNames = useSelector(
         (state) => state?.studentRegistration?.dists
     );
+        
+    useEffect(() => {
+        evalID && evalID.district
+            ? (evalID.district.split(',').length === fullDistrictsNames.length-1 && !evalID.district.includes('All Districts')) 
+                ? setselectedDistricts(fullDistrictsNames)
+                : setselectedDistricts(evalID.district.split(','))
+            : '';
+    }, []);
 
-    async function handledistricts() {
-        const value = { district: selectedDistricts.toString() };
+    useEffect(() => {
+        if (clickedValue.name === 'All Districts') {
+            if (selectedDistricts.includes('All Districts')) {
+                setselectedDistricts(fullDistrictsNames);
+            } else {
+                setselectedDistricts([]);
+            }
+        } else if (clickedValue.name && clickedValue.name !== 'All Districts' && selectedDistricts.length === fullDistrictsNames.length-1 && !selectedDistricts.includes('All Districts')) {
+            setselectedDistricts(fullDistrictsNames);
+        }
+        else if (clickedValue.name && clickedValue.name !== 'All Districts') {
+            setselectedDistricts(
+                selectedDistricts?.filter((item) => item !== 'All Districts')
+            );
+        } 
+
+    }, [clickedValue]);
+
+    async function handledistricts(value) {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         await axios
             .put(
@@ -52,7 +77,11 @@ const EditEvalProcess = (props) => {
     }
 
     const handleclick = () => {
-        handledistricts();
+        const value = { district: '' };
+        selectedDistricts.includes('All Districts')
+            ? (value.district = selectedDistricts?.filter((item) => item !== 'All Districts').toString())
+            : (value.district = selectedDistricts.toString());
+        handledistricts(value);
     };
 
     return (
@@ -60,16 +89,30 @@ const EditEvalProcess = (props) => {
             <Container>
                 <Card className="p-5 m-5">
                     <Row>
-                        <Label className="mb-2 text-info">
-                            Level Name :{' '}
-                            <span className="text-muted">
-                                {evalID && evalID.level_name}
-                            </span>{' '}
-                            No Of Evaluation :{' '}
-                            <span className="text-muted">
-                                {evalID && evalID.no_of_evaluation}
-                            </span>
-                        </Label>
+                        <Col md={4}>
+                            <Label className="mb-2 text-info">
+                                Level Name :{' '}
+                                <span className="text-muted">
+                                    {evalID && evalID.level_name}
+                                </span>{' '}
+                            </Label>
+                        </Col>
+                        <Col md={4}>
+                            <Label className="mb-2 text-info">
+                                No Of Evaluation :{' '}
+                                <span className="text-muted">
+                                    {evalID && evalID.no_of_evaluation}
+                                </span>
+                            </Label>
+                        </Col>
+                        <Col md={4}>
+                            <Label className="mb-2 text-info">
+                                Evaluation Schema :{' '}
+                                <span className="text-muted">
+                                    {evalID && evalID.eval_schema}
+                                </span>
+                            </Label>
+                        </Col>
                     </Row>
                     <Row>
                         <Label className="mb-2">Districts:</Label>
@@ -77,6 +120,7 @@ const EditEvalProcess = (props) => {
                             list={fullDistrictsNames}
                             value={selectedDistricts}
                             setValue={setselectedDistricts}
+                            selValue={setclickedValue}
                         />
                     </Row>
                 </Card>
