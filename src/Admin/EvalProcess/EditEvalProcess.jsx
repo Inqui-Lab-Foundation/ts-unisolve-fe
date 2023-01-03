@@ -50,7 +50,7 @@ const EditEvalProcess = (props) => {
                 .optional()
                 // .matches(phoneRegExp, 'Enter only numeric Values')
                 .positive()
-                .integer()
+                // .integer()
                 // .max(2)
                 .required('No of Evaluation is Required')
         }),
@@ -114,12 +114,13 @@ const EditEvalProcess = (props) => {
                                             className="mb-2"
                                             htmlFor="no_of_evaluation"
                                         >
-                                            No Of Evaluation
+                                            No of Evaluation
                                         </Label>
                                         <InputBox
                                             {...inputDICE}
                                             id="no_of_evaluation"
                                             name="no_of_evaluation"
+                                            type="number"
                                             placeholder="Please enter no of Evaluation"
                                             onChange={formik.handleChange}
                                             onBlur={formik.handleBlur}
