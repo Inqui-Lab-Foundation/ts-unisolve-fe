@@ -21,7 +21,9 @@ const evalprocess = () => {
     async function handleEvalList() {
         var config = {
             method: 'get',
-            url: process.env.REACT_APP_API_BASE_URL + '/evaluationProcess',
+            url:
+                process.env.REACT_APP_API_BASE_URL +
+                '/evaluationProcess?status=ALL',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${currentUser?.data[0]?.token}`
@@ -103,15 +105,15 @@ const evalprocess = () => {
                 width: '6%'
                 // center: true,
             },
-            {
-                name: 'Evaluation Id',
-                selector: 'evaluation_process_id',
-                // cellExport: (row) => row.evaluation_process_id,
+            // {
+            //     name: 'Evaluation Id',
+            //     selector: 'evaluation_process_id',
+            //     // cellExport: (row) => row.evaluation_process_id,
 
-                sortable: true,
-                width: '12%'
-                // center: true,
-            },
+            //     sortable: true,
+            //     width: '12%'
+            //     // center: true,
+            // },
             {
                 name: 'Level Name',
                 selector: 'level_name',
@@ -149,41 +151,57 @@ const evalprocess = () => {
                 name: 'Actions',
                 selector: 'action',
                 center: true,
-                width: '30%',
+                width: '40%',
                 cell: (record) => [
                     <>
                         <Link
                             exact="true"
                             key={record}
                             onClick={() => handleEdit(record)}
-                            style={{ marginRight: '7px' }}
+                            style={{ marginRight: '12px' }}
                         >
                             <div className="btn btn-primary btn-lg mx-2">
                                 EDIT
                             </div>
                         </Link>
-                        <Link
-                            exact="true"
-                            key={record}
-                            onClick={() =>
-                                handleActiveStatusUpdate(record, 'INACTIVE')
-                            }
-                            style={{ marginRight: '10px' }}
-                        >
-                            <div className="btn btn-danger btn-lg">
-                                INACTIVE
-                            </div>
-                        </Link>
+
                         <Link
                             exact="true"
                             key={record}
                             onClick={() => handleDic(record)}
-                            style={{ marginRight: '7px' }}
+                            style={{ marginRight: '12px' }}
                         >
                             <div className="btn btn-success btn-lg mx-2">
-                            Districts
+                                Districts
                             </div>
                         </Link>
+                        {record.status == 'ACTIVE' ? (
+                            <Link
+                                exact="true"
+                                key={record}
+                                onClick={() =>
+                                    handleActiveStatusUpdate(record, 'INACTIVE')
+                                }
+                                style={{ marginRight: '5px' }}
+                            >
+                                <div className="btn btn-danger btn-lg  mx-2">
+                                    INACTIVE
+                                </div>
+                            </Link>
+                        ) : (
+                            <Link
+                                exact="true"
+                                key={record}
+                                onClick={() =>
+                                    handleActiveStatusUpdate(record, 'ACTIVE')
+                                }
+                                style={{ marginRight: '12px' }}
+                            >
+                                <div className="btn btn-warning btn-lg  mx-2">
+                                    ACTIVE
+                                </div>
+                            </Link>
+                        )}
                     </>
                 ]
             }

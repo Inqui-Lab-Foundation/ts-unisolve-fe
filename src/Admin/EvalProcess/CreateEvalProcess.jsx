@@ -39,7 +39,9 @@ const CreateEvalProcess = (props) => {
         initialValues: {
             level_name: '',
             no_of_evaluation: '',
-            status: 'ACTIVE'
+            eval_schema: '',
+            status: 'ACTIVE',
+            district: '-'
         },
         validationSchema: Yup.object({
             level_name: Yup.string()
@@ -47,11 +49,12 @@ const CreateEvalProcess = (props) => {
                 .required('Level Name is Required'),
             no_of_evaluation: Yup.number()
                 .optional()
-                // .matches(phoneRegExp, 'Enter only numeric Values')
                 .positive()
                 .integer()
-                // .max(2)
-                .required('No of Evaluation is Required')
+                .required('No of Evaluation is Required'),
+            eval_schema: Yup.string()
+                .optional()
+                .required(' Evaluation Schema is Required')
         }),
         onSubmit: async (values) => {
             const axiosConfig = getNormalHeaders(KEY.User_API_Key);
@@ -116,12 +119,13 @@ const CreateEvalProcess = (props) => {
                                             className="mb-2"
                                             htmlFor="no_of_evaluation"
                                         >
-                                            No Of Evaluation
+                                            No of Evaluation
                                         </Label>
                                         <InputBox
                                             {...inputDICE}
                                             id="no_of_evaluation"
                                             name="no_of_evaluation"
+                                            type="number"
                                             placeholder="Please enter no of Evaluation"
                                             onChange={formik.handleChange}
                                             onBlur={formik.handleBlur}
@@ -133,6 +137,55 @@ const CreateEvalProcess = (props) => {
                                         formik.errors.no_of_evaluation ? (
                                             <small className="error-cls">
                                                 {formik.errors.no_of_evaluation}
+                                            </small>
+                                        ) : null}
+                                        <Label
+                                            className="mb-2"
+                                            htmlFor="eval_schema"
+                                        >
+                                            Evaluation Schema
+                                        </Label>
+                                        {/* <InputBox
+                                            {...inputDICE}
+                                            id="no_of_evaluation"
+                                            name="no_of_evaluation"
+                                            type="number"
+                                            placeholder="Please enter no of Evaluation"
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={
+                                                formik.values.no_of_evaluation
+                                            }
+                                        />
+                                        {formik.touched.no_of_evaluation &&
+                                        formik.errors.no_of_evaluation ? (
+                                            <small className="error-cls">
+                                                {formik.errors.no_of_evaluation}
+                                            </small> */}
+                                        <select
+                                            name="eval_schema"
+                                            id="eval_schema"
+                                            placeholder="Please select Evaluation schema"
+                                            className="form-control custom-dropdown"
+                                            value={formik.values.eval_schema}
+                                            onChange={formik.handleChange}
+                                        >
+                                            <option disabled={true} value="">
+                                                {' '}
+                                                Select Evaluation Schema
+                                            </option>
+                                            <option value="RATING_SCALE">
+                                                Rating Scale
+                                            </option>
+                                            <option value="ACCEPT_REJECT">
+                                                Accept Reject
+                                            </option>
+                                        </select>
+
+                                        {formik.touched.eval_schema &&
+                                        formik.errors.eval_schema ? (
+                                            <small className="error-cls">
+                                                {formik.errors.eval_schema}
                                             </small>
                                         ) : null}
                                     </FormGroup>

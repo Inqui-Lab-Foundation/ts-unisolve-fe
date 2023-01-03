@@ -15,7 +15,7 @@ import {
     ProSidebar,
     Menu,
     MenuItem,
-    SubMenu,
+    // SubMenu,
     SidebarHeader,
     SidebarContent
 } from 'react-pro-sidebar';
@@ -155,7 +155,9 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                     <MenuItem
                         icon={<FaPen />}
                         className={
-                            (location.pathname === '/admin/evaluationStatus' || location.pathname === '/admin/evaluationStatus/viewlist') &&
+                            (location.pathname === '/admin/evaluationStatus' ||
+                                location.pathname ===
+                                    '/admin/evaluationStatus/viewlist') &&
                             'sidebar-active'
                         }
                     >
@@ -286,7 +288,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                             Tranlsation
                         </NavLink>
                     </MenuItem>
-                    <SubMenu
+                    {/* <SubMenu
                         title="Settings"
                         icon={<img src={TicketIcon} />}
                         data-element={location.pathname}
@@ -307,8 +309,8 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                             <NavLink exact={true} to={'/admin/road-map'}>
                                 Schedule Roadmap
                             </NavLink>
-                        </MenuItem>
-                        {/* <MenuItem
+                        </MenuItem> */}
+                    {/* <MenuItem
                             icon={
                                 <img
                                     src={FaqIcon}
@@ -325,7 +327,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                                 Tranlsation
                             </NavLink>
                         </MenuItem> */}
-                    </SubMenu>
+                    {/* </SubMenu> */}
 
                     <MenuItem
                         icon={
