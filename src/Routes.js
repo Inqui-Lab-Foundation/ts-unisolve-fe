@@ -151,6 +151,7 @@ import EadminChangePassword from './Evaluator/Admin/Pages/ChangePSWModal';
 import ListOfIdeas from './Evaluator/Admin/ViewTable/ViewSelectedIdea';
 import TicketResView from './Admin/Tickets/TicketResView';
 import EditEvalProcess from './Admin/EvalProcess/EditEvalProcess';
+import SelDistricts from './Admin/EvalProcess/SelectingDistricts';
 import CreateEvalProcess from './Admin/EvalProcess/CreateEvalProcess';
 
 const Routers = () => {
@@ -735,6 +736,11 @@ const Routers = () => {
                         exact={true}
                         path="/admin/edit-evaluationProcess"
                         component={EditEvalProcess}
+                    />
+                    <ProtectedRoute
+                        exact={true}
+                        path="/admin/selectingDistricts-evaluationProcess"
+                        component={SelDistricts}
                     />
                     <ProtectedRoute
                         exact={true}
