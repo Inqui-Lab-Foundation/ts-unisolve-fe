@@ -18,7 +18,7 @@ import { useSelector } from 'react-redux';
 import { getDistrictData } from '../../../redux/studentRegistration/actions';
 import { useDispatch } from 'react-redux';
 import { ReasonsOptions } from '../Pages/ReasonForRejectionData';
-import { getAdmin, getAdminEvalutorsList } from '../../../redux/actions';
+import { getAdminList, getAdminEvalutorsList } from '../../../redux/actions';
 
 
 const ViewSelectedIdea = () => {
@@ -51,14 +51,14 @@ const ViewSelectedIdea = () => {
         (state) => state?.adminEvalutors?.evalutorsList
     );
     const adminlist = useSelector(
-        (state) => state?.admin?.adminData
+        (state) => state?.admin?.adminList
     );    
     const Allevalobj={};
     const Allevalnamelist = evallist.map((i) => {
         Allevalobj[i.user.full_name] = i.user.user_id;
         return i.user.full_name;
     });
-    adminlist.map((i) =>{
+    adminlist?.map((i) =>{
         Allevalobj[i.user.full_name] = i.user.user_id; 
         Allevalnamelist.push(i.user.full_name);
     });
@@ -72,7 +72,7 @@ const ViewSelectedIdea = () => {
     useEffect(() => {
         dispatch(getDistrictData());
         dispatch(getAdminEvalutorsList());
-        dispatch(getAdmin());
+        dispatch(getAdminList());
     },[]);
     
     // useEffect(() => {
