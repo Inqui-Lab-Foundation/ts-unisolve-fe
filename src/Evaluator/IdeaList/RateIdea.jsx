@@ -40,8 +40,23 @@ const RateIdea = (props) => {
             handleAlert();
         }
     };
+
+    // ------function to get Occurrence----
+    const getOccurrence=((array, value) => {
+        return array.filter((v) => (v === value)).length;
+    });
+    // ---------------------------------
     
     const handleSubmit=()=>{
+        // ------to get overal rating score----
+        const scale=[1,2,3,4,5,6,7,8,9,10];
+        let totalWeight=0;
+        let ratedPrams=[novelityScore,usefulnessScore,feasabilityScore,scalabilityScore,affordabilityScore];
+        scale?.forEach((item)=>{
+            totalWeight+=getOccurrence(ratedPrams,item)*item;
+        });
+        let overAll=Number((totalWeight/5)?.toFixed(1));
+        // -------------------------
         let param = {
             evaluator_id: props?.evaluator_id,
             challenge_response_id: props?.challenge_response_id,
@@ -51,7 +66,7 @@ const RateIdea = (props) => {
             param_3: feasabilityScore,
             param_4: scalabilityScore,
             param_5: affordabilityScore,
-            overall:Number(((novelityScore+usefulnessScore+feasabilityScore+scalabilityScore+affordabilityScore)/5).toFixed(2)),
+            overall: overAll,
             comments: comments,
         };
         const body = JSON.stringify({...param});
