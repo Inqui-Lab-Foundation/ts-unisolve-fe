@@ -95,9 +95,9 @@ const handleL1Round = (handledText) => {
         .then(function (response) {
             openNotificationWithIcon('success', response?.data?.message=='OK'?'Idea processed successfully!':response?.data?.message);
             props?.setIsDetail(false);
-            props?.settableData([]);
-            props?.setdistrict('');
-            props?.setsdg('');
+            // props?.settableData([]);
+            // props?.setdistrict('');
+            // props?.setsdg('');
         })
         .catch(function (error) {
             openNotificationWithIcon(
