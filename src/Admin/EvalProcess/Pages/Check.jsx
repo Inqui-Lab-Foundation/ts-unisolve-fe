@@ -1,8 +1,9 @@
 import { Col } from 'reactstrap';
 
-const Check = ({ list, setValue, value }) => {
+const Check = ({ list, setValue, value, selValue }) => {
     const handleClick = (e) => {
         const { name, checked } = e.target;
+        selValue({name:name,checked:checked});
         setValue([...value, name]);
         if (!checked) {
             setValue(value.filter((item) => item !== name));
@@ -17,7 +18,7 @@ const Check = ({ list, setValue, value }) => {
                         type="checkbox"
                         className="mx-2 w-auto"
                         onChange={(e) => handleClick(e)}
-                        isChecked={value.includes(name)}
+                        checked={value.includes(name)}
                         id={name}
                     />
                     <label htmlFor={name} className="my-auto mx-3">

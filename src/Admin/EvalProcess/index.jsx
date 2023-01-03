@@ -172,7 +172,7 @@ const evalprocess = () => {
                             style={{ marginRight: '12px' }}
                         >
                             <div className="btn btn-success btn-lg mx-2">
-                                Districts
+                            DISTRICTS
                             </div>
                         </Link>
                         {record.status == 'ACTIVE' ? (

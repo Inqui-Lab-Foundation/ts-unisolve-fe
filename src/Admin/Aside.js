@@ -173,7 +173,7 @@ const Aside = ({ rtl, toggled, handleToggleSidebar }) => {
                         }
                     >
                         <NavLink exact={true} to={'/admin/evaluationProcess'}>
-                            Evaluation Process
+                            Evaluation Config
                         </NavLink>
                     </MenuItem>
                     <MenuItem

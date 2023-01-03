@@ -120,7 +120,7 @@ const handleReject=()=>{
                     <div className="row idea_detail_card">
                         <div className="col-12 p-0">
                             <div className="row">
-                                <div className="col-sm-8">
+                                <div className="col-lg-6">
                                     <h2 className="mb-md-4 mb-3">
                                         SDG:{' '}
                                         <span className="text-capitalize fs-3">
@@ -129,15 +129,37 @@ const handleReject=()=>{
                                         </span>
                                     </h2>
                                 </div>
-                                <div className="col-sm-4 d-flex justify-content-end">
+                                <div className="col-lg-6 d-flex justify-content-end">
                                     <div className="ms-auto me-sm-3 p-0">
                                         <Button
                                             btnClass="primary"
                                             size="small"
-                                            label="Back"
+                                            label='Back to List'
                                             onClick={() =>
                                                 props?.setIsDetail(false)
                                             }
+                                        />
+                                    </div>
+                                    <div className="ms-auto me-sm-3 p-0">
+                                        <Button
+                                            btnClass={props?.currentRow > 1 ? "primary":'default'}
+                                            size="small"
+                                            label={'Previous'}
+                                            onClick={() =>
+                                                props?.handlePrev()
+                                            }
+                                            disabled={props?.currentRow==1}
+                                        />
+                                    </div>
+                                    <div className="ms-auto me-sm-3 p-0">
+                                        <Button
+                                            btnClass={props?.dataLength!=props?.currentRow?"primary":'default'}
+                                            size="small"
+                                            label={'Next'}
+                                            onClick={() =>
+                                                props?.handleNext()
+                                            }
+                                            disabled={props?.dataLength==props?.currentRow}
                                         />
                                     </div>
                                 </div>
