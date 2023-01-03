@@ -181,7 +181,7 @@ const evalprocess = () => {
                             style={{ marginRight: '7px' }}
                         >
                             <div className="btn btn-success btn-lg mx-2">
-                            Districts
+                            DISTRICTS
                             </div>
                         </Link>
                     </>
