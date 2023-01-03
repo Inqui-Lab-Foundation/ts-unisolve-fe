@@ -126,7 +126,7 @@ export const getSubmittedIdeaList = () => async (dispatch) => {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         const result = await axios
             .get(
-                `${process.env.REACT_APP_API_BASE_URL + '/challenge_response/fetchRandomChallenge&evaluator_user_id='+currentUser?.data[0]?.user_id +'&level='+level}`,
+                `${process.env.REACT_APP_API_BASE_URL + '/challenge_response/fetchRandomChallenge?evaluator_user_id='+currentUser?.data[0]?.user_id +'&level='+level}`,
                 axiosConfig
             )
             .then((data) => data)
