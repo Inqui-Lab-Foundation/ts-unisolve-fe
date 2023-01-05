@@ -84,8 +84,10 @@ export default function DoughnutChart({ user }) {
         }
     },[user]);
     useEffect(() => {
-        setshowDefault(true);
-        dispatch(getAdminTeamsList(mentorid));
+        if(mentorid){
+            setshowDefault(true);
+            dispatch(getAdminTeamsList(mentorid));
+        }
     }, [mentorid]);
     const columns = [
         {
