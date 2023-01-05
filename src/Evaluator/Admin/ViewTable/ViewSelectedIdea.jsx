@@ -85,11 +85,11 @@ const ViewSelectedIdea = () => {
             .get(`${URL.getidealist}${dataParam}${filterParams}`, axiosConfig)
             .then(function (response) {
                 if (response.status === 200) {
-                    settableData(
-                        response.data &&
-                            response.data.data[0] &&
-                            response.data.data[0].dataValues
-                    );
+                    const updatedWithKey = response.data && response.data.data[0] && response.data.data[0].dataValues.map((item, i) => {
+                        const upd = { ...item }; upd["key"] = i + 1;
+                         return upd;
+                     });
+                     settableData(updatedWithKey && updatedWithKey);
                 }
             })
             .catch(function (error) {
@@ -104,13 +104,7 @@ const ViewSelectedIdea = () => {
         columns: [
             {
                 name: 'No',
-                cell: (params, index) => {
-                    return [
-                        <div className="ms-3" key={params}>
-                            {index + 1}
-                        </div>
-                    ];
-                },
+                selector: (row) => row.key,
                 sortable: true,
                 width: '7%'
             },

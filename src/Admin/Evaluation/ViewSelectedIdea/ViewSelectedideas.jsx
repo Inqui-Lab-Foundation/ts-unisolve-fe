@@ -26,7 +26,7 @@ const ViewSelectedIdea = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const title = new URLSearchParams(search).get('title');
-    const status = new URLSearchParams(search).get('status');
+    const level = new URLSearchParams(search).get('level');
     const evaluation_status = new URLSearchParams(search).get(
         'evaluation_status'
     );
@@ -64,10 +64,7 @@ const ViewSelectedIdea = () => {
         Allevalnamelist.push(i.user.full_name);
     });
     
-    const dataParam =
-        title === 'Submitted'
-            ? 'status=' + status
-            : 'evaluation_status=' + evaluation_status;
+    const dataParam = level!=='L1' ? `evaluation_status=${evaluation_status}&level=${level}` : 'evaluation_status=' + evaluation_status;
     const filterParams =
         (district && district !== 'All Districts' ? '&district=' + district : '') +
         (sdg && sdg !== 'ALL' ? '&sdg=' + sdg : '') +
@@ -93,11 +90,11 @@ const ViewSelectedIdea = () => {
             .get(`${URL.getidealist}${dataParam}${filterParams}`, axiosConfig)
             .then(function (response) {
                 if (response.status === 200) {
-                    settableData(
-                        response.data &&
-                            response.data.data[0] &&
-                            response.data.data[0].dataValues
-                    );
+                    const updatedWithKey = response.data && response.data.data[0] && response.data.data[0].dataValues.map((item, i) => {
+                        const upd = { ...item }; upd["key"] = i + 1;
+                         return upd;
+                     });
+                     settableData(updatedWithKey && updatedWithKey);
                 }
             })
             .catch(function (error) {
@@ -109,13 +106,7 @@ const ViewSelectedIdea = () => {
         columns: [
             {
                 name: 'No',
-                cell: (params, index) => {
-                    return [
-                        <div className="ms-3" key={params}>
-                            {index + 1}
-                        </div>
-                    ];
-                },
+                selector: (row) => row.key,
                 sortable: true,
                 width: '7%'
             },
@@ -171,6 +162,7 @@ const ViewSelectedIdea = () => {
                 },
                 width: '10%'
             },
+            
             {
                 name: 'Actions',
                 cell: (params) => {
@@ -201,7 +193,82 @@ const ViewSelectedIdea = () => {
         ]
     };
 
-    
+    const evaluatedIdeaL2 = {
+        data: tableData && tableData.length > 0 ? tableData : [],
+        columns: [
+            {
+                name: 'No',
+                selector: (row) => row.key,
+                sortable: true,
+                width: '7%'
+            },
+            {
+                name: 'Team Name',
+                selector: (row) => row.team_name || '',
+                sortable: true,
+                width: '15%'
+            },
+            {
+                name: 'SDG',
+                selector: (row) => row.sdg,
+                width: '15%'
+            },
+            {
+                name: 'Submitted By',
+                selector: (row) => row.initiated_name,
+                width: '15%'
+            },
+            {
+                name: 'Evaluated By',
+                cell: (row) => row.evaluator_rating.evaluated_name,
+                width: '15%'
+            },
+            {
+                name: 'Evaluated At',
+                selector: (row) =>
+                    row.evaluator_rating.evaluated_at
+                        ? moment(row.evaluator_rating.evaluated_at).format('DD-MM-YY h:mm:ss a')
+                        : row.evaluator_rating.evaluated_at,
+                width: '15%'
+            },
+            
+            {
+                name: 'overall',
+                selector :(row) => row.evaluator_rating.overall,
+                width : '10%'
+            },
+
+            {
+                name: 'Actions',
+                cell: (params) => {
+                    return [
+                        <div className="d-flex" key={params}>
+                            <div
+                                className="btn btn-primary btn-lg mr-5 mx-2"
+                                onClick={() => {
+                                    setIdeaDetails(params);
+                                    setIsDetail(true);
+                                    let index=0;
+                                    tableData?.forEach((item, i)=>{
+                                        if(item?.challenge_response_id==params?.challenge_response_id){
+                                            index=i;
+                                        }
+                                    });
+                                    setCurrentRow(index+1);
+                                }}
+                            >
+                                View
+                            </div>
+                        </div>
+                    ];
+                },
+                width: '8%',
+                left: true
+            }
+        ]
+    };
+
+    const sel = level!=='L1'? evaluatedIdeaL2 : evaluatedIdea;
     const showbutton = district && sdg;
 
     const handleNext=()=>{
@@ -313,7 +380,7 @@ const ViewSelectedIdea = () => {
                                 <DataTableExtensions
                                     print={false}
                                     export={false}
-                                    {...evaluatedIdea}
+                                    {...sel}
                                 >
                                     <DataTable
                                         data={tableData || []}
