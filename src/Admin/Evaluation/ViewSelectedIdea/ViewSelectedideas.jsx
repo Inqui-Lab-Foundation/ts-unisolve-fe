@@ -64,7 +64,7 @@ const ViewSelectedIdea = () => {
         Allevalnamelist.push(i.user.full_name);
     });
     
-    const dataParam = level!=='L1' ? `evaluation_status=${evaluation_status}&level=${level}` : 'evaluation_status=' + evaluation_status;
+    const dataParam = level!=='L1' ? `evaluation_status=${evaluation_status}` : 'evaluation_status=' + evaluation_status;
     const filterParams =
         (district && district !== 'All Districts' ? '&district=' + district : '') +
         (sdg && sdg !== 'ALL' ? '&sdg=' + sdg : '') +
@@ -200,43 +200,43 @@ const ViewSelectedIdea = () => {
                 name: 'No',
                 selector: (row) => row.key,
                 sortable: true,
-                width: '7%'
+                width: '17%'
             },
             {
                 name: 'Team Name',
                 selector: (row) => row.team_name || '',
                 sortable: true,
-                width: '15%'
+                width: '25%'
             },
             {
                 name: 'SDG',
                 selector: (row) => row.sdg,
-                width: '15%'
+                width: '25%'
             },
             {
                 name: 'Submitted By',
                 selector: (row) => row.initiated_name,
-                width: '15%'
+                width: '25%'
             },
-            {
-                name: 'Evaluated By',
-                cell: (row) => row.evaluator_rating.evaluated_name,
-                width: '15%'
-            },
-            {
-                name: 'Evaluated At',
-                selector: (row) =>
-                    row.evaluator_rating.evaluated_at
-                        ? moment(row.evaluator_rating.evaluated_at).format('DD-MM-YY h:mm:ss a')
-                        : row.evaluator_rating.evaluated_at,
-                width: '15%'
-            },
+            // {
+            //     name: 'Evaluated By',
+            //     cell: (row) => row.evaluator_rating.,
+            //     width: '15%'
+            // },
+            // {
+            //     name: 'Evaluated At',
+            //     selector: (row) =>
+            //         row.evaluator_rating.evaluated_at
+            //             ? moment(row.evaluator_rating.evaluated_at).format('DD-MM-YY h:mm:ss a')
+            //             : row.evaluator_rating.evaluated_at,
+            //     width: '15%'
+            // },
             
-            {
-                name: 'overall',
-                selector :(row) => row.evaluator_rating.overall,
-                width : '10%'
-            },
+            // {
+            //     name: 'overall',
+            //     selector :(row) => row.evaluator_rating.overall,
+            //     width : '10%'
+            // },
 
             {
                 name: 'Actions',
@@ -318,17 +318,18 @@ const ViewSelectedIdea = () => {
                                                 />
                                             </div>
                                         </Col>
+                                        {level==='L1' && 
                                         <Col md={2}>
-                                            <div className="my-3 d-md-block d-flex justify-content-center">
-                                                <Select
-                                                    list={Allevalnamelist}
-                                                    setValue={setevalname}
-                                                    placeHolder={'Select evaluator name'}
-                                                    value={evalname}
-                                                />
-                                            </div>
-                                        </Col>
-                                        
+                                        <div className="my-3 d-md-block d-flex justify-content-center">
+                                            <Select
+                                                list={Allevalnamelist}
+                                                setValue={setevalname}
+                                                placeHolder={'Select evaluator name'}
+                                                value={evalname}
+                                            />
+                                        </div>
+                                    </Col>}
+
                                         {title === 'Rejected' ? (
                                             <Col md={3}>
                                                 <div className="my-3 d-md-block d-flex justify-content-center">
@@ -358,7 +359,7 @@ const ViewSelectedIdea = () => {
                                                     />
                                                 </div>
                                             </Col>
-                                        <Col md={title === 'Rejected' ? 1 : 4}>
+                                        <Col md={title === 'Rejected' ? 1 : level === 'L1'? 4 : 6}>
                                             <div className="text-right">
                                                 <Button
                                                     btnClass="primary"
