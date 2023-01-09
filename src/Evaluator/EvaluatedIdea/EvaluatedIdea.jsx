@@ -16,9 +16,11 @@ import { ReasonsOptions } from '../Admin/Pages/ReasonForRejectionData';
 import { cardData } from '../../Student/Pages/Ideas/SDGData';
 import { Button } from '../../stories/Button';
 import { getCurrentUser } from '../../helpers/Utils';
+import Spinner from 'react-bootstrap/Spinner';
 
 const EvaluatedIdea = () => {
     const dispatch = useDispatch();
+    const [showspin,setshowspin]=React.useState(false);
     const currentUser = getCurrentUser('current_user');
     const [reason, setReason] = React.useState('');
     const [district, setdistrict] = React.useState('');
@@ -37,9 +39,11 @@ const EvaluatedIdea = () => {
     );
     const statusdata = ['Accepted', 'Rejected', 'Both'];
 
-    // React.useEffect(() => {
-    //     dispatch(getL1EvaluatedIdea(filterParams));
-    // }, [reason, district, sdg, status]);
+    React.useEffect(() => {
+        if(status &&(status === 'Accepted')){
+            setReason('');
+        }
+    }, [status]);
     const [levelName, setLevelName]=React.useState('');
     const [evalSchema, setEvalSchema]=React.useState('');
     
@@ -55,7 +59,8 @@ const EvaluatedIdea = () => {
     }, []);
 
     const handleclickcall = () => {
-        dispatch(getL1EvaluatedIdea(filterParams));
+        setshowspin(true);
+        dispatch(getL1EvaluatedIdea(filterParams,setshowspin));
     };
     const levelparam = levelName === 'L1' ? '?level=L1' : '?evaluation_status=SELECTEDROUND1&level=L2';
     const statusparam =
@@ -65,16 +70,9 @@ const EvaluatedIdea = () => {
             : '';
     const districtparam =
         district && district !== 'All Districts'
-            ? statusparam !== ''
-                ? '&district=' + district
-                : '?district=' + district
-            : '';
+            ? '&district=' + district : '';
     const sdgparam =
-        sdg && sdg !== 'ALL'
-            ? districtparam !== ''
-                ? '&sdg=' + sdg
-                : '?sdg=' + sdg
-            : '';
+        sdg && sdg !== 'ALL' ? '&sdg=' + sdg: '';
     const filterParams =
         levelparam +
         statusparam +
@@ -202,6 +200,7 @@ const EvaluatedIdea = () => {
             setIdeaDetails(evaluatedIdeaList[currentRow]);
             setIsDetail(true);
             setCurrentRow(currentRow-1);
+            
         }
     };
 
@@ -282,8 +281,13 @@ const EvaluatedIdea = () => {
                                 </Container>
                             </div>
                         )}
-
-                        {!isDetail ? (
+                        {
+                        showspin && <div className='text-center mt-5'>
+                        <Spinner animation="border" variant="secondary"/>
+                        </div>
+                        }
+                        {!showspin && (
+                        !isDetail ? (
                             <div className="bg-white border card pt-3 mt-5">
                                 <DataTableExtensions
                                     print={false}
@@ -316,7 +320,7 @@ const EvaluatedIdea = () => {
                                 currentRow={currentRow}
                                 dataLength={evaluatedIdeaList && evaluatedIdeaList?.length}
                             />
-                        )}
+                        ))}
                     </div>
                 </div>
             </div>

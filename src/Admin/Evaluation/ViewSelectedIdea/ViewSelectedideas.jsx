@@ -11,7 +11,7 @@ import axios from 'axios';
 import { KEY, URL } from '../../../constants/defaultValues';
 import { Button } from '../../../stories/Button';
 import Select from '../Pages/Select';
-import { Col, Container, Row } from 'reactstrap';
+import { Col, Container, Row} from 'reactstrap';
 import { cardData } from '../../../Student/Pages/Ideas/SDGData.js';
 import { useSelector } from 'react-redux';
 import { getDistrictData } from '../../../redux/studentRegistration/actions';
@@ -20,6 +20,7 @@ import { ReasonsOptions } from '../../../Evaluator/Admin/Pages/ReasonForRejectio
 import { getNormalHeaders } from '../../../helpers/Utils';
 import { getAdminEvalutorsList } from '../../store/adminEvalutors/actions';
 import { getAdminList } from '../../store/admin/actions';
+import { Spinner } from 'react-bootstrap';
 
 const ViewSelectedIdea = () => {
     const { search } = useLocation();
@@ -39,6 +40,7 @@ const ViewSelectedIdea = () => {
     const [evalname,setevalname] = React.useState('');
     const [currentRow, setCurrentRow]= React.useState(1);
     const [tablePage, setTablePage]=React.useState(1);
+    const [showspin,setshowspin]=React.useState(false);
 
     const SDGDate = cardData.map((i) => {
         return i.goal_title;
@@ -82,6 +84,7 @@ const ViewSelectedIdea = () => {
     // }, [reason, district, sdg]);
 
     const handleclickcall = () => {
+        setshowspin(true);
         handleideaList();
     };
 
@@ -96,10 +99,12 @@ const ViewSelectedIdea = () => {
                          return upd;
                      });
                      settableData(updatedWithKey && updatedWithKey);
+                     setshowspin(false);
                 }
             })
             .catch(function (error) {
                 console.log(error);
+                setshowspin(false);
             });
     }
     const evaluatedIdea = {
@@ -376,8 +381,13 @@ const ViewSelectedIdea = () => {
                                 </Container>
                             </div>
                         )}
-
-                        {!isDetail ? (
+                        {
+                        showspin && <div className='text-center mt-5'>
+                        <Spinner animation="border" variant="secondary"/>
+                        </div>
+                        }
+                        {!showspin && 
+                        (!isDetail ? (
                             <div className="bg-white border card pt-3 mt-5">
                                 <DataTableExtensions
                                     print={false}
@@ -410,7 +420,7 @@ const ViewSelectedIdea = () => {
                                 currentRow={currentRow}
                                 dataLength={tableData && tableData?.length}
                             />
-                        )}
+                        ))}
                     </div>
                 </div>
             </div>

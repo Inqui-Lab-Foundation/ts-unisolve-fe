@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 import { getDistrictData } from '../../redux/studentRegistration/actions';
 import { useDispatch } from 'react-redux';
 import { getNormalHeaders } from '../../helpers/Utils';
+import Spinner from 'react-bootstrap/Spinner';
 
 const ViewSelectedIdea = () => {
     const dispatch = useDispatch();
@@ -28,6 +29,7 @@ const ViewSelectedIdea = () => {
     const [tablePage, setTablePage]=React.useState(1);
     // eslint-disable-next-line no-unused-vars
     const [btnDisabler, setBtnDisabler]=React.useState(false);
+    const [showspin,setshowspin]=React.useState(false);
 
     const SDGDate = cardData.map((i) => {
         return i.goal_title;
@@ -47,6 +49,7 @@ const ViewSelectedIdea = () => {
     }, []);
 
     const handleclickcall = () => {
+        setshowspin(true);
         handleideaList();
     };
 
@@ -65,11 +68,12 @@ const ViewSelectedIdea = () => {
                         return upd;
                     });
                     settableData(updatedWithKey && updatedWithKey);
-                
+                    setshowspin(false);
                 }
             })
             .catch(function (error) {
                 console.log(error);
+                setshowspin(false);
             });
     }
 
@@ -201,8 +205,13 @@ const ViewSelectedIdea = () => {
                                 </Container>
                             </div>
                         )}
-
-                        {!isDetail ? (
+                        {
+                        showspin && <div className='text-center mt-5'>
+                        <Spinner animation="border" variant="secondary"/>
+                        </div>
+                        }
+                        {!showspin && 
+                        (!isDetail ? (
                             <div className="bg-white border card pt-3 mt-5">
                                 <DataTableExtensions
                                     print={false}
@@ -238,7 +247,7 @@ const ViewSelectedIdea = () => {
                                 currentRow={currentRow}
                                 dataLength={tableData && tableData?.length}
                             />
-                        )}
+                        ))}
                     </div>
                 </div>
             </div>
