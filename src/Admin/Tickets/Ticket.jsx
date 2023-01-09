@@ -350,6 +350,27 @@ const TicketsPage = () => {
                                     </DataTableExtensions>
                                 </div>
                             </TabPane>
+                            <TabPane tab="Invalid" key="5">
+                                <div className="my-2">
+                                    <DataTableExtensions
+                                        print={false}
+                                        export={false}
+                                        {...allData}
+                                        exportHeaders
+                                    >
+                                        <DataTable
+                                            data={rows}
+                                            // noHeader
+                                            defaultSortField="id"
+                                            defaultSortAsc={false}
+                                            pagination
+                                            highlightOnHover
+                                            fixedHeader
+                                            subHeaderAlign={Alignment.Center}
+                                        />
+                                    </DataTableExtensions>
+                                </div>
+                            </TabPane>
                         </Tabs>
                     </div>
                 </Row>
