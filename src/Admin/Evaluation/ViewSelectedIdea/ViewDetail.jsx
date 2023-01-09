@@ -225,7 +225,7 @@ const handleReject=()=>{
                             <div className="level-status-card card border p-md-5 p-3 mb-3 me-lg-0 me-md-3">
                                    
                                 {props?.ideaDetails?.evaluation_status ? <p className={`${props?.ideaDetails?.evaluation_status=='SELECTEDROUND1'?'text-success':'text-danger'} fs-3 fw-bold text-center`}>
-                                    <span className='fs-3 text-dark'>L1: </span>{props?.ideaDetails?.evaluation_status=='SELECTEDROUND1'?'Accepted':'Rejected'}
+                                    <span className='fs-3 text-info'>L1: </span>{props?.ideaDetails?.evaluation_status=='SELECTEDROUND1'?'Accepted':'Rejected'}
                                 </p> : ''}
                                 
                     
@@ -244,7 +244,8 @@ const handleReject=()=>{
                                         <span className='text-bold'>Rejected Reason: </span> {props?.ideaDetails?.rejected_reason || ''}
                                     </p>
                                 }
-                                {props?.ideaDetails?.evaluation_status 
+                                {(props?.ideaDetails?.evaluator_ratings.length===0) &&
+                                (props?.ideaDetails?.evaluation_status 
                                 ? 
                                             props?.ideaDetails?.evaluation_status=='SELECTEDROUND1' ?
                                             <button
@@ -286,8 +287,42 @@ const handleReject=()=>{
                                             }}
                                         >
                                             <span className="fs-4">Accept</span>
-                                </button></>}
+                                </button></>)}
                             </div>
+                            {props?.ideaDetails?.evaluator_ratings.length > 0 && (
+                                props?.ideaDetails?.evaluator_ratings.map((item,i) => (
+                                    <div className="level-status-card card border p-md-5 p-3 mb-3 me-lg-0 me-md-3" key={i}>
+                                    <p className='text-center fs-3 fw-bold'>
+                                    <span className='fs-2 text-info'>{item.level} - </span> <span className='fs-3'>Overall Rating: </span>{item.overall}
+                                    </p>
+                                    <p className='text-center'>
+                                        <span className='text-bold'>Evaluated By: </span> {item.rated_evaluated_name}
+                                    </p>
+                                    <p className='text-center'>
+                                        <span className='text-bold'>Evaluated At: </span> {moment(item.created_by).format('DD-MM-YY h:mm:ss a')|| ''}
+                                    </p>
+                                    <p className='text-center'>
+                                        <span className='text-bold'>Novelity Score: </span>{item.param_1} 
+                                    </p>
+                                    <p className='text-center'>
+                                        <span className='text-bold'>Usefulness Score: </span>{item.param_2} 
+                                    </p>
+                                    <p className='text-center'>
+                                        <span className='text-bold'>Feasability Score: </span>{item.param_3} 
+                                    </p>
+                                    <p className='text-center'>
+                                        <span className='text-bold'>Scalability Score: </span>{item.param_4} 
+                                    </p>
+                                    <p className='text-center'>
+                                        <span className='text-bold'>Sustainability Score: </span>{item.param_5}  
+                                    </p>
+                                    <p className='text-center'>
+                                        <span className='text-bold'>Comments: </span>{item.comments}
+                                    </p>
+                                </div>
+                                ))
+                            )}
+                            
                         </div>
                         
                         

@@ -36,12 +36,12 @@ const eadmindashboard = () => {
 
     return (
         <Layout>
-            <div className="container dashboard-wrapper mt-5 mb-50">
+            <div className="container dashboard-wrapper mt-5 mb-5">
                 <h2 className="mb-5">Evaluation</h2>
                 <div className="dashboard">
                     <Container>
                         <Row>
-                            <Col lg={4} md={6}>
+                            <Col>
                                 <Link to="/admin/challenges">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-primary">
@@ -53,8 +53,10 @@ const eadmindashboard = () => {
                                     </Card>
                                 </Link>
                             </Col>
-                            <Col lg={4} md={6}>
-                                <Link to="/admin/evaluationStatus/viewlist?evaluation_status=SELECTEDROUND1&title=Accepted">
+                        </Row>
+                        <Row>
+                            <Col lg={6} md={6}>
+                                <Link to="/admin/evaluationStatus/viewlist?evaluation_status=SELECTEDROUND1&title=Accepted&level=L1">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-success">ACCEPTED</b>
                                         <h3 className="display-5 bold m-2">
@@ -63,12 +65,38 @@ const eadmindashboard = () => {
                                     </Card>
                                 </Link>
                             </Col>
-                            <Col lg={4} md={6}>
-                                <Link to="/admin/evaluationStatus/viewlist?evaluation_status=REJECTEDROUND1&title=Rejected">
+                            <Col lg={6} md={6}>
+                                <Link to="/admin/evaluationStatus/viewlist?evaluation_status=REJECTEDROUND1&title=Rejected&level=L1">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-danger">REJECTED</b>
                                         <h3 className="display-5 bold m-2">
                                             {dateCount.rejected_round_one_count}
+                                        </h3>
+                                    </Card>
+                                </Link>
+                            </Col>
+                        </Row>
+                        <Row className="mt-5">
+                            <Col lg={6} md={6}>
+                                <Link to="/admin/evaluationStatus/viewlist?evaluation_status=SELECTEDROUND1&level=L2&title=L2 PROCESSED&level=L2">
+                                    <Card className="p-4 text-center card-effect mb-3">
+                                        <b className="text-success">
+                                            L2 PROCESSED
+                                        </b>
+                                        <h3 className="display-5 bold m-2">
+                                            {dateCount.l2_processed}
+                                        </h3>
+                                    </Card>
+                                </Link>
+                            </Col>
+                            <Col lg={6} md={6}>
+                                <Link to="/admin/evaluationStatus/viewlist?evaluation_status=SELECTEDROUND1&level=L2&title=L2 YET TO PROCESSED&level=L2">
+                                    <Card className="p-4 text-center card-effect mb-3">
+                                        <b className="text-warning">
+                                            L2 YET TO PROCESSED
+                                        </b>
+                                        <h3 className="display-5 bold m-2">
+                                            {dateCount.l2_yet_to_processed}
                                         </h3>
                                     </Card>
                                 </Link>
