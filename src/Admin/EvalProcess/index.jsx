@@ -31,7 +31,7 @@ const evalprocess = () => {
         };
         await axios(config)
             .then(function (response) {
-                console.log(response);
+                // console.log(response);
                 if (response.status === 200) {
                     setEvalList(
                         response.data &&
@@ -87,7 +87,7 @@ const evalprocess = () => {
         };
         axios(config)
             .then(function (response) {
-                console.log(response);
+                // console.log(response);
                 if (response.status === 200) {
                     handleEvalList();
 

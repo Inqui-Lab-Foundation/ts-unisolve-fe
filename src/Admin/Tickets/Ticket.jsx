@@ -69,7 +69,6 @@ const TicketsPage = () => {
         };
         await axios(config)
             .then(function (response) {
-                console.log(response);
                 if (response.status === 200) {
                     setAllTicketResponse(
                         response.data.data[0] &&
@@ -94,7 +93,6 @@ const TicketsPage = () => {
         };
         await axios(config)
             .then(function (response) {
-                console.log(response);
                 if (response.status === 200) {
                     setAllTicketResponse(
                         response.data.data[0] &&
@@ -119,7 +117,6 @@ const TicketsPage = () => {
         };
         await axios(config)
             .then(function (response) {
-                console.log(response);
                 if (response.status === 200) {
                     setAllTicketResponse(
                         response.data.data[0] &&
@@ -144,7 +141,6 @@ const TicketsPage = () => {
         };
         await axios(config)
             .then(function (response) {
-                console.log(response);
                 if (response.status === 200) {
                     setAllTicketResponse(
                         response.data.data[0] &&
