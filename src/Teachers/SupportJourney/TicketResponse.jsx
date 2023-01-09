@@ -33,7 +33,6 @@ const TicketResponse = (props) => {
     const id = new URLSearchParams(search).get('id');
     const { supportTicket } = useSelector((state) => state.mentors);
     const language = useSelector((state) => state?.mentors.mentorLanguage);
-    console.log(supportTicket);
     // const {supportTicketRespnses} = useSelector(state=>state.mentors);
 
     const dispatch = useDispatch();
