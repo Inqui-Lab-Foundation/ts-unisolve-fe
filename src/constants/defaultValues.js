@@ -51,6 +51,7 @@ export const URL = {
     updateMobile: process.env.REACT_APP_API_BASE_URL + '/mentors/updateMobile',
     updateMentor: process.env.REACT_APP_API_BASE_URL + '/mentors/update',
     updateMentorStatus: process.env.REACT_APP_API_BASE_URL + '/mentors',
+    updateAdminStatus: process.env.REACT_APP_API_BASE_URL + '/admins',
     updateStudentStatus: process.env.REACT_APP_API_BASE_URL + '/students',
     putAdminQuizResponce: process.env.REACT_APP_API_BASE_URL + '/quiz/',
     //

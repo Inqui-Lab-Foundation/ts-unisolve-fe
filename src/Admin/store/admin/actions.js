@@ -35,7 +35,7 @@ export const getAdmin = () => async (dispatch) => {
         dispatch({ type: GET_ADMINS });
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         const result = await axios
-            .get(`${URL.getAdmin}`, axiosConfig)
+            .get(`${URL.getAdmin + '?status= ALL'}`, axiosConfig)
             .then((user) => user)
             .catch((err) => {
                 return err.response;
