@@ -500,7 +500,7 @@ const Dashboard = () => {
                                         </button>
                                     </div>
 
-                                    <div className="mb-5 p-3" ref={pdfRef}>
+                                    <div className="mb-5 p-3">
                                         <div className="container-fluid card shadow border">
                                             <div className="row">
                                                 <div className="col">

@@ -67,7 +67,7 @@ const ViewSelectedIdea = () => {
         Allevalnamelist.push(i.user.full_name);
     });
     
-    const dataParam = level!=='L1' ? `evaluation_status=${evaluation_status}` : 'evaluation_status=' + evaluation_status;
+    const dataParam = level!=='L1' ? `&evaluation_status=${evaluation_status}` : '&evaluation_status=' + evaluation_status;
     const filterParams =
         (district && district !== 'All Districts' ? '&district=' + district : '') +
         (sdg && sdg !== 'ALL' ? '&sdg=' + sdg : '') +
@@ -91,7 +91,7 @@ const ViewSelectedIdea = () => {
     async function handleideaList() {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         await axios
-            .get(`${URL.getidealist}${dataParam}${filterParams}`, axiosConfig)
+            .get(`${URL.getidealist}level=${level}${dataParam}${filterParams}`, axiosConfig)
             .then(function (response) {
                 if (response.status === 200) {
                     const updatedWithKey = response.data && response.data.data[0] && response.data.data[0].dataValues.map((item, i) => {
