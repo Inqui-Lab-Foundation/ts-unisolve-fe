@@ -5,6 +5,7 @@ import { Button } from '../../stories/Button';
 import LinkComponent from '../IdeaList/LinkComponent';
 import moment from 'moment';
 import { getCurrentUser } from '../../helpers/Utils';
+import RatedDetailCard from './RatedDetailCard';
 
 const EvaluatedIdeaDetail = (props) => {
     const [teamResponse, setTeamResponse] = React.useState([]);
@@ -148,32 +149,36 @@ const EvaluatedIdeaDetail = (props) => {
                                 }
                             </div>
                             {levelName !== 'L1' && ( 
-                                <div className="level-status-card card border p-md-5 p-3 mb-3 me-lg-0 me-md-3">
-                                <p className='text-center fs-3 fw-bold'>
-                                <span className='fs-2 text-info'>{props?.ideaDetails?.evaluator_ratings[0]?.level} - </span> <span className='fs-3'>Overall Rating: </span>{props?.ideaDetails?.evaluator_ratings[0]?.overall}
-                                </p>
-                                <p className='text-center'>
-                                    <span className='text-bold'>Evaluated At: </span> {moment(props?.ideaDetails?.evaluator_ratings[0]?.created_at).format('DD-MM-YY h:mm:ss a')|| ''}
-                                </p>
-                                <p className='text-center'>
-                                    <span className='text-bold'>Novelity Score: </span> {props?.ideaDetails?.evaluator_ratings[0]?.param_1}
-                                </p>
-                                <p className='text-center'>
-                                    <span className='text-bold'>Usefulness Score: </span> {props?.ideaDetails?.evaluator_ratings[0]?.param_2}
-                                </p>
-                                <p className='text-center'>
-                                    <span className='text-bold'>Feasability Score: </span> {props?.ideaDetails?.evaluator_ratings[0]?.param_3}
-                                </p>
-                                <p className='text-center'>
-                                    <span className='text-bold'>Scalability Score: </span> {props?.ideaDetails?.evaluator_ratings[0]?.param_4}
-                                </p>
-                                <p className='text-center'>
-                                    <span className='text-bold'>Sustainability Score: </span> {props?.ideaDetails?.evaluator_ratings[0]?.param_5}
-                                </p>
-                                <p className='text-center'>
-                                    <span className='text-bold'>Comments: </span>{props?.ideaDetails?.evaluator_ratings[0]?.comments} 
-                                </p>
-                            </div>)}
+                            //     <div className="level-status-card card border p-md-5 p-3 mb-3 me-lg-0 me-md-3">
+                            //     <p className='text-center fs-3 fw-bold'>
+                            //     <span className='fs-2 text-info'>{props?.ideaDetails?.evaluator_ratings[0]?.level} - </span> <span className='fs-3'>Overall Rating: </span>{props?.ideaDetails?.evaluator_ratings[0]?.overall}
+                            //     </p>
+                            //     <p className='text-center'>
+                            //         <span className='text-bold'>Evaluated At: </span> {moment(props?.ideaDetails?.evaluator_ratings[0]?.created_at).format('DD-MM-YY h:mm:ss a')|| ''}
+                            //     </p>
+                            //     <p className='text-center'>
+                            //         <span className='text-bold'>Novelity Score: </span> {props?.ideaDetails?.evaluator_ratings[0]?.param_1}
+                            //     </p>
+                            //     <p className='text-center'>
+                            //         <span className='text-bold'>Usefulness Score: </span> {props?.ideaDetails?.evaluator_ratings[0]?.param_2}
+                            //     </p>
+                            //     <p className='text-center'>
+                            //         <span className='text-bold'>Feasability Score: </span> {props?.ideaDetails?.evaluator_ratings[0]?.param_3}
+                            //     </p>
+                            //     <p className='text-center'>
+                            //         <span className='text-bold'>Scalability Score: </span> {props?.ideaDetails?.evaluator_ratings[0]?.param_4}
+                            //     </p>
+                            //     <p className='text-center'>
+                            //         <span className='text-bold'>Sustainability Score: </span> {props?.ideaDetails?.evaluator_ratings[0]?.param_5}
+                            //     </p>
+                            //     <p className='text-center'>
+                            //         <span className='text-bold'>Comments: </span>{props?.ideaDetails?.evaluator_ratings[0]?.comments} 
+                            //     </p>
+                            // </div>
+                            <RatedDetailCard 
+                                details={props?.ideaDetails}
+                            />
+                            )}
                         </div>
                         
                         

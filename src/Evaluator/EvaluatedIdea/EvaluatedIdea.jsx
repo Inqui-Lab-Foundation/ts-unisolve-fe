@@ -33,7 +33,7 @@ const EvaluatedIdea = () => {
     const SDGDate = cardData.map((i) => {
         return i.goal_title;
     });
-    SDGDate.push('ALL');
+    SDGDate.unshift('ALL SDGs');
     const fullDistrictsNames = useSelector(
         (state) => state?.studentRegistration?.dists
     );
@@ -72,7 +72,7 @@ const EvaluatedIdea = () => {
         district && district !== 'All Districts'
             ? '&district=' + district : '';
     const sdgparam =
-        sdg && sdg !== 'ALL' ? '&sdg=' + sdg: '';
+        sdg && sdg !== 'ALL SDGs' ? '&sdg=' + sdg: '';
     const filterParams =
         levelparam +
         statusparam +
