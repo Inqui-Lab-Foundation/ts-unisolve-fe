@@ -45,7 +45,7 @@ const ViewSelectedIdea = () => {
     const SDGDate = cardData.map((i) => {
         return i.goal_title;
     });
-    SDGDate.push('ALL');
+    SDGDate.unshift('ALL SDGs');
     const fullDistrictsNames = useSelector(
         (state) => state?.studentRegistration?.dists
     );
@@ -70,7 +70,7 @@ const ViewSelectedIdea = () => {
     const dataParam = level!=='L1' ? `&evaluation_status=${evaluation_status}` : '&evaluation_status=' + evaluation_status;
     const filterParams =
         (district && district !== 'All Districts' ? '&district=' + district : '') +
-        (sdg && sdg !== 'ALL' ? '&sdg=' + sdg : '') +
+        (sdg && sdg !== 'ALL SDGs' ? '&sdg=' + sdg : '') +
         (reason && '&rejected_reason=' + reason) + (evalname && '&evaluator_id=' + Allevalobj[evalname]);
 
     useEffect(() => {
