@@ -57,7 +57,7 @@ const ViewSelectedIdea = () => {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         await axios
             .get(
-                `${URL.getidealist}status=SUBMITTED${filterParams}`,
+                `${URL.getidealist}level=L1&status=SUBMITTED${filterParams}`,
                 axiosConfig
             )
             .then(function (response) {
