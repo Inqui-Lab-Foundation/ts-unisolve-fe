@@ -9,12 +9,14 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Modal } from 'react-bootstrap';
 import axios from 'axios';
 import Select from '../Pages/Select';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 //import { useDispatch } from 'react-redux';
 
 const ViewDetail = (props) => {
     //const dispatch = useDispatch();
     const history = useHistory();
+    const { search } = useLocation();
+    const level = new URLSearchParams(search).get('level');
     const currentUser = getCurrentUser('current_user');
     const [teamResponse, setTeamResponse] = React.useState([]);
     const [isReject, setIsreject]=React.useState(false);
@@ -244,7 +246,7 @@ const handleReject=()=>{
                                         <span className='text-bold'>Rejected Reason: </span> {props?.ideaDetails?.rejected_reason || ''}
                                     </p>
                                 }
-                                {(props?.ideaDetails?.evaluator_ratings.length===0) &&
+                                {(level==='L1') &&
                                 (props?.ideaDetails?.evaluation_status 
                                 ? 
                                             props?.ideaDetails?.evaluation_status=='SELECTEDROUND1' ?
@@ -289,7 +291,7 @@ const handleReject=()=>{
                                             <span className="fs-4">Accept</span>
                                 </button></>)}
                             </div>
-                            {props?.ideaDetails?.evaluator_ratings.length > 0 && (
+                            {level!=='L1' && (
                                 props?.ideaDetails?.evaluator_ratings.map((item,i) => (
                                     <div className="level-status-card card border p-md-5 p-3 mb-3 me-lg-0 me-md-3" key={i}>
                                     <p className='text-center fs-3 fw-bold'>
