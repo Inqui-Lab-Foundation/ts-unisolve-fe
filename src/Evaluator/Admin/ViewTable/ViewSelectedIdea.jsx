@@ -67,7 +67,7 @@ const ViewSelectedIdea = () => {
 
     const level0Param =  level0 ==='L0' ? 'status='+status:'';
     const levelParm = level ? 'level='+level : '';
-    const dataParam = level==='L1'? '&evaluation_status='+evaluation_status : title==='L2 YET TO PROCESSED' ? '&yetToProcessList=true': '';
+    const dataParam = level==='L1'? '&evaluation_status='+evaluation_status : title==='L2 - Yet to Processed' ? '&yetToProcessList=true': '';
     const filterParams =
         (district && district !== 'All Districts' ? '&district=' + district : '') +
         (sdg && sdg !== 'ALL SDGs' ? '&sdg=' + sdg : '') +
@@ -88,7 +88,7 @@ const ViewSelectedIdea = () => {
     async function handleideaList() {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         await axios
-            .get(title === 'FINAl'? `${URL.getidealistfinal}${filterParamsfinal}` :`${URL.getidealist}${level0Param}${levelParm}${dataParam}${filterParams}`, axiosConfig)
+            .get(title === 'Final'? `${URL.getidealistfinal}${filterParamsfinal}` :`${URL.getidealist}${level0Param}${levelParm}${dataParam}${filterParams}`, axiosConfig)
             .then(function (response) {
                 if (response.status === 200) {
                     const updatedWithKey = response.data && response.data.data[0] && response.data.data[0].dataValues.map((item, i) => {
@@ -440,7 +440,7 @@ const ViewSelectedIdea = () => {
                     <div className="col-12 p-0">
                         {!isDetail && (
                             <div>
-                                <h2 className="ps-2 pb-3">{title} Ideas</h2>
+                                <h2 className="ps-2 pb-3">{title} Challenges</h2>
 
                                 <Container fluid className='px-0'>
                                     <Row className='align-items-center'>

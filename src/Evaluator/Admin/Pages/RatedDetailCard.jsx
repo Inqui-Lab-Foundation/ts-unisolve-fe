@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import React from 'react';
 //import moment from 'moment';
-import {FaStar, FaStarHalf} from 'react-icons/fa';
+//import {FaStar, FaStarHalf} from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 
 const RatedDetailCard = (props) => {
@@ -14,7 +14,7 @@ const RatedDetailCard = (props) => {
     const [feasability, setFeasability] = React.useState(0);
     const [scalability, setScalability] = React.useState(0);
     const [sustainability, setSustainability] = React.useState(0);
-    const [starCount, setStarCount]=React.useState(0);
+    //const [starCount, setStarCount]=React.useState(0);
   
     React.useEffect(()=>{
         if(props?.details?.evaluator_ratings.length>0){
@@ -25,7 +25,7 @@ const RatedDetailCard = (props) => {
         setFeasability(average(props?.details?.evaluator_ratings[0]?.param_3));
         setScalability(average(props?.details?.evaluator_ratings[0]?.param_4));
         setSustainability(average(props?.details?.evaluator_ratings[0]?.param_5));
-        setStarCount(average(props?.details?.evaluator_ratings[0]?.overall) && Number(average(props?.details?.evaluator_ratings[0]?.overall))/2);
+        //setStarCount(average(props?.details?.evaluator_ratings[0]?.overall) && Number(average(props?.details?.evaluator_ratings[0]?.overall))/2);
     }
     },[props]);
   return (
@@ -43,6 +43,11 @@ const RatedDetailCard = (props) => {
               </div>
           </div>
           <div className="row">
+          <div className="col-12">
+                  <p className="fs-1 fw-bold text-center" style={{marginBottom:'5px'}}>
+                      {overAll}
+                  </p>
+              </div>
               <div className="col-12">
                   {/* <div className="alert alert-warning" role="alert">
                       <p className="my-2">
@@ -54,13 +59,9 @@ const RatedDetailCard = (props) => {
                   </div> */}
                   <p className="text-muted my-3 text-center">OverAll Rating</p>
               </div>
-              <div className="col-12">
-                  <p className="fs-1 fw-bold mb-3 mt-1 text-center">
-                      {overAll}
-                  </p>
-              </div>
+              
               {/* --------star logic------ */}
-              <div className="col-12 mb-2">
+              {/* <div className="col-12 mb-2">
                   {starCount > 4.5 ? (
                       <div className="d-flex justify-content-center w-100">
                           <FaStar color="#ffcb34" size={22} />
@@ -126,7 +127,7 @@ const RatedDetailCard = (props) => {
                     <></>
                   )
                   }
-              </div>
+              </div> */}
               {/* ----------------- */}
           </div>
           <div className="row mb-1">

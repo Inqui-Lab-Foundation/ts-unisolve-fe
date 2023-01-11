@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import React from 'react';
 import moment from 'moment';
-import {FaStar, FaStarHalf} from 'react-icons/fa';
+//import {FaStar, FaStarHalf} from 'react-icons/fa';
 
 const RatedDetailCard = (props) => {
     console.warn(props);
@@ -11,7 +11,7 @@ const RatedDetailCard = (props) => {
     const [feasability, setFeasability] = React.useState(0);
     const [scalability, setScalability] = React.useState(0);
     const [sustainability, setSustainability] = React.useState(0);
-    const [starCount, setStarCount]=React.useState(0);
+    //const [starCount, setStarCount]=React.useState(0);
     React.useEffect(()=>{
         setOverAll(props?.details?.evaluator_ratings[0]?.overall);
         setNovelity(props?.details?.evaluator_ratings[0]?.param_1);
@@ -19,7 +19,7 @@ const RatedDetailCard = (props) => {
         setFeasability(props?.details?.evaluator_ratings[0]?.param_3);
         setScalability(props?.details?.evaluator_ratings[0]?.param_4);
         setSustainability(props?.details?.evaluator_ratings[0]?.param_5);
-        setStarCount(props?.details?.evaluator_ratings[0]?.overall && Number(props?.details?.evaluator_ratings[0]?.overall)/2);
+        //setStarCount(props?.details?.evaluator_ratings[0]?.overall && Number(props?.details?.evaluator_ratings[0]?.overall)/2);
     },[props]);
   return (
       <div className="level-status-card card border p-md-5 p-3 mb-3 me-lg-0 me-md-3">
@@ -53,7 +53,7 @@ const RatedDetailCard = (props) => {
                   </p>
               </div>
               {/* --------star logic------ */}
-              <div className="col-12 mb-2">
+              {/* <div className="col-12 mb-2">
                   {starCount > 4.5 ? (
                       <div className="d-flex justify-content-center w-100">
                           <FaStar color="#ffcb34" size={22} />
@@ -119,7 +119,7 @@ const RatedDetailCard = (props) => {
                     <></>
                   )
                   }
-              </div>
+              </div> */}
               {/* ----------------- */}
           </div>
           <div className="row mb-1">
