@@ -45,7 +45,7 @@ const eadmindashboard = () => {
                                 <Link to="/eadmin/listofideas?status=SUBMITTED&title=Submitted&level0=L0">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-primary">
-                                            SUBMITTED IDEAS
+                                            SUBMITTED CHALLENGES
                                         </b>
                                         <h3 className="display-5 bold m-2">
                                             {dateCount.submitted_count}
@@ -57,7 +57,7 @@ const eadmindashboard = () => {
                                 <Link to="/eadmin/listofideas?status=DRAFT&title=Drafted&level0=L0">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-secondary">
-                                            DRAFTED IDEAS
+                                            DRAFT CHALLENGES
                                         </b>
                                         <h3 className="display-5 bold m-2">
                                             {dateCount.draft_count}
@@ -71,7 +71,7 @@ const eadmindashboard = () => {
                                 <Link to="/eadmin/listofideas?evaluation_status=SELECTEDROUND1&title=Accepted&level=L1">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-success">
-                                            ACCEPTED IDEAS
+                                            ACCEPTED CHALLENGES
                                         </b>
                                         <h3 className="display-5 bold m-2">
                                             {dateCount.selected_round_one_count}
@@ -83,7 +83,7 @@ const eadmindashboard = () => {
                                 <Link to="/eadmin/listofideas?evaluation_status=REJECTEDROUND1&title=Rejected&level=L1">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-danger">
-                                            REJECTED IDEAS
+                                            REJECTED CHALLENGES
                                         </b>
                                         <h3 className="display-5 bold m-2">
                                             {dateCount.rejected_round_one_count}
@@ -94,10 +94,10 @@ const eadmindashboard = () => {
                         </Row>
                         <Row className="mb-5">
                             <Col lg={6} md={6}>
-                                <Link to="/eadmin/listofideas?title=L2 PROCESSED&level=L2">
+                                <Link to="/eadmin/listofideas?title=L2 - Processed&level=L2">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-success">
-                                            L2 PROCESSED IDEAS
+                                            L2 - PROCESSED CHALLENGES
                                         </b>
                                         <h3 className="display-5 bold m-2">
                                             {dateCount.l2_processed}
@@ -106,10 +106,10 @@ const eadmindashboard = () => {
                                 </Link>
                             </Col>
                             <Col lg={6} md={6}>
-                                <Link to="/eadmin/listofideas?title=L2 YET TO PROCESSED&level=L2">
+                                <Link to="/eadmin/listofideas?title=L2 - Yet to Processed&level=L2">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-warning">
-                                            L2 YET TO PROCESSED IDEAS
+                                            L2 - YET TO PROCESSED CHALLENGES
                                         </b>
                                         <h3 className="display-5 bold m-2">
                                             {dateCount.l2_yet_to_processed}
@@ -120,10 +120,10 @@ const eadmindashboard = () => {
                         </Row>
                         {/* <Row className="mb-5">
                             <Col>
-                                <Link to="/admin/evaluationStatus/viewlist?title=FINAl">
+                                <Link to="/admin/evaluationStatus/viewlist?title=Final">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-success">
-                                            FINAl IDEAS
+                                            FINAL CHALLENGES
                                         </b>
                                         <h3 className="display-5 bold m-2">
                                             1

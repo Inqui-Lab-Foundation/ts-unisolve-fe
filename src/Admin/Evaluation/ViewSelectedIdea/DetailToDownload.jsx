@@ -8,7 +8,6 @@ const detailToDownload = (props) => {
 
     const average = arr => arr.reduce((p,c) => p+c,0)/arr.length;
   
-    console.log(props?.ideaDetails,"======props?.ideaDetails?");
     return (
         <div className="container bg-light" style={{ minWidth: '1240px' }}>
             <div className="row">

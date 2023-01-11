@@ -21,6 +21,10 @@ import { getNormalHeaders } from '../../../helpers/Utils';
 import { getAdminEvalutorsList } from '../../store/adminEvalutors/actions';
 import { getAdminList } from '../../store/admin/actions';
 import { Spinner } from 'react-bootstrap';
+import jsPDF from 'jspdf';
+import {FaDownload, FaHourglassHalf} from 'react-icons/fa';
+import DetailToDownload from './DetailToDownload';
+import ReactDOMServer from "react-dom/server";
 
 const ViewSelectedIdea = () => {
     const { search } = useLocation();
@@ -67,7 +71,7 @@ const ViewSelectedIdea = () => {
         Allevalnamelist.push(i.user.full_name);
     });
     
-    const dataParam = level==='L1' ? '&evaluation_status=' + evaluation_status : title==='L2 YET TO PROCESSED' ? '&yetToProcessList=true': '';
+    const dataParam = level==='L1' ? '&evaluation_status=' + evaluation_status : title==='L2 - Yet to Processed' ? '&yetToProcessList=true': '';
     const filterParams =
         (district && district !== 'All Districts' ? '&district=' + district : '') +
         (sdg && sdg !== 'ALL SDGs' ? '&sdg=' + sdg : '') +
@@ -92,7 +96,7 @@ const ViewSelectedIdea = () => {
     async function handleideaList() {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         await axios
-            .get(title === 'FINAl'? `${URL.getidealistfinal}${filterParamsfinal}` :`${URL.getidealist}level=${level}${dataParam}${filterParams}`, axiosConfig)
+            .get(title === 'Final'? `${URL.getidealistfinal}${filterParamsfinal}` :`${URL.getidealist}level=${level}${dataParam}${filterParams}`, axiosConfig)
             .then(function (response) {
                 if (response.status === 200) {
                     const updatedWithKey = response.data && response.data.data[0] && response.data.data[0].dataValues.map((item, i) => {
@@ -201,6 +205,28 @@ const ViewSelectedIdea = () => {
         ]
     };
 
+const [pdfLoader, setPdfLoader]=React.useState(false);
+const [teamResponse, setTeamResponse] = React.useState([]);
+const downloadPDF = async(params) => {
+    if (params?.response) {
+                setTeamResponse(
+                    Object.entries(params?.response).map((e) => e[1])
+                );
+            }
+    console.log(teamResponse,"teamResponse");
+    setPdfLoader(true);
+    const content=ReactDOMServer.renderToString(<DetailToDownload ideaDetails={params} teamResponse={teamResponse} level={level}/>);
+    const doc = new jsPDF('p', 'px', [1754, 1240]);
+    await doc.html(content, {
+        pagesplit:true,
+        margin: [8, 8, 8, 8],
+        callback: function (doc) {
+            doc.save('Detail.pdf');
+        }
+    });
+    setPdfLoader(false);
+};
+
     const evaluatedIdeaL2 = {
         data: tableData && tableData.length > 0 ? tableData : [],
         columns: [
@@ -208,7 +234,7 @@ const ViewSelectedIdea = () => {
                 name: 'No',
                 selector: (row) => row.key,
                 sortable: true,
-                width: '9%'
+                width: '10%'
             },
             {
                 name: 'Team Name',
@@ -219,24 +245,27 @@ const ViewSelectedIdea = () => {
             {
                 name: 'SDG',
                 selector: (row) => row.sdg,
-                width: '25%'
+                width: '15%'
             },
             {
                 name: 'Submitted By',
                 selector: (row) => row.initiated_name,
-                width: '23%'
+                width: '25%'
             },
             {
-                name: 'overall',
-                cell :(row) => {
-                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].overall) :' ' :' '];},
-                 width : '15%'
+                name: 'Overall',
+                // cell :(row) => {
+                //     return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].overall) :' ' :' '];},
+                selector: (row) => row.evaluator_ratings[0]?.overall_avg ? row.evaluator_ratings[0]?.overall_avg : '-',
+                 width : '10%',
+                 sortable: true,
             },
 
             {
                 name: 'Actions',
                 cell: (params) => {
                     return [
+                        <>
                         <div className="d-flex" key={params}>
                             <div
                                 className="btn btn-primary btn-lg mr-5 mx-2"
@@ -255,9 +284,17 @@ const ViewSelectedIdea = () => {
                                 View
                             </div>
                         </div>
+                        <div className='mx-2 pointer d-flex align-items-center'>
+                        {
+                            !pdfLoader?
+                            <FaDownload size={22} onClick={()=>{downloadPDF(params);}} className="text-danger"/>:
+                            <FaHourglassHalf size={22} className="text-info"/>
+                        }
+                    </div>
+                    </>
                     ];
                 },
-                width: '8%',
+                width: '20%',
                 left: true
             }
         ]
@@ -378,7 +415,7 @@ const ViewSelectedIdea = () => {
                     <div className="col-12 p-0">
                         {!isDetail && (
                             <div>
-                                <h2 className="ps-2 pb-3">{title} Ideas</h2>
+                                <h2 className="ps-2 pb-3">{title} Challenges</h2>
 
                                 <Container fluid className="px-0">
                                     <Row className="align-items-center">
