@@ -12,6 +12,10 @@ import Select from '../Pages/Select';
 import { useHistory, useLocation } from 'react-router-dom';
 import RatedDetailCard from '../Pages/RatedDetailCard';
 //import { useDispatch } from 'react-redux';
+import jsPDF from 'jspdf';
+import {FaDownload, FaHourglassHalf} from 'react-icons/fa';
+import DetailToDownload from './DetailToDownload';
+import ReactDOMServer from "react-dom/server";
 
 const ViewDetail = (props) => {
     //const dispatch = useDispatch();
@@ -116,6 +120,21 @@ const handleReject=()=>{
     }
 };
 
+const [pdfLoader, setPdfLoader]=React.useState(false);
+const downloadPDF = async() => {
+    setPdfLoader(true);
+    const content=ReactDOMServer.renderToString(<DetailToDownload ideaDetails={props?.ideaDetails} teamResponse={teamResponse} level={level}/>);
+    const doc = new jsPDF('p', 'px', [1754, 1240]);
+    await doc.html(content, {
+        pagesplit:true,
+        margin: [8, 8, 8, 8],
+        callback: function (doc) {
+            doc.save('Detail.pdf');
+        }
+    });
+    setPdfLoader(false);
+};
+
   return (
     <div>
         {teamResponse && teamResponse?.length > 0 ? (
@@ -165,10 +184,17 @@ const handleReject=()=>{
                                             disabled={props?.dataLength==props?.currentRow}
                                         />
                                     </div>
+                                    <div className='mx-2 pointer d-flex align-items-center'>
+                                        {
+                                            !pdfLoader?
+                                            <FaDownload size={22} onClick={()=>{downloadPDF();}}/>:
+                                            <FaHourglassHalf size={22}/>
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
+                        
                         <div className="col-lg-8 order-lg-0 order-1 p-0 h-100">
                             {teamResponse?.map((item, index) => {
                                 return (
