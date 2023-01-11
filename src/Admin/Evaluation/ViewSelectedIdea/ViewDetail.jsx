@@ -11,6 +11,10 @@ import axios from 'axios';
 import Select from '../Pages/Select';
 import { useHistory, useLocation } from 'react-router-dom';
 //import { useDispatch } from 'react-redux';
+import jsPDF from 'jspdf';
+import {FaDownload, FaHourglassHalf} from 'react-icons/fa';
+import DetailToDownload from './DetailToDownload';
+import ReactDOMServer from "react-dom/server";
 
 const ViewDetail = (props) => {
     //const dispatch = useDispatch();
@@ -115,6 +119,21 @@ const handleReject=()=>{
     }
 };
 
+const [pdfLoader, setPdfLoader]=React.useState(false);
+const downloadPDF = async() => {
+    setPdfLoader(true);
+    const content=ReactDOMServer.renderToString(<DetailToDownload ideaDetails={props?.ideaDetails} teamResponse={teamResponse} level={level}/>);
+    const doc = new jsPDF('p', 'px', [1754, 1240]);
+    await doc.html(content, {
+        pagesplit:true,
+        margin: [8, 8, 8, 8],
+        callback: function (doc) {
+            doc.save('Detail.pdf');
+        }
+    });
+    setPdfLoader(false);
+};
+
   return (
     <div>
         {teamResponse && teamResponse?.length > 0 ? (
@@ -164,167 +183,174 @@ const handleReject=()=>{
                                             disabled={props?.dataLength==props?.currentRow}
                                         />
                                     </div>
+                                    <div className='mx-2 pointer d-flex align-items-center'>
+                                        {
+                                            !pdfLoader?
+                                            <FaDownload size={22} onClick={()=>{downloadPDF();}}/>:
+                                            <FaHourglassHalf size={22}/>
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        
+                                <div className="col-lg-8 order-lg-0 order-1 p-0 h-100">
+                                    {teamResponse?.map((item, index) => {
+                                        return (
+                                            <div
+                                                key={index}
+                                                className="mb-4 my-3 comment-card px-5 py-3 card me-md-3"
+                                            >
+                                                <div className="question quiz mb-0">
+                                                    <b
+                                                        style={{
+                                                            fontSize: '1.6rem'
+                                                        }}
+                                                    >
+                                                        {item?.question_no || ''}.{' '}
+                                                        {item?.question || ''}
+                                                    </b>
+                                                </div>
+                                                <div className="bg-light rounded p-5">
+                                                    <p
+                                                        style={{
+                                                            fontSize: '1.4rem'
+                                                        }}
+                                                    >
+                                                        {item?.question_type ===
+                                                        'MCQ' ? (
+                                                            item?.selected_option?.map(
+                                                                (data, i) => {
+                                                                    return (
+                                                                        <div key={i}>
+                                                                            {data || ''}
+                                                                        </div>
+                                                                    );
+                                                                }
+                                                            )
+                                                        ) : item?.question_type ===
+                                                            'TEXT' ||
+                                                        item?.question_type ===
+                                                            'MRQ' ? (
+                                                            item?.selected_option
+                                                        ) : item?.question_type ===
+                                                        'DRAW' ? (
+                                                            <LinkComponent
+                                                                item={
+                                                                    item.selected_option
+                                                                }
+                                                            />
+                                                        ) : (
+                                                            ''
+                                                        )}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                                <div className="col-lg-4 order-lg-1 order-0 p-0 h-100 mt-3 status_info_col">
+                                    <div className="level-status-card card border p-md-5 p-3 mb-3 me-lg-0 me-md-3">
+                                        
+                                        {props?.ideaDetails?.evaluation_status ? <p className={`${props?.ideaDetails?.evaluation_status=='SELECTEDROUND1'?'text-success':'text-danger'} fs-3 fw-bold text-center`}>
+                                            <span className='fs-3 text-info'>L1: </span>{props?.ideaDetails?.evaluation_status=='SELECTEDROUND1'?'Accepted':'Rejected'}
+                                        </p> : ''}
+                                        
+                            
+                                        {props?.ideaDetails?.evaluated_name ? <p className='text-center'>
+                                            <span className='text-bold'>Evaluated By: </span> {props?.ideaDetails?.evaluated_name|| ''}
+                                        </p> : '' }
 
-                        <div className="col-lg-8 order-lg-0 order-1 p-0 h-100">
-                            {teamResponse?.map((item, index) => {
-                                return (
-                                    <div
-                                        key={index}
-                                        className="mb-4 my-3 comment-card px-5 py-3 card me-md-3"
+                                        {props?.ideaDetails?.evaluated_at ? <p className='text-center'>
+                                            <span className='text-bold'>Evaluated At: </span> {moment(props?.ideaDetails?.evaluated_at).format('DD-MM-YY h:mm:ss a')|| ''}
+                                        </p>: '' }
+                                        
+                                        {
+                                            props?.ideaDetails?.evaluation_status=='REJECTEDROUND1' && 
+
+                                            <p className="text-center">
+                                                <span className='text-bold'>Rejected Reason: </span> {props?.ideaDetails?.rejected_reason || ''}
+                                            </p>
+                                        }
+                                        {(level==='L1') &&
+                                        (props?.ideaDetails?.evaluation_status 
+                                        ? 
+                                                    props?.ideaDetails?.evaluation_status=='SELECTEDROUND1' ?
+                                                    <button
+                                                                className="btn btn-lg px-5 py-2 btn-danger me-3 rounded-pill"
+                                                                onClick={() => {
+                                                                    // handleAlert('reject');
+                                                                    setIsreject(true);
+                                                                    setReason('');
+                                                                }}
+                                                            >
+                                                                <span className="fs-4">Reject</span>
+                                                            </button>
+                                                    :
+                                                    <button
+                                                                className="btn btn-lg px-5 py-2 btn-success me-3 rounded-pill"
+                                                                onClick={() => {
+                                                                    handleAlert('accept');
+                                                                    setReason('');
+                                                                }}
+                                                            >
+                                                                <span className="fs-4">Accept</span>
+                                                    </button> 
+                                        : 
+                                        <><button
+                                        className="btn btn-lg px-5 py-2 btn-danger me-3 rounded-pill m-2"
+                                        onClick={() => {
+                                            // handleAlert('reject');
+                                            setIsreject(true);
+                                            setReason('');
+                                        }}
                                     >
-                                        <div className="question quiz mb-0">
-                                            <b
-                                                style={{
-                                                    fontSize: '1.6rem'
-                                                }}
-                                            >
-                                                {item?.question_no || ''}.{' '}
-                                                {item?.question || ''}
-                                            </b>
-                                        </div>
-                                        <div className="bg-light rounded p-5">
-                                            <p
-                                                style={{
-                                                    fontSize: '1.4rem'
-                                                }}
-                                            >
-                                                {item?.question_type ===
-                                                'MCQ' ? (
-                                                    item?.selected_option?.map(
-                                                        (data, i) => {
-                                                            return (
-                                                                <div key={i}>
-                                                                    {data || ''}
-                                                                </div>
-                                                            );
-                                                        }
-                                                    )
-                                                ) : item?.question_type ===
-                                                      'TEXT' ||
-                                                  item?.question_type ===
-                                                      'MRQ' ? (
-                                                    item?.selected_option
-                                                ) : item?.question_type ===
-                                                  'DRAW' ? (
-                                                    <LinkComponent
-                                                        item={
-                                                            item.selected_option
-                                                        }
-                                                    />
-                                                ) : (
-                                                    ''
-                                                )}
+                                        <span className="fs-4">Reject</span>
+                                    </button>
+                                    <button
+                                                    className="btn btn-lg px-5 py-2 btn-success me-3 rounded-pill m-2"
+                                                    onClick={() => {
+                                                        handleAlert('accept');
+                                                        setReason('');
+                                                    }}
+                                                >
+                                                    <span className="fs-4">Accept</span>
+                                        </button></>)}
+                                    </div>
+                                    {level!=='L1' && (
+                                        props?.ideaDetails?.evaluator_ratings.map((item,i) => (
+                                            <div className="level-status-card card border p-md-5 p-3 mb-3 me-lg-0 me-md-3" key={i}>
+                                            <p className='text-center fs-3 fw-bold'>
+                                            <span className='fs-2 text-info'>{item.level} - </span> <span className='fs-3'>Overall Rating: </span>{item.overall}
+                                            </p>
+                                            <p className='text-center'>
+                                                <span className='text-bold'>Evaluated By: </span> {item.rated_evaluated_name}
+                                            </p>
+                                            <p className='text-center'>
+                                                <span className='text-bold'>Evaluated At: </span> {moment(item.created_by).format('DD-MM-YY h:mm:ss a')|| ''}
+                                            </p>
+                                            <p className='text-center'>
+                                                <span className='text-bold'>Novelity Score: </span>{item.param_1} 
+                                            </p>
+                                            <p className='text-center'>
+                                                <span className='text-bold'>Usefulness Score: </span>{item.param_2} 
+                                            </p>
+                                            <p className='text-center'>
+                                                <span className='text-bold'>Feasability Score: </span>{item.param_3} 
+                                            </p>
+                                            <p className='text-center'>
+                                                <span className='text-bold'>Scalability Score: </span>{item.param_4} 
+                                            </p>
+                                            <p className='text-center'>
+                                                <span className='text-bold'>Sustainability Score: </span>{item.param_5}  
+                                            </p>
+                                            <p className='text-center'>
+                                                <span className='text-bold'>Comments: </span>{item.comments}
                                             </p>
                                         </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                        <div className="col-lg-4 order-lg-1 order-0 p-0 h-100 mt-3 status_info_col">
-                            <div className="level-status-card card border p-md-5 p-3 mb-3 me-lg-0 me-md-3">
-                                   
-                                {props?.ideaDetails?.evaluation_status ? <p className={`${props?.ideaDetails?.evaluation_status=='SELECTEDROUND1'?'text-success':'text-danger'} fs-3 fw-bold text-center`}>
-                                    <span className='fs-3 text-info'>L1: </span>{props?.ideaDetails?.evaluation_status=='SELECTEDROUND1'?'Accepted':'Rejected'}
-                                </p> : ''}
-                                
-                    
-                                {props?.ideaDetails?.evaluated_name ? <p className='text-center'>
-                                    <span className='text-bold'>Evaluated By: </span> {props?.ideaDetails?.evaluated_name|| ''}
-                                </p> : '' }
-
-                                {props?.ideaDetails?.evaluated_at ? <p className='text-center'>
-                                    <span className='text-bold'>Evaluated At: </span> {moment(props?.ideaDetails?.evaluated_at).format('DD-MM-YY h:mm:ss a')|| ''}
-                                </p>: '' }
-                                
-                                {
-                                    props?.ideaDetails?.evaluation_status=='REJECTEDROUND1' && 
-
-                                    <p className="text-center">
-                                        <span className='text-bold'>Rejected Reason: </span> {props?.ideaDetails?.rejected_reason || ''}
-                                    </p>
-                                }
-                                {(level==='L1') &&
-                                (props?.ideaDetails?.evaluation_status 
-                                ? 
-                                            props?.ideaDetails?.evaluation_status=='SELECTEDROUND1' ?
-                                            <button
-                                                        className="btn btn-lg px-5 py-2 btn-danger me-3 rounded-pill"
-                                                        onClick={() => {
-                                                            // handleAlert('reject');
-                                                            setIsreject(true);
-                                                            setReason('');
-                                                        }}
-                                                    >
-                                                        <span className="fs-4">Reject</span>
-                                                    </button>
-                                            :
-                                            <button
-                                                        className="btn btn-lg px-5 py-2 btn-success me-3 rounded-pill"
-                                                        onClick={() => {
-                                                            handleAlert('accept');
-                                                            setReason('');
-                                                        }}
-                                                    >
-                                                        <span className="fs-4">Accept</span>
-                                            </button> 
-                                : 
-                                <><button
-                                className="btn btn-lg px-5 py-2 btn-danger me-3 rounded-pill m-2"
-                                onClick={() => {
-                                    // handleAlert('reject');
-                                    setIsreject(true);
-                                    setReason('');
-                                }}
-                            >
-                                <span className="fs-4">Reject</span>
-                            </button>
-                            <button
-                                            className="btn btn-lg px-5 py-2 btn-success me-3 rounded-pill m-2"
-                                            onClick={() => {
-                                                handleAlert('accept');
-                                                setReason('');
-                                            }}
-                                        >
-                                            <span className="fs-4">Accept</span>
-                                </button></>)}
-                            </div>
-                            {level!=='L1' && (
-                                props?.ideaDetails?.evaluator_ratings.map((item,i) => (
-                                    <div className="level-status-card card border p-md-5 p-3 mb-3 me-lg-0 me-md-3" key={i}>
-                                    <p className='text-center fs-3 fw-bold'>
-                                    <span className='fs-2 text-info'>{item.level} - </span> <span className='fs-3'>Overall Rating: </span>{item.overall}
-                                    </p>
-                                    <p className='text-center'>
-                                        <span className='text-bold'>Evaluated By: </span> {item.rated_evaluated_name}
-                                    </p>
-                                    <p className='text-center'>
-                                        <span className='text-bold'>Evaluated At: </span> {moment(item.created_by).format('DD-MM-YY h:mm:ss a')|| ''}
-                                    </p>
-                                    <p className='text-center'>
-                                        <span className='text-bold'>Novelity Score: </span>{item.param_1} 
-                                    </p>
-                                    <p className='text-center'>
-                                        <span className='text-bold'>Usefulness Score: </span>{item.param_2} 
-                                    </p>
-                                    <p className='text-center'>
-                                        <span className='text-bold'>Feasability Score: </span>{item.param_3} 
-                                    </p>
-                                    <p className='text-center'>
-                                        <span className='text-bold'>Scalability Score: </span>{item.param_4} 
-                                    </p>
-                                    <p className='text-center'>
-                                        <span className='text-bold'>Sustainability Score: </span>{item.param_5}  
-                                    </p>
-                                    <p className='text-center'>
-                                        <span className='text-bold'>Comments: </span>{item.comments}
-                                    </p>
-                                </div>
-                                ))
-                            )}
-                            
+                                        ))
+                                    )}
+                                    
                         </div>
                         
                         
