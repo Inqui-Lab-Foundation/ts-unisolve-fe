@@ -65,7 +65,7 @@ const eadmindashboard = () => {
                                 </Link>
                             </Col>
                         </Row>
-                        <Row>
+                        <Row className="mb-5">
                             <Col lg={6} md={6}>
                                 <Link to="/admin/evaluationStatus/viewlist?evaluation_status=SELECTEDROUND1&title=Accepted&level=L1">
                                     <Card className="p-4 text-center card-effect mb-3">

@@ -8,7 +8,7 @@ const detailToDownload = (props) => {
 
     const average = arr => arr.reduce((p,c) => p+c,0)/arr.length;
   
-
+    console.log(props?.ideaDetails,"======props?.ideaDetails?");
     return (
         <div className="container bg-light" style={{ minWidth: '1240px' }}>
             <div className="row">
@@ -26,15 +26,15 @@ const detailToDownload = (props) => {
                         </div>
                         <div className="row my-2">
                             <div className="col-4 fw-bold fs-4">Team Members</div>
-                            <div className="col-8 text-capitalize fs-4">:</div>
+                            <div className="col-8 text-capitalize fs-4">: {props?.ideaDetails?.team_members.toString()}</div>
                         </div>
                         <div className="row my-2">
                             <div className="col-4 fw-bold fs-4">Organisation Code</div>
-                            <div className="col-8 text-capitalize fs-4">:</div>
+                            <div className="col-8 text-capitalize fs-4">: {props?.ideaDetails?.team?.mentor?.organization?.organization_code}</div>
                         </div>
                         <div className="row my-2">
                             <div className="col-4 fw-bold fs-4">Oraganisation Name</div>
-                            <div className="col-8 text-capitalize fs-4">:</div>
+                            <div className="col-8 text-capitalize fs-4">: {props?.ideaDetails?.team?.mentor?.organization?.organization_name}</div>
                         </div>
                     </div>
                 </div>
