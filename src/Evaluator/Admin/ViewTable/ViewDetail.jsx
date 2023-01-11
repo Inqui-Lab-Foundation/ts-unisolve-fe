@@ -11,6 +11,10 @@ import axios from 'axios';
 import Select from '../../Helper/Select';
 import { useHistory, useLocation } from 'react-router-dom';
 //import { useDispatch } from 'react-redux';
+import jsPDF from 'jspdf';
+import {FaDownload, FaHourglassHalf} from 'react-icons/fa';
+import DetailToDownload from '../../../Admin/Evaluation/ViewSelectedIdea/DetailToDownload';
+import ReactDOMServer from "react-dom/server";
 
 const ViewDetail = (props) => {
     //const dispatch = useDispatch();
@@ -115,6 +119,20 @@ const handleReject=()=>{
         setIsreject(false);
     }
 };
+const [pdfLoader, setPdfLoader]=React.useState(false);
+const downloadPDF = async() => {
+    setPdfLoader(true);
+    const content=ReactDOMServer.renderToString(<DetailToDownload ideaDetails={props?.ideaDetails} teamResponse={teamResponse} level={level}/>);
+    const doc = new jsPDF('p', 'px', [1754, 1240]);
+    await doc.html(content, {
+        pagesplit:true,
+        margin: [8, 8, 8, 8],
+        callback: function (doc) {
+            doc.save('Detail.pdf');
+        }
+    });
+    setPdfLoader(false);
+};
 
   return (
     <div>
@@ -164,6 +182,13 @@ const handleReject=()=>{
                                             }
                                             disabled={props?.dataLength==props?.currentRow}
                                         />
+                                    </div>
+                                    <div className='mx-2 pointer d-flex align-items-center'>
+                                        {
+                                            !pdfLoader?
+                                            <FaDownload size={22} onClick={()=>{downloadPDF();}}/>:
+                                            <FaHourglassHalf size={22}/>
+                                        }
                                     </div>
                                 </div>
                             </div>
