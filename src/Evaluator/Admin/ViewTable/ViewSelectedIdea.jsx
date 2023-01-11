@@ -28,6 +28,8 @@ const ViewSelectedIdea = () => {
     const title = new URLSearchParams(search).get("title");
     const status = new URLSearchParams(search).get("status");
     const evaluation_status = new URLSearchParams(search).get("evaluation_status");
+    const level0 = new URLSearchParams(search).get("level0");
+    const level = new URLSearchParams(search).get("level");
     const [isDetail, setIsDetail] = React.useState(false);
     const [ideaDetails, setIdeaDetails] = React.useState({});
     const [tableData, settableData] = React.useState([]);
@@ -42,7 +44,7 @@ const ViewSelectedIdea = () => {
     const SDGDate = cardData.map((i) => {
         return i.goal_title;
     });
-    SDGDate.push('ALL');
+    SDGDate.unshift('ALL SDGs');
     const fullDistrictsNames = useSelector(
         (state) => state?.studentRegistration?.dists
     );
@@ -63,10 +65,12 @@ const ViewSelectedIdea = () => {
         Allevalnamelist.push(i.user.full_name);
     });
 
-    const dataParam =  title === 'Submitted' ? 'status='+status : 'evaluation_status='+evaluation_status;
+    const level0Param =  level0 ==='L0' ? 'status='+status:'';
+    const levelParm = level ? 'level='+level : '';
+    const dataParam = level==='L1'? '&evaluation_status='+evaluation_status : title==='L2 YET TO PROCESSED' ? '&yetToProcessList=true': '';
     const filterParams =
         (district && district !== 'All Districts' ? '&district=' + district : '') +
-        (sdg && sdg !== 'ALL' ? '&sdg=' + sdg : '') +
+        (sdg && sdg !== 'ALL SDGs' ? '&sdg=' + sdg : '') +
         (reason && '&rejected_reason=' + reason) + (evalname && '&evaluator_id=' + Allevalobj[evalname]);
 
     useEffect(() => {
@@ -82,7 +86,7 @@ const ViewSelectedIdea = () => {
     async function handleideaList() {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         await axios
-            .get(`${URL.getidealist}${dataParam}${filterParams}`, axiosConfig)
+            .get(`${URL.getidealist}${level0Param}${levelParm}${dataParam}${filterParams}`, axiosConfig)
             .then(function (response) {
                 if (response.status === 200) {
                     const updatedWithKey = response.data && response.data.data[0] && response.data.data[0].dataValues.map((item, i) => {
@@ -300,7 +304,7 @@ const ViewSelectedIdea = () => {
                                                 />
                                             </div>
                                         </Col>
-                                        {title !== 'Submitted' ? (<Col md={2}>
+                                        {level === 'L1' && (<Col md={2}>
                                             <div className="my-3 d-md-block d-flex justify-content-center">
                                                 <Select
                                                     list={Allevalnamelist}
@@ -309,7 +313,7 @@ const ViewSelectedIdea = () => {
                                                     value={evalname}
                                                 />
                                             </div>
-                                        </Col>) : ''}
+                                        </Col>)}
                                         
                                         {title === 'Rejected' ? (
                                             <Col md={3}>
@@ -340,7 +344,7 @@ const ViewSelectedIdea = () => {
                                                 />
                                             </div>
                                         </Col>
-                                        <Col md={title === 'Rejected' ? 1 : title==='Submitted' ? 6 : 4}>
+                                        <Col md={title === 'Rejected' ? 1 : level !== 'L1' ? 6 : 4}>
                                             <div className="text-right">
                                                 <Button
                                                     btnClass="primary"

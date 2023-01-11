@@ -83,7 +83,7 @@ const MyCertificate = () => {
                                     >
                                         {currentUser?.data[0]?.full_name}
                                     </span>
-                                    {/* <span
+                                    <span
                                         className="text-capitalize"
                                         style={{
                                             position: 'absolute',
@@ -92,8 +92,8 @@ const MyCertificate = () => {
                                             fontSize: '1rem'
                                         }}
                                     >
-                                        {currentUser?.data[0]?.full_name}
-                                    </span> */}
+                                        {currentUser?.data[0]?.organization_name}
+                                    </span>
                                     <img
                                         src={TeacherCertificate}
                                         alt="certificate"

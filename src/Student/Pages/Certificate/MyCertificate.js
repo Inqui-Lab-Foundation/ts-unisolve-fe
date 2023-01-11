@@ -34,7 +34,7 @@ const Certificate = ({
         const badge = 'the_finisher';
         const size = type ? [298, 220] : [298, 220];
         // const size = type ? [210, 297] : [298, 200];
-        const orientation = type ? 'l' : 'p';
+        const orientation = type ? 'l' : 'l';
         const doc = new jsPDF(orientation, 'px', size);
         const certName = `${currentUser?.data[0]?.full_name}_${
             type ? 'idea_certificate' : 'course_certificate'
@@ -89,14 +89,25 @@ const Certificate = ({
                             className="text-capitalize"
                             style={{
                                 position: 'absolute',
-                                top: `${type ? '9rem' : '8rem'}`,
-                                left: `${type ? '10.3rem' : '10.3rem'}`,
+                                top: `${type ? '9rem' : '8.4rem'}`,
+                                left: `${type ? '10.3rem' : '10rem'}`,
                                 // top: `${type ? '9rem' : '12.8rem'}`,
                                 // left: `${type ? '10.3rem' : '6.5rem'}`,
                                 fontSize: '0.8rem'
                             }}
                         >
                             {currentUser?.data[0]?.full_name + certDateCheck()}
+                        </span>
+                        <span
+                            className="text-capitalize"
+                            style={{
+                                position: 'absolute',
+                                top: `${type ? '10.5rem' : '9.8rem'}`,
+                                left: `${type ? '5rem' : '5rem'}`,
+                                fontSize: '0.8rem'
+                            }}
+                        >
+                            {currentUser?.data[0]?.organization_name + certDateCheck()}
                         </span>
                         <img
                             src={
