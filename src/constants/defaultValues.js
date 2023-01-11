@@ -132,6 +132,7 @@ export const URL = {
     getTeamMemberStatusEndpoint:
         process.env.REACT_APP_API_BASE_URL + '/dashboard/teamStats/',
     getidealist: process.env.REACT_APP_API_BASE_URL + '/challenge_response?',
+    getidealistfinal: process.env.REACT_APP_API_BASE_URL + '/challenge_response/evaluationResult',
     gettotalcount:
         process.env.REACT_APP_API_BASE_URL + '/dashboard/evaluatorStats'
 };

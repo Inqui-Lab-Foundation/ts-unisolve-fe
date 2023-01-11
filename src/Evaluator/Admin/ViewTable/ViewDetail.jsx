@@ -10,6 +10,7 @@ import { Modal } from 'react-bootstrap';
 import axios from 'axios';
 import Select from '../../Helper/Select';
 import { useHistory, useLocation } from 'react-router-dom';
+import RatedDetailCard from '../Pages/RatedDetailCard';
 //import { useDispatch } from 'react-redux';
 import jsPDF from 'jspdf';
 import {FaDownload, FaHourglassHalf} from 'react-icons/fa';
@@ -319,6 +320,11 @@ const downloadPDF = async() => {
                                 </button></>
                             )}
                             </div>
+                            {level!=='L1' && props?.ideaDetails?.evaluator_ratings.length > 0 &&(
+                                <RatedDetailCard 
+                                details={props?.ideaDetails}
+                            />
+                            )}
                         </div>
                         )}
                     </div>
