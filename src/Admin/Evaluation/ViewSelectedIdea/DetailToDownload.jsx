@@ -54,51 +54,54 @@ const detailToDownload = (props) => {
                 {/* ---------------------------------- */}
                 {/* ---------------status------------------ */}
                 <div className="col-md-5 col-12 h1-100">
-                    <div className="status p-5 bg-white shadow rounded border h-100">
-                        <p className='fs-2 fw-bold text-primary'>STATUS</p>
-                        <div className="row my-2">
-                            <div className="col-2 fw-bold fs-4">L1</div>
-                            <div className={`${props?.ideaDetails?.evaluation_status=='SELECTEDROUND1'?'text-success':'text-danger'} col-10 text-capitalize fs-4`}>
-                            : {props?.ideaDetails?.evaluation_status ==
-                                'SELECTEDROUND1'
-                                    ? 'Accepted'
-                                    : 'Rejected'}
+                    {
+                        props?.ideaDetails?.evaluation_status &&
+                        <div className="status p-5 bg-white shadow rounded border h-100">
+                            <p className='fs-2 fw-bold text-primary'>STATUS</p>
+                            <div className="row my-2">
+                                <div className="col-2 fw-bold fs-4">L1</div>
+                                <div className={`${props?.ideaDetails?.evaluation_status=='SELECTEDROUND1'?'text-success':'text-danger'} col-10 text-capitalize fs-4`}>
+                                : {props?.ideaDetails?.evaluation_status ==
+                                    'SELECTEDROUND1'
+                                        ? 'Accepted'
+                                        : 'Rejected'}
+                                </div>
                             </div>
+                            {
+                                props?.level!=='L1' && props?.ideaDetails?.evaluator_ratings && props?.ideaDetails?.evaluator_ratings.length>0 &&(
+                                        <div className='col-12 mb-2'>
+                                            <div className="row my-2">
+                                                <div className="col-2 fw-bold fs-4">L2</div>
+                                                <div className="col-10 text-capitalize fs-4">: {overAll?.toFixed(1)}</div>
+                                            </div>
+                                            <div className="row my-2">
+                                                <div className="col-3 fw-bold fs-4">Novelity</div>
+                                                <div className="col-9 text-capitalize fs-4">: {novelity?.toFixed(1)}</div>
+                                            </div>
+                                            <div className="row my-2">
+                                                <div className="col-3 fw-bold fs-4">Usefullness</div>
+                                                <div className="col-9 text-capitalize fs-4">: {usefulness?.toFixed(1)}</div>
+                                            </div>
+                                            <div className="row my-2">
+                                                <div className="col-3 fw-bold fs-4">Feasability</div>
+                                                <div className="col-9 text-capitalize fs-4">: {feasability?.toFixed(1)}</div>
+                                            </div>
+                                            <div className="row my-2">
+                                                <div className="col-3 fw-bold fs-4">Scalability</div>
+                                                <div className="col-9 text-capitalize fs-4">: {scalability?.toFixed(1)}</div>
+                                            </div>
+                                            <div className="row my-2">
+                                                <div className="col-3 fw-bold fs-4">Sustainability</div>
+                                                <div className="col-9 text-capitalize fs-4">: {sustainability?.toFixed(1)}</div>
+                                            </div>
+                                        </div>
+                            
+                                    
+                                )
+                            }
+                            
                         </div>
-                        {
-                            props?.level!=='L1' && props?.ideaDetails?.evaluator_ratings && props?.ideaDetails?.evaluator_ratings.length>0 &&(
-                                    <div className='col-12 mb-2'>
-                                        <div className="row my-2">
-                                            <div className="col-2 fw-bold fs-4">L2</div>
-                                            <div className="col-10 text-capitalize fs-4">: {overAll?.toFixed(1)}</div>
-                                        </div>
-                                        <div className="row my-2">
-                                            <div className="col-3 fw-bold fs-4">Novelity</div>
-                                            <div className="col-9 text-capitalize fs-4">: {novelity?.toFixed(1)}</div>
-                                        </div>
-                                        <div className="row my-2">
-                                            <div className="col-3 fw-bold fs-4">Usefullness</div>
-                                            <div className="col-9 text-capitalize fs-4">: {usefulness?.toFixed(1)}</div>
-                                        </div>
-                                        <div className="row my-2">
-                                            <div className="col-3 fw-bold fs-4">Feasability</div>
-                                            <div className="col-9 text-capitalize fs-4">: {feasability?.toFixed(1)}</div>
-                                        </div>
-                                        <div className="row my-2">
-                                            <div className="col-3 fw-bold fs-4">Scalability</div>
-                                            <div className="col-9 text-capitalize fs-4">: {scalability?.toFixed(1)}</div>
-                                        </div>
-                                        <div className="row my-2">
-                                            <div className="col-3 fw-bold fs-4">Sustainability</div>
-                                            <div className="col-9 text-capitalize fs-4">: {sustainability?.toFixed(1)}</div>
-                                        </div>
-                                    </div>
-                          
-                                
-                            )
-                        }
-                        
-                    </div>
+                    }
               
                 </div>
                 {/* ----------------------------------------- */}
