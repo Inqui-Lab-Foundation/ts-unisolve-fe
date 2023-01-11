@@ -19,6 +19,10 @@ import { getDistrictData } from '../../../redux/studentRegistration/actions';
 import { useDispatch } from 'react-redux';
 import { ReasonsOptions } from '../Pages/ReasonForRejectionData';
 import { getAdminList, getAdminEvalutorsList } from '../../../redux/actions';
+import jsPDF from 'jspdf';
+import {FaDownload, FaHourglassHalf} from 'react-icons/fa';
+import DetailToDownload from '../../../Admin/Evaluation/ViewSelectedIdea/DetailToDownload';
+import ReactDOMServer from "react-dom/server";
 
 
 const ViewSelectedIdea = () => {
@@ -196,42 +200,64 @@ const ViewSelectedIdea = () => {
             }
         ]
     };
+    const [pdfLoader, setPdfLoader]=React.useState(false);
+const [teamResponse, setTeamResponse] = React.useState([]);
+const downloadPDF = async(params) => {
+    if (params?.response) {
+                setTeamResponse(
+                    Object.entries(params?.response).map((e) => e[1])
+                );
+            }
+    console.log(teamResponse,"teamResponse");
+    setPdfLoader(true);
+    const content=ReactDOMServer.renderToString(<DetailToDownload ideaDetails={params} teamResponse={teamResponse} level={level}/>);
+    const doc = new jsPDF('p', 'px', [1754, 1240]);
+    await doc.html(content, {
+        pagesplit:true,
+        margin: [8, 8, 8, 8],
+        callback: function (doc) {
+            doc.save('Detail.pdf');
+        }
+    });
+    setPdfLoader(false);
+};
     const evaluatedIdeaL2 = {
         data: tableData && tableData.length > 0 ? tableData : [],
         columns: [
             {
                 name: 'No',
                 selector: (row) => row.key,
-                sortable: true,
-                width: '9%'
+                width: '10%'
             },
             {
                 name: 'Team Name',
                 selector: (row) => row.team_name || '',
-                sortable: true,
                 width: '20%'
             },
             {
                 name: 'SDG',
                 selector: (row) => row.sdg,
-                width: '25%'
+                width: '15%'
             },
             {
                 name: 'Submitted By',
                 selector: (row) => row.initiated_name,
-                width: '23%'
+                width: '25%'
             },
             {
-                name: 'overall',
-                cell :(row) => {
-                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].overall) :' ' :' '];},
-                 width : '15%'
+                name: 'Overall',
+                // cell :(row) => {
+                //     return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].overall) :' ' :' '];},
+                selector: (row) => row.evaluator_ratings[0]?.overall_avg ? row.evaluator_ratings[0]?.overall_avg : '-',
+                 width : '10%',
+                 sortable: true,
             },
 
             {
                 name: 'Actions',
                 cell: (params) => {
                     return [
+                        <>
                         <div className="d-flex" key={params}>
                             <div
                                 className="btn btn-primary btn-lg mr-5 mx-2"
@@ -250,9 +276,17 @@ const ViewSelectedIdea = () => {
                                 View
                             </div>
                         </div>
+                        <div className='mx-2 pointer d-flex align-items-center'>
+                        {
+                            !pdfLoader?
+                            <FaDownload size={22} onClick={()=>{downloadPDF(params);}} className="text-danger"/>:
+                            <FaHourglassHalf size={22} className="text-info"/>
+                        }
+                    </div>
+                    </>
                     ];
                 },
-                width: '8%',
+                width: '20%',
                 left: true
             }
         ]
