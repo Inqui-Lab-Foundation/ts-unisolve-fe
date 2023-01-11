@@ -151,8 +151,8 @@ const ViewSelectedIdea = () => {
         }
     };
     const handlePrev=()=>{
-        if(tableData && currentRow > 1){
-            setIdeaDetails(tableData[currentRow]);
+        if(tableData && currentRow >= 1){
+            setIdeaDetails(tableData[currentRow-2]);
             setIsDetail(true);
             setCurrentRow(currentRow-1);
         }

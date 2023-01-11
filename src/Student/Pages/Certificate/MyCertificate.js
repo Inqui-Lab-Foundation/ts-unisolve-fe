@@ -93,7 +93,9 @@ const Certificate = ({
                                 left: `${type ? '10.3rem' : '10rem'}`,
                                 // top: `${type ? '9rem' : '12.8rem'}`,
                                 // left: `${type ? '10.3rem' : '6.5rem'}`,
-                                fontSize: '0.8rem'
+                                fontSize: '0.8rem',
+                                fontFamily:"Times New Roman"
+                                
                             }}
                         >
                             {currentUser?.data[0]?.full_name + certDateCheck()}
@@ -104,7 +106,8 @@ const Certificate = ({
                                 position: 'absolute',
                                 top: `${type ? '10.5rem' : '9.8rem'}`,
                                 left: `${type ? '5rem' : '5rem'}`,
-                                fontSize: '0.8rem'
+                                fontSize: '0.8rem',
+                                fontFamily:"Times New Roman"
                             }}
                         >
                             {currentUser?.data[0]?.organization_name + certDateCheck()}

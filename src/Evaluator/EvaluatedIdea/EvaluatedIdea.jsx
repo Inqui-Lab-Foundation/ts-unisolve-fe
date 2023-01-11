@@ -187,7 +187,7 @@ const EvaluatedIdea = () => {
             }
         ]
     };
-
+    
     const handleNext=()=>{
         if(evaluatedIdeaList && currentRow < evaluatedIdeaList?.length){
             setIdeaDetails(evaluatedIdeaList[currentRow]);
@@ -196,8 +196,8 @@ const EvaluatedIdea = () => {
         }
     };
     const handlePrev=()=>{
-        if(evaluatedIdeaList && currentRow > 1){
-            setIdeaDetails(evaluatedIdeaList[currentRow]);
+        if(evaluatedIdeaList && currentRow >= 1){
+            setIdeaDetails(evaluatedIdeaList[currentRow-2]);
             setIsDetail(true);
             setCurrentRow(currentRow-1);
             

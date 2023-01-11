@@ -72,6 +72,8 @@ const ViewSelectedIdea = () => {
         (district && district !== 'All Districts' ? '&district=' + district : '') +
         (sdg && sdg !== 'ALL SDGs' ? '&sdg=' + sdg : '') +
         (reason && '&rejected_reason=' + reason) + (evalname && '&evaluator_id=' + Allevalobj[evalname]);
+    const filterParamsfinal = (district && district !== 'All Districts' ? '?district=' + district : '') +
+    (sdg && sdg !== 'ALL SDGs' ? '&sdg=' + sdg : '');
 
     useEffect(() => {
         dispatch(getDistrictData());
@@ -86,7 +88,7 @@ const ViewSelectedIdea = () => {
     async function handleideaList() {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         await axios
-            .get(`${URL.getidealist}${level0Param}${levelParm}${dataParam}${filterParams}`, axiosConfig)
+            .get(title === 'FINAl'? `${URL.getidealistfinal}${filterParamsfinal}` :`${URL.getidealist}${level0Param}${levelParm}${dataParam}${filterParams}`, axiosConfig)
             .then(function (response) {
                 if (response.status === 200) {
                     const updatedWithKey = response.data && response.data.data[0] && response.data.data[0].dataValues.map((item, i) => {
@@ -103,7 +105,8 @@ const ViewSelectedIdea = () => {
     const handleclickcall = () => {
         handleideaList();
     };
-    const evaluatedIdea = {
+    const average = arr => arr.reduce((p,c) => p+c,0)/arr.length;
+    const evaluatedIdeaL1 = {
         data: tableData && tableData.length > 0 ? tableData : [],
         columns: [
             {
@@ -174,6 +177,74 @@ const ViewSelectedIdea = () => {
                                 onClick={() => {
                                     setIdeaDetails(params);
                                     setIsDetail(true);
+                                    let index=0;
+                                    tableData?.forEach((item, i)=>{
+                                        if(item?.challenge_response_id==params?.challenge_response_id){
+                                            index=i;
+                                        }
+                                    });
+                                    setCurrentRow(index+1);
+                                }}
+                            >
+                                View
+                            </div>
+                        </div>
+                    ];
+                },
+                width: '8%',
+                left: true
+            }
+        ]
+    };
+    const evaluatedIdeaL2 = {
+        data: tableData && tableData.length > 0 ? tableData : [],
+        columns: [
+            {
+                name: 'No',
+                selector: (row) => row.key,
+                sortable: true,
+                width: '9%'
+            },
+            {
+                name: 'Team Name',
+                selector: (row) => row.team_name || '',
+                sortable: true,
+                width: '20%'
+            },
+            {
+                name: 'SDG',
+                selector: (row) => row.sdg,
+                width: '25%'
+            },
+            {
+                name: 'Submitted By',
+                selector: (row) => row.initiated_name,
+                width: '23%'
+            },
+            {
+                name: 'overall',
+                cell :(row) => {
+                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].overall) :' ' :' '];},
+                 width : '15%'
+            },
+
+            {
+                name: 'Actions',
+                cell: (params) => {
+                    return [
+                        <div className="d-flex" key={params}>
+                            <div
+                                className="btn btn-primary btn-lg mr-5 mx-2"
+                                onClick={() => {
+                                    setIdeaDetails(params);
+                                    setIsDetail(true);
+                                    let index=0;
+                                    tableData?.forEach((item, i)=>{
+                                        if(item?.challenge_response_id==params?.challenge_response_id){
+                                            index=i;
+                                        }
+                                    });
+                                    setCurrentRow(index+1);
                                 }}
                             >
                                 View
@@ -187,7 +258,7 @@ const ViewSelectedIdea = () => {
         ]
     };
 
-    const evaluatedIdeaforsub = {
+    const evaluatedIdeaforL0 = {
         data: tableData && tableData.length > 0 ? tableData : [],
         columns: [
             {
@@ -252,8 +323,99 @@ const ViewSelectedIdea = () => {
             }
         ]
     };
-    const sel =
-        title === 'Submitted' ? evaluatedIdeaforsub : evaluatedIdea;
+
+    const evaluatedIdeafinal = {
+        data: tableData && tableData.length > 0 ? tableData : [],
+        columns: [
+            {
+                name: 'No',
+                selector: (row) => row.key,
+                sortable: true,
+                width: '6%'
+            },
+            {
+                name: 'Team Name',
+                selector: (row) => row.team_name || '',
+                sortable: true,
+                width: '11.5%'
+            },
+            {
+                name: 'SDG',
+                selector: (row) => row.sdg,
+                width: '10%'
+            },
+            {
+                name: 'Submitted By',
+                selector: (row) => row.initiated_name,
+                width: '11.5%'
+            },
+            {
+                name: 'overall',
+                cell :(row) => {
+                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].overall).toFixed(2) :' ' :' '];},
+                 width : '7%'
+            },
+            {
+                name: 'Novelity',
+                cell :(row) => {
+                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].param_1).toFixed(2) :' ' :' '];},
+                 width : '8%'
+            },
+            {
+                name: 'Usefulness',
+                cell :(row) => {
+                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].param_2).toFixed(2) :' ' :' '];},
+                 width : '9%'
+            },
+            {
+                name: 'Feasability',
+                cell :(row) => {
+                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].param_3).toFixed(2) :' ' :' '];},
+                 width : '9%'
+            },
+            {
+                name: 'Scalability',
+                cell :(row) => {
+                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].param_4).toFixed(2) :' ' :' '];},
+                 width : '9%'
+            },
+            {
+                name: 'Sustainability',
+                cell :(row) => {
+                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].param_5).toFixed(2) :' ' :' '];},
+                 width : '11%'
+            },
+
+            {
+                name: 'Actions',
+                cell: (params) => {
+                    return [
+                        <div className="d-flex" key={params}>
+                            <div
+                                className="btn btn-primary btn-lg mr-5 mx-2"
+                                onClick={() => {
+                                    setIdeaDetails(params);
+                                    setIsDetail(true);
+                                    let index=0;
+                                    tableData?.forEach((item, i)=>{
+                                        if(item?.challenge_response_id==params?.challenge_response_id){
+                                            index=i;
+                                        }
+                                    });
+                                    setCurrentRow(index+1);
+                                }}
+                            >
+                                View
+                            </div>
+                        </div>
+                    ];
+                },
+                width: '8%',
+                left: true
+            }
+        ]
+    };
+    const sel = level0 ? evaluatedIdeaforL0 : level==='L1' ? evaluatedIdeaL1 : level === 'L2' ? evaluatedIdeaL2 :  evaluatedIdeafinal;
     const showbutton = district && sdg;
 
     const handleNext=()=>{
@@ -265,8 +427,8 @@ const ViewSelectedIdea = () => {
         }
     };
     const handlePrev=()=>{
-        if(tableData && currentRow > 1){
-            setIdeaDetails(tableData[currentRow]);
+        if(tableData && currentRow >= 1){
+            setIdeaDetails(tableData[currentRow-2]);
             setIsDetail(true);
             setCurrentRow(currentRow-1);
         }

@@ -10,6 +10,7 @@ import { Modal } from 'react-bootstrap';
 import axios from 'axios';
 import Select from '../../Helper/Select';
 import { useHistory, useLocation } from 'react-router-dom';
+import RatedDetailCard from '../Pages/RatedDetailCard';
 //import { useDispatch } from 'react-redux';
 
 const ViewDetail = (props) => {
@@ -294,6 +295,11 @@ const handleReject=()=>{
                                 </button></>
                             )}
                             </div>
+                            {level!=='L1' && props?.ideaDetails?.evaluator_ratings.length > 0 &&(
+                                <RatedDetailCard 
+                                details={props?.ideaDetails}
+                            />
+                            )}
                         </div>
                         )}
                     </div>

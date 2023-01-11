@@ -78,7 +78,8 @@ const MyCertificate = () => {
                                             position: 'absolute',
                                             top: '8rem',
                                             left: '9rem',
-                                            fontSize: '1rem'
+                                            fontSize: '1rem',
+                                            fontFamily:"Times New Roman"
                                         }}
                                     >
                                         {currentUser?.data[0]?.full_name}
@@ -89,7 +90,8 @@ const MyCertificate = () => {
                                             position: 'absolute',
                                             top: '9.5rem',
                                             left: '5rem',
-                                            fontSize: '1rem'
+                                            fontSize: '1rem',
+                                            fontFamily:"Times New Roman"
                                         }}
                                     >
                                         {currentUser?.data[0]?.organization_name}
