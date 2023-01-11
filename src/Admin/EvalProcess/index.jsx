@@ -14,7 +14,6 @@ const evalprocess = () => {
     const history = useHistory();
     const [evalList, setEvalList] = useState([]);
     const currentUser = getCurrentUser('current_user');
-    console.log(evalList);
     useEffect(() => {
         handleEvalList();
     }, []);
@@ -45,7 +44,6 @@ const evalprocess = () => {
             });
     }
 
-    console.log(evalList);
     const handleEdit = (item) => {
         history.push({
             pathname: '/admin/edit-evaluationProcess'

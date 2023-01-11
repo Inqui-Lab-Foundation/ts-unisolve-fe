@@ -9,16 +9,19 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Modal } from 'react-bootstrap';
 import axios from 'axios';
 import Select from '../../Helper/Select';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 //import { useDispatch } from 'react-redux';
 
 const ViewDetail = (props) => {
     //const dispatch = useDispatch();
+    const { search } = useLocation();
     const history = useHistory();
     const currentUser = getCurrentUser('current_user');
     const [teamResponse, setTeamResponse] = React.useState([]);
     const [isReject, setIsreject]=React.useState(false);
     const [reason, setReason]=React.useState('');
+    const level = new URLSearchParams(search).get("level");
+    const level0 = new URLSearchParams(search).get("level0");
     const selectData = [
         'Idea is very common and already in use.',
         'Idea does not have proper details and information to make a decision.',
@@ -221,6 +224,7 @@ const handleReject=()=>{
                                 );
                             })}
                         </div>
+                        {props?.ideaDetails?.status ==='SUBMITTED' && (
                         <div className="col-lg-4 order-lg-1 order-0 p-0 h-100 mt-3 status_info_col">
                             <div className="level-status-card card border p-md-5 p-3 mb-3 me-lg-0 me-md-3">
                                 
@@ -244,7 +248,8 @@ const handleReject=()=>{
                                         <span className='text-bold'>Rejected Reason: </span> {props?.ideaDetails?.rejected_reason || ''}
                                     </p>
                                 }
-                                {props?.ideaDetails?.evaluation_status 
+                                {(level ==='L1' || level0==='L0') && (
+                                props?.ideaDetails?.evaluation_status 
                                 ? 
                                             props?.ideaDetails?.evaluation_status=='SELECTEDROUND1' ?
                                             <button
@@ -286,12 +291,11 @@ const handleReject=()=>{
                                             }}
                                         >
                                             <span className="fs-4">Accept</span>
-                                </button></>}
+                                </button></>
+                            )}
                             </div>
                         </div>
-                        
-                        
-                    
+                        )}
                     </div>
                         <div>
                             <Button

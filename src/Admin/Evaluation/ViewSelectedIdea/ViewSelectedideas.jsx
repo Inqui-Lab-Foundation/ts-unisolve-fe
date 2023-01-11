@@ -45,7 +45,7 @@ const ViewSelectedIdea = () => {
     const SDGDate = cardData.map((i) => {
         return i.goal_title;
     });
-    SDGDate.push('ALL');
+    SDGDate.unshift('ALL SDGs');
     const fullDistrictsNames = useSelector(
         (state) => state?.studentRegistration?.dists
     );
@@ -67,10 +67,10 @@ const ViewSelectedIdea = () => {
         Allevalnamelist.push(i.user.full_name);
     });
     
-    const dataParam = level!=='L1' ? `&evaluation_status=${evaluation_status}` : '&evaluation_status=' + evaluation_status;
+    const dataParam = level==='L1' ? '&evaluation_status=' + evaluation_status : title==='L2 YET TO PROCESSED' ? '&yetToProcessList=true': '';
     const filterParams =
         (district && district !== 'All Districts' ? '&district=' + district : '') +
-        (sdg && sdg !== 'ALL' ? '&sdg=' + sdg : '') +
+        (sdg && sdg !== 'ALL SDGs' ? '&sdg=' + sdg : '') +
         (reason && '&rejected_reason=' + reason) + (evalname && '&evaluator_id=' + Allevalobj[evalname]);
 
     useEffect(() => {
@@ -212,37 +212,25 @@ const ViewSelectedIdea = () => {
                 name: 'Team Name',
                 selector: (row) => row.team_name || '',
                 sortable: true,
-                width: '25%'
+                width: '20%'
             },
             {
                 name: 'SDG',
                 selector: (row) => row.sdg,
-                width: '25%'
+                width: '20%'
             },
             {
                 name: 'Submitted By',
                 selector: (row) => row.initiated_name,
-                width: '25%'
+                width: '20%'
             },
-            // {
-            //     name: 'Evaluated By',
-            //     cell: (row) => row.evaluator_rating.,
-            //     width: '15%'
-            // },
-            // {
-            //     name: 'Evaluated At',
-            //     selector: (row) =>
-            //         row.evaluator_rating.evaluated_at
-            //             ? moment(row.evaluator_rating.evaluated_at).format('DD-MM-YY h:mm:ss a')
-            //             : row.evaluator_rating.evaluated_at,
-            //     width: '15%'
-            // },
-            
-            // {
-            //     name: 'overall',
-            //     selector :(row) => row.evaluator_rating.overall,
-            //     width : '10%'
-            // },
+            {
+                name: 'overall',
+                cell :(row) => {
+                    const average = arr => arr.reduce((p,c) => p+c,0)/arr.length;
+                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].overall) :' ' :' '];},
+                 width : '15%'
+            },
 
             {
                 name: 'Actions',

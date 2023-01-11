@@ -16,6 +16,7 @@ import { getDistrictData } from '../../redux/studentRegistration/actions';
 import { useDispatch } from 'react-redux';
 import { getNormalHeaders } from '../../helpers/Utils';
 import Spinner from 'react-bootstrap/Spinner';
+import { useLocation } from 'react-router-dom';
 
 const ViewSelectedIdea = () => {
     const dispatch = useDispatch();
@@ -34,15 +35,16 @@ const ViewSelectedIdea = () => {
     const SDGDate = cardData.map((i) => {
         return i.goal_title;
     });
-    SDGDate.push('ALL');
+    SDGDate.unshift('ALL SDGs');
     const fullDistrictsNames = useSelector(
         (state) => state?.studentRegistration?.dists
     );
-
+    const {search} = useLocation();
+    const status = new URLSearchParams(search).get('status');
     const filterParams =
         (district && district !== 'All Districts'
             ? '&district=' + district
-            : '') + (sdg && sdg !== 'ALL' ? '&sdg=' + sdg : '');
+            : '') + (sdg && sdg !== 'ALL SDGs' ? '&sdg=' + sdg : '');
 
     useEffect(() => {
         dispatch(getDistrictData());
@@ -57,7 +59,7 @@ const ViewSelectedIdea = () => {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         await axios
             .get(
-                `${URL.getidealist}level=L1&status=SUBMITTED${filterParams}`,
+                `${URL.getidealist}status=${status ? status : "ALL"}${filterParams}`,
                 axiosConfig
             )
             .then(function (response) {
