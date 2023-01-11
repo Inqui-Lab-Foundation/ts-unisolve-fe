@@ -1,26 +1,13 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable indent */
 import React from 'react';
 import LinkComponent from '../Pages/LinkComponent';
 // import moment from 'moment';
 
 const detailToDownload = (props) => {
-    const [overAll, setOverAll]=React.useState(0);
-    const [novelity, setNovelity]=React.useState(0);
-    const [usefulness, setUsefulness] = React.useState(0);
-    const [feasability, setFeasability] = React.useState(0);
-    const [scalability, setScalability] = React.useState(0);
-    const [sustainability, setSustainability] = React.useState(0);
-    React.useEffect(()=>{
-        if(props?.ideaDetails?.evaluator_ratings && props?.ideaDetails?.evaluator_ratings.length>0){
-        const average = arr => arr.reduce((p,c) => p+c,0)/arr.length;
-        setOverAll(average(props?.ideaDetails?.evaluator_ratings[0]?.overall));
-        setNovelity(average(props?.ideaDetails?.evaluator_ratings[0]?.param_1));
-        setUsefulness(average(props?.ideaDetails?.evaluator_ratings[0]?.param_2));
-        setFeasability(average(props?.ideaDetails?.evaluator_ratings[0]?.param_3));
-        setScalability(average(props?.ideaDetails?.evaluator_ratings[0]?.param_4));
-        setSustainability(average(props?.ideaDetails?.evaluator_ratings[0]?.param_5));
-    }
-    },[props]);
+
+    const average = arr => arr.reduce((p,c) => p+c,0)/arr.length;
+  
 
     return (
         <div className="container bg-light" style={{ minWidth: '1240px' }}>
@@ -72,27 +59,27 @@ const detailToDownload = (props) => {
                                         <div className='col-12 mb-2'>
                                             <div className="row my-2">
                                                 <div className="col-2 fw-bold fs-4">L2</div>
-                                                <div className="col-10 text-capitalize fs-4">: {overAll?.toFixed(1)}</div>
+                                                <div className="col-10 text-capitalize fs-4">: {average(props?.ideaDetails?.evaluator_ratings[0]?.overall)?.toFixed(1)}</div>
                                             </div>
                                             <div className="row my-2">
                                                 <div className="col-3 fw-bold fs-4">Novelity</div>
-                                                <div className="col-9 text-capitalize fs-4">: {novelity?.toFixed(1)}</div>
+                                                <div className="col-9 text-capitalize fs-4">: {average(props?.ideaDetails?.evaluator_ratings[0]?.param_1)?.toFixed(1)}</div>
                                             </div>
                                             <div className="row my-2">
                                                 <div className="col-3 fw-bold fs-4">Usefullness</div>
-                                                <div className="col-9 text-capitalize fs-4">: {usefulness?.toFixed(1)}</div>
+                                                <div className="col-9 text-capitalize fs-4">: {average(props?.ideaDetails?.evaluator_ratings[0]?.param_2)?.toFixed(1)}</div>
                                             </div>
                                             <div className="row my-2">
                                                 <div className="col-3 fw-bold fs-4">Feasability</div>
-                                                <div className="col-9 text-capitalize fs-4">: {feasability?.toFixed(1)}</div>
+                                                <div className="col-9 text-capitalize fs-4">: {average(props?.ideaDetails?.evaluator_ratings[0]?.param_3)?.toFixed(1)}</div>
                                             </div>
                                             <div className="row my-2">
                                                 <div className="col-3 fw-bold fs-4">Scalability</div>
-                                                <div className="col-9 text-capitalize fs-4">: {scalability?.toFixed(1)}</div>
+                                                <div className="col-9 text-capitalize fs-4">: {average(props?.ideaDetails?.evaluator_ratings[0]?.param_4)?.toFixed(1)}</div>
                                             </div>
                                             <div className="row my-2">
                                                 <div className="col-3 fw-bold fs-4">Sustainability</div>
-                                                <div className="col-9 text-capitalize fs-4">: {sustainability?.toFixed(1)}</div>
+                                                <div className="col-9 text-capitalize fs-4">: {average(props?.ideaDetails?.evaluator_ratings[0]?.param_5)?.toFixed(1)}</div>
                                             </div>
                                         </div>
                             
