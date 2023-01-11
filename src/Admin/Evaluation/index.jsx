@@ -90,7 +90,7 @@ const eadmindashboard = () => {
                         </Row>
                         <Row className="mt-5">
                             <Col lg={6} md={6}>
-                                <Link to="/admin/evaluationStatus/viewlist?evaluation_status=SELECTEDROUND1&level=L2&title=L2 PROCESSED&level=L2">
+                                <Link to="/admin/evaluationStatus/viewlist?title=L2 PROCESSED&level=L2">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-success">
                                             L2 PROCESSED
@@ -102,7 +102,7 @@ const eadmindashboard = () => {
                                 </Link>
                             </Col>
                             <Col lg={6} md={6}>
-                                <Link to="/admin/evaluationStatus/viewlist?evaluation_status=SELECTEDROUND1&level=L2&title=L2 YET TO PROCESSED&level=L2">
+                                <Link to="/admin/evaluationStatus/viewlist?title=L2 YET TO PROCESSED&level=L2">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-warning">
                                             L2 YET TO PROCESSED

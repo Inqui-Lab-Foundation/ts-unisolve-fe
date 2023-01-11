@@ -10,6 +10,7 @@ import { Modal } from 'react-bootstrap';
 import axios from 'axios';
 import Select from '../Pages/Select';
 import { useHistory, useLocation } from 'react-router-dom';
+import RatedDetailCard from '../Pages/RatedDetailCard';
 //import { useDispatch } from 'react-redux';
 
 const ViewDetail = (props) => {
@@ -291,38 +292,10 @@ const handleReject=()=>{
                                             <span className="fs-4">Accept</span>
                                 </button></>)}
                             </div>
-                            {level!=='L1' && (
-                                props?.ideaDetails?.evaluator_ratings.map((item,i) => (
-                                    <div className="level-status-card card border p-md-5 p-3 mb-3 me-lg-0 me-md-3" key={i}>
-                                    <p className='text-center fs-3 fw-bold'>
-                                    <span className='fs-2 text-info'>{item.level} - </span> <span className='fs-3'>Overall Rating: </span>{item.overall}
-                                    </p>
-                                    <p className='text-center'>
-                                        <span className='text-bold'>Evaluated By: </span> {item.rated_evaluated_name}
-                                    </p>
-                                    <p className='text-center'>
-                                        <span className='text-bold'>Evaluated At: </span> {moment(item.created_by).format('DD-MM-YY h:mm:ss a')|| ''}
-                                    </p>
-                                    <p className='text-center'>
-                                        <span className='text-bold'>Novelity Score: </span>{item.param_1} 
-                                    </p>
-                                    <p className='text-center'>
-                                        <span className='text-bold'>Usefulness Score: </span>{item.param_2} 
-                                    </p>
-                                    <p className='text-center'>
-                                        <span className='text-bold'>Feasability Score: </span>{item.param_3} 
-                                    </p>
-                                    <p className='text-center'>
-                                        <span className='text-bold'>Scalability Score: </span>{item.param_4} 
-                                    </p>
-                                    <p className='text-center'>
-                                        <span className='text-bold'>Sustainability Score: </span>{item.param_5}  
-                                    </p>
-                                    <p className='text-center'>
-                                        <span className='text-bold'>Comments: </span>{item.comments}
-                                    </p>
-                                </div>
-                                ))
+                            {level!=='L1' && props?.ideaDetails?.evaluator_ratings.length > 0 &&(
+                                <RatedDetailCard 
+                                details={props?.ideaDetails}
+                            />
                             )}
                             
                         </div>
