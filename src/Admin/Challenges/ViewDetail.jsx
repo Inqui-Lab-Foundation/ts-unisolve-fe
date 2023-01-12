@@ -130,7 +130,7 @@ const downloadPDF = async() => {
         }).then(canvas => {
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF('p', 'px', [1754, 1240]);
-        pdf.addImage(imgData, "JPEG", 10, 10);
+        pdf.addImage(imgData, "JPEG", 10, 10,900, pdf.internal.pageSize.height, undefined,'FAST');
         pdf.save(`${new Date().toISOString()}.pdf`);
       });
       setPdfLoader(false);

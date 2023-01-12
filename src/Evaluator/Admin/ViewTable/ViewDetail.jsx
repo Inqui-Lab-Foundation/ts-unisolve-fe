@@ -11,14 +11,12 @@ import axios from 'axios';
 import Select from '../../Helper/Select';
 import { useHistory, useLocation } from 'react-router-dom';
 import RatedDetailCard from '../Pages/RatedDetailCard';
-//import { useDispatch } from 'react-redux';
 import jsPDF from 'jspdf';
 import {FaDownload, FaHourglassHalf} from 'react-icons/fa';
 import DetailToDownload from '../../../Admin/Evaluation/ViewSelectedIdea/DetailToDownload';
 import html2canvas from "html2canvas";
 
 const ViewDetail = (props) => {
-    //const dispatch = useDispatch();
     const { search } = useLocation();
     const history = useHistory();
     const currentUser = getCurrentUser('current_user');
@@ -132,7 +130,7 @@ const downloadPDF = async() => {
         }).then(canvas => {
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF('p', 'px', [1754, 1240]);
-        pdf.addImage(imgData, "JPEG", 10, 10);
+        pdf.addImage(imgData, "JPEG", 10, 10,900, pdf.internal.pageSize.height, undefined,'FAST');
         pdf.save(`${new Date().toISOString()}.pdf`);
       });
       setPdfLoader(false);
@@ -326,7 +324,7 @@ const downloadPDF = async() => {
                                 </button></>
                             )}
                             </div>
-                            {level!=='L1' && props?.ideaDetails?.evaluator_ratings.length > 0 &&(
+                            {level!=='L1' && props?.ideaDetails?.evaluator_ratings && props?.ideaDetails?.evaluator_ratings.length > 0 &&(
                                 <RatedDetailCard 
                                 details={props?.ideaDetails}
                             />

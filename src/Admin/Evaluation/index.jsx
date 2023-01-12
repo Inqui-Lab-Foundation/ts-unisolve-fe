@@ -66,7 +66,7 @@ const eadmindashboard = () => {
                             </Col>
                         </Row>
                         <Row className="mb-5">
-                            <Col lg={6} md={6}>
+                            <Col lg={4} md={4}>
                                 <Link to="/admin/evaluationStatus/viewlist?evaluation_status=SELECTEDROUND1&title=Accepted&level=L1">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-success">
@@ -78,7 +78,7 @@ const eadmindashboard = () => {
                                     </Card>
                                 </Link>
                             </Col>
-                            <Col lg={6} md={6}>
+                            <Col lg={4} md={4}>
                                 <Link to="/admin/evaluationStatus/viewlist?evaluation_status=REJECTEDROUND1&title=Rejected&level=L1">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-danger">
@@ -86,6 +86,18 @@ const eadmindashboard = () => {
                                         </b>
                                         <h3 className="display-5 bold m-2">
                                             {dateCount.rejected_round_one_count}
+                                        </h3>
+                                    </Card>
+                                </Link>
+                            </Col>
+                            <Col lg={4} md={4}>
+                                <Link to="/admin/evaluationStatus/viewlist?title=L1 - Yet to Processed&level=L1">
+                                    <Card className="p-4 text-center card-effect mb-3">
+                                        <b className="text-warning">
+                                        L1 - YET TO PROCESSED CHALLENGES
+                                        </b>
+                                        <h3 className="display-5 bold m-2">
+                                        {dateCount.l1_yet_to_process}
                                         </h3>
                                     </Card>
                                 </Link>
@@ -117,20 +129,20 @@ const eadmindashboard = () => {
                                 </Link>
                             </Col>
                         </Row>
-                        {/* <Row className="mb-5">
+                        <Row className="mb-5">
                             <Col>
-                                <Link to="/admin/evaluationStatus/viewlist?title=Final">
+                                <Link to="/admin/evaluationStatus/viewfinallist?title=Final&level=L2">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-success">
                                             FINAL CHALLENGES
                                         </b>
                                         <h3 className="display-5 bold m-2">
-                                            1
+                                        {dateCount.final_challenges}
                                         </h3>
                                     </Card>
                                 </Link>
                             </Col>
-                        </Row> */}
+                        </Row>
                     </Container>
                 </div>
             </div>
