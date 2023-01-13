@@ -17,11 +17,11 @@ const detailToDownload = (props) => {
                         <p className='fs-2 fw-bold text-primary'>PERSONAL&nbsp;DETAILS</p>
                         <div className="row my-2">
                             <div className="col-4 fw-bold fs-4">Teacher Name</div>
-                            <div className="col-8 text-capitalize fs-4">: {props?.ideaDetails?.team?.mentor?.full_name}</div>
+                            <div className="col-8 text-capitalize fs-4">: {props?.ideaDetails?.mentor_name}</div>
                         </div>
                         <div className="row my-2">
                             <div className="col-4 fw-bold fs-4">Team Name</div>
-                            <div className="col-8 text-capitalize fs-4">: {props?.ideaDetails?.team?.team_name}</div>
+                            <div className="col-8 text-capitalize fs-4">: {props?.ideaDetails?.team_name}</div>
                         </div>
                         <div className="row my-2">
                             <div className="col-4 fw-bold fs-4">Team Members</div>
@@ -29,11 +29,15 @@ const detailToDownload = (props) => {
                         </div>
                         <div className="row my-2">
                             <div className="col-4 fw-bold fs-4">Organisation Code</div>
-                            <div className="col-8 text-capitalize fs-4">: {props?.ideaDetails?.team?.mentor?.organization?.organization_code}</div>
+                            <div className="col-8 text-capitalize fs-4">: {props?.ideaDetails?.organization_code}</div>
                         </div>
                         <div className="row my-2">
                             <div className="col-4 fw-bold fs-4">Oraganisation Name</div>
-                            <div className="col-8 text-capitalize fs-4">: {props?.ideaDetails?.team?.mentor?.organization?.organization_name}</div>
+                            <div className="col-8 text-capitalize fs-4">: {props?.ideaDetails?.organization_name}</div>
+                        </div>
+                        <div className="row my-2">
+                            <div className="col-4 fw-bold fs-4">CID</div>
+                            <div className="col-8 text-capitalize fs-4">: {props?.ideaDetails?.challenge_response_id}</div>
                         </div>
                     </div>
                 </div>
@@ -61,7 +65,7 @@ const detailToDownload = (props) => {
                                                 <div className="col-10 text-capitalize fs-4">: {props?.ideaDetails?.evaluator_ratings[0]?.overall_avg}</div>
                                             </div>
                                             <div className="row my-2">
-                                                <div className="col-3 fw-bold fs-4">Novelity</div>
+                                                <div className="col-3 fw-bold fs-4">Novelty</div>
                                                 <div className="col-9 text-capitalize fs-4">: {props?.ideaDetails?.evaluator_ratings[0]?.param_1_avg}</div>
                                             </div>
                                             <div className="row my-2">

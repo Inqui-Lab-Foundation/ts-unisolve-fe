@@ -109,7 +109,7 @@ const ViewSelectedIdea = () => {
                  width : '7%'
             },
             {
-                name: 'Novelity',
+                name: 'Novelty',
                 cell :(row) => {
                     return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].param_1).toFixed(2) :' ' :' '];},
                  width : '8%'
