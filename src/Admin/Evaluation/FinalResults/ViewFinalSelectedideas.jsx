@@ -18,6 +18,10 @@ import { getDistrictData } from '../../../redux/studentRegistration/actions';
 import { useDispatch } from 'react-redux';
 import { getNormalHeaders } from '../../../helpers/Utils';
 import { Spinner } from 'react-bootstrap';
+import jsPDF from 'jspdf';
+import {FaDownload, FaHourglassHalf} from 'react-icons/fa';
+import html2canvas from "html2canvas";
+import TableDetailPdf from './TableDetailPdf';
 
 const ViewSelectedIdea = () => {
     const { search } = useLocation();
@@ -44,6 +48,9 @@ const ViewSelectedIdea = () => {
     
     const filterParamsfinal = (district && district !== 'All Districts' ? '&district=' + district : '') +
         (sdg && sdg !== 'ALL SDGs' ? '&sdg=' + sdg : '');
+    // const filterParamsfinal = (district && district !== 'All Districts' ? '&district=' + district : '') +
+    // (sdg && sdg !== 'ALL SDGs' ? '&sdg=' + sdg : '')+(title && title == '0' ? '&final_status=0' : '&final_status=1');
+    
 
     useEffect(() => {
         dispatch(getDistrictData());
@@ -56,9 +63,10 @@ const ViewSelectedIdea = () => {
     };
 
     async function handleideaList() {
+        settableData({});
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         await axios
-            .get(`${URL.getidealistfinal}?level=${level}${filterParamsfinal}`, axiosConfig)
+            .get(`${URL.getFinalEvaluation}?key=${title && title == '0' ?'0':'1'}${filterParamsfinal}`, axiosConfig)
             .then(function (response) {
                 if (response.status === 200) {
                     console.log(response.data.data,"----response.data");
@@ -75,7 +83,7 @@ const ViewSelectedIdea = () => {
                 setshowspin(false);
             });
     }
-    const average = arr => arr.reduce((p,c) => p+c,0)/arr.length;
+    // const average = arr => arr.reduce((p,c) => p+c,0)/arr.length;
     console.log(tableData,"----------tableData");
     const evaluatedIdeafinal = {
         data: tableData && tableData.length > 0 ? tableData : [],
@@ -88,55 +96,56 @@ const ViewSelectedIdea = () => {
             },
             {
                 name: 'Team Name',
-                selector: (row) => row.evaluator_ratings[0]?.challenge_response?.team_name || '',
+                selector: (row) => row?.team_name || '',
                 sortable: true,
                 width: '11.5%'
             },
             {
                 name: 'SDG',
-                selector: (row) => row.evaluator_ratings[0]?.challenge_response?.sdg,
-                width: '10%'
+                selector: (row) => row?.sdg,
+                // width: '10%'
             },
-            {
-                name: 'Submitted By',
-                selector: (row) => row.evaluator_ratings[0]?.challenge_response?.initiated_name,
-                width: '11.5%'
-            },
-            {
-                name: 'Overall',
-                cell :(row) => {
-                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].overall).toFixed(2) :' ' :' '];},
-                 width : '7%'
-            },
+            // {
+            //     name: 'Submitted By',
+            //     selector: (row) => row.evaluator_ratings[0]?.challenge_response?.initiated_name,
+            //     width: '11.5%'
+            // },
+           
             {
                 name: 'Novelity',
                 cell :(row) => {
-                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].param_1).toFixed(2) :' ' :' '];},
-                 width : '8%'
+                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? row.evaluator_ratings[0].param_1_avg :' ' :' '];},
+                //  width : '8%'
             },
             {
                 name: 'Usefulness',
                 cell :(row) => {
-                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].param_2).toFixed(2) :' ' :' '];},
-                 width : '9%'
+                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? row.evaluator_ratings[0].param_2_avg :' ' :' '];},
+                //  width : '9%'
             },
             {
                 name: 'Feasability',
                 cell :(row) => {
-                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].param_3).toFixed(2) :' ' :' '];},
-                 width : '9%'
+                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? row.evaluator_ratings[0].param_3_avg :' ' :' '];},
+                //  width : '9%'
             },
             {
                 name: 'Scalability',
                 cell :(row) => {
-                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].param_4).toFixed(2) :' ' :' '];},
-                 width : '9%'
+                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? row.evaluator_ratings[0].param_4_avg :' ' :' '];},
+                //  width : '9%'
             },
             {
                 name: 'Sustainability',
                 cell :(row) => {
-                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].param_5).toFixed(2) :' ' :' '];},
-                 width : '11%'
+                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? row.evaluator_ratings[0].param_5_avg :' ' :' '];},
+                //  width : '11%'
+            },
+            {
+                name: 'Overall',
+                cell :(row) => {
+                    return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? row.evaluator_ratings[0].overall_avg :' ' :' '];},
+                //  width : '7%'
             },
 
             {
@@ -147,6 +156,7 @@ const ViewSelectedIdea = () => {
                             <div
                                 className="btn btn-primary btn-lg mr-5 mx-2"
                                 onClick={() => {
+                                    console.warn(params);
                                     setIdeaDetails(params);
                                     setIsDetail(true);
                                     let index=0;
@@ -160,10 +170,17 @@ const ViewSelectedIdea = () => {
                             >
                                 View
                             </div>
+                            <div className='mx-2 pointer d-flex align-items-center'>
+                                {
+                                    !pdfLoader?
+                                    <FaDownload size={22} onClick={()=>{downloadPDF(params);}} className="text-danger"/>:
+                                    <FaHourglassHalf size={22} className="text-info"/>
+                                }
+                            </div>
                         </div>
                     ];
                 },
-                width: '8%',
+                width: '12%',
                 left: true
             }
         ]
@@ -185,14 +202,44 @@ const ViewSelectedIdea = () => {
             setCurrentRow(currentRow-1);
         }
     };
+
+    const [pdfLoader, setPdfLoader]=React.useState(false);
+    const [teamResponse, setTeamResponse] = React.useState([]);
+    const [details, setDetails] = React.useState();
+    const downloadPDF = async(params) => {
+        await setDetails(params);
+        if (params?.response) {
+                    await setTeamResponse(
+                        Object.entries(params?.response).map((e) => e[1])
+                    );
+                
+        setPdfLoader(true);
+        const domElement = document.getElementById("pdfIdd");
+        await html2canvas(domElement,{
+                onclone: document => {
+                    document.getElementById("pdfIdd").style.display = "block";
+                }, scale:1.13
+            }).then(canvas => {
+            const imgData = canvas.toDataURL("image/png");
+            const pdf = new jsPDF('p', 'px', [1754, 1240]);
+            pdf.addImage(imgData, "png", 10, 10);
+            pdf.save(`${new Date().toISOString()}.pdf`);
+        });
+        setPdfLoader(false);
+        }
+    };
+
     return (
         <Layout>
             <div className="container evaluated_idea_wrapper pt-5 mb-50">
+                <div id='pdfIdd' style={{display:'none'}}>
+                    <TableDetailPdf ideaDetails={details} teamResponse={teamResponse} level={level}/>
+                </div>
                 <div className="row">
                     <div className="col-12 p-0">
                         {!isDetail && (
                             <div>
-                                <h2 className="ps-2 pb-3">{title} Challenges</h2>
+                                <h2 className="ps-2 pb-3">{title=='0'? 'Final Evaluated':'Final Winners'} Challenges</h2>
 
                                 <Container fluid className="px-0">
                                     <Row className="align-items-center">

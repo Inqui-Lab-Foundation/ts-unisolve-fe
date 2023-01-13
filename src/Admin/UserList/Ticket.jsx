@@ -756,13 +756,14 @@ const TicketsPage = (props) => {
     // const handleEvaluatorStatus=(status,id)=>{
     //     console.warn(status,id);
     // };
+
     return (
         <Layout>
             <Container className="ticket-page mt-5 mb-50 userlist">
                 <Row className="mt-0 pt-3">
                     <h2>User List</h2>
                     {/* <h2 onClick={handleDelete}>User List</h2> */}
-                    <div className="ticket-data">
+                        <div className="ticket-data">
                         <Tabs
                             defaultActiveKey={
                                 localStorage.getItem('tab')
@@ -999,7 +1000,7 @@ const TicketsPage = (props) => {
                                 </div>
                             </TabPane>
                         </Tabs>
-                    </div>
+                        </div>
                 </Row>
             </Container>
             <ImportPopup

@@ -47,7 +47,7 @@ const eadmindashboard = () => {
                                             SUBMITTED CHALLENGES
                                         </b>
                                         <h3 className="display-5 bold m-2">
-                                            {dateCount.submitted_count}
+                                            {dateCount?.submitted_count}
                                         </h3>
                                     </Card>
                                 </Link>
@@ -73,7 +73,7 @@ const eadmindashboard = () => {
                                             ACCEPTED CHALLENGES
                                         </b>
                                         <h3 className="display-5 bold m-2">
-                                            {dateCount.selected_round_one_count}
+                                            {dateCount?.selected_round_one_count}
                                         </h3>
                                     </Card>
                                 </Link>
@@ -85,7 +85,7 @@ const eadmindashboard = () => {
                                             REJECTED CHALLENGES
                                         </b>
                                         <h3 className="display-5 bold m-2">
-                                            {dateCount.rejected_round_one_count}
+                                            {dateCount?.rejected_round_one_count}
                                         </h3>
                                     </Card>
                                 </Link>
@@ -97,7 +97,7 @@ const eadmindashboard = () => {
                                         L1 - YET TO PROCESSED CHALLENGES
                                         </b>
                                         <h3 className="display-5 bold m-2">
-                                        {dateCount.l1_yet_to_process}
+                                        {dateCount?.l1_yet_to_process}
                                         </h3>
                                     </Card>
                                 </Link>
@@ -111,7 +111,7 @@ const eadmindashboard = () => {
                                             L2 - PROCESSED CHALLENGES
                                         </b>
                                         <h3 className="display-5 bold m-2">
-                                            {dateCount.l2_processed}
+                                            {dateCount?.l2_processed}
                                         </h3>
                                     </Card>
                                 </Link>
@@ -123,21 +123,33 @@ const eadmindashboard = () => {
                                             L2 - YET TO PROCESSED CHALLENGES
                                         </b>
                                         <h3 className="display-5 bold m-2">
-                                            {dateCount.l2_yet_to_processed}
+                                            {dateCount?.l2_yet_to_processed}
                                         </h3>
                                     </Card>
                                 </Link>
                             </Col>
                         </Row>
                         <Row className="mb-5">
-                            <Col>
-                                <Link to="/admin/evaluationStatus/viewfinallist?title=Final&level=L2">
+                            <Col md={6}>
+                                <Link to="/admin/evaluationStatus/viewfinallist?title=0&level=L2">
                                     <Card className="p-4 text-center card-effect mb-3">
-                                        <b className="text-success">
-                                            FINAL CHALLENGES
+                                        <b className="text-warning">
+                                            FINAL EVALUATION CHALLENGES
                                         </b>
                                         <h3 className="display-5 bold m-2">
-                                        {dateCount.final_challenges}
+                                        {/* {dateCount?.final_challenges} */}
+                                        </h3>
+                                    </Card>
+                                </Link>
+                            </Col>
+                            <Col md={6}>
+                                <Link to="/admin/evaluationStatus/viewfinallist?title=1&level=L2">
+                                    <Card className="p-4 text-center card-effect mb-3">
+                                        <b className="text-success">
+                                            FINAL WINNERS CHALLENGES
+                                        </b>
+                                        <h3 className="display-5 bold m-2">
+                                        {/* {dateCount?.final_challenges} */}
                                         </h3>
                                     </Card>
                                 </Link>

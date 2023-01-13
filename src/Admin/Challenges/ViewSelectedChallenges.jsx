@@ -56,6 +56,7 @@ const ViewSelectedIdea = () => {
     };
 
     async function handleideaList() {
+        settableData([]);
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         await axios
             .get(
