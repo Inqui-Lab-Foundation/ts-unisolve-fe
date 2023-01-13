@@ -46,10 +46,19 @@ import Register from '../../Evaluator/Register';
 const { TabPane } = Tabs;
 
 const SelectDists = ({ getDistrictsListAction, dists, tab, setDist }) => {
+    const [dsts, setNewDist] = useState('');
+
+    useEffect(async () => {
+        const dist = localStorage.getItem('dist');
+        await setNewDist(dist);
+        // console.log(dist, 'dsts');
+        // console.log(dsts, 'dsts');
+    }, [localStorage.getItem('dist')]);
     useEffect(() => {
         if (tab && (tab == 1 || tab == 2)) getDistrictsListAction();
     }, [tab]);
     const handleDists = (e) => {
+        setNewDist(e.target.value);
         setDist(e.target.value);
     };
     return (
@@ -57,6 +66,7 @@ const SelectDists = ({ getDistrictsListAction, dists, tab, setDist }) => {
             onChange={handleDists}
             name="districts"
             id="districts"
+            value={dsts}
             className="text-capitalize"
         >
             <option value="">Select District</option>
@@ -81,8 +91,8 @@ const TicketsPage = (props) => {
     const [tab, setTab] = useState('1');
     const [studentDist, setstudentDist] = useState('');
     const [mentorDist, setmentorDist] = useState('');
+    const [newDist, setNewDists] = useState('');
     const [registerModalShow, setRegisterModalShow] = useState(false);
-
     useEffect(() => {
         if (tab === 3) {
             props.getEvaluatorListAction();
@@ -93,6 +103,8 @@ const TicketsPage = (props) => {
 
     useEffect(() => {
         if (Number(tab) === 1 && studentDist !== '') {
+            console.log('1');
+            console.log(studentDist);
             props.getStudentListAction(studentDist);
         }
     }, [tab, studentDist]);
@@ -119,6 +131,9 @@ const TicketsPage = (props) => {
     }, []);
     const changeTab = (e) => {
         setmentorDist('');
+        setNewDists('');
+        // localStorage.removeItem('dist');
+        // localStorage.removeItem('num');
         setstudentDist('');
         localStorage.setItem('tab', e);
         if (e === '4') {
@@ -150,11 +165,50 @@ const TicketsPage = (props) => {
         }
     }, [localStorage.getItem('tab')]);
 
-    const handleSelect = (item) => {
-        props.history.push({
-            pathname: `/admin/userprofile`,
-            data: item
-        });
+    useEffect(() => {
+        if (localStorage.getItem('dist')) {
+            const number = localStorage.getItem('num');
+            if (number == '2') {
+                let dist = localStorage.getItem('dist');
+                setmentorDist(dist);
+                setNewDists(dist);
+                console.log(newDist);
+                props.getAdminMentorsListAction('ALL', mentorDist);
+            } else {
+                let dist = localStorage.getItem('dist');
+                setstudentDist(dist);
+                setNewDists(dist);
+                props.getStudentListAction(studentDist);
+            }
+        }
+    }, [localStorage.getItem('dist')]);
+
+    // const viewDetail = (item) => {
+    //     props.history.push({
+    //         pathname: '/admin/userprofile',
+    //         data: item
+    //     });
+    //     // localStorage.setItem('mentor', JSON.stringify(item));
+    // };
+    const handleSelect = (item, num) => {
+        localStorage.removeItem('dist');
+        localStorage.removeItem('num');
+        if (num == '1') {
+            props.history.push({
+                pathname: `/admin/userprofile`,
+                data: item,
+                dist: studentDist,
+                num: num
+            });
+        } else {
+            props.history.push({
+                pathname: `/admin/userprofile`,
+                data: item,
+                dist: mentorDist,
+                num: num
+            });
+        }
+        localStorage.setItem('mentor', JSON.stringify(item));
     };
     const handleEdit = (item) => {
         props.history.push({
@@ -358,7 +412,7 @@ const TicketsPage = (props) => {
                     <Link
                         exact="true"
                         key={record.id}
-                        onClick={() => handleSelect(record)}
+                        onClick={() => handleSelect(record, '2')}
                         style={{ marginRight: '10px' }}
                     >
                         <div className="btn btn-primary btn-lg">VIEW</div>
@@ -463,7 +517,8 @@ const TicketsPage = (props) => {
                     <Link
                         key={record.id}
                         exact="true"
-                        onClick={() => handleSelect(record)}
+                        // onClick={viewDetail}
+                        onClick={() => handleSelect(record, '1')}
                         style={{ marginRight: '10px' }}
                     >
                         <div className="btn btn-primary btn-lg mr-5">VIEW</div>
@@ -732,6 +787,7 @@ const TicketsPage = (props) => {
                                                         props.getDistrictsListAction
                                                     }
                                                     setDist={setstudentDist}
+                                                    newDist={newDist}
                                                     dists={props.dists}
                                                     tab={tab}
                                                 />
@@ -753,6 +809,7 @@ const TicketsPage = (props) => {
                                                         props.getDistrictsListAction
                                                     }
                                                     setDist={setmentorDist}
+                                                    newDist={newDist}
                                                     dists={props.dists}
                                                     tab={tab}
                                                 />
