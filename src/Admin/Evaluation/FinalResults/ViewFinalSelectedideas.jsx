@@ -95,6 +95,11 @@ const ViewSelectedIdea = () => {
                 width: '6%'
             },
             {
+                name:'CID',
+                selector: (row) => row.challenge_response_id,
+                //width: '9%'
+            },
+            {
                 name: 'Team Name',
                 selector: (row) => row?.team_name || '',
                 sortable: true,
@@ -112,40 +117,46 @@ const ViewSelectedIdea = () => {
             // },
            
             {
-                name: 'Novelity',
+                name: 'Novelty',
                 cell :(row) => {
                     return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? row.evaluator_ratings[0].param_1_avg :' ' :' '];},
                 //  width : '8%'
+                sortable: true,
             },
             {
                 name: 'Usefulness',
                 cell :(row) => {
                     return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? row.evaluator_ratings[0].param_2_avg :' ' :' '];},
                 //  width : '9%'
+                sortable: true,
             },
             {
                 name: 'Feasability',
                 cell :(row) => {
                     return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? row.evaluator_ratings[0].param_3_avg :' ' :' '];},
                 //  width : '9%'
+                sortable: true,
             },
             {
                 name: 'Scalability',
                 cell :(row) => {
                     return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? row.evaluator_ratings[0].param_4_avg :' ' :' '];},
                 //  width : '9%'
+                sortable: true,
             },
             {
                 name: 'Sustainability',
                 cell :(row) => {
                     return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? row.evaluator_ratings[0].param_5_avg :' ' :' '];},
                 //  width : '11%'
+                sortable: true,
             },
             {
                 name: 'Overall',
                 cell :(row) => {
                     return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? row.evaluator_ratings[0].overall_avg :' ' :' '];},
                 //  width : '7%'
+                sortable: true,
             },
 
             {
@@ -221,8 +232,8 @@ const ViewSelectedIdea = () => {
                 }, scale:1.13
             }).then(canvas => {
             const imgData = canvas.toDataURL("image/png");
-            const pdf = new jsPDF('p', 'px', [1754, 1240]);
-            pdf.addImage(imgData, "png", 10, 10);
+            const pdf = new jsPDF('p', 'px', [2580,3508]);
+            pdf.addImage(imgData, "JPEG", 20, 20,2540, pdf.internal.pageSize.height, undefined,'FAST');
             pdf.save(`${new Date().toISOString()}.pdf`);
         });
         setPdfLoader(false);

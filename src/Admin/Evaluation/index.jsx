@@ -137,7 +137,7 @@ const eadmindashboard = () => {
                                             FINAL EVALUATION CHALLENGES
                                         </b>
                                         <h3 className="display-5 bold m-2">
-                                        {/* {dateCount?.final_challenges} */}
+                                        {dateCount?.final_evaluation_challenge}
                                         </h3>
                                     </Card>
                                 </Link>
@@ -149,7 +149,7 @@ const eadmindashboard = () => {
                                             FINAL WINNERS CHALLENGES
                                         </b>
                                         <h3 className="display-5 bold m-2">
-                                        {/* {dateCount?.final_challenges} */}
+                                        {dateCount?.final_evaluation_final}
                                         </h3>
                                     </Card>
                                 </Link>

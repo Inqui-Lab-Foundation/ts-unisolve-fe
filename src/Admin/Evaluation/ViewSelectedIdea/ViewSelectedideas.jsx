@@ -278,8 +278,8 @@ const downloadPDF = async(params) => {
             }, scale:1.13
         }).then(canvas => {
         const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF('p', 'px', [1754, 1240]);
-        pdf.addImage(imgData, "png", 10, 10);
+        const pdf = new jsPDF('p', 'px', [2580,3508]);
+        pdf.addImage(imgData, "JPEG", 20, 20,2540, pdf.internal.pageSize.height, undefined,'FAST');
         pdf.save(`${new Date().toISOString()}.pdf`);
       });
       setPdfLoader(false);
@@ -292,23 +292,28 @@ const downloadPDF = async(params) => {
                 name: 'No',
                 selector: (row) => row.key,
                 sortable: true,
-                width: '10%'
+                width: '9%'
+            },
+            {
+                name:'CID',
+                selector: (row) => row.challenge_response_id,
+                width: '9%'
             },
             {
                 name: 'Team Name',
                 selector: (row) => row.team_name || '',
                 sortable: true,
-                width: '20%'
+                width: '17%'
             },
             {
                 name: 'SDG',
                 selector: (row) => row.sdg,
-                width: '15%'
+                width: '13%'
             },
             {
                 name: 'Submitted By',
                 selector: (row) => row.initiated_name,
-                width: '25%'
+                width: '22%'
             },
             {
                 name: 'Overall',
@@ -452,7 +457,7 @@ const downloadPDF = async(params) => {
                  width : '7%'
             },
             {
-                name: 'Novelity',
+                name: 'Novelty',
                 cell :(row) => {
                     return[row.evaluator_ratings ? row.evaluator_ratings.length > 0 ? average(row.evaluator_ratings[0].param_1).toFixed(2) :' ' :' '];},
                  width : '8%'
