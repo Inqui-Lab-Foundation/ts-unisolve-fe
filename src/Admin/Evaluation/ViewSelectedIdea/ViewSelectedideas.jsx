@@ -23,7 +23,6 @@ import { getAdminList } from '../../store/admin/actions';
 import { Spinner } from 'react-bootstrap';
 import jsPDF from 'jspdf';
 import {FaDownload, FaHourglassHalf} from 'react-icons/fa';
-// import DetailToDownload from './DetailToDownload';
 import html2canvas from "html2canvas";
 import TableDetailPdf from './TableDetailPdf';
 
@@ -95,6 +94,7 @@ const ViewSelectedIdea = () => {
     };
 
     async function handleideaList() {
+        settableData({});
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         await axios
             .get(title === 'Final'? `${URL.getidealistfinal}${filterParamsfinal}` :`${URL.getidealist}level=${level}${dataParam}${filterParams}`, axiosConfig)

@@ -42,10 +42,11 @@ import CommonPage from '../../components/CommonPage';
 import { updateEvaluator } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import Register from '../../Evaluator/Register';
+import ViewUserProfile from './ViewUserProfile';
 
 const { TabPane } = Tabs;
 
-const SelectDists = ({ getDistrictsListAction, dists, tab, setDist }) => {
+const SelectDists = ({ getDistrictsListAction, dists, tab, setDist, value }) => {
     useEffect(() => {
         if (tab && (tab == 1 || tab == 2)) getDistrictsListAction();
     }, [tab]);
@@ -55,6 +56,7 @@ const SelectDists = ({ getDistrictsListAction, dists, tab, setDist }) => {
     return (
         <select
             onChange={handleDists}
+            value={value}
             name="districts"
             id="districts"
             className="text-capitalize"
@@ -151,10 +153,12 @@ const TicketsPage = (props) => {
     }, [localStorage.getItem('tab')]);
 
     const handleSelect = (item) => {
-        props.history.push({
-            pathname: `/admin/userprofile`,
-            data: item
-        });
+        // props.history.push({
+        //     pathname: `/admin/userprofile`,
+        //     data: item
+        // });
+        setData(item);
+        setView(true);
     };
     const handleEdit = (item) => {
         props.history.push({
@@ -701,13 +705,17 @@ const TicketsPage = (props) => {
     // const handleEvaluatorStatus=(status,id)=>{
     //     console.warn(status,id);
     // };
+    const [isView, setView]=React.useState(false);
+    const [data, setData]=React.useState();
+
     return (
         <Layout>
             <Container className="ticket-page mt-5 mb-50 userlist">
                 <Row className="mt-0 pt-3">
                     <h2>User List</h2>
                     {/* <h2 onClick={handleDelete}>User List</h2> */}
-                    <div className="ticket-data">
+                    { !isView?
+                        <div className="ticket-data">
                         <Tabs
                             defaultActiveKey={
                                 localStorage.getItem('tab')
@@ -732,6 +740,7 @@ const TicketsPage = (props) => {
                                                         props.getDistrictsListAction
                                                     }
                                                     setDist={setstudentDist}
+                                                    value={studentDist}
                                                     dists={props.dists}
                                                     tab={tab}
                                                 />
@@ -753,6 +762,7 @@ const TicketsPage = (props) => {
                                                         props.getDistrictsListAction
                                                     }
                                                     setDist={setmentorDist}
+                                                    value={mentorDist}
                                                     dists={props.dists}
                                                     tab={tab}
                                                 />
@@ -942,7 +952,11 @@ const TicketsPage = (props) => {
                                 </div>
                             </TabPane>
                         </Tabs>
-                    </div>
+                        </div>:
+                        <>  
+                        <ViewUserProfile data={data} setView={setView} />   
+                        </>
+                    }
                 </Row>
             </Container>
             <ImportPopup

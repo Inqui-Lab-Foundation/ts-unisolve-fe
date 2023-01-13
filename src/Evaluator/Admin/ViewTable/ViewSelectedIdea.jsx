@@ -91,6 +91,7 @@ const ViewSelectedIdea = () => {
     // }, [reason,district,sdg]);
 
     async function handleideaList() {
+        settableData([]);
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         await axios
             .get(`${URL.getidealist}${level0Param}${levelParm}${dataParam}${filterParams}`, axiosConfig)
