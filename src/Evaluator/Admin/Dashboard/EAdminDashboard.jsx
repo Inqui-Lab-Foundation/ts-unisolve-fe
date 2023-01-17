@@ -132,7 +132,7 @@ const eadmindashboard = () => {
                         </Row>
                         <Row className="mb-5">
                             <Col md={6}>
-                                <Link to="/eadmin/listofideas?title=Final Evaluated&level=L2">
+                                <Link to="/eadmin/listofFinalideas?title=0&level=L2">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-warning">
                                             FINAL EVALUATION CHALLENGES
@@ -146,7 +146,7 @@ const eadmindashboard = () => {
                                 </Link>
                             </Col>
                             <Col md={6}>
-                                <Link to="/eadmin/listofideas?title=Final Winners&level=L2">
+                                <Link to="/eadmin/listofFinalideas?title=1&level=L2">
                                     <Card className="p-4 text-center card-effect mb-3">
                                         <b className="text-success">
                                             FINAL WINNERS CHALLENGES
@@ -158,20 +158,6 @@ const eadmindashboard = () => {
                                 </Link>
                             </Col>
                         </Row>
-                        {/* <Row className="mb-5">
-                            <Col>
-                                <Link to="/eadmin/listofFinalideas?title=Final&level=L2">
-                                    <Card className="p-4 text-center card-effect mb-3">
-                                        <b className="text-success">
-                                            FINAL CHALLENGES
-                                        </b>
-                                        <h3 className="display-5 bold m-2">
-                                        {dateCount.final_challenges}
-                                        </h3>
-                                    </Card>
-                                </Link>
-                            </Col>
-                        </Row> */}
                     </Container>
                 </div>
             </div>
