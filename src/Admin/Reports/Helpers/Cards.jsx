@@ -30,9 +30,9 @@ const Cards = ({ heading, list, reports, props, distList }) => {
             Contact: '9801775505'
         }
     ];
-    console.log(distList);
 
     const handleDownload = (item) => {
+        // All download reports list //
         setMsg(item);
         var url = '';
         if (item == 'Registered Teachers List') {
@@ -87,6 +87,7 @@ const Cards = ({ heading, list, reports, props, distList }) => {
     };
 
     const handleView = (item) => {
+        //All challenges districtWise count //
         var url = '';
         if (item == 'Submitted Challenges') {
             url = 'SUBMITTED';
