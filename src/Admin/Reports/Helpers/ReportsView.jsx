@@ -25,6 +25,8 @@ const ReportsView = () => {
 
     useEffect(() => {
         handleDistAPI(disTrict);
+        // handleDistAPI we get the Challenges //
+        // disTrict = districtWise count //
     }, []);
 
     async function handleDistAPI(disTrict) {
@@ -36,7 +38,6 @@ const ReportsView = () => {
             .get(`${URL.getReportsView}`, axiosConfig)
             .then((res) => {
                 if (res?.status == 200) {
-                    console.log(res);
                     setListData(res && res.data && res.data.data);
                 }
             })
@@ -60,7 +61,6 @@ const ReportsView = () => {
             }
         ]
     };
-    console.log(listData);
     return (
         <Layout>
             <Container className="ReportsView pt-3 pt-xl-5">
