@@ -88,7 +88,7 @@ const Certificate = ({
                             className="text-capitalize"
                             style={{
                                 position: 'absolute',
-                                top: `${type ? '9rem' : '8.3rem'}`,
+                                top: `${type ? '8.1rem' : '7.4rem'}`,
                                 left: `${type ? '10.3rem' : '10rem'}`,
                                 // top: `${type ? '9rem' : '12.8rem'}`,
                                 // left: `${type ? '10.3rem' : '6.5rem'}`,
@@ -103,7 +103,7 @@ const Certificate = ({
                             className="text-capitalize"
                             style={{
                                 position: 'absolute',
-                                top: `${type ? '10.4rem' : '9.7rem'}`,
+                                top: `${type ? '9.5rem' : '8.8rem'}`,
                                 left: `${type ? '5rem' : '5rem'}`,
                                 fontSize: '0.8rem',
                                 fontFamily:"Times New Roman"
@@ -205,7 +205,7 @@ const MyCertificate = () => {
         <Layout>
             <Container className="presuervey mb-50 mt-5 ">
                 <Fragment>
-                    {!showDummypage ? (
+                    {showDummypage ? (
                         // all_topics_count === topics_completed_count || enablePostSurvey
                         <Row>
                             <Col className="d-lg-flex justify-content-center">

@@ -55,7 +55,7 @@ const MyCertificate = () => {
             <Container className="presuervey mb-50 mt-5 ">
                 <Fragment>
                     <Card className="course-sec-basic p-5">
-                        {tempVar ? (
+                        {!tempVar ? (
                             <CardBody>
                                 <CardTitle
                                     className=" text-left pt-4 pb-4"
@@ -75,7 +75,7 @@ const MyCertificate = () => {
                                         className="text-capitalize"
                                         style={{
                                             position: 'absolute',
-                                            top: '7.9rem',
+                                            top: '7.2rem',
                                             left: '10rem',
                                             fontSize: '1rem',
                                             fontFamily:"Times New Roman"
@@ -87,7 +87,7 @@ const MyCertificate = () => {
                                         className="text-capitalize"
                                         style={{
                                             position: 'absolute',
-                                            top: '9.3rem',
+                                            top: '8.6rem',
                                             left: '5rem',
                                             fontSize: '1rem',
                                             fontFamily:"Times New Roman"
