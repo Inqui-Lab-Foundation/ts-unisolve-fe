@@ -140,6 +140,7 @@ const Dashboard = () => {
             .then((res) => {
                 if (res?.status == 200) {
                     var mentorTeamArray = [];
+                    console.log(res);
                     res &&
                         res.data &&
                         res.data.data[0] &&
