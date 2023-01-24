@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { Fragment, useLayoutEffect, useRef, useState } from 'react';
 import { Card, CardBody, CardTitle, Container } from 'reactstrap';
 import { Button } from '../../stories/Button';
@@ -18,10 +19,10 @@ const MyCertificate = () => {
     const currentUser = getCurrentUser('current_user');
     const language = useSelector((state) => state?.mentors.mentorLanguage);
     const [postSurveyStatus, setPostSurveyStatus] = useState('');
-    let tempVar = postSurveyStatus ==="COMPLETED";
+    let tempVar = postSurveyStatus === 'COMPLETED';
     const handleCertificateDownload = () => {
         const content = pdfRef.current;
-        const doc = new jsPDF('l', 'px', [211,298]);
+        const doc = new jsPDF('l', 'px', [211, 298]);
         doc.html(content, {
             callback: function (doc) {
                 doc.save('certificate.pdf');
@@ -75,10 +76,10 @@ const MyCertificate = () => {
                                         className="text-capitalize"
                                         style={{
                                             position: 'absolute',
-                                            top: '7.2rem',
+                                            top: '8rem',
                                             left: '10rem',
                                             fontSize: '1rem',
-                                            fontFamily:"Times New Roman"
+                                            fontFamily: 'Yeseva One'
                                         }}
                                     >
                                         {currentUser?.data[0]?.full_name}
@@ -87,13 +88,16 @@ const MyCertificate = () => {
                                         className="text-capitalize"
                                         style={{
                                             position: 'absolute',
-                                            top: '8.6rem',
+                                            top: '9.6rem',
                                             left: '5rem',
-                                            fontSize: '1rem',
-                                            fontFamily:"Times New Roman"
+                                            fontSize: '0.75rem',
+                                            fontFamily: 'Yeseva One'
                                         }}
                                     >
-                                        {currentUser?.data[0]?.organization_name}
+                                        {
+                                            currentUser?.data[0]
+                                                ?.organization_name
+                                        }
                                     </span>
                                     <img
                                         src={TeacherCertificate}
@@ -119,7 +123,7 @@ const MyCertificate = () => {
                                 </div>
                             </CardBody>
                         ) : (
-                            <div className='text-center'>
+                            <div className="text-center">
                                 <div>
                                     <img
                                         className="img-fluid w-25"
@@ -128,7 +132,13 @@ const MyCertificate = () => {
                                 </div>
                                 <div>
                                     <h2>
-                                        {postSurveyStatus =="COMPLETED" ? t('teacher_certificate.complete_post_survey_default') :t('teacher_certificate.complete_postsurvey')}
+                                        {postSurveyStatus == 'COMPLETED'
+                                            ? t(
+                                                  'teacher_certificate.complete_post_survey_default'
+                                              )
+                                            : t(
+                                                  'teacher_certificate.complete_postsurvey'
+                                              )}
                                     </h2>
                                 </div>
                             </div>
