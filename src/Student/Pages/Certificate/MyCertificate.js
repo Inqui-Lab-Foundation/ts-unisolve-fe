@@ -88,12 +88,13 @@ const Certificate = ({
                             className="text-capitalize"
                             style={{
                                 position: 'absolute',
-                                top: `${type ? '8.1rem' : '7.4rem'}`,
-                                left: `${type ? '10.3rem' : '10rem'}`,
+                                top: `${type ? '8.3rem' : '7.6rem'}`,
+                                left: `${type ? '9rem' : '9rem'}`,
                                 // top: `${type ? '9rem' : '12.8rem'}`,
                                 // left: `${type ? '10.3rem' : '6.5rem'}`,
                                 fontSize: '0.8rem',
-                                fontFamily:"Times New Roman"
+                                fontFamily:"Times New Roman",
+                                fontWeight:'bold',
                                 
                             }}
                         >
@@ -103,10 +104,11 @@ const Certificate = ({
                             className="text-capitalize"
                             style={{
                                 position: 'absolute',
-                                top: `${type ? '9.5rem' : '8.8rem'}`,
+                                top: `${type ? '9.7rem' : '9rem'}`,
                                 left: `${type ? '5rem' : '5rem'}`,
                                 fontSize: '0.8rem',
-                                fontFamily:"Times New Roman"
+                                fontFamily:"Times New Roman",
+                                fontWeight:'bold',
                             }}
                         >
                             {currentUser?.data[0]?.organization_name + certDateCheck()}
