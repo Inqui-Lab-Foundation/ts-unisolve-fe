@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { Fragment, useLayoutEffect, useRef, useState } from 'react';
 import { Card, CardBody, CardTitle, Container } from 'reactstrap';
 import { Button } from '../../stories/Button';
@@ -18,10 +19,10 @@ const MyCertificate = () => {
     const currentUser = getCurrentUser('current_user');
     const language = useSelector((state) => state?.mentors.mentorLanguage);
     const [postSurveyStatus, setPostSurveyStatus] = useState('');
-    let tempVar = postSurveyStatus ==="COMPLETED";
+    let tempVar = postSurveyStatus === 'COMPLETED';
     const handleCertificateDownload = () => {
         const content = pdfRef.current;
-        const doc = new jsPDF('l', 'px', [211,298]);
+        const doc = new jsPDF('l', 'px', [211, 298]);
         doc.html(content, {
             callback: function (doc) {
                 doc.save('certificate.pdf');
@@ -95,7 +96,10 @@ const MyCertificate = () => {
                                             fontFamily:"Times New Roman"
                                         }}
                                     >
-                                        {currentUser?.data[0]?.organization_name}
+                                        {
+                                            currentUser?.data[0]
+                                                ?.organization_name
+                                        }
                                     </span>
                                     <img
                                         src={TeacherCertificate}
@@ -121,7 +125,7 @@ const MyCertificate = () => {
                                 </div>
                             </CardBody>
                         ) : (
-                            <div className='text-center'>
+                            <div className="text-center">
                                 <div>
                                     <img
                                         className="img-fluid w-25"
@@ -130,7 +134,13 @@ const MyCertificate = () => {
                                 </div>
                                 <div>
                                     <h2>
-                                        {postSurveyStatus =="COMPLETED" ? t('teacher_certificate.complete_post_survey_default') :t('teacher_certificate.complete_postsurvey')}
+                                        {postSurveyStatus == 'COMPLETED'
+                                            ? t(
+                                                  'teacher_certificate.complete_post_survey_default'
+                                              )
+                                            : t(
+                                                  'teacher_certificate.complete_postsurvey'
+                                              )}
                                     </h2>
                                 </div>
                             </div>
