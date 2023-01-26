@@ -33,7 +33,7 @@ const Certificate = ({
     const handleCertificateDownload = () => {
         const content = type ? partRef.current : pdfRef.current;
         const badge = 'the_finisher';
-        const size = type ? [298, 220] : [298, 220];
+        const size = type ? [298, 211] : [298, 211];
         // const size = type ? [210, 297] : [298, 200];
         const orientation = type ? 'l' : 'l';
         const doc = new jsPDF(orientation, 'px', size);
@@ -88,11 +88,11 @@ const Certificate = ({
                             className="text-capitalize"
                             style={{
                                 position: 'absolute',
-                                top: `${type ? '8.3rem' : '7.6rem'}`,
+                                top: `${type ? '8rem' : '7.4rem'}`,
                                 left: `${type ? '9rem' : '9rem'}`,
                                 // top: `${type ? '9rem' : '12.8rem'}`,
                                 // left: `${type ? '10.3rem' : '6.5rem'}`,
-                                fontSize: '0.8rem',
+                                fontSize: '0.75rem',
                                 fontFamily:"Times New Roman",
                                 fontWeight:'bold',
                                 
@@ -104,9 +104,9 @@ const Certificate = ({
                             className="text-capitalize"
                             style={{
                                 position: 'absolute',
-                                top: `${type ? '9.7rem' : '9rem'}`,
+                                top: `${type ? '9.4rem' : '8.8rem'}`,
                                 left: `${type ? '5rem' : '5rem'}`,
-                                fontSize: '0.8rem',
+                                fontSize: '0.75rem',
                                 fontFamily:"Times New Roman",
                                 fontWeight:'bold',
                             }}
@@ -120,13 +120,12 @@ const Certificate = ({
                                     : courseCompletionCertificate
                             }
                             alt="certificate"
-                            className="img-fluid mx-auto"
                             style={{
                                 width:'297px',
                                 height:'210px',
                                 // width: `${type ? '297px' : '200px'}`,
                                 // height: `${type ? '209px' : '297px'}`,
-                                border: '1px solid #cccccc'
+                                // border: '1px solid #cccccc'
                             }}
                         />
                     </div>
