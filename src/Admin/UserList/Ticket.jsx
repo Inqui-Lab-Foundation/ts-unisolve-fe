@@ -699,6 +699,7 @@ const TicketsPage = (props) => {
                 width: '25%',
                 cell: (record) => [
                     <Link
+                        key={record?.id}
                         exact="true"
                         className="mr-5"
                         key={record?.id}
@@ -709,7 +710,8 @@ const TicketsPage = (props) => {
                     </Link>,
                     <Link
                         exact="true"
-                        key={record.id}
+                        key={record?.id}
+                        onClick={() => handleEdit(record)}
                         style={{ marginRight: '10px' }}
                         onClick={() => {
                             let status =
@@ -978,11 +980,11 @@ const TicketsPage = (props) => {
                             >
                                 <div className="my-5">
                                     <DataTableExtensions
-                                        {...adminData}
+                                        {...adminDatas}
                                         exportHeaders
                                     >
                                         <DataTable
-                                            data={props.adminData}
+                                            data={props.adminData && props.adminData}
                                             defaultSortField="id"
                                             defaultSortAsc={false}
                                             pagination
