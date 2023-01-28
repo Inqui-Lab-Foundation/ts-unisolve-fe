@@ -93,7 +93,7 @@ const Certificate = ({
                                 // top: `${type ? '9rem' : '12.8rem'}`,
                                 // left: `${type ? '10.3rem' : '6.5rem'}`,
                                 fontSize: '0.75rem',
-                                fontFamily:"Times New Roman",
+                                fontFamily:"courier",
                                 fontWeight:'bold',
                                 
                             }}
@@ -107,7 +107,7 @@ const Certificate = ({
                                 top: `${type ? '9.4rem' : '8.8rem'}`,
                                 left: `${type ? '5rem' : '5rem'}`,
                                 fontSize: '0.75rem',
-                                fontFamily:"Times New Roman",
+                                fontFamily:"courier",
                                 fontWeight:'bold',
                             }}
                         >
