@@ -16,14 +16,13 @@ import {
     updateStudentCertificate
 } from '../../../redux/studentRegistration/actions';
 //import CommonPage from '../../../components/CommonPage';
-import moment from 'moment';
+//import moment from 'moment';
 import Congo from '../../../assets/media/survey-success.jpg';
 
 const Certificate = ({
     type,
     currentUser,
     postSurveyStatus,
-    certDate,
     language
 }) => {
     const { t } = useTranslation();
@@ -59,12 +58,12 @@ const Certificate = ({
                 updateStudentCertificate(currentUser?.data[0]?.student_id)
             );
     };
-    const certDateCheck = () => {
-        const check = type !=='participate'
-            ? certDate?.course_completed_date &&
-            moment(certDate?.course_completed_date).format('DD-MM-YYYY'):'';
-        return check ? ' on ' + check : '';
-    };
+    // const certDateCheck = () => {
+    //     const check = type !=='participate'
+    //         ? certDate?.course_completed_date &&
+    //         moment(certDate?.course_completed_date).format('DD-MM-YYYY'):'';
+    //     return check ? ' on ' + check : '';
+    // };
     return (
         <Card
             className="course-sec-basic p-5 m-4 w-100"
@@ -111,7 +110,7 @@ const Certificate = ({
                                 fontWeight:'bold',
                             }}
                         >
-                            {currentUser?.data[0]?.organization_name + certDateCheck()}
+                            {currentUser?.data[0]?.organization_name}
                         </span>
                         <img
                             src={
