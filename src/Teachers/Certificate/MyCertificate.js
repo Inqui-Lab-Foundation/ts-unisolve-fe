@@ -80,7 +80,7 @@ const MyCertificate = () => {
                                             left: '10rem',
                                             fontSize: '0.75rem',
                                             fontWeight:'bold',
-                                            fontFamily:"Times New Roman"
+                                            fontFamily:"courier"
                                         }}
                                     >
                                         {currentUser?.data[0]?.full_name}
@@ -93,7 +93,7 @@ const MyCertificate = () => {
                                             left: '5rem',
                                             fontSize: '0.75rem',
                                             fontWeight:'bold',
-                                            fontFamily:"Times New Roman"
+                                            fontFamily:"courier"
                                         }}
                                     >
                                         {
