@@ -94,6 +94,7 @@ const Certificate = ({
                                 fontSize: '0.75rem',
                                 fontFamily:"courier",
                                 fontWeight:'bold',
+                                color:'#000000'
                                 
                             }}
                         >
@@ -108,6 +109,7 @@ const Certificate = ({
                                 fontSize: '0.75rem',
                                 fontFamily:"courier",
                                 fontWeight:'bold',
+                                color:'#000000'
                             }}
                         >
                             {currentUser?.data[0]?.organization_name}
