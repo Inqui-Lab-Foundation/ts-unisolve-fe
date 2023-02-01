@@ -978,11 +978,11 @@ const TicketsPage = (props) => {
                             >
                                 <div className="my-5">
                                     <DataTableExtensions
-                                        {...adminData}
+                                        {...adminDatas}
                                         exportHeaders
                                     >
                                         <DataTable
-                                            data={props.adminData}
+                                            data={props.adminData && props.adminData}
                                             defaultSortField="id"
                                             defaultSortAsc={false}
                                             pagination

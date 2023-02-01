@@ -117,6 +117,7 @@ const AddNewSchool = (props) => {
                         err.response.data.message
                     );
                     return err.response;
+                    
                 });
         }
     });

@@ -172,17 +172,8 @@ const ChangePSWModal = (props) => {
                                         onBlur={formik.handleBlur}
                                         value={formik.values.oldPassword}
                                     />
-                                    <div
-                                        className="pointer position-absolute top-50 end-0 me-4 mt-1"
-                                        onClick={() => {
-                                            handleShowPassword(oldPassword);
-                                        }}
-                                    >
-                                        {oldPassword?.type === 'password' ? (
-                                            <FaEyeSlash size={18} />
-                                        ) : (
-                                            <FaEye size={18} />
-                                        )}
+                                    <div className='pointer position-absolute top-50 end-0 me-4 mt-1' onClick={()=>{handleShowPassword(oldPassword);}}>
+                                        {oldPassword?.type==='password'?<FaEyeSlash size={18}/>:<FaEye size={18}/>}
                                     </div>
                                     {formik.touched.oldPassword &&
                                     formik.errors.oldPassword ? (
@@ -213,18 +204,8 @@ const ChangePSWModal = (props) => {
                                         onBlur={formik.handleBlur}
                                         value={formik.values.newPassword}
                                     />
-                                    <div
-                                        className="pointer position-absolute end-0 me-4"
-                                        style={{ bottom: '4rem' }}
-                                        onClick={() => {
-                                            handleShowPassword(newPassword);
-                                        }}
-                                    >
-                                        {newPassword?.type === 'password' ? (
-                                            <FaEyeSlash size={18} />
-                                        ) : (
-                                            <FaEye size={18} />
-                                        )}
+                                    <div className='pointer position-absolute end-0 me-4' style={{bottom:'4rem'}} onClick={()=>{handleShowPassword(newPassword);}}>
+                                        {newPassword?.type==='password'?<FaEyeSlash size={18}/>:<FaEye size={18}/>}
                                     </div>
                                     <small className="mt-2">
                                         {t(
