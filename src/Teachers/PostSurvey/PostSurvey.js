@@ -44,10 +44,10 @@ const PostSurvey = () => {
     const dashboardStates = useSelector(
         (state) => state.teacherDashBoard.dashboardStates
     );
-
+    const allStudentPostSurvey = dashboardStates?.students_count === dashboardStates?.post_survey_count;
     useEffect(() => {
-        //if(!dashboardStates)
-        dispatch(getDashboardStates(currentUser?.data[0]?.user_id));
+        if(!dashboardStates)
+            dispatch(getDashboardStates(currentUser?.data[0]?.user_id));
     }, [dispatch, currentUser?.data[0]?.user_id]);
     const formik = useFormik({
         initialValues: {},
@@ -125,10 +125,10 @@ const PostSurvey = () => {
             <Container className="presuervey mb-50 mt-5 ">
                 <Col>
                     <Row className=" justify-content-center">
+                        <h2>{t('teacher.post_survey')}</h2>
                         <div className="aside  p-4 bg-white">
-                            <h2>{t('teacher.post_survey')}</h2>
                             <CardBody>
-                                {postSurveyStatus != 'COMPLETED' ? (
+                                {postSurveyStatus != 'COMPLETED' && allStudentPostSurvey ? (
                                     <>
                                         <UncontrolledAlert
                                             color="danger"

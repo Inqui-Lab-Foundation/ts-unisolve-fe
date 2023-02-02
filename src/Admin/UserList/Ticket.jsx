@@ -978,7 +978,7 @@ const TicketsPage = (props) => {
                             >
                                 <div className="my-5">
                                     <DataTableExtensions
-                                        {...adminDatas}
+                                        {...adminData}
                                         exportHeaders
                                     >
                                         <DataTable
