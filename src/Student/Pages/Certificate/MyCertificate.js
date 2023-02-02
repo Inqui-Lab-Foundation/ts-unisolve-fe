@@ -1,4 +1,4 @@
-import { Fragment, useLayoutEffect, useRef } from 'react';
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Card, CardBody, CardTitle, Col, Container, Row } from 'reactstrap';
 import { Button } from '../../../stories/Button';
 import Layout from '../../Layout';
@@ -9,8 +9,8 @@ import ideaSubmissionCertificate from '../../../assets/media/img/certificates/TN
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    getStudentChallengeSubmittedResponse,
-    getStudentDashboardStatus,
+    // getStudentChallengeSubmittedResponse,
+    // getStudentDashboardStatus,
     studentPostSurveyCertificate,
     updateStudentBadges,
     updateStudentCertificate
@@ -23,7 +23,8 @@ const Certificate = ({
     type,
     currentUser,
     postSurveyStatus,
-    language
+    language,
+    name
 }) => {
     const { t } = useTranslation();
     const pdfRef = useRef(null);
@@ -98,7 +99,7 @@ const Certificate = ({
                                 
                             }}
                         >
-                            {currentUser?.data[0]?.full_name}
+                            {name}
                         </span>
                         <span
                             className="text-capitalize"
@@ -156,6 +157,7 @@ const Certificate = ({
 const MyCertificate = () => {
     const showDummypage = false;
     const { t } = useTranslation();
+    const [name,setName] = useState('');
     // const teamMember = useSelector((state) => state?.studentRegistration.teamMember);
     const language = useSelector(
         (state) => state?.studentRegistration?.studentLanguage
@@ -163,46 +165,56 @@ const MyCertificate = () => {
     const postSurveyStatusGl = useSelector(
         (state) => state?.studentRegistration?.postSurveyStatusGl
     );
-    const dashboardStatus = useSelector(
-        (state) => state?.studentRegistration?.dashboardStatus
-    );
-    const ideaSubmissionStatus = useSelector(
-        (state) => state?.studentRegistration.ideaSubmissionStatus
-    );
-    const ideaSubmissionsSubmittedAt = useSelector(
-        (state) => state?.studentRegistration?.challengesSubmittedResponse[0]
-    );
-    let { all_topics_count, topics_completed_count } = dashboardStatus
-        ? dashboardStatus
-        : { all_topics_count: null, topics_completed_count: null };
+    // const dashboardStatus = useSelector(
+    //     (state) => state?.studentRegistration?.dashboardStatus
+    // );
+    // const ideaSubmissionStatus = useSelector(
+    //     (state) => state?.studentRegistration.ideaSubmissionStatus
+    // );
+    // const ideaSubmissionsSubmittedAt = useSelector(
+    //     (state) => state?.studentRegistration?.challengesSubmittedResponse[0]
+    // );
+    // let { all_topics_count, topics_completed_count } = dashboardStatus
+    //     ? dashboardStatus
+    //     : { all_topics_count: null, topics_completed_count: null };
     const currentUser = getCurrentUser('current_user');
     const dispatch = useDispatch();
+    useEffect(() => {
+        let studentName='';
+        const namearr = currentUser?.data[0]?.full_name;
+        for (const i  of namearr){
+            if(!Number.isInteger(parseInt(i))){
+                studentName+=i;
+            }
+        }
+        setName(studentName);
+    }, [name]);
     useLayoutEffect(() => {
-        if (!dashboardStatus)
-            dispatch(
-                getStudentDashboardStatus(
-                    currentUser?.data[0]?.user_id,
-                    language
-                )
-            );
-        if (!ideaSubmissionStatus)
-            dispatch(
-                getStudentChallengeSubmittedResponse(
-                    currentUser?.data[0]?.team_id,
-                    language
-                )
-            );
-        if (!ideaSubmissionsSubmittedAt)
-            dispatch(
-                getStudentChallengeSubmittedResponse(
-                    currentUser?.data[0]?.team_id,
-                    language
-                )
-            );
+        // if (!dashboardStatus)
+        //     dispatch(
+        //         getStudentDashboardStatus(
+        //             currentUser?.data[0]?.user_id,
+        //             language
+        //         )
+        //     );
+        // if (!ideaSubmissionStatus)
+        //     dispatch(
+        //         getStudentChallengeSubmittedResponse(
+        //             currentUser?.data[0]?.team_id,
+        //             language
+        //         )
+        //     );
+        // if (!ideaSubmissionsSubmittedAt)
+        //     dispatch(
+        //         getStudentChallengeSubmittedResponse(
+        //             currentUser?.data[0]?.team_id,
+        //             language
+        //         )
+        //     );
         if (!postSurveyStatusGl)
             dispatch(studentPostSurveyCertificate(language));
     }, [language]);
-    const enablePostSurvey = ideaSubmissionStatus === 'SUBMITTED';
+    //const enablePostSurvey = ideaSubmissionStatus === 'SUBMITTED';
     return (
         <Layout>
             <Container className="presuervey mb-50 mt-5 ">
@@ -211,22 +223,24 @@ const MyCertificate = () => {
                         // all_topics_count === topics_completed_count || enablePostSurvey
                         <Row>
                             <Col className="d-lg-flex justify-content-center">
-                                <Certificate
+                                {/* <Certificate
                                     type={'participate'}
                                     currentUser={currentUser}
                                     postSurveyStatus={enablePostSurvey}
                                     //certDate={ideaSubmissionsSubmittedAt}
                                     ideaDate={ideaSubmissionsSubmittedAt}
                                     language={language}
-                                />
+                                /> */}
                                 <Certificate
                                     language={language}
                                     currentUser={currentUser}
-                                    certDate={dashboardStatus}
-                                    postSurveyStatus={
-                                        all_topics_count ===
-                                        topics_completed_count
-                                    }
+                                    name={name}
+                                    //certDate={dashboardStatus}
+                                    // postSurveyStatus={
+                                    //     all_topics_count ===
+                                    //     topics_completed_count
+                                    // }
+                                    postSurveyStatus={postSurveyStatusGl==='COMPLETE'}
                                 />
                             </Col>
                         </Row>
