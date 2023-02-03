@@ -30,7 +30,9 @@ import DoubleBounce from '../../components/Loaders/DoubleBounce';
 const TicketsPage = (props) => {
     const history = useHistory();
     const { t } = useTranslation();
-    const dashboardStates  = useSelector((state) => state.teacherDashBoard.dashboardStates);
+    const dashboardStates = useSelector(
+        (state) => state.teacherDashBoard.dashboardStates
+    );
 
     localStorage.setItem('teamId', JSON.stringify(''));
     const [count, setCount] = useState(0);
@@ -132,7 +134,7 @@ const TicketsPage = (props) => {
                                     {t('teacher_teams.view')}
                                 </div>
                             )}
-                        </Link>,
+                        </Link>
                         // <Link
                         //     key={params}
                         //     exact='true'
@@ -141,18 +143,18 @@ const TicketsPage = (props) => {
                         // >
                         //     <div className="btn btn-warning btn-lg mr-5 mx-2">{t('teacher_teams.edit')}</div>
                         // </Link>,
-                        <Link
-                            key={params}
-                            exact="true"
-                            onClick={() => handleDelete(params)}
-                            // style={{marginRight:"20px"}}
-                        >
-                            {params.student_count <= 2 && (
-                                <div className="btn btn-danger btn-lg mx-2">
-                                    {t('teacher_teams.delete')}
-                                </div>
-                            )}
-                        </Link>
+                        // <Link
+                        //     key={params}
+                        //     exact="true"
+                        //     onClick={() => handleDelete(params)}
+                        //     // style={{marginRight:"20px"}}
+                        // >
+                        //     {params.student_count <= 2 && (
+                        //         <div className="btn btn-danger btn-lg mx-2">
+                        //             {t('teacher_teams.delete')}
+                        //         </div>
+                        //     )}
+                        // </Link>
                     ];
                 },
                 width: '40%',
@@ -182,68 +184,68 @@ const TicketsPage = (props) => {
         localStorage.setItem('teamId', JSON.stringify(item));
     };
 
-    const handleDelete = (item) => {
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger'
-            },
-            buttonsStyling: false
-        });
+    // const handleDelete = (item) => {
+    //     const swalWithBootstrapButtons = Swal.mixin({
+    //         customClass: {
+    //             confirmButton: 'btn btn-success',
+    //             cancelButton: 'btn btn-danger'
+    //         },
+    //         buttonsStyling: false
+    //     });
 
-        swalWithBootstrapButtons
-            .fire({
-                title: 'You are attempting to delete Team.',
-                text: 'Are you sure?',
-                imageUrl: `${logout}`,
-                showCloseButton: true,
-                confirmButtonText: 'Delete',
-                showCancelButton: true,
-                cancelButtonText: 'Cancel',
-                reverseButtons: false
-            })
-            .then((result) => {
-                if (result.isConfirmed) {
-                    var config = {
-                        method: 'delete',
-                        url:
-                            process.env.REACT_APP_API_BASE_URL +
-                            '/teams/' +
-                            item.team_id,
-                        headers: {
-                            'Content-Type': 'application/json',
-                            // Accept: "application/json",
-                            Authorization: `Bearer ${currentUser?.data[0]?.token}`
-                        }
-                    };
-                    axios(config)
-                        .then(function (response) {
-                            if (response.status === 200) {
-                                setCount(count + 1);
-                                openNotificationWithIcon(
-                                    'success',
-                                    'Team Delete Successfully'
-                                );
-                                props.history.push('/teacher/teamlist');
-                            } else {
-                                openNotificationWithIcon(
-                                    'error',
-                                    'Opps! Something Wrong'
-                                );
-                            }
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    swalWithBootstrapButtons.fire(
-                        'Cancelled',
-                        'Team not Deleted',
-                        'error'
-                    );
-                }
-            });
-    };
+    //     swalWithBootstrapButtons
+    //         .fire({
+    //             title: 'You are attempting to delete Team.',
+    //             text: 'Are you sure?',
+    //             imageUrl: `${logout}`,
+    //             showCloseButton: true,
+    //             confirmButtonText: 'Delete',
+    //             showCancelButton: true,
+    //             cancelButtonText: 'Cancel',
+    //             reverseButtons: false
+    //         })
+    //         .then((result) => {
+    //             if (result.isConfirmed) {
+    //                 var config = {
+    //                     method: 'delete',
+    //                     url:
+    //                         process.env.REACT_APP_API_BASE_URL +
+    //                         '/teams/' +
+    //                         item.team_id,
+    //                     headers: {
+    //                         'Content-Type': 'application/json',
+    //                         // Accept: "application/json",
+    //                         Authorization: `Bearer ${currentUser?.data[0]?.token}`
+    //                     }
+    //                 };
+    //                 axios(config)
+    //                     .then(function (response) {
+    //                         if (response.status === 200) {
+    //                             setCount(count + 1);
+    //                             openNotificationWithIcon(
+    //                                 'success',
+    //                                 'Team Delete Successfully'
+    //                             );
+    //                             props.history.push('/teacher/teamlist');
+    //                         } else {
+    //                             openNotificationWithIcon(
+    //                                 'error',
+    //                                 'Opps! Something Wrong'
+    //                             );
+    //                         }
+    //                     })
+    //                     .catch(function (error) {
+    //                         console.log(error);
+    //                     });
+    //             } else if (result.dismiss === Swal.DismissReason.cancel) {
+    //                 swalWithBootstrapButtons.fire(
+    //                     'Cancelled',
+    //                     'Team not Deleted',
+    //                     'error'
+    //                 );
+    //             }
+    //         });
+    // };
 
     return (
         <Layout>
@@ -304,25 +306,32 @@ const TicketsPage = (props) => {
                         <Label>Instructions</Label>
                         <List>
                             <li>
-                            20 to 30 students to be enrolled in SIC per School.
+                                20 to 30 students to be enrolled in SIC per
+                                School.
                             </li>
                             <li>
-                            Special characters are not allowed in Team name & Student name.
+                                Special characters are not allowed in Team name
+                                & Student name.
                             </li>
                             <li>
-                            Team name & Student name has to be only in english. No other language text will be accepted.
+                                Team name & Student name has to be only in
+                                english. No other language text will be
+                                accepted.
                             </li>
                             <li>
-                            Each team needs to have a min of 2 to max 4 members.
+                                Each team needs to have a min of 2 to max 4
+                                members.
                             </li>
                             <li>
-                            Delete team members will be active only once you add 3 members to the team.
+                                Delete team members will be active only once you
+                                add 3 members to the team.
                             </li>
                             <li>
-                            You can edit details of the team member by using the edit option.
+                                You can edit details of the team member by using
+                                the edit option.
                             </li>
                             <li>
-                            You can delete the team by using Delete Option.
+                                You can delete the team by using Delete Option.
                             </li>
                         </List>
                     </Card>
