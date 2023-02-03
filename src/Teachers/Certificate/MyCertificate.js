@@ -5,7 +5,7 @@ import { Button } from '../../stories/Button';
 import Layout from '../Layout';
 import jsPDF from 'jspdf';
 import { getCurrentUser, getNormalHeaders } from '../../helpers/Utils';
-import TeacherCertificate from '../../assets/media/img/certificates/TN-SIDP-Certificates-signed-1-1.png';
+import TeacherCertificate from '../../assets/media/img/certificates/Teacher-certificate -of-appreciation-1.png';
 import { useTranslation } from 'react-i18next';
 import { KEY, URL } from '../../constants/defaultValues';
 import { useSelector } from 'react-redux';
@@ -76,12 +76,12 @@ const MyCertificate = () => {
                                         className="text-capitalize"
                                         style={{
                                             position: 'absolute',
-                                            top: '7.2rem',
+                                            top: '9.4rem',
                                             left: '10rem',
-                                            fontSize: '0.75rem',
-                                            fontWeight:'bold',
-                                            fontFamily:"courier",
-                                            color:'#000000'
+                                            fontSize: '0.5rem',
+                                            fontWeight: 'bold',
+                                            fontFamily: 'courier',
+                                            color: '#000000'
                                         }}
                                     >
                                         {currentUser?.data[0]?.full_name}
@@ -90,12 +90,12 @@ const MyCertificate = () => {
                                         className="text-capitalize"
                                         style={{
                                             position: 'absolute',
-                                            top: '8.6rem',
-                                            left: '5rem',
-                                            fontSize: '0.75rem',
-                                            fontWeight:'bold',
-                                            fontFamily:"courier",
-                                            color:'#000000'
+                                            top: '10.7rem',
+                                            left: '6rem',
+                                            fontSize: '0.5rem',
+                                            fontWeight: 'bold',
+                                            fontFamily: 'courier',
+                                            color: '#000000'
                                         }}
                                     >
                                         {
@@ -108,7 +108,7 @@ const MyCertificate = () => {
                                         alt="certificate"
                                         style={{
                                             width: '297px',
-                                            height: '209px',
+                                            height: '209px'
                                             //border: '1px solid #ccc'
                                         }}
                                     />

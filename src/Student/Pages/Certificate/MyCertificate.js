@@ -4,7 +4,7 @@ import { Button } from '../../../stories/Button';
 import Layout from '../../Layout';
 import jsPDF from 'jspdf';
 import { getCurrentUser } from '../../../helpers/Utils';
-import courseCompletionCertificate from '../../../assets/media/img/certificates/TN-SIDP-Certificates-signed-2-1.png';
+import courseCompletionCertificate from '../../../assets/media/img/certificates/Student-certificate-of-completion-1.png';
 import ideaSubmissionCertificate from '../../../assets/media/img/certificates/TN-SIDP-Certificates-signed-3-1.png';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -88,15 +88,14 @@ const Certificate = ({
                             className="text-capitalize"
                             style={{
                                 position: 'absolute',
-                                top: `${type ? '8rem' : '7.4rem'}`,
+                                top: `${type ? '7rem' : '8.7rem'}`,
                                 left: `${type ? '9rem' : '9rem'}`,
                                 // top: `${type ? '9rem' : '12.8rem'}`,
                                 // left: `${type ? '10.3rem' : '6.5rem'}`,
-                                fontSize: '0.75rem',
-                                fontFamily:"courier",
-                                fontWeight:'bold',
-                                color:'#000000'
-                                
+                                fontSize: '0.5rem',
+                                fontFamily: 'courier',
+                                fontWeight: 'bold',
+                                color: '#000000'
                             }}
                         >
                             {name}
@@ -105,12 +104,12 @@ const Certificate = ({
                             className="text-capitalize"
                             style={{
                                 position: 'absolute',
-                                top: `${type ? '9.4rem' : '8.8rem'}`,
-                                left: `${type ? '5rem' : '5rem'}`,
-                                fontSize: '0.75rem',
-                                fontFamily:"courier",
-                                fontWeight:'bold',
-                                color:'#000000'
+                                top: `${type ? '8.1rem' : '10.1rem'}`,
+                                left: `${type ? '5rem' : '5.3rem'}`,
+                                fontSize: '0.5rem',
+                                fontFamily: 'courier',
+                                fontWeight: 'bold',
+                                color: '#000000'
                             }}
                         >
                             {currentUser?.data[0]?.organization_name}
@@ -123,8 +122,8 @@ const Certificate = ({
                             }
                             alt="certificate"
                             style={{
-                                width:'297px',
-                                height:'210px',
+                                width: '297px',
+                                height: '210px'
                                 // width: `${type ? '297px' : '200px'}`,
                                 // height: `${type ? '209px' : '297px'}`,
                                 // border: '1px solid #cccccc'
@@ -135,7 +134,7 @@ const Certificate = ({
                 <div className="text-center">
                     <Button
                         button="submit"
-                        disabled={!postSurveyStatus}
+                        disabled={postSurveyStatus}
                         label={
                             type
                                 ? t('teacher_certificate.download_participate')
@@ -157,7 +156,7 @@ const Certificate = ({
 const MyCertificate = () => {
     const showDummypage = false;
     const { t } = useTranslation();
-    const [name,setName] = useState('');
+    const [name, setName] = useState('');
     // const teamMember = useSelector((state) => state?.studentRegistration.teamMember);
     const language = useSelector(
         (state) => state?.studentRegistration?.studentLanguage
@@ -180,11 +179,11 @@ const MyCertificate = () => {
     const currentUser = getCurrentUser('current_user');
     const dispatch = useDispatch();
     useEffect(() => {
-        let studentName='';
+        let studentName = '';
         const namearr = currentUser?.data[0]?.full_name;
-        for (const i  of namearr){
-            if(!Number.isInteger(parseInt(i))){
-                studentName+=i;
+        for (const i of namearr) {
+            if (!Number.isInteger(parseInt(i))) {
+                studentName += i;
             }
         }
         setName(studentName);
@@ -240,7 +239,9 @@ const MyCertificate = () => {
                                     //     all_topics_count ===
                                     //     topics_completed_count
                                     // }
-                                    postSurveyStatus={postSurveyStatusGl==='COMPLETE'}
+                                    postSurveyStatus={
+                                        postSurveyStatusGl === 'COMPLETE'
+                                    }
                                 />
                             </Col>
                         </Row>
