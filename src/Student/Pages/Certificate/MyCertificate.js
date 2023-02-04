@@ -134,7 +134,7 @@ const Certificate = ({
                 <div className="text-center">
                     <Button
                         button="submit"
-                        disabled={postSurveyStatus}
+                        disabled={!postSurveyStatus}
                         label={
                             type
                                 ? t('teacher_certificate.download_participate')
