@@ -95,7 +95,7 @@ const Certificate = ({
                                 fontSize: '0.75rem',
                                 fontFamily: 'courier',
                                 fontWeight: 'bold',
-                                color: '#000000'
+                                color: '#047581'
                             }}
                         >
                             {name}
