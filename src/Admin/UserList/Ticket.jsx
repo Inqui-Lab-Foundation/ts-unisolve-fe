@@ -252,7 +252,7 @@ const TicketsPage = (props) => {
         const axiosConfig = getNormalHeaders(KEY.User_API_Key);
         await axios
             .put(`${URL.updateMentorStatus + '/' + id}`, data, axiosConfig)
-            .then((user) => console.log(user))
+            // .then((user) => console.log(user))
             .catch((err) => {
                 console.log('error', err);
             });
@@ -982,7 +982,10 @@ const TicketsPage = (props) => {
                                         exportHeaders
                                     >
                                         <DataTable
-                                            data={props.adminData && props.adminData}
+                                            data={
+                                                props.adminData &&
+                                                props.adminData
+                                            }
                                             defaultSortField="id"
                                             defaultSortAsc={false}
                                             pagination
