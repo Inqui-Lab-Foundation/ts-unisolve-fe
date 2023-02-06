@@ -76,12 +76,12 @@ const MyCertificate = () => {
                                         className="text-capitalize"
                                         style={{
                                             position: 'absolute',
-                                            top: '7.5rem',
-                                            left: '9.3rem',
+                                            top: '7.2rem',
+                                            left: '10rem',
                                             fontSize: '0.75rem',
                                             fontWeight: 'bold',
                                             fontFamily: 'courier',
-                                            color: '#000000'
+                                            color: '#047581'
                                         }}
                                     >
                                         {currentUser?.data[0]?.full_name}
@@ -90,8 +90,8 @@ const MyCertificate = () => {
                                         className="text-capitalize"
                                         style={{
                                             position: 'absolute',
-                                            top: '8.9rem',
-                                            left: '5.4rem',
+                                            top: '8.6rem',
+                                            left: '5rem',
                                             fontSize: '0.75rem',
                                             fontWeight: 'bold',
                                             fontFamily: 'courier',
