@@ -5,7 +5,7 @@ import { Button } from '../../stories/Button';
 import Layout from '../Layout';
 import jsPDF from 'jspdf';
 import { getCurrentUser, getNormalHeaders } from '../../helpers/Utils';
-import TeacherCertificate from '../../assets/media/img/certificates/Teacher-certificate -of-appreciation-1.png';
+import TeacherCertificate from '../../assets/media/img/certificates/Appreciation-teacher-certificate.png';
 import { useTranslation } from 'react-i18next';
 import { KEY, URL } from '../../constants/defaultValues';
 import { useSelector } from 'react-redux';
@@ -76,9 +76,9 @@ const MyCertificate = () => {
                                         className="text-capitalize"
                                         style={{
                                             position: 'absolute',
-                                            top: '9.4rem',
-                                            left: '10rem',
-                                            fontSize: '0.5rem',
+                                            top: '7.5rem',
+                                            left: '9.3rem',
+                                            fontSize: '0.75rem',
                                             fontWeight: 'bold',
                                             fontFamily: 'courier',
                                             color: '#000000'
@@ -90,9 +90,9 @@ const MyCertificate = () => {
                                         className="text-capitalize"
                                         style={{
                                             position: 'absolute',
-                                            top: '10.7rem',
-                                            left: '6rem',
-                                            fontSize: '0.5rem',
+                                            top: '8.9rem',
+                                            left: '5.4rem',
+                                            fontSize: '0.75rem',
                                             fontWeight: 'bold',
                                             fontFamily: 'courier',
                                             color: '#000000'
