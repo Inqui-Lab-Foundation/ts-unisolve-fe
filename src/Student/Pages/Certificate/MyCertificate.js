@@ -4,7 +4,7 @@ import { Button } from '../../../stories/Button';
 import Layout from '../../Layout';
 import jsPDF from 'jspdf';
 import { getCurrentUser } from '../../../helpers/Utils';
-import courseCompletionCertificate from '../../../assets/media/img/certificates/Student-certificate-of-completion-1.png';
+import courseCompletionCertificate from '../../../assets/media/img/certificates/Completion-student-certificate.png';
 import ideaSubmissionCertificate from '../../../assets/media/img/certificates/TN-SIDP-Certificates-signed-3-1.png';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -92,7 +92,7 @@ const Certificate = ({
                                 left: `${type ? '9rem' : '9rem'}`,
                                 // top: `${type ? '9rem' : '12.8rem'}`,
                                 // left: `${type ? '10.3rem' : '6.5rem'}`,
-                                fontSize: '0.5rem',
+                                fontSize: '0.75rem',
                                 fontFamily: 'courier',
                                 fontWeight: 'bold',
                                 color: '#000000'
@@ -104,9 +104,11 @@ const Certificate = ({
                             className="text-capitalize"
                             style={{
                                 position: 'absolute',
-                                top: `${type ? '8.1rem' : '10.1rem'}`,
-                                left: `${type ? '5rem' : '5.3rem'}`,
-                                fontSize: '0.5rem',
+                                top: '7.5rem',
+                                left: '9.3rem',
+                                // top: `${type ? '8.1rem' : '10.1rem'}`,
+                                // left: `${type ? '5rem' : '5.3rem'}`,
+                                fontSize: '0.75rem',
                                 fontFamily: 'courier',
                                 fontWeight: 'bold',
                                 color: '#000000'
@@ -123,7 +125,9 @@ const Certificate = ({
                             alt="certificate"
                             style={{
                                 width: '297px',
-                                height: '210px'
+                                height: '210px',
+                                top: '8.9rem',
+                                left: '5.4rem'
                                 // width: `${type ? '297px' : '200px'}`,
                                 // height: `${type ? '209px' : '297px'}`,
                                 // border: '1px solid #cccccc'
@@ -240,7 +244,7 @@ const MyCertificate = () => {
                                     //     topics_completed_count
                                     // }
                                     postSurveyStatus={
-                                        postSurveyStatusGl === 'COMPLETE'
+                                        postSurveyStatusGl === 'COMPLETED'
                                     }
                                 />
                             </Col>

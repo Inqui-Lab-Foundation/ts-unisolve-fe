@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import './style.scss';
@@ -44,9 +45,10 @@ const PostSurvey = () => {
     const dashboardStates = useSelector(
         (state) => state.teacherDashBoard.dashboardStates
     );
-    const allStudentPostSurvey = dashboardStates?.students_count === dashboardStates?.post_survey_count;
+    const allStudentPostSurvey =
+        dashboardStates?.students_count === dashboardStates?.post_survey_count;
     useEffect(() => {
-        if(!dashboardStates)
+        if (!dashboardStates)
             dispatch(getDashboardStates(currentUser?.data[0]?.user_id));
     }, [dispatch, currentUser?.data[0]?.user_id]);
     const formik = useFormik({
@@ -128,7 +130,10 @@ const PostSurvey = () => {
                         <h2>{t('teacher.post_survey')}</h2>
                         <div className="aside  p-4 bg-white">
                             <CardBody>
-                                {postSurveyStatus != 'COMPLETED' && allStudentPostSurvey ? (
+                                {dashboardStates &&
+                                dashboardStates.teams_count > 0 &&
+                                postSurveyStatus != 'COMPLETED' &&
+                                allStudentPostSurvey ? (
                                     <>
                                         <UncontrolledAlert
                                             color="danger"
