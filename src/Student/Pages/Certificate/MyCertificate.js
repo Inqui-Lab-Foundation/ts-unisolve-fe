@@ -88,7 +88,7 @@ const Certificate = ({
                             className="text-capitalize"
                             style={{
                                 position: 'absolute',
-                                top: `${type ? '7rem' : '8.7rem'}`,
+                                top: `${type ? '8rem' : '7.4rem'}`,
                                 left: `${type ? '9rem' : '9rem'}`,
                                 // top: `${type ? '9rem' : '12.8rem'}`,
                                 // left: `${type ? '10.3rem' : '6.5rem'}`,
@@ -104,10 +104,10 @@ const Certificate = ({
                             className="text-capitalize"
                             style={{
                                 position: 'absolute',
-                                top: '7.5rem',
-                                left: '9.3rem',
-                                // top: `${type ? '8.1rem' : '10.1rem'}`,
-                                // left: `${type ? '5rem' : '5.3rem'}`,
+                                // top: '7.5rem',
+                                // left: '8rem',
+                                top: `${type ? '9.4rem' : '8.8rem'}`,
+                                left: `${type ? '5rem' : '5.3rem'}`,
                                 fontSize: '0.75rem',
                                 fontFamily: 'courier',
                                 fontWeight: 'bold',
