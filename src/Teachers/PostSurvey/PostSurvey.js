@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import './style.scss';
 import {
@@ -40,11 +42,14 @@ const PostSurvey = () => {
     const [count, setCount] = useState(0);
     const [postSurveyStatus, setPostSurveyStatus] = useState('');
     const language = useSelector((state) => state?.mentors.mentorLanguage);
-    const dashboardStates  = useSelector((state) => state.teacherDashBoard.dashboardStates);
-
+    const dashboardStates = useSelector(
+        (state) => state.teacherDashBoard.dashboardStates
+    );
+    const allStudentPostSurvey =
+        dashboardStates?.students_count === dashboardStates?.post_survey_count;
     useEffect(() => {
-        //if(!dashboardStates)
-        dispatch(getDashboardStates(currentUser?.data[0]?.user_id));
+        if (!dashboardStates)
+            dispatch(getDashboardStates(currentUser?.data[0]?.user_id));
     }, [dispatch, currentUser?.data[0]?.user_id]);
     const formik = useFormik({
         initialValues: {},
@@ -104,18 +109,11 @@ const PostSurvey = () => {
             locale: final[1]
         };
         axios
-            .get(
-                `${URL.getPostSurveyList}/3`,
-                axiosConfig
-            )
+            .get(`${URL.getPostSurveyList}/3`, axiosConfig)
             .then((postSurveyRes) => {
                 if (postSurveyRes?.status == 200) {
-                    setQuizSurveyId(
-                        postSurveyRes.data.data[0].quiz_survey_id
-                    );
-                    setPostSurveyStatus(
-                        postSurveyRes.data.data[0].progress
-                    );
+                    setQuizSurveyId(postSurveyRes.data.data[0].quiz_survey_id);
+                    setPostSurveyStatus(postSurveyRes.data.data[0].progress);
                     let allQuestions = postSurveyRes.data.data[0];
                     setPostSurveyList(allQuestions.quiz_survey_questions);
                 }
@@ -124,24 +122,26 @@ const PostSurvey = () => {
                 return err.response;
             });
     }, [language, count]);
-    console.log(dashboardStates,"dashboard");
-    console.log(postSurveyStatus,"postSurveyStatus");
     return (
         <Layout>
             <Container className="presuervey mb-50 mt-5 ">
                 <Col>
                     <Row className=" justify-content-center">
+                        <h2>{t('teacher.post_survey')}</h2>
                         <div className="aside  p-4 bg-white">
-                            <h2>{t("teacher.post_survey")}</h2>
                             <CardBody>
-                                {(dashboardStates && dashboardStates.teams_count && dashboardStates.ideas_count===dashboardStates.teams_count && postSurveyStatus != 'COMPLETED') ? (
+                                {dashboardStates &&
+                                dashboardStates.teams_count > 0 &&
+                                postSurveyStatus != 'COMPLETED' &&
+                                allStudentPostSurvey ? (
                                     <>
                                         <UncontrolledAlert
                                             color="danger"
                                             className="mb-5"
                                         >
-                                            Please complete the following post survey to
-                                            get course completion certificate.
+                                            Please complete the following post
+                                            survey to get course completion
+                                            certificate.
                                         </UncontrolledAlert>
                                         <Form
                                             className="form-row"
@@ -289,7 +289,7 @@ const PostSurvey = () => {
                                             </div>
                                         </Form>
                                     </>
-                                ):postSurveyStatus == 'COMPLETED' ?
+                                ) : postSurveyStatus == 'COMPLETED' ? (
                                     <div style={{ textAlign: 'center' }}>
                                         <div>
                                             <img
@@ -304,11 +304,10 @@ const PostSurvey = () => {
                                                 )}
                                             </h2>
                                         </div>
-                                    </div> :
-                                    <PostSurveyStatic/>
-                                }
-
-                                
+                                    </div>
+                                ) : (
+                                    <PostSurveyStatic />
+                                )}
                             </CardBody>
                         </div>
                     </Row>

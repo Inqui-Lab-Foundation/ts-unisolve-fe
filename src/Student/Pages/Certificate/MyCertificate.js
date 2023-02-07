@@ -1,29 +1,30 @@
-import { Fragment, useLayoutEffect, useRef } from 'react';
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Card, CardBody, CardTitle, Col, Container, Row } from 'reactstrap';
 import { Button } from '../../../stories/Button';
 import Layout from '../../Layout';
 import jsPDF from 'jspdf';
 import { getCurrentUser } from '../../../helpers/Utils';
-import courseCompletionCertificate from '../../../assets/media/img/certificates/TN_Course+Completion+Certficate.png';
-import ideaSubmissionCertificate from '../../../assets/media/img/certificates/TN+Idea+Submission.png';
+import courseCompletionCertificate from '../../../assets/media/img/certificates/Completion-student-certificate.png';
+import ideaSubmissionCertificate from '../../../assets/media/img/certificates/TN-SIDP-Certificates-signed-3-1.png';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    getStudentDashboardStatus,
+    // getStudentChallengeSubmittedResponse,
+    // getStudentDashboardStatus,
     studentPostSurveyCertificate,
     updateStudentBadges,
     updateStudentCertificate
 } from '../../../redux/studentRegistration/actions';
 //import CommonPage from '../../../components/CommonPage';
-import moment from 'moment';
+//import moment from 'moment';
 import Congo from '../../../assets/media/survey-success.jpg';
 
 const Certificate = ({
     type,
     currentUser,
     postSurveyStatus,
-    certDate,
-    language
+    language,
+    name
 }) => {
     const { t } = useTranslation();
     const pdfRef = useRef(null);
@@ -32,8 +33,9 @@ const Certificate = ({
     const handleCertificateDownload = () => {
         const content = type ? partRef.current : pdfRef.current;
         const badge = 'the_finisher';
-        const size = type ? [210, 297] : [298, 200];
-        const orientation = type ? 'l' : 'p';
+        const size = type ? [298, 211] : [298, 211];
+        // const size = type ? [210, 297] : [298, 200];
+        const orientation = type ? 'l' : 'l';
         const doc = new jsPDF(orientation, 'px', size);
         const certName = `${currentUser?.data[0]?.full_name}_${
             type ? 'idea_certificate' : 'course_certificate'
@@ -57,15 +59,12 @@ const Certificate = ({
                 updateStudentCertificate(currentUser?.data[0]?.student_id)
             );
     };
-    const certDateCheck = () => {
-        const check = type
-            ? certDate?.course_completed_date &&
-              moment(certDate?.course_completed_date).format('DD-MM-YYYY')
-            : certDate?.post_survey_completed_date &&
-              moment(certDate?.post_survey_completed_date).format('DD-MM-YYYY');
-        return check ? ' on ' + check : '';
-    };
-    console.log(type);
+    // const certDateCheck = () => {
+    //     const check = type !=='participate'
+    //         ? certDate?.course_completed_date &&
+    //         moment(certDate?.course_completed_date).format('DD-MM-YYYY'):'';
+    //     return check ? ' on ' + check : '';
+    // };
     return (
         <Card
             className="course-sec-basic p-5 m-4 w-100"
@@ -89,12 +88,33 @@ const Certificate = ({
                             className="text-capitalize"
                             style={{
                                 position: 'absolute',
-                                top: `${type ? '9rem' : '12.8rem'}`,
-                                left: `${type ? '10.3rem' : '6.5rem'}`,
-                                fontSize: '0.8rem'
+                                top: `${type ? '8rem' : '7.4rem'}`,
+                                left: `${type ? '9rem' : '9rem'}`,
+                                // top: `${type ? '9rem' : '12.8rem'}`,
+                                // left: `${type ? '10.3rem' : '6.5rem'}`,
+                                fontSize: '0.75rem',
+                                fontFamily: 'courier',
+                                fontWeight: 'bold',
+                                color: '#047581'
                             }}
                         >
-                            {currentUser?.data[0]?.full_name + certDateCheck()}
+                            {name}
+                        </span>
+                        <span
+                            className="text-capitalize"
+                            style={{
+                                position: 'absolute',
+                                // top: '7.5rem',
+                                // left: '8rem',
+                                top: `${type ? '9.4rem' : '8.8rem'}`,
+                                left: `${type ? '5rem' : '5.3rem'}`,
+                                fontSize: '0.75rem',
+                                fontFamily: 'courier',
+                                fontWeight: 'bold',
+                                color: '#000000'
+                            }}
+                        >
+                            {currentUser?.data[0]?.organization_name}
                         </span>
                         <img
                             src={
@@ -103,11 +123,14 @@ const Certificate = ({
                                     : courseCompletionCertificate
                             }
                             alt="certificate"
-                            className="img-fluid mx-auto"
                             style={{
-                                width: `${type ? '297px' : '200px'}`,
-                                height: `${type ? '209px' : '297px'}`,
-                                border: '1px solid #cccccc'
+                                width: '297px',
+                                height: '210px',
+                                top: '8.9rem',
+                                left: '5.4rem'
+                                // width: `${type ? '297px' : '200px'}`,
+                                // height: `${type ? '209px' : '297px'}`,
+                                // border: '1px solid #cccccc'
                             }}
                         />
                     </div>
@@ -137,6 +160,7 @@ const Certificate = ({
 const MyCertificate = () => {
     const showDummypage = false;
     const { t } = useTranslation();
+    const [name, setName] = useState('');
     // const teamMember = useSelector((state) => state?.studentRegistration.teamMember);
     const language = useSelector(
         (state) => state?.studentRegistration?.studentLanguage
@@ -144,46 +168,83 @@ const MyCertificate = () => {
     const postSurveyStatusGl = useSelector(
         (state) => state?.studentRegistration?.postSurveyStatusGl
     );
-    const dashboardStatus = useSelector(
-        (state) => state?.studentRegistration?.dashboardStatus
-    );
-    let { all_topics_count, topics_completed_count } = dashboardStatus
-        ? dashboardStatus
-        : { all_topics_count: null, topics_completed_count: null };
+    // const dashboardStatus = useSelector(
+    //     (state) => state?.studentRegistration?.dashboardStatus
+    // );
+    // const ideaSubmissionStatus = useSelector(
+    //     (state) => state?.studentRegistration.ideaSubmissionStatus
+    // );
+    // const ideaSubmissionsSubmittedAt = useSelector(
+    //     (state) => state?.studentRegistration?.challengesSubmittedResponse[0]
+    // );
+    // let { all_topics_count, topics_completed_count } = dashboardStatus
+    //     ? dashboardStatus
+    //     : { all_topics_count: null, topics_completed_count: null };
     const currentUser = getCurrentUser('current_user');
     const dispatch = useDispatch();
+    useEffect(() => {
+        let studentName = '';
+        const namearr = currentUser?.data[0]?.full_name;
+        for (const i of namearr) {
+            if (!Number.isInteger(parseInt(i))) {
+                studentName += i;
+            }
+        }
+        setName(studentName);
+    }, [name]);
     useLayoutEffect(() => {
-        if (!dashboardStatus)
-            dispatch(
-                getStudentDashboardStatus(currentUser?.data[0]?.user_id, language)
-            );
+        // if (!dashboardStatus)
+        //     dispatch(
+        //         getStudentDashboardStatus(
+        //             currentUser?.data[0]?.user_id,
+        //             language
+        //         )
+        //     );
+        // if (!ideaSubmissionStatus)
+        //     dispatch(
+        //         getStudentChallengeSubmittedResponse(
+        //             currentUser?.data[0]?.team_id,
+        //             language
+        //         )
+        //     );
+        // if (!ideaSubmissionsSubmittedAt)
+        //     dispatch(
+        //         getStudentChallengeSubmittedResponse(
+        //             currentUser?.data[0]?.team_id,
+        //             language
+        //         )
+        //     );
         if (!postSurveyStatusGl)
             dispatch(studentPostSurveyCertificate(language));
     }, [language]);
-    const enablePostSurvey =
-        postSurveyStatusGl && postSurveyStatusGl === 'COMPLETED';
+    //const enablePostSurvey = ideaSubmissionStatus === 'SUBMITTED';
     return (
         <Layout>
             <Container className="presuervey mb-50 mt-5 ">
                 <Fragment>
-                    {showDummypage ? (
+                    {!showDummypage ? (
                         // all_topics_count === topics_completed_count || enablePostSurvey
                         <Row>
                             <Col className="d-lg-flex justify-content-center">
-                                <Certificate
+                                {/* <Certificate
                                     type={'participate'}
                                     currentUser={currentUser}
                                     postSurveyStatus={enablePostSurvey}
-                                    certDate={dashboardStatus}
+                                    //certDate={ideaSubmissionsSubmittedAt}
+                                    ideaDate={ideaSubmissionsSubmittedAt}
                                     language={language}
-                                />
+                                /> */}
                                 <Certificate
                                     language={language}
                                     currentUser={currentUser}
-                                    certDate={dashboardStatus}
+                                    name={name}
+                                    //certDate={dashboardStatus}
+                                    // postSurveyStatus={
+                                    //     all_topics_count ===
+                                    //     topics_completed_count
+                                    // }
                                     postSurveyStatus={
-                                        all_topics_count ===
-                                        topics_completed_count
+                                        postSurveyStatusGl === 'COMPLETED'
                                     }
                                 />
                             </Col>
@@ -201,8 +262,9 @@ const MyCertificate = () => {
                                 <h6
                                     dangerouslySetInnerHTML={{
                                         __html:
-                                            t('dummytext.name') + currentUser?.data[0].full_name
-                                            // t('dummytext.school') + teamMember.team?.mentor?.organization?.organization_name
+                                            t('dummytext.name') +
+                                            currentUser?.data[0].full_name
+                                        // t('dummytext.school') + teamMember.team?.mentor?.organization?.organization_name
                                     }}
                                 ></h6>
                                 <p

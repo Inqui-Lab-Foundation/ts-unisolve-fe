@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 // import { Doughnut } from 'react-chartjs-2';
 import 'antd/dist/antd.css';
@@ -5,16 +6,20 @@ import { Card, Col, Progress } from 'reactstrap';
 import { Table } from 'antd';
 import { getAdminTeamsList, getTeamMemberStatus } from '../store/teams/actions';
 import { useSelector } from 'react-redux';
-import { useLayoutEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 // import DoubleBounce from '../../components/Loaders/DoubleBounce';
-import { FaCheckCircle,FaTimesCircle } from 'react-icons/fa';
+import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { Button } from '../../stories/Button';
 import IdeaSubmissionCard from '../../components/IdeaSubmissionCard';
 import { getStudentChallengeSubmittedResponse } from '../../redux/studentRegistration/actions';
 import { useTranslation } from 'react-i18next';
-
+import Select from '../../Admin/Challenges/pages/Select';
+import { Modal } from 'react-bootstrap';
+//import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { getCurrentUser, openNotificationWithIcon } from '../../helpers/Utils';
+import axios from 'axios';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -62,11 +67,17 @@ export const options = {
 export default function DoughnutChart({ user }) {
     const { t } = useTranslation();
     const dispatch = useDispatch();
+    const currentUser = getCurrentUser('current_user');
     const { teamsList, teamsMembersStatus, teamsMembersStatusErr } =
         useSelector((state) => state.teams);
     const [teamId, setTeamId] = useState(null);
     const [showDefault, setshowDefault] = useState(true);
     const [ideaShow, setIdeaShow] = useState(false);
+    const [Student, setStudent] = useState('');
+    const [ChangeShow, setChangeShow] = useState(false);
+    const [mentorid, setmentorid] = useState('');
+    const [studentchangelist, setstudentchangelist] = useState([]);
+    const [studentchangeObj, setstudentchangeObj] = useState({});
     const { challengesSubmittedResponse } = useSelector(
         (state) => state?.studentRegistration
     );
@@ -77,11 +88,49 @@ export default function DoughnutChart({ user }) {
     const percentageBWNumbers = (a, b) => {
         return (((a - b) / a) * 100).toFixed(2);
     };
+    useEffect(() => {
+        if (user) {
+            setmentorid(user[0].mentor_id);
+        }
+    }, [user]);
+    useEffect(() => {
+        if (mentorid) {
+            setshowDefault(true);
+            dispatch(getAdminTeamsList(mentorid));
+        }
+    }, [mentorid]);
 
-    useLayoutEffect(() => {
-        setshowDefault(true);
-        dispatch(getAdminTeamsList(user[0].mentor_id));
-    }, [user[0].mentor_id]);
+    const handleChangeStudent = async (id, name) => {
+        var config = {
+            method: 'put',
+            url:
+                process.env.REACT_APP_API_BASE_URL +
+                '/challenge_response/updateEntry/' +
+                JSON.stringify(id),
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${currentUser?.data[0]?.token}`
+            },
+            data: { initiated_by: studentchangeObj[name] }
+        };
+        axios(config)
+            .then(function (response) {
+                if (response.status === 200) {
+                    openNotificationWithIcon(
+                        'success',
+                        'Idea initiated to New Student Successfully',
+                        ''
+                    );
+                    setChangeShow(false);
+                    dispatch(getStudentChallengeSubmittedResponse(teamId));
+                    setStudent('');
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+                setChangeShow(false);
+            });
+    };
     const columns = [
         {
             title: 'Name',
@@ -91,7 +140,7 @@ export default function DoughnutChart({ user }) {
         {
             title: 'Pre Survey',
             dataIndex: 'pre_survey_status',
-            align:"center",
+            align: 'center',
             width: '10%',
             render: (_, record) =>
                 record?.pre_survey_status ? (
@@ -103,7 +152,7 @@ export default function DoughnutChart({ user }) {
         {
             title: 'Lesson Progress',
             dataIndex: 'address',
-            align:"center",
+            align: 'center',
             width: '30%',
             render: (_, record) => {
                 let percent =
@@ -113,8 +162,8 @@ export default function DoughnutChart({ user }) {
                         record.topics_completed_count
                     );
                 return (
-                    <div className='d-flex'>
-                        <div style={{width:"80%"}}>
+                    <div className="d-flex">
+                        <div style={{ width: '80%' }}>
                             <Progress
                                 key={'25'}
                                 className="progress-height"
@@ -124,16 +173,18 @@ export default function DoughnutChart({ user }) {
                                         ? percent <= 25
                                             ? 'danger'
                                             : percent > 25 && percent <= 50
-                                                ? 'info'
-                                                : percent > 50 && percent <= 75
-                                                    ? 'warning'
-                                                    : 'sucess'
+                                            ? 'info'
+                                            : percent > 50 && percent <= 75
+                                            ? 'warning'
+                                            : 'sucess'
                                         : 'danger'
                                 }
                                 value={percent}
                             />
                         </div>
-                        <span className='ms-2'>{Math.round(percent) ? Math.round(percent) : '0'}%</span>
+                        <span className="ms-2">
+                            {Math.round(percent) ? Math.round(percent) : '0'}%
+                        </span>
                     </div>
                 );
             }
@@ -141,50 +192,70 @@ export default function DoughnutChart({ user }) {
         {
             title: 'Idea Submission',
             dataIndex: 'idea_submission',
-            align:"center",
+            align: 'center',
             width: '20%',
             render: (_, record) =>
-                record?.idea_submission ? <FaCheckCircle size={20} color="green"/> : <FaTimesCircle size={20} color="red" />
+                record?.idea_submission ? (
+                    <FaCheckCircle size={20} color="green" />
+                ) : (
+                    <FaTimesCircle size={20} color="red" />
+                )
         },
         {
             title: 'Post Survey',
             dataIndex: 'post_survey_status',
-            align:"center",
+            align: 'center',
             width: '10%',
             render: (_, record) =>
                 record?.post_survey_status ? (
-                    <FaCheckCircle size={20} color="green"/>
+                    <FaCheckCircle size={20} color="green" />
                 ) : (
                     <FaTimesCircle size={20} color="red" />
                 )
         },
         {
             title: 'Certificate',
-            dataIndex: 'certificate_status',
-            align:"center",
+            dataIndex: 'certificate',
+            align: 'center',
             width: '10%',
             render: (_, record) =>
-                record?.certificate_status ? (
-                    <FaCheckCircle size={20} color="green"/>
+                record?.certificate ? (
+                    <FaCheckCircle size={20} color="green" />
                 ) : (
                     <FaTimesCircle size={20} color="red" />
                 )
         }
     ];
 
+    console.log(teamsMembersStatus);
+    useEffect(() => {
+        const studentlistObj = {};
+        const studentlist = teamsMembersStatus.map((stu) => {
+            studentlistObj[stu.full_name] = stu.user_id;
+            return stu.full_name;
+        });
+        let index = studentlist.indexOf(
+            challengesSubmittedResponse[0]?.initiated_name
+        );
+        if (index >= 0) {
+            studentlist.splice(index, 1);
+        }
+        setstudentchangelist(studentlist);
+        setstudentchangeObj(studentlistObj);
+    }, [teamsMembersStatus, ChangeShow]);
     return (
         <>
-            <div  className="select-team w-100">
+            <div className="select-team w-100">
                 <label htmlFor="teams" className="">
                     Team Progress:
                 </label>
-                <div className='d-flex align-items-center'>
-                    <Col className="row p-4" >
+                <div className="d-flex align-items-center">
+                    <Col className="row p-4">
                         <select
                             onChange={(e) => setTeamId(e.target.value)}
                             name="teams"
                             id="teams"
-                            style={{backgroundColor:'lavender'}}
+                            style={{ backgroundColor: 'lavender' }}
                         >
                             <option value="">Select Team</option>
                             {teamsList && teamsList.length > 0 ? (
@@ -198,19 +269,48 @@ export default function DoughnutChart({ user }) {
                             )}
                         </select>
                     </Col>
-                    <Col className='d-flex justify-content-end align-items-center'>
-                        <Card className='p-3 mx-4 d-flex flex-row'>
-                            <span className='fw-bold'>IDEA STATUS :</span> 
-                            <span>{" "} {challengesSubmittedResponse[0]?.status ? challengesSubmittedResponse[0]?.status : "NOT STARTED"} </span>
+                    <Col className="d-flex justify-content-end align-items-center">
+                        <Card className="p-3 mx-4 d-flex flex-row">
+                            <span className="fw-bold">IDEA STATUS :</span>
+                            <span>
+                                {' '}
+                                {challengesSubmittedResponse[0]?.status
+                                    ? challengesSubmittedResponse[0]?.status
+                                    : 'NOT STARTED'}{' '}
+                            </span>
                         </Card>
+
                         <Button
                             button="button"
                             label={t('student.view_idea')}
-                            disabled={teamsMembersStatus.length > 0 && challengesSubmittedResponse[0]?.status ? false : true}
-                            btnClass={`${teamsMembersStatus.length > 0 && challengesSubmittedResponse[0]?.status ? "primary" : "default"}`}
+                            disabled={
+                                teamsMembersStatus.length > 0 &&
+                                challengesSubmittedResponse[0]?.status
+                                    ? false
+                                    : true
+                            }
+                            btnClass={`${
+                                teamsMembersStatus.length > 0 &&
+                                challengesSubmittedResponse[0]?.status
+                                    ? 'primary'
+                                    : 'default'
+                            }`}
                             size="small"
-                            onClick={()=>setIdeaShow(true)}
+                            onClick={() => setIdeaShow(true)}
                         />
+                        <div className="m-3">
+                            <Button
+                                label={'Change'}
+                                btnClass={`${
+                                    teamsMembersStatus.length > 0 &&
+                                    challengesSubmittedResponse[0]?.status
+                                        ? 'primary'
+                                        : 'default'
+                                }`}
+                                size="small"
+                                onClick={() => setChangeShow(true)}
+                            />
+                        </div>
                     </Col>
                 </div>
                 {showDefault && (
@@ -233,17 +333,77 @@ export default function DoughnutChart({ user }) {
                         className="d-flex justify-content-center align-items-center"
                         style={{ minHeight: '25rem' }}
                     >
-                        <p className="text-primary">There are no students in selected Team</p>
+                        <p className="text-primary">
+                            There are no students in selected Team
+                        </p>
                         {/* <p className="text-primary">{"No Data Found"}*</p> */}
                     </div>
-                ) : (
-                    null
-                )}
+                ) : null}
             </div>
             {/* <div style={{ width: '50%' }}>
                 <Doughnut options={options} data={data} />
             </div> */}
-            {ideaShow && <IdeaSubmissionCard show={ideaShow} handleClose={()=>setIdeaShow(false)} response={challengesSubmittedResponse}/>}
+            {ideaShow && (
+                <IdeaSubmissionCard
+                    show={ideaShow}
+                    handleClose={() => setIdeaShow(false)}
+                    response={challengesSubmittedResponse}
+                />
+            )}
+            {ChangeShow && (
+                <Modal
+                    show={ChangeShow}
+                    onHide={() => setChangeShow(false)}
+                    //{...props}
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                    className="assign-evaluator ChangePSWModal teacher-register-modal"
+                    backdrop="static"
+                    scrollable={true}
+                >
+                    <Modal.Header
+                        closeButton
+                        onHide={() => setChangeShow(false)}
+                    >
+                        <Modal.Title
+                            id="contained-modal-title-vcenter"
+                            className="w-100 d-block text-center"
+                        >
+                            Idea Initiation Change
+                        </Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <div className="my-3 text-center">
+                            <h3 className="mb-sm-4 mb-3">
+                                Please Initiate Idea to Student
+                            </h3>
+                            <Select
+                                list={studentchangelist}
+                                setValue={setStudent}
+                                placeHolder={'Please Select'}
+                                value={Student}
+                            />
+                        </div>
+                        <div className="text-center">
+                            <Button
+                                label={'Submit'}
+                                btnClass={!Student ? 'default' : 'primary'}
+                                size="small "
+                                onClick={() =>
+                                    handleChangeStudent(
+                                        challengesSubmittedResponse[0]
+                                            .challenge_response_id,
+                                        Student
+                                    )
+                                }
+                                disabled={!Student}
+                            />
+                        </div>
+                    </Modal.Body>
+                </Modal>
+            )}
         </>
     );
 }
