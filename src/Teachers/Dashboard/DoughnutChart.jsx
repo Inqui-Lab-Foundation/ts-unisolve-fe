@@ -101,6 +101,9 @@ export default function DoughnutChart({ user }) {
     }, [mentorid]);
 
     const handleChangeStudent = async (id, name) => {
+        //  handleChangeStudent Api we can update the initiate student //
+        // here id = class ; name = student name //
+
         var config = {
             method: 'put',
             url:
@@ -227,7 +230,6 @@ export default function DoughnutChart({ user }) {
         }
     ];
 
-    console.log(teamsMembersStatus);
     useEffect(() => {
         const studentlistObj = {};
         const studentlist = teamsMembersStatus.map((stu) => {
