@@ -9,7 +9,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Modal } from 'react-bootstrap';
 import axios from 'axios';
 import Select from '../Pages/Select';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import RatedDetailCard from '../Pages/RatedDetailCard';
 //import { useDispatch } from 'react-redux';
 import jsPDF from 'jspdf';
@@ -19,7 +19,7 @@ import html2canvas from "html2canvas";
 
 const ViewDetail = (props) => {
     //const dispatch = useDispatch();
-    const history = useHistory();
+    //const history = useHistory();
     const { search } = useLocation();
     const level = new URLSearchParams(search).get('level');
     const currentUser = getCurrentUser('current_user');
@@ -101,9 +101,9 @@ const handleL1Round = (handledText) => {
     axios(config)
         .then(function (response) {
             openNotificationWithIcon('success', response?.data?.message=='OK'?'Idea processed successfully!':response?.data?.message);
-            history.push({
-                pathname: '/admin/evaluationStatus',
-            });
+            // history.push({
+            //     pathname: '/admin/evaluationStatus',
+            // });
         })
         .catch(function (error) {
             openNotificationWithIcon(
@@ -156,6 +156,13 @@ const downloadPDF = async() => {
                                                 ''}
                                         </span>
                                     </h2>
+                                    <h3 className="mb-md-4 mb-3">
+                                        S.No:{' '}
+                                        <span className="text-capitalize fs-3">
+                                            {props?.ideaDetails?.key ||
+                                                ''}
+                                        </span>
+                                    </h3>
                                 </div>
                                 <div className="col-lg-6 d-flex justify-content-end">
                                     <div className="ms-auto me-sm-3 p-0">
