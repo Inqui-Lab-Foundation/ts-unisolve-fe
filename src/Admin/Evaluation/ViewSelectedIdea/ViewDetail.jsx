@@ -156,6 +156,13 @@ const downloadPDF = async() => {
                                                 ''}
                                         </span>
                                     </h2>
+                                    <h3 className="mb-md-4 mb-3">
+                                        S.No:{' '}
+                                        <span className="text-capitalize fs-3">
+                                            {props?.ideaDetails?.key ||
+                                                ''}
+                                        </span>
+                                    </h3>
                                 </div>
                                 <div className="col-lg-6 d-flex justify-content-end">
                                     <div className="ms-auto me-sm-3 p-0">
